@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\MegaHerdt.DbConfiguration\MegaHerdt.DbConfiguration.csproj" />
-  </ItemGroup>
-
 </Project>
