@@ -13,11 +13,11 @@ namespace MegaHerdt.Helpers.Helpers
     public class AuthHelper
     {
         private readonly ApplicationDbContext context;
-        private readonly UserManager<IdentityUser> userManager;
-        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<User> userManager;
+        private readonly SignInManager<User> signInManager;
        
-        public AuthHelper(ApplicationDbContext context, UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+        public AuthHelper(ApplicationDbContext context, UserManager<User> userManager,
+            SignInManager<User> signInManager)
         {
             this.context = context;
             this.userManager = userManager;
@@ -26,10 +26,10 @@ namespace MegaHerdt.Helpers.Helpers
 
 
         //PASAR EL jwtkey CON IConfiguration del jwt:key DESDE CONTROLADOR
-        public async Task<UserToken> CreateUser(ApplicationUser appUser, string jwtKey)
+        public async Task<UserToken> CreateUser(User appUser, string jwtKey)
         {
-            var user = new IdentityUser { UserName = appUser.Email, Email = appUser.Email };
-            var result = await this.userManager.CreateAsync(user, appUser.Password);
+            var result = await this.userManager.CreateAsync(appUser, appUser.Password);
+
             if (result.Succeeded)
             {
                 return await BuildToken(appUser, jwtKey);
@@ -38,7 +38,7 @@ namespace MegaHerdt.Helpers.Helpers
 
         }
 
-        public async Task<UserToken> Login(ApplicationUser user, string jwtKey)
+        public async Task<UserToken> Login(User user, string jwtKey)
         {
             var result = await this.signInManager.PasswordSignInAsync(user.Email, user.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
@@ -48,11 +48,11 @@ namespace MegaHerdt.Helpers.Helpers
             throw new Exception("Invalid login attempt.");
         }
 
-        public async Task<UserToken> RenovateToken(ApplicationUser user, string jwtKey)
+        public async Task<UserToken> RenovateToken(User user, string jwtKey)
         {
             return await BuildToken(user,jwtKey);
         }
-        private async Task<UserToken> BuildToken(ApplicationUser user, string jwtKey)
+        private async Task<UserToken> BuildToken(User user, string jwtKey)
         {
             var claims = new List<Claim>
             {
@@ -62,7 +62,7 @@ namespace MegaHerdt.Helpers.Helpers
             };
 
             var identityUser = await this.userManager.FindByEmailAsync(user.Email);
-
+            
             claims.Add(new Claim(ClaimTypes.NameIdentifier, identityUser.Id));
 
             var claimsDb = await this.userManager.GetClaimsAsync(identityUser);
@@ -90,11 +90,11 @@ namespace MegaHerdt.Helpers.Helpers
         }
 
         //Hacer el paginado en el controlador con el QUERYABLE
-       public IQueryable<ApplicationUser> Get()
+       public IEnumerable<User> Get()
         {
-            var queryable = this.context.Users.AsQueryable();
-            queryable = queryable.OrderBy(x => x.Email);
-            return queryable;
+           /* var queryable = this.context.Users.AsQueryable().;
+            queryable = queryable.OrderBy(x => x.Email);*/
+            return this.context.Users.AsEnumerable() ;
         }
 
         public async Task<List<string>> GetRoles()

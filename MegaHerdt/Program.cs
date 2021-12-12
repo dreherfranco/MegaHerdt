@@ -1,4 +1,6 @@
 using MegaHerdt.DbConfiguration.DbConfiguration;
+using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Models.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -19,8 +21,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlite(connectionString, b => b.MigrationsAssembly("MegaHerdt.API"))
             );
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+builder.Services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>().AddUserManager<UserManager<User>>().AddSignInManager()
                 .AddDefaultTokenProviders();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -36,6 +38,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     ClockSkew = TimeSpan.Zero
                 });
 
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    // Default Password settings.
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
+
+//dependency injection
+//builder.Services.AddTransient<SignInManager<IdentityUser>>();
+//builder.Services.AddTransient<UserManager<IdentityUser>>();
+//builder.Services.AddSingleton<ApplicationDbContext>();
+builder.Services.AddTransient<AuthHelper>();
 
 var app = builder.Build();
 
@@ -48,6 +66,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

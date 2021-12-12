@@ -2,7 +2,7 @@
 
 namespace MegaHerdt.Models.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class User : IdentityUser
     {
         public string Dni { get; set; }
         public string Password { get; set; }

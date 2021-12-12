@@ -1,12 +1,13 @@
 ﻿using MegaHerdt.Models.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace MegaHerdt.DbConfiguration.DbConfiguration
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public DbSet<ApplicationUser> Users { get; set; }
+       
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
