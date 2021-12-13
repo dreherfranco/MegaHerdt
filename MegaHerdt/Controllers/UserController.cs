@@ -1,4 +1,6 @@
-﻿using MegaHerdt.Helpers.Helpers;
+﻿using AutoMapper;
+using MegaHerdt.API.DTOs.User;
+using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,25 +15,22 @@ namespace MegaHerdt.API.Controllers
     {
         private readonly AuthHelper AuthHelper;
         private readonly IConfiguration Configuration;
-    //    private readonly UserManager<User> userManager;
-        public UserController(/*UserManager<User> userManager,*/AuthHelper authHelper, IConfiguration configuration)
+        private readonly IMapper Mapper;
+        public UserController(AuthHelper authHelper, IConfiguration configuration, IMapper mapper)
         {
             this.AuthHelper = authHelper;
             this.Configuration = configuration;
-          //  this.userManager = userManager;
+            this.Mapper = mapper;
         }
-        // GET: api/<UserController>
-        [HttpGet]
-        public async Task<ActionResult<List<User>>> Get()
+        // POST: api/<UserController>
+        [HttpPost]
+        public async Task<ActionResult<UserToken>> Post([FromBody] UserDTO userDTO)
         {
             try
             {
-                var applicationUser = new User { UserName= "mail@test.com", Email = "mail@test.com", Password = "Holaaaa879" ,Dni="42464099", Surname = "dreher", Name = "franco" };
-                var create = await this.AuthHelper.CreateUser(applicationUser, Configuration["jwt:key"]);
-                
-               // var result = await this.userManager.CreateAsync(applicationUser, applicationUser.Password);
-                var user = this.AuthHelper.Get().ToList();
-                return user;
+               var user = Mapper.Map<User>(userDTO);
+                var userToken= await this.AuthHelper.CreateUser(user, Configuration["jwt:key"]);
+                return userToken;
             }catch(Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
@@ -43,12 +42,6 @@ namespace MegaHerdt.API.Controllers
         public string Get(int id)
         {
             return "value";
-        }
-
-        // POST api/<UserController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
         }
 
         // PUT api/<UserController>/5

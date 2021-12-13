@@ -26,14 +26,15 @@ namespace MegaHerdt.Helpers.Helpers
 
 
         //PASAR EL jwtkey CON IConfiguration del jwt:key DESDE CONTROLADOR
-        public async Task<UserToken> CreateUser(User appUser, string jwtKey)
+        public async Task<UserToken> CreateUser(User user, string jwtKey)
         {
-            var result = await this.userManager.CreateAsync(appUser, appUser.Password);
+            var result = await this.userManager.CreateAsync(user, user.Password);
 
             if (result.Succeeded)
             {
-                return await BuildToken(appUser, jwtKey);
+                return await BuildToken(user, jwtKey);
             }
+
             throw new Exception("Create User error");
 
         }
