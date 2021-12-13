@@ -24,6 +24,7 @@
     <ProjectReference Include="..\MegaHerdt.DbConfiguration\MegaHerdt.DbConfiguration.csproj" />
     <ProjectReference Include="..\MegaHerdt.Helpers\MegaHerdt.Helpers.csproj" />
     <ProjectReference Include="..\MegaHerdt.Models\MegaHerdt.Models.csproj" />
+    <ProjectReference Include="..\MegaHerdt.Services\MegaHerdt.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211212203359_initial")]
+    [Migration("20211213015436_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MegaHerdt.Helpers\MegaHerdt.Helpers.csproj" />
+  </ItemGroup>
+
 </Project>

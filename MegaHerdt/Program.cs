@@ -1,11 +1,11 @@
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.Helpers.Helpers;
 using AutoMapper;
+using MegaHerdt.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -16,6 +16,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 //dependency injection
 builder.Services.AddTransient<AuthHelper>();
+builder.Services.AddTransient<UserService>();
 
 var app = builder.Build();
 

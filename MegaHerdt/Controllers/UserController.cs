@@ -2,6 +2,7 @@
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,24 +14,27 @@ namespace MegaHerdt.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly AuthHelper AuthHelper;
+        //private readonly AuthHelper AuthHelper;
+        private readonly UserService UserService;
         private readonly IConfiguration Configuration;
         private readonly IMapper Mapper;
-        public UserController(AuthHelper authHelper, IConfiguration configuration, IMapper mapper)
+        public UserController(/*AuthHelper authHelper,*/ UserService userService, IConfiguration configuration, IMapper mapper)
         {
-            this.AuthHelper = authHelper;
+            //this.AuthHelper = authHelper;
             this.Configuration = configuration;
             this.Mapper = mapper;
+            this.UserService = userService;
         }
         // POST: api/<UserController>
         [HttpPost]
-        public async Task<ActionResult<UserToken>> Post([FromBody] UserDTO userDTO)
+        public async Task<ActionResult<UserTokenDTO>> Post([FromBody] UserDTO userDTO)
         {
             try
             {
                var user = Mapper.Map<User>(userDTO);
-                var userToken= await this.AuthHelper.CreateUser(user, Configuration["jwt:key"]);
-                return userToken;
+                //var userToken= await this.AuthHelper.CreateUser(user, Configuration["jwt:key"]);
+                var userToken = await this.UserService.CreateUser(user, Configuration["jwt:key"]);
+                return Mapper.Map<UserTokenDTO>(userToken);
             }catch(Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
