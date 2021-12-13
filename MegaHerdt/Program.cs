@@ -1,6 +1,5 @@
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.Helpers.Helpers;
-using AutoMapper;
 using MegaHerdt.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
