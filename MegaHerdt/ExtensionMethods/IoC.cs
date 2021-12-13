@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.DbConfiguration.DbConfiguration;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.Identity;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

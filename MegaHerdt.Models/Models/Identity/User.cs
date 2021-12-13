@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace MegaHerdt.Models.Models
+namespace MegaHerdt.Models.Models.Identity
 {
     public class User : IdentityUser
     {

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.Identity;
 
 namespace MegaHerdt.API.Mapper
 {
@@ -11,6 +12,7 @@ namespace MegaHerdt.API.Mapper
             #region User
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<UserToken, UserTokenDTO>().ReverseMap();
+            CreateMap<UserLoginDTO, User>();
             #endregion User
 
         }

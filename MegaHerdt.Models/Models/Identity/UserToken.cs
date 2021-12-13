@@ -1,5 +1,5 @@
 ﻿
-namespace MegaHerdt.Models.Models
+namespace MegaHerdt.Models.Models.Identity
 {
     public class UserToken
     {

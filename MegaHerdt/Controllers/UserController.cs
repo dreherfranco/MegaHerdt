@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.User;
-using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +23,25 @@ namespace MegaHerdt.API.Controllers
             this.UserService = userService;
         }
 
+        //HACER PAGINACIOOOOOON
+        [HttpGet("get-users")]
+        public ActionResult<List<UserDTO>> Get(/*[FromQuery] PaginationDTO paginationDTO*/)
+        {
+            try
+            {
+                var usersDTO = Mapper.Map<List<UserDTO>>(this.UserService.Get());
+                return usersDTO;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+            
+        }
+
         // POST: api/<UserController>
-        [HttpPost]
-        public async Task<ActionResult<UserTokenDTO>> Post([FromBody] UserDTO userDTO)
+        [HttpPost("create")]
+        public async Task<ActionResult<UserTokenDTO>> CreateUser([FromBody] UserDTO userDTO)
         {
             try
             {
@@ -35,6 +51,72 @@ namespace MegaHerdt.API.Controllers
             }catch(Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<UserTokenDTO>> Login([FromBody] UserLoginDTO userDTO)
+        {
+            try
+            {
+                var user = Mapper.Map<User>(userDTO);
+
+                var userToken = await this.UserService.Login(user, Configuration["jwt:key"]);
+                return Mapper.Map<UserTokenDTO>(userToken);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("get-roles")]
+        public async Task<ActionResult<List<string>>> GetRoles()
+        {
+            try
+            {
+                return await this.UserService.GetRoles();
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+            
+        }
+
+        [HttpPost("assign-role")]
+        public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
+        {
+            try
+            {
+                var assignRole = await this.UserService.AssignRole(roleDTO.roleName, roleDTO.userId);
+                if (assignRole)
+                {
+                    return NoContent();
+                }
+                throw new Exception("Role didn't be assigned");
+            }catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("remove-role")]
+        public async Task<ActionResult> RemoveRole([FromBody] EditRoleDTO roleDTO)
+        {
+            try
+            {
+                var removeRole = await this.UserService.RemoveRole(roleDTO.roleName, roleDTO.userId);
+                if (removeRole)
+                {
+                    return NoContent();
+                }
+                throw new Exception("Role didn't be removed");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
             }
         }
     }

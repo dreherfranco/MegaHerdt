@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using MegaHerdt.DbConfiguration.DbConfiguration;
-using MegaHerdt.Models.Models;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
+using MegaHerdt.Models.Models.Identity;
 
 namespace MegaHerdt.Helpers.Helpers
 {
@@ -44,7 +44,8 @@ namespace MegaHerdt.Helpers.Helpers
             var result = await this.signInManager.PasswordSignInAsync(user.Email, user.Password, isPersistent: false, lockoutOnFailure: false);
             if (result.Succeeded)
             {
-                return await BuildToken(user, jwtKey);
+                var findUser = await this.userManager.FindByEmailAsync(user.Email);
+                return await BuildToken(findUser, jwtKey);
             }
             throw new Exception("Invalid login attempt.");
         }
@@ -91,11 +92,11 @@ namespace MegaHerdt.Helpers.Helpers
         }
 
         //Hacer el paginado en el controlador con el QUERYABLE
-       public IEnumerable<User> Get()
+       public IQueryable<User> Get()
         {
-           /* var queryable = this.context.Users.AsQueryable().;
-            queryable = queryable.OrderBy(x => x.Email);*/
-            return this.context.Users.AsEnumerable() ;
+            var queryable = this.context.Users.AsQueryable();
+            queryable = queryable.OrderBy(x => x.Email);
+            return queryable ;
         }
 
         public async Task<List<string>> GetRoles()

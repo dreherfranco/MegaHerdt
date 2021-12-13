@@ -1,4 +1,5 @@
 ﻿using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
