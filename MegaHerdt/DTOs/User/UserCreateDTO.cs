@@ -1,4 +1,6 @@
-﻿namespace MegaHerdt.API.DTOs.User
+﻿using MegaHerdt.API.DTOs.Phone;
+
+namespace MegaHerdt.API.DTOs.User
 {
     public class UserCreateDTO
     {
@@ -8,5 +10,6 @@
         public string Password { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public List<PhoneCreationDTO> Phones { get; set; }
     }
 }

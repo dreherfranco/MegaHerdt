@@ -60,7 +60,7 @@ namespace MegaHerdt.Helpers.Helpers
             if (userDb != null)
             {
                 user.Id = userDb.Id;
-                await userRepository.Update(user);
+                this.userRepository.Update(user);
                 return await BuildToken(user, jwtKey);
               //  throw new Exception("Update with errors");
             }
@@ -112,7 +112,9 @@ namespace MegaHerdt.Helpers.Helpers
         //Hacer el paginado en el controlador con el QUERYABLE
        public IQueryable<User> Get(Expression<Func<User, bool>> filter = null)
         {
-            return this.userRepository.Get(filter).OrderBy(x => x.Email);
+            return this.userRepository.Get(filter)
+                .Include(x => x.Phones)
+                .OrderBy(x => x.Email);
         }
 
         public async Task<List<string>> GetRoles()
