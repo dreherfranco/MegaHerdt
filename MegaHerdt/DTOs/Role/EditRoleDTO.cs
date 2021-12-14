@@ -1,4 +1,4 @@
-﻿namespace MegaHerdt.API.DTOs.User
+﻿namespace MegaHerdt.API.DTOs.Role
 {
     public class EditRoleDTO
     {

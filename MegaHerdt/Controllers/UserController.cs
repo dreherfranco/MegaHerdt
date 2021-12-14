@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MegaHerdt.API.DTOs.Role;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Services.Services;
