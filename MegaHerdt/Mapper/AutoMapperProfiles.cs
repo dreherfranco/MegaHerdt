@@ -11,7 +11,8 @@ namespace MegaHerdt.API.Mapper
         {
             #region User
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<User, UserCreateDTO>().ReverseMap();
+            CreateMap<UserCreateDTO, User>();
+            CreateMap<UserUpdateDTO, User>();
             CreateMap<UserToken, UserTokenDTO>().ReverseMap();
             CreateMap<UserLoginDTO, User>();
             #endregion User
