@@ -1,6 +1,7 @@
 ﻿using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models.Identity;
 using Microsoft.AspNetCore.Identity;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.Services.Services
 {
@@ -16,6 +17,11 @@ namespace MegaHerdt.Services.Services
         {
             return AuthHelper.Get();
         }
+        public IQueryable<User> GetByEmail(string email)
+        {
+            Expression<Func<User, bool>> filter = x => x.Email == email;
+            return AuthHelper.Get(filter);
+        }
 
         public async Task<UserToken> CreateUser(User user, string jwtKey)
         {
@@ -26,7 +32,10 @@ namespace MegaHerdt.Services.Services
         {
             return await AuthHelper.Login(user, jwtKey);
         }
-
+        public async Task<UserToken> UserUpdate(User user, string jwtKey)
+        {
+            return await AuthHelper.UserUpdate(user, jwtKey);
+        }
         public async Task<List<string>> GetRoles()
         {
             return await this.AuthHelper.GetRoles();

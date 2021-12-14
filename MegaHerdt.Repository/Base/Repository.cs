@@ -13,18 +13,18 @@ namespace MegaHerdt.Repository.Base
             Context = context;
         }
 
-        public T Agregar(T entity)
+        public T Add(T entity)
         {
             Context.Set<T>().Add(entity);
             Context.SaveChangesAsync();
             return entity;
         }
 
-        public IEnumerable<T> Obtener(Expression<Func<T, bool>> filter = null)
+        public IQueryable<T> Get(Expression<Func<T, bool>> filter = null)
         {
             if (filter == null)
             {
-                return this.Context.Set<T>().AsEnumerable();
+                return this.Context.Set<T>().AsQueryable();
             }
             else
             {
@@ -34,14 +34,14 @@ namespace MegaHerdt.Repository.Base
 
         }
 
-        public void Eliminar(T entity)
+        public void Delete(T entity)
         {
             this.Context.Set<T>().Remove(entity);
             Context.SaveChanges();
 
         }
 
-        public void Actualizar(T entidad)
+        public void Update(T entidad)
         {
             this.Context.Entry(entidad).State = EntityState.Modified;
             this.Context.SaveChanges();

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211213232914_initial")]
+    [Migration("20211214014219_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,6 +123,22 @@ namespace MegaHerdt.API.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
+                            ConcurrencyStamp = "620f3688-755b-41b0-bf60-01642af6b171",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
+                            ConcurrencyStamp = "e3dc3d6f-c3c7-40ca-8502-98ddca5074a8",
+                            Name = "Empleado",
+                            NormalizedName = "Empleado"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

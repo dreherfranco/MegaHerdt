@@ -158,6 +158,16 @@ namespace MegaHerdt.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "620f3688-755b-41b0-bf60-01642af6b171", "Admin", "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "e3dc3d6f-c3c7-40ca-8502-98ddca5074a8", "Empleado", "Empleado" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
 using MegaHerdt.Models.Models.Identity;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.Helpers.Helpers
 {
@@ -50,7 +51,15 @@ namespace MegaHerdt.Helpers.Helpers
             }
             throw new Exception("Invalid login attempt.");
         }
-
+        public async Task<UserToken> UserUpdate(User user, string jwtKey)
+        {
+            var result = await userManager.UpdateAsync(user);
+            if (result.Succeeded)
+            {
+                return await BuildToken(user, jwtKey);
+            }
+            throw new Exception("Update with errors");
+        }
         public async Task<UserToken> RenovateToken(User user, string jwtKey)
         {
             return await BuildToken(user,jwtKey);
@@ -93,11 +102,22 @@ namespace MegaHerdt.Helpers.Helpers
         }
 
         //Hacer el paginado en el controlador con el QUERYABLE
-       public IQueryable<User> Get()
+       public IQueryable<User> Get(Expression<Func<User, bool>> filter = null)
         {
-            var queryable = this.context.Users.AsQueryable();
-            queryable = queryable.OrderBy(x => x.Email);
-            return queryable ;
+            if (filter == null)
+            {
+                return this.context.Users
+                    .AsQueryable()
+                    .OrderBy(x => x.Email);
+            }
+            else
+            {
+                return this.context.Users
+                    .AsQueryable()
+                    .Where(filter)
+                    .OrderBy(x => x.Email);
+            }
+            
         }
 
         public async Task<List<string>> GetRoles()

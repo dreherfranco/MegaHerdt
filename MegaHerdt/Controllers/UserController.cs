@@ -26,8 +26,8 @@ namespace MegaHerdt.API.Controllers
 
         //HACER PAGINACIOOOOOON
         [HttpGet("get-users")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
-        public ActionResult<List<UserDTO>> Get(/*[FromQuery] PaginationDTO paginationDTO*/)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public ActionResult<List<UserDTO>> GetAll(/*[FromQuery] PaginationDTO paginationDTO*/)
         {
             try
             {
@@ -38,9 +38,25 @@ namespace MegaHerdt.API.Controllers
             {
                 return BadRequest(new { message = ex.Message });
             }
-            
+
         }
 
+        //PROBAR FUNCIONALIDAD
+        [HttpGet("get-user/{email}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public ActionResult<List<UserDTO>> GetByEmail(string email)
+        {
+            try
+            {
+                var usersDTO = Mapper.Map<List<UserDTO>>(this.UserService.GetByEmail(email));
+                return usersDTO;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
         // POST: api/<UserController>
         [HttpPost("create")]
         public async Task<ActionResult<UserTokenDTO>> CreateUser([FromBody] UserCreateDTO userDTO)
@@ -72,6 +88,23 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        //PROBAR FUNCIONALIDAD
+        [HttpPost("update")]
+        public async Task<ActionResult<UserTokenDTO>> UserUpdate([FromBody] UserUpdateDTO userDTO)
+        {
+            try
+            {
+                var user = Mapper.Map<User>(userDTO);
+
+                var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
+                return Mapper.Map<UserTokenDTO>(userToken);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("get-roles")]
         public async Task<ActionResult<List<string>>> GetRoles()
         {
@@ -87,7 +120,9 @@ namespace MegaHerdt.API.Controllers
             
         }
 
+        #region Roles
         [HttpPost("create-role")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> CreateRole([FromBody] CreateRoleDTO roleDTO)
         {
             try
@@ -106,6 +141,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("assign-role")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
         {
             try
@@ -123,6 +159,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("remove-role")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> RemoveRole([FromBody] EditRoleDTO roleDTO)
         {
             try
@@ -139,5 +176,6 @@ namespace MegaHerdt.API.Controllers
                 throw new Exception(ex.Message);
             }
         }
+        #endregion Roles
     }
 }
