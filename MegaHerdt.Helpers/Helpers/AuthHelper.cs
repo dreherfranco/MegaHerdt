@@ -15,13 +15,14 @@ namespace MegaHerdt.Helpers.Helpers
         private readonly ApplicationDbContext context;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
-       
+        private readonly RoleManager<IdentityRole> roleManager;
         public AuthHelper(ApplicationDbContext context, UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
             this.context = context;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.roleManager = roleManager;
         }
 
 
@@ -104,16 +105,20 @@ namespace MegaHerdt.Helpers.Helpers
             return await context.Roles.Select(x => x.Name).ToListAsync();
         }
 
-
-        //VER EditRoleDTO
-        public async Task<bool> AssignRole(string roleName, string userId)
+        public async Task<IdentityResult> CreateRole(string roleName)
         {
-            var user = await userManager.FindByIdAsync(userId);
-            if (user == null)
+            var role = new IdentityRole() { Name=roleName };
+            return await roleManager.CreateAsync(role);
+        }
+        //VER EditRoleDTO
+        public async Task<bool> AssignRole(string roleName, string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            var role = await roleManager.FindByNameAsync(roleName);
+            if (user == null || role == null)
             {
-                throw new Exception("User doesn't exists");
+                throw new Exception("User or role doesn't exists");
             }
-
             var addClaim = await userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, roleName));
             if (addClaim.Succeeded)
                 return true;
@@ -121,9 +126,9 @@ namespace MegaHerdt.Helpers.Helpers
         }
 
         //VER EditRoleDTO
-        public async Task<bool> RemoveRole(string roleName, string userId)
+        public async Task<bool> RemoveRole(string roleName, string email)
         {
-            var user = await userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByEmailAsync(email);
             if (user == null)
             {
                 throw new Exception("User doesn't exists");

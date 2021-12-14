@@ -2,6 +2,7 @@
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,7 @@ namespace MegaHerdt.API.Controllers
 
         //HACER PAGINACIOOOOOON
         [HttpGet("get-users")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "admin")]
         public ActionResult<List<UserDTO>> Get(/*[FromQuery] PaginationDTO paginationDTO*/)
         {
             try
@@ -41,7 +43,7 @@ namespace MegaHerdt.API.Controllers
 
         // POST: api/<UserController>
         [HttpPost("create")]
-        public async Task<ActionResult<UserTokenDTO>> CreateUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult<UserTokenDTO>> CreateUser([FromBody] UserCreateDTO userDTO)
         {
             try
             {
@@ -85,12 +87,30 @@ namespace MegaHerdt.API.Controllers
             
         }
 
+        [HttpPost("create-role")]
+        public async Task<ActionResult> CreateRole([FromBody] CreateRoleDTO roleDTO)
+        {
+            try
+            {
+                var createRole = await this.UserService.CreateRole(roleDTO.RoleName);
+                if (createRole.Succeeded)
+                {
+                    return NoContent();
+                }
+                throw new Exception("Role didn't be assigned");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
         [HttpPost("assign-role")]
         public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
         {
             try
             {
-                var assignRole = await this.UserService.AssignRole(roleDTO.roleName, roleDTO.userId);
+                var assignRole = await this.UserService.AssignRole(roleDTO.RoleName, roleDTO.UserEmail);
                 if (assignRole)
                 {
                     return NoContent();
@@ -107,7 +127,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var removeRole = await this.UserService.RemoveRole(roleDTO.roleName, roleDTO.userId);
+                var removeRole = await this.UserService.RemoveRole(roleDTO.RoleName, roleDTO.UserEmail);
                 if (removeRole)
                 {
                     return NoContent();

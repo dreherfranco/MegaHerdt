@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace MegaHerdt.Services.Services
 {
@@ -30,13 +31,18 @@ namespace MegaHerdt.Services.Services
         {
             return await this.AuthHelper.GetRoles();
         }
-        public async Task<bool> AssignRole(string roleName, string userId)
-        { 
-            return await this.AuthHelper.AssignRole(roleName, userId);
+        public async Task<IdentityResult> CreateRole(string roleName)
+        {
+            return await this.AuthHelper.CreateRole(roleName);
         }
-        public async Task<bool> RemoveRole(string roleName, string userId)
+
+        public async Task<bool> AssignRole(string roleName, string email)
         { 
-            return await this.AuthHelper.RemoveRole(roleName, userId);
+            return await this.AuthHelper.AssignRole(roleName, email);
+        }
+        public async Task<bool> RemoveRole(string roleName, string email)
+        { 
+            return await this.AuthHelper.RemoveRole(roleName, email);
         }
 
     }

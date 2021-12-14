@@ -1,8 +1,7 @@
 ﻿namespace MegaHerdt.API.DTOs.User
 {
-    public class EditRoleDTO
+    public class CreateRoleDTO
     {
-        public string UserEmail { get; set; }
         public string RoleName { get; set; }
     }
 }
