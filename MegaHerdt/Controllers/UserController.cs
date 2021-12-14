@@ -26,7 +26,7 @@ namespace MegaHerdt.API.Controllers
 
         //HACER PAGINACIOOOOOON
         [HttpGet("get-users")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<List<UserDTO>> GetAll(/*[FromQuery] PaginationDTO paginationDTO*/)
         {
             try
@@ -44,11 +44,11 @@ namespace MegaHerdt.API.Controllers
         //PROBAR FUNCIONALIDAD
         [HttpGet("get-user/{email}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public ActionResult<List<UserDTO>> GetByEmail(string email)
+        public ActionResult<UserDTO> GetByEmail(string email)
         {
             try
             {
-                var usersDTO = Mapper.Map<List<UserDTO>>(this.UserService.GetByEmail(email));
+                var usersDTO = Mapper.Map<UserDTO>(this.UserService.GetByEmail(email));
                 return usersDTO;
             }
             catch (Exception ex)
@@ -94,8 +94,8 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var user = Mapper.Map<User>(userDTO);
-
+                var userDb = this.UserService.GetByEmail(userDTO.Email);
+                var user = Mapper.Map(userDTO, userDb);
                 var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
                 return Mapper.Map<UserTokenDTO>(userToken);
             }

@@ -34,17 +34,16 @@ namespace MegaHerdt.Repository.Base
 
         }
 
-        public void Delete(T entity)
+        public Task Delete(T entity)
         {
             this.Context.Set<T>().Remove(entity);
-            Context.SaveChanges();
-
+            return Context.SaveChangesAsync();
         }
 
-        public void Update(T entidad)
+        public Task Update(T entidad)
         {
             this.Context.Entry(entidad).State = EntityState.Modified;
-            this.Context.SaveChanges();
+            return this.Context.SaveChangesAsync();
         }
 
     }

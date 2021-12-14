@@ -1,6 +1,9 @@
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Models.Models.Identity;
+using MegaHerdt.Repository.Base;
 using MegaHerdt.Services.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +48,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //dependency injection
 builder.Services.AddTransient<AuthHelper>();
 builder.Services.AddTransient<UserService>();
+builder.Services.AddTransient<Repository<User>>();
+builder.Services.AddTransient<Repository<IdentityRole>>();
 
 var app = builder.Build();
 

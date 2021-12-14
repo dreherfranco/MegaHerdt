@@ -17,10 +17,10 @@ namespace MegaHerdt.Services.Services
         {
             return AuthHelper.Get();
         }
-        public IQueryable<User> GetByEmail(string email)
+        public User GetByEmail(string email)
         {
             Expression<Func<User, bool>> filter = x => x.Email == email;
-            return AuthHelper.Get(filter);
+            return AuthHelper.Get(filter).FirstOrDefault();
         }
 
         public async Task<UserToken> CreateUser(User user, string jwtKey)
@@ -32,23 +32,26 @@ namespace MegaHerdt.Services.Services
         {
             return await AuthHelper.Login(user, jwtKey);
         }
+
         public async Task<UserToken> UserUpdate(User user, string jwtKey)
         {
             return await AuthHelper.UserUpdate(user, jwtKey);
         }
+
         public async Task<List<string>> GetRoles()
         {
             return await this.AuthHelper.GetRoles();
         }
+
         public async Task<IdentityResult> CreateRole(string roleName)
         {
             return await this.AuthHelper.CreateRole(roleName);
         }
-
         public async Task<bool> AssignRole(string roleName, string email)
         { 
             return await this.AuthHelper.AssignRole(roleName, email);
         }
+
         public async Task<bool> RemoveRole(string roleName, string email)
         { 
             return await this.AuthHelper.RemoveRole(roleName, email);

@@ -8,26 +8,28 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.EntityFrameworkCore;
 using MegaHerdt.Models.Models.Identity;
 using System.Linq.Expressions;
+using MegaHerdt.Repository.Base;
 
 namespace MegaHerdt.Helpers.Helpers
 {
     public class AuthHelper
     {
-        private readonly ApplicationDbContext context;
+        private readonly Repository<User> userRepository;
+        private readonly Repository<IdentityRole> roleRepository;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
         private readonly RoleManager<IdentityRole> roleManager;
-        public AuthHelper(ApplicationDbContext context, UserManager<User> userManager,
+
+        public AuthHelper(Repository<User> userRepository, Repository<IdentityRole> roleRepository, UserManager<User> userManager,
             SignInManager<User> signInManager, RoleManager<IdentityRole> roleManager)
         {
-            this.context = context;
+            this.userRepository = userRepository;
+            this.roleRepository = roleRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
             this.roleManager = roleManager;
         }
 
-
-        //PASAR EL jwtkey CON IConfiguration del jwt:key DESDE CONTROLADOR
         public async Task<UserToken> CreateUser(User user, string jwtKey)
         {
             var result = await this.userManager.CreateAsync(user, user.Password);
@@ -51,19 +53,25 @@ namespace MegaHerdt.Helpers.Helpers
             }
             throw new Exception("Invalid login attempt.");
         }
+
         public async Task<UserToken> UserUpdate(User user, string jwtKey)
         {
-            var result = await userManager.UpdateAsync(user);
-            if (result.Succeeded)
+            var userDb = await userManager.FindByEmailAsync(user.Email);
+            if (userDb != null)
             {
+                user.Id = userDb.Id;
+                await userRepository.Update(user);
                 return await BuildToken(user, jwtKey);
+              //  throw new Exception("Update with errors");
             }
-            throw new Exception("Update with errors");
+            throw new Exception("User doesn't exists");
         }
+
         public async Task<UserToken> RenovateToken(User user, string jwtKey)
         {
             return await BuildToken(user,jwtKey);
         }
+
         private async Task<UserToken> BuildToken(User user, string jwtKey)
         {
             var claims = new List<Claim>
@@ -104,25 +112,12 @@ namespace MegaHerdt.Helpers.Helpers
         //Hacer el paginado en el controlador con el QUERYABLE
        public IQueryable<User> Get(Expression<Func<User, bool>> filter = null)
         {
-            if (filter == null)
-            {
-                return this.context.Users
-                    .AsQueryable()
-                    .OrderBy(x => x.Email);
-            }
-            else
-            {
-                return this.context.Users
-                    .AsQueryable()
-                    .Where(filter)
-                    .OrderBy(x => x.Email);
-            }
-            
+            return this.userRepository.Get(filter).OrderBy(x => x.Email);
         }
 
         public async Task<List<string>> GetRoles()
         {
-            return await context.Roles.Select(x => x.Name).ToListAsync();
+            return await roleRepository.Get().Select(x => x.Name).ToListAsync();
         }
 
         public async Task<IdentityResult> CreateRole(string roleName)
@@ -130,7 +125,7 @@ namespace MegaHerdt.Helpers.Helpers
             var role = new IdentityRole() { Name=roleName };
             return await roleManager.CreateAsync(role);
         }
-        //VER EditRoleDTO
+
         public async Task<bool> AssignRole(string roleName, string email)
         {
             var user = await userManager.FindByEmailAsync(email);
@@ -145,7 +140,6 @@ namespace MegaHerdt.Helpers.Helpers
             return false;
         }
 
-        //VER EditRoleDTO
         public async Task<bool> RemoveRole(string roleName, string email)
         {
             var user = await userManager.FindByEmailAsync(email);
