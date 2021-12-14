@@ -18,16 +18,19 @@ namespace MegaHerdt.API.Controllers
         private readonly UserService UserService;
         private readonly IConfiguration Configuration;
         private readonly IMapper Mapper;
-        public UserController(UserService userService, IConfiguration configuration, IMapper mapper)
+        private readonly HashService hashService;
+        public UserController(UserService userService, IConfiguration configuration,
+            IMapper mapper, HashService hashService)
         {
             this.Configuration = configuration;
             this.Mapper = mapper;
             this.UserService = userService;
+            this.hashService = hashService;
         }
 
         //HACER PAGINACIOOOOOON
         [HttpGet("get-users")]
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<List<UserDTO>> GetAll(/*[FromQuery] PaginationDTO paginationDTO*/)
         {
             try
@@ -64,10 +67,12 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-               var user = Mapper.Map<User>(userDTO);
+                userDTO.Password = hashService.Hash(userDTO.Password);
+                var user = Mapper.Map<User>(userDTO);
                 var userToken = await this.UserService.CreateUser(user, Configuration["jwt:key"]);
                 return Mapper.Map<UserTokenDTO>(userToken);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
@@ -78,6 +83,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
+                userDTO.Password = hashService.Hash(userDTO.Password);
                 var user = Mapper.Map<User>(userDTO);
 
                 var userToken = await this.UserService.Login(user, Configuration["jwt:key"]);
@@ -89,16 +95,22 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        //PROBAR FUNCIONALIDAD
+        //INGRESAR CONTRASEÑA PARA ACTUALIZAR
         [HttpPost("update")]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<ActionResult<UserTokenDTO>> UserUpdate([FromBody] UserUpdateDTO userDTO)
         {
             try
             {
                 var userDb = this.UserService.GetByEmail(userDTO.Email);
-                var user = Mapper.Map(userDTO, userDb);
-                var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
-                return Mapper.Map<UserTokenDTO>(userToken);
+                userDTO.Password = hashService.Hash(userDTO.Password);
+                if (userDTO.Password == userDb.Password)
+                {
+                    var user = Mapper.Map(userDTO, userDb);
+                    var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
+                    return Mapper.Map<UserTokenDTO>(userToken);
+                }
+                return BadRequest(new { message = "enter password correctly to update" });
             }
             catch (Exception ex)
             {
@@ -118,7 +130,7 @@ namespace MegaHerdt.API.Controllers
 
                 throw new Exception(ex.Message);
             }
-            
+
         }
 
         #region Roles
@@ -153,7 +165,8 @@ namespace MegaHerdt.API.Controllers
                     return NoContent();
                 }
                 throw new Exception("Role didn't be assigned");
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 throw new Exception(ex.Message);
             }

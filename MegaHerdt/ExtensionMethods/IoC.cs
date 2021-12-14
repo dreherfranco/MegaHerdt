@@ -1,10 +1,14 @@
 ﻿using MegaHerdt.DbConfiguration.DbConfiguration;
+using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
+using MegaHerdt.Repository.Base;
+using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace MegaHerdt.API.ExtensionMethods
@@ -48,6 +52,60 @@ namespace MegaHerdt.API.ExtensionMethods
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
             });
+            return builder;
+        }
+
+        public static WebApplicationBuilder SwaggerInjection(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIAutores", Version = "v1" });
+
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+
+            });
+            return builder;
+        }
+
+        public static WebApplicationBuilder HelpersInjection(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddTransient<AuthHelper>();
+            return builder;
+        }
+
+        public static WebApplicationBuilder ServicesInjection(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddTransient<UserService>();
+            builder.Services.AddTransient<HashService>();
+            return builder;
+        }
+
+        public static WebApplicationBuilder RepositoryInjection(this WebApplicationBuilder builder)
+        {
+            builder.Services.AddTransient<Repository<User>>();
+            builder.Services.AddTransient<Repository<IdentityRole>>();
             return builder;
         }
     }

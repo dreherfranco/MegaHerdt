@@ -12,44 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIAutores", Version = "v1" });
+IoC.SwaggerInjection(builder);
 
-    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-    {
-        Name = "Authorization",
-        Type = SecuritySchemeType.ApiKey,
-        Scheme = "Bearer",
-        BearerFormat = "JWT",
-        In = ParameterLocation.Header
-    });
-
-    c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type = ReferenceType.SecurityScheme,
-                                Id = "Bearer"
-                            }
-                        },
-                        new string[]{}
-                    }
-                });
-
-});
-
+//DEPENDENCY INJECTION
 IoC.DbConfiguration(builder);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-//dependency injection
-builder.Services.AddTransient<AuthHelper>();
-builder.Services.AddTransient<UserService>();
-builder.Services.AddTransient<Repository<User>>();
-builder.Services.AddTransient<Repository<IdentityRole>>();
+IoC.HelpersInjection(builder);
+IoC.ServicesInjection(builder);
+IoC.RepositoryInjection(builder);
 
 var app = builder.Build();
 
