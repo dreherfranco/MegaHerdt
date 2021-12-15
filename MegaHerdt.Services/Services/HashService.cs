@@ -10,7 +10,7 @@ namespace MegaHerdt.Services.Services
 {
     public class HashService
     {
-        public string Hash(string textoPlano)
+        public string Hash(string planeText)
         {
             var lengthSalt = 16;
             var salt = new byte[16];
@@ -19,17 +19,17 @@ namespace MegaHerdt.Services.Services
                 salt[i] = (byte)(i);
             }
 
-            return Hash(textoPlano, salt);
+            return Hash(planeText, salt);
         }
 
-        public string Hash(string textoPlano, byte[] sal)
+        public string Hash(string planeText, byte[] sal)
         {
-            var llaveDerivada = KeyDerivation.Pbkdf2(password: textoPlano,
+            var derivatedKey = KeyDerivation.Pbkdf2(password: planeText,
                 salt: sal, prf: KeyDerivationPrf.HMACSHA1,
                 iterationCount: 10000,
                 numBytesRequested: 32);
 
-            var hash = Convert.ToBase64String(llaveDerivada);
+            var hash = Convert.ToBase64String(derivatedKey);
 
             return hash;
         }
