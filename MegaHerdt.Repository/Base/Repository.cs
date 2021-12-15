@@ -13,10 +13,10 @@ namespace MegaHerdt.Repository.Base
             Context = context;
         }
 
-        public T Add(T entity)
+        public async Task<T> Add(T entity)
         {
             Context.Set<T>().Add(entity);
-            Context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
             return entity;
         }
 
@@ -34,16 +34,16 @@ namespace MegaHerdt.Repository.Base
 
         }
 
-        public void Delete(T entity)
+        public async Task Delete(T entity)
         {
             this.Context.Set<T>().Remove(entity);
-            Context.SaveChangesAsync();
+            await Context.SaveChangesAsync();
         }
 
-        public void Update(T entidad)
+        public async Task Update(T entidad)
         {
             this.Context.Entry(entidad).State = EntityState.Modified;
-            this.Context.SaveChangesAsync();
+            await this.Context.SaveChangesAsync();
         }
 
     }

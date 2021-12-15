@@ -26,7 +26,6 @@ namespace MegaHerdt.API.ExtensionMethods
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserManager<UserManager<User>>()
                 .AddSignInManager()
-                .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddDefaultTokenProviders();
 
             builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -43,7 +43,7 @@ namespace MegaHerdt.Services.Services
             return await this.AuthHelper.GetRoles();
         }
 
-        public async Task<IdentityResult> CreateRole(string roleName)
+        public async Task<string> CreateRole(string roleName)
         {
             return await this.AuthHelper.CreateRole(roleName);
         }
@@ -52,10 +52,14 @@ namespace MegaHerdt.Services.Services
             return await this.AuthHelper.AssignRole(roleName, email);
         }
 
-        public async Task<bool> RemoveRole(string roleName, string email)
+        public async Task<bool> RemoveRoleToUser(string roleName, string email)
         { 
-            return await this.AuthHelper.RemoveRole(roleName, email);
+            return await this.AuthHelper.RemoveRoleToUser(roleName, email);
         }
 
+        public async Task DeleteRole(string roleName)
+        {
+            await this.AuthHelper.DeleteRole(roleName);
+        }
     }
 }

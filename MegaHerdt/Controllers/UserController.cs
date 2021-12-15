@@ -30,7 +30,7 @@ namespace MegaHerdt.API.Controllers
 
         //HACER PAGINACIOOOOOON
         [HttpGet("get-users")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public ActionResult<List<UserDTO>> GetAll(/*[FromQuery] PaginationDTO paginationDTO*/)
         {
             try
@@ -141,7 +141,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var createRole = await this.UserService.CreateRole(roleDTO.RoleName);
-                if (createRole.Succeeded)
+                if (!string.IsNullOrWhiteSpace(createRole))
                 {
                     return NoContent();
                 }
@@ -154,7 +154,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("assign-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
         public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
         {
             try
@@ -172,18 +172,33 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpPost("remove-role")]
+        [HttpPost("remove-role-to-user")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
-        public async Task<ActionResult> RemoveRole([FromBody] EditRoleDTO roleDTO)
+        public async Task<ActionResult> RemoveRoleToUser([FromBody] EditRoleDTO roleDTO)
         {
             try
             {
-                var removeRole = await this.UserService.RemoveRole(roleDTO.RoleName, roleDTO.UserEmail);
+                var removeRole = await this.UserService.RemoveRoleToUser(roleDTO.RoleName, roleDTO.UserEmail);
                 if (removeRole)
                 {
                     return NoContent();
                 }
                 throw new Exception("Role didn't be removed");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpPost("delete-role")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Admin")]
+        public async Task<ActionResult> DeleteRole([FromBody] DeleteRoleDTO roleDTO)
+        {
+            try
+            {
+                await this.UserService.DeleteRole(roleDTO.RoleName); 
+                return NoContent();
             }
             catch (Exception ex)
             {
