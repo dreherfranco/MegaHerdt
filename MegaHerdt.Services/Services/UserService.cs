@@ -20,7 +20,9 @@ namespace MegaHerdt.Services.Services
         public User GetByEmail(string email)
         {
             Expression<Func<User, bool>> filter = x => x.Email == email;
-            return AuthHelper.Get(filter).FirstOrDefault();
+            var user = AuthHelper.Get(filter).FirstOrDefault();
+            if(user != null) { return user; }
+            throw new Exception("User doesn't exists");
         }
 
         public async Task<UserToken> CreateUser(User user, string jwtKey)
@@ -37,29 +39,6 @@ namespace MegaHerdt.Services.Services
         {
             return await AuthHelper.UserUpdate(user, jwtKey);
         }
-
-        public async Task<List<string>> GetRoles()
-        {
-            return await this.AuthHelper.GetRoles();
-        }
-
-        public async Task<string> CreateRole(string roleName)
-        {
-            return await this.AuthHelper.CreateRole(roleName);
-        }
-        public async Task<bool> AssignRole(string roleName, string email)
-        { 
-            return await this.AuthHelper.AssignRole(roleName, email);
-        }
-
-        public async Task<bool> RemoveRoleToUser(string roleName, string email)
-        { 
-            return await this.AuthHelper.RemoveRoleToUser(roleName, email);
-        }
-
-        public async Task DeleteRole(string roleName)
-        {
-            await this.AuthHelper.DeleteRole(roleName);
-        }
+     
     }
 }

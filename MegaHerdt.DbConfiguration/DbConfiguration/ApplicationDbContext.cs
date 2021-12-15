@@ -17,6 +17,10 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<User>()
+           .HasIndex(b => b.Email)
+           .IsUnique();
+
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
@@ -39,7 +43,6 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                 Name = "Empleado",
                 NormalizedName = "Empleado"
             };
-            //var passwordHasher = new PasswordHasher<IdentityUser>();    
 
             modelBuilder.Entity<IdentityRole>()
                 .HasData(new List<IdentityRole>(){ rolAdmin,rolAdmin2});

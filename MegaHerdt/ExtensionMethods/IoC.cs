@@ -97,6 +97,7 @@ namespace MegaHerdt.API.ExtensionMethods
         public static WebApplicationBuilder ServicesInjection(this WebApplicationBuilder builder)
         {
             builder.Services.AddTransient<UserService>();
+            builder.Services.AddTransient<RoleService>();
             builder.Services.AddTransient<HashService>();
             return builder;
         }
