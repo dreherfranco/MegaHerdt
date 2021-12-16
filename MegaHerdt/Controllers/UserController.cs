@@ -18,17 +18,15 @@ namespace MegaHerdt.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService UserService;
-        private readonly RoleService RoleService;
         private readonly IConfiguration Configuration;
         private readonly IMapper Mapper;
         private readonly HashService hashService;
         public UserController(UserService userService, IConfiguration configuration,
-            IMapper mapper, HashService hashService, RoleService roleService)
+            IMapper mapper, HashService hashService)
         {
             this.Configuration = configuration;
             this.Mapper = mapper;
             this.UserService = userService;
-            this.RoleService = roleService;
             this.hashService = hashService;
         }
 
@@ -65,7 +63,7 @@ namespace MegaHerdt.API.Controllers
             }
 
         }
-        // POST: api/<UserController>
+
         [HttpPost("create")]
         public async Task<ActionResult<UserTokenDTO>> CreateUser([FromBody] UserCreateDTO userDTO)
         {
@@ -122,94 +120,6 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpGet("get-roles")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult<List<string>>> GetRoles()
-        {
-            try
-            {
-                return await this.RoleService.GetRoles();
-            }
-            catch (Exception ex)
-            {
-
-                throw new Exception(ex.Message);
-            }
-
-        }
-
-        #region Roles
-        [HttpPost("create-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult> CreateRole([FromBody] CreateRoleDTO roleDTO)
-        {
-            try
-            {
-                var createRole = await this.RoleService.CreateRole(roleDTO.RoleName);
-                if (!string.IsNullOrWhiteSpace(createRole))
-                {
-                    return NoContent();
-                }
-                throw new Exception("Role didn't be assigned");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        [HttpPost("assign-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
-        {
-            try
-            {
-                var assignRole = await this.RoleService.AssignRole(roleDTO.RoleName, roleDTO.UserEmail);
-                if (assignRole)
-                {
-                    return NoContent();
-                }
-                throw new Exception("Role didn't be assigned");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        [HttpPost("remove-role-to-user")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult> RemoveRoleToUser([FromBody] EditRoleDTO roleDTO)
-        {
-            try
-            {
-                var removeRole = await this.RoleService.RemoveRoleToUser(roleDTO.RoleName, roleDTO.UserEmail);
-                if (removeRole)
-                {
-                    return NoContent();
-                }
-                throw new Exception("Role didn't be removed");
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
-        [HttpPost("delete-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult> DeleteRole([FromBody] DeleteRoleDTO roleDTO)
-        {
-            try
-            {
-                await this.RoleService.DeleteRole(roleDTO.RoleName); 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-        #endregion Roles
+        
     }
 }
