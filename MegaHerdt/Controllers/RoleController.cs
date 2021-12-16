@@ -14,6 +14,7 @@ namespace MegaHerdt.API.Controllers
     public class RoleController : ControllerBase
     {
         private readonly RoleService RoleService;
+
         public RoleController(RoleService roleService)
         {
             this.RoleService = roleService;

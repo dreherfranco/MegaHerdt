@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using MegaHerdt.API.DTOs.Pagination;
 using MegaHerdt.API.DTOs.Role;
 using MegaHerdt.API.DTOs.User;
+using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models.Identity;
@@ -8,6 +10,7 @@ using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,11 +37,15 @@ namespace MegaHerdt.API.Controllers
         [HttpGet("get-users")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public ActionResult<List<UserDTO>> GetAll(/*[FromQuery] PaginationDTO paginationDTO*/)
+        public async Task<ActionResult<List<UserDTO>>> GetAll([FromQuery] PaginationDTO paginationDTO)
         {
             try
             {
-                var usersDTO = Mapper.Map<List<UserDTO>>(this.UserService.Get());
+                var usersQueryable = this.UserService.Get();
+                await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
+
+                var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
+                var usersDTO = Mapper.Map<List<UserDTO>>(entity);
                 return usersDTO;
             }
             catch (Exception ex)
