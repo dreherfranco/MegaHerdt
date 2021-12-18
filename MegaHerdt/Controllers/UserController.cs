@@ -33,7 +33,6 @@ namespace MegaHerdt.API.Controllers
             this.hashService = hashService;
         }
 
-        //HACER PAGINACIOOOOOON
         [HttpGet("get-users")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]

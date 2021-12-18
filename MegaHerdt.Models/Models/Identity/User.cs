@@ -14,5 +14,6 @@ namespace MegaHerdt.Models.Models.Identity
         [Required]
         public string Surname { get; set; }
         public List<Phone> Phones { get; set; }
+        public List<Address> Addresses { get; set; }
     }
 }

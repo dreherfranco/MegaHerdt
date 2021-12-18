@@ -10,10 +10,10 @@ namespace MegaHerdt.Models.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public string Number { get; set; }
         [ForeignKey("User")]
         public string UserId { get; set; }
+        [Required]
+        public string Number { get; set; }
         public User User { get; set; }
         
     }
