@@ -27,7 +27,7 @@ namespace MegaHerdt.Models.Models
         public string Province { get; set; }
         [Required]
         public string TownName { get; set; }
-        public string Piso { get; set; } 
+        public string Floor { get; set; } 
         public User User { get; set; }
 
     }

@@ -39,6 +39,9 @@ namespace MegaHerdt.Services.Services
         {
             return await AuthHelper.UserUpdate(user, jwtKey);
         }
-     
+        public async Task UserDelete(string userEmail)
+        {
+            await AuthHelper.UserDelete(userEmail);
+        }
     }
 }

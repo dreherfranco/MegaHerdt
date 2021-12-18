@@ -58,9 +58,17 @@ namespace MegaHerdt.Helpers.Helpers
                 user.Id = userDb.Id;
                 await this.userRepository.Update(user);
                 return await BuildToken(user, jwtKey);
-              //  throw new Exception("Update with errors");
             }
             throw new Exception("User doesn't exists");
+        }
+
+        public async Task UserDelete(string userEmail)
+        {
+            var userDb = await userManager.FindByEmailAsync(userEmail);
+            if (userDb != null)
+            {
+                await this.userRepository.Delete(userDb);
+            }
         }
 
         public async Task<UserToken> RenovateToken(User user, string jwtKey)
@@ -105,11 +113,11 @@ namespace MegaHerdt.Helpers.Helpers
             };
         }
 
-        //Hacer el paginado en el controlador con el QUERYABLE
        public IQueryable<User> Get(Expression<Func<User, bool>> filter = null)
         {
             return this.userRepository.Get(filter)
                 .Include(x => x.Phones)
+                .Include(x => x.Addresses)
                 .OrderBy(x => x.Email);
         }
 

@@ -10,6 +10,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
     public class ApplicationDbContext : IdentityDbContext<User>
     {
        public DbSet<Phone> Phones { get; set; }
+       public DbSet<Address> Addresses { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {

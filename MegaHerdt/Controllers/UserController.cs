@@ -1,18 +1,18 @@
 ﻿using AutoMapper;
+using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.Pagination;
 using MegaHerdt.API.DTOs.Role;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
+using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MegaHerdt.API.Controllers
 {
@@ -112,13 +112,13 @@ namespace MegaHerdt.API.Controllers
             {
                 var userDb = this.UserService.GetByEmail(userDTO.Email);
                 userDTO.Password = hashService.Hash(userDTO.Password);
-                if (userDTO.Password == userDb.Password)
+                if (userDTO.Password == userDb.Password && userDTO.Email == userDb.Email)
                 {
                     var user = Mapper.Map(userDTO, userDb);
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
                     return Mapper.Map<UserTokenDTO>(userToken);
                 }
-                return BadRequest(new { message = "enter password correctly to update" });
+                return BadRequest(new { message = "enter password or email correctly to update" });
             }
             catch (Exception ex)
             {
@@ -126,6 +126,37 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        
+        [HttpDelete("delete/{userEmail}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult> UserDelete(string userEmail)
+        {
+            try
+            {
+                await UserService.UserDelete(userEmail);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPut("address/add/{userEmail}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<UserTokenDTO>> AddAddress([FromBody] AddressCreationDTO addressCreationDTO,string userEmail)
+        {
+            try
+            {
+                var userDb = UserService.GetByEmail(userEmail);
+                var address = Mapper.Map<Address>(addressCreationDTO);
+                userDb.Addresses.Add(address);
+                var userToken = await this.UserService.UserUpdate(userDb, Configuration["jwt:key"]);
+                return Mapper.Map<UserTokenDTO>(userToken);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

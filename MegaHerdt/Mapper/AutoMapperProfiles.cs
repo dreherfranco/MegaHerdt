@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
@@ -13,21 +14,25 @@ namespace MegaHerdt.API.Mapper
             #region User
             CreateMap<User, UserDTO>()
                 .ForMember(x => x.Phones, x => x.MapFrom(this.MapUserPhonesDTO))
+                .ForMember(x => x.Addresses, x => x.MapFrom(this.MapUserAddressesDTO))
                 .ReverseMap();
 
             CreateMap<UserCreateDTO, User>()
                 .ForMember(x => x.Phones, x => x.MapFrom(this.MapUserPhonesCreation))
+                .ForMember(x => x.Addresses, x => x.MapFrom(this.MapUserAddressesCreation))
                 .ReverseMap();
 
             CreateMap<UserUpdateDTO, User>()
-                .ForMember(
-                x => x.Phones, x => x.MapFrom(this.MapUserPhonesUpdate)
-                );
+                .ForMember(x => x.Phones, x => x.MapFrom(this.MapUserPhonesUpdate))
+                .ForMember(x => x.Addresses, x => x.MapFrom(this.MapUserAddressesUpdate));
 
             CreateMap<UserToken, UserTokenDTO>().ReverseMap();
             CreateMap<UserLoginDTO, User>();
             #endregion User
 
+            #region Address
+            CreateMap<AddressCreationDTO, Address>();
+            #endregion Address
         }
 
 
@@ -50,6 +55,30 @@ namespace MegaHerdt.API.Mapper
             return result;
         }
 
+        public List<AddressDTO> MapUserAddressesDTO(User user, UserDTO userDTO)
+        {
+            var result = new List<AddressDTO>();
+            if (user.Addresses == null) { return result; }
+
+            foreach (var address in user.Addresses)
+            {
+                result.Add(
+                    new AddressDTO()
+                    {
+                        Id = address.Id,
+                        StreetName = address.StreetName,
+                        UserId = address.UserId,
+                        StreetNumber = address.StreetNumber,
+                        Department = address.Department,
+                        PostalCode = address.PostalCode,
+                        Province = address.Province,
+                        TownName = address.TownName,
+                        Floor = address.Floor,
+                    });
+            }
+            return result;
+        }
+
         public List<Phone> MapUserPhonesCreation(UserCreateDTO userCreateDTO, User user)
         {
             var result = new List<Phone>();
@@ -65,6 +94,30 @@ namespace MegaHerdt.API.Mapper
             }
             return result;
         }
+        public List<Address> MapUserAddressesCreation(UserCreateDTO userCreateDTO, User user)
+        {
+            var result = new List<Address>();
+            if (userCreateDTO.Addresses == null) { return result; }
+
+            foreach (var address in userCreateDTO.Addresses)
+            {
+                if (string.IsNullOrWhiteSpace(address.Floor)) { address.Floor = "0"; }
+
+                result.Add(
+                    new Address()
+                    {
+                        StreetName = address.StreetName,
+                        StreetNumber = address.StreetNumber,
+                        Department = address.Department,
+                        PostalCode=address.PostalCode,
+                        Province=address.Province,
+                        TownName=address.TownName,
+                        Floor=address.Floor
+                    });
+            }
+            return result;
+        }
+
         public List<Phone> MapUserPhonesUpdate(UserUpdateDTO userUpdateDTO, User user)
         {
             var result = new List<Phone>();
@@ -78,6 +131,30 @@ namespace MegaHerdt.API.Mapper
                         Id = phone.Id,
                         Number = phone.Number,
                         UserId = user.Id
+                    });
+            }
+            return result;
+        }
+
+        public List<Address> MapUserAddressesUpdate(UserUpdateDTO userUpdateDTO, User user)
+        {
+            var result = new List<Address>();
+            if (userUpdateDTO.Addresses == null) { return result; }
+
+            foreach (var address in userUpdateDTO.Addresses)
+            {
+                result.Add(
+                    new Address()
+                    {
+                        Id = address.Id,
+                        StreetName = address.StreetName,
+                        UserId = user.Id,
+                        StreetNumber = address.StreetNumber,
+                        Department = address.Department,
+                        PostalCode = address.PostalCode,
+                        Province = address.Province,
+                        TownName = address.TownName,
+                        Floor = address.Floor,
                     });
             }
             return result;

@@ -74,6 +74,32 @@ namespace MegaHerdt.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    StreetName = table.Column<string>(type: "TEXT", nullable: false),
+                    StreetNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    Department = table.Column<string>(type: "TEXT", nullable: false),
+                    PostalCode = table.Column<int>(type: "INTEGER", nullable: false),
+                    Province = table.Column<string>(type: "TEXT", nullable: false),
+                    TownName = table.Column<string>(type: "TEXT", nullable: false),
+                    Floor = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Addresses_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -158,15 +184,40 @@ namespace MegaHerdt.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "620f3688-755b-41b0-bf60-01642af6b171", "Admin", "Admin" });
+            migrationBuilder.CreateTable(
+                name: "Phones",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<string>(type: "TEXT", nullable: false),
+                    Number = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Phones", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Phones_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "e3dc3d6f-c3c7-40ca-8502-98ddca5074a8", "Empleado", "Empleado" });
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "e80b47db-d8f1-400a-bdfb-54f226009bc2", "Admin", "Admin" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "7b8a692d-c6fd-4e33-9871-5756983c505d", "Empleado", "Empleado" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Addresses_UserId",
+                table: "Addresses",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -200,14 +251,28 @@ namespace MegaHerdt.API.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_Email",
+                table: "AspNetUsers",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Phones_UserId",
+                table: "Phones",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Addresses");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -222,6 +287,9 @@ namespace MegaHerdt.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Phones");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

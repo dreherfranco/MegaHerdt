@@ -5,8 +5,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
@@ -56,7 +54,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("assign-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
+    //    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
         {
             try
