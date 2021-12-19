@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace MegaHerdt.API.Controllers
 {
@@ -112,7 +113,7 @@ namespace MegaHerdt.API.Controllers
             {
                 var userDb = this.UserService.GetByEmail(userDTO.Email);
                 userDTO.Password = hashService.Hash(userDTO.Password);
-                if (userDTO.Password == userDb.Password && userDTO.Email == userDb.Email)
+                if (userDTO.Password == userDb.Password && UserValidations.UserEmailIsOk(userDTO.Email, HttpContext))
                 {
                     var user = Mapper.Map(userDTO, userDb);
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
@@ -131,9 +132,13 @@ namespace MegaHerdt.API.Controllers
         public async Task<ActionResult> UserDelete(string userEmail)
         {
             try
-            {
-                await UserService.UserDelete(userEmail);
-                return NoContent();
+            {    
+                if (UserValidations.UserEmailIsOk(userEmail, HttpContext))
+                {
+                    await UserService.UserDelete(userEmail);
+                    return NoContent();
+                }
+                throw new Exception("User email is incorrect");
             }
             catch (Exception ex)
             {
@@ -147,11 +152,15 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var userDb = UserService.GetByEmail(userEmail);
-                var address = Mapper.Map<Address>(addressCreationDTO);
-                userDb.Addresses.Add(address);
-                var userToken = await this.UserService.UserUpdate(userDb, Configuration["jwt:key"]);
-                return Mapper.Map<UserTokenDTO>(userToken);
+                if (UserValidations.UserEmailIsOk(userEmail, HttpContext))
+                {
+                    var userDb = UserService.GetByEmail(userEmail);
+                    var address = Mapper.Map<Address>(addressCreationDTO);
+                    userDb.Addresses.Add(address);
+                    var userToken = await this.UserService.UserUpdate(userDb, Configuration["jwt:key"]);
+                    return Mapper.Map<UserTokenDTO>(userToken);
+                }
+                throw new Exception("User email is incorrect");
             }
             catch (Exception ex)
             {
