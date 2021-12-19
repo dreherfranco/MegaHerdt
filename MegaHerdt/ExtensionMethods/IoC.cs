@@ -91,6 +91,7 @@ namespace MegaHerdt.API.ExtensionMethods
         public static WebApplicationBuilder HelpersInjection(this WebApplicationBuilder builder)
         {
             builder.Services.AddTransient<AuthHelper>();
+            builder.Services.AddTransient<ReparationHelper>();
             return builder;
         }
 

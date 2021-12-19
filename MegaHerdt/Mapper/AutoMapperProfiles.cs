@@ -2,6 +2,7 @@
 using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Reparation;
+using MegaHerdt.API.DTOs.ReparationState;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
@@ -36,9 +37,14 @@ namespace MegaHerdt.API.Mapper
             #endregion Address
 
             #region Reparation
-            CreateMap<Reparation, ReparationDTO>().ReverseMap();
+            CreateMap<Reparation, ReparationDTO>()
+                .ReverseMap();
             CreateMap<ReparationCreationDTO, Reparation>();
             #endregion Reparation
+
+            #region ReparationState
+            CreateMap<ReparationState, ReparationStateDTO>();
+            #endregion ReparationState
         }
 
 
@@ -166,5 +172,10 @@ namespace MegaHerdt.API.Mapper
             return result;
         }
         #endregion UserUtilsMethods
+
+        #region ReparationUtilsMethods
+
+        #endregion ReparationUtilsMethods
     }
 }
+

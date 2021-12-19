@@ -40,5 +40,20 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpGet("clientReparations/{clientId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<List<ReparationDTO>>> GetClientReparations(string clientId)
+        {
+            try
+            {              
+                var clientReparations = this.ReparationService.GetClientReparations(clientId);
+                return this.Mapper.Map<List<ReparationDTO>>(clientReparations);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
     }
 }

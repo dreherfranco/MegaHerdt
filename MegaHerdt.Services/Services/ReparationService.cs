@@ -1,24 +1,26 @@
-﻿using MegaHerdt.Models.Models;
-using MegaHerdt.Repository.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Models.Models;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.Services.Services
 {
     public class ReparationService
     {
-        private readonly Repository<Reparation> repository;
-        public ReparationService(Repository<Reparation> repository)
+        private readonly ReparationHelper reparationHelper;
+        public ReparationService(ReparationHelper reparationHelper)
         {
-            this.repository = repository;
+            this.reparationHelper = reparationHelper;
         }
 
         public async Task<Reparation> CreateReparation(Reparation reparation)
         {
-            return await this.repository.Add(reparation);
+            return await this.reparationHelper.CreateReparation(reparation);
+        }
+
+        public List<Reparation> GetClientReparations(string clientId)
+        {
+            Expression<Func<Reparation, bool>> filter = x => x.ClientId == clientId;
+            return this.reparationHelper.GetClientReparations(filter).ToList();
         }
     }
 }
