@@ -19,13 +19,13 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UserService UserService;
         private readonly IConfiguration Configuration;
         private readonly IMapper Mapper;
         private readonly HashService hashService;
-        public UserController(UserService userService, IConfiguration configuration,
+        public UsersController(UserService userService, IConfiguration configuration,
             IMapper mapper, HashService hashService)
         {
             this.Configuration = configuration;

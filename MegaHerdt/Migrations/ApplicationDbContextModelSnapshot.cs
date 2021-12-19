@@ -164,6 +164,62 @@ namespace MegaHerdt.API.Migrations
                     b.ToTable("Phones");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ReparationStateId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("EmployeeId");
+
+                    b.HasIndex("ReparationStateId");
+
+                    b.ToTable("Reparations");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ReparationState", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ReparationsStates");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "En proceso"
+                        });
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -193,14 +249,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "e80b47db-d8f1-400a-bdfb-54f226009bc2",
+                            ConcurrencyStamp = "806947e9-8b8e-475f-8016-4c47c89515c5",
                             Name = "Admin",
                             NormalizedName = "Admin"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "7b8a692d-c6fd-4e33-9871-5756983c505d",
+                            ConcurrencyStamp = "abc6280b-4a47-402b-b749-c9760c2ced02",
                             Name = "Empleado",
                             NormalizedName = "Empleado"
                         });
@@ -330,6 +386,33 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
+                {
+                    b.HasOne("MegaHerdt.Models.Models.Identity.User", "Client")
+                        .WithMany("ClientReparations")
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MegaHerdt.Models.Models.Identity.User", "Employee")
+                        .WithMany("EmployeeReparations")
+                        .HasForeignKey("EmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MegaHerdt.Models.Models.ReparationState", "ReparationState")
+                        .WithMany("Reparations")
+                        .HasForeignKey("ReparationStateId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Client");
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("ReparationState");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -385,7 +468,16 @@ namespace MegaHerdt.API.Migrations
                 {
                     b.Navigation("Addresses");
 
+                    b.Navigation("ClientReparations");
+
+                    b.Navigation("EmployeeReparations");
+
                     b.Navigation("Phones");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ReparationState", b =>
+                {
+                    b.Navigation("Reparations");
                 });
 #pragma warning restore 612, 618
         }

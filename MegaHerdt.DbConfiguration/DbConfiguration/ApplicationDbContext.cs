@@ -11,6 +11,8 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
     {
        public DbSet<Phone> Phones { get; set; }
        public DbSet<Address> Addresses { get; set; }
+       public DbSet<Reparation> Reparations { get; set; }
+       public DbSet<ReparationState> ReparationsStates { get; set;}
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -19,8 +21,18 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>()
-           .HasIndex(b => b.Email)
+           .HasIndex(u => u.Email)
            .IsUnique();
+
+            modelBuilder.Entity<Reparation>()
+                   .HasOne(r => r.Client)
+                   .WithMany(u => u.ClientReparations)
+                   .HasForeignKey(r => r.ClientId);
+
+            modelBuilder.Entity<Reparation>()
+                   .HasOne(r => r.Employee)
+                   .WithMany(u => u.EmployeeReparations)
+                   .HasForeignKey(r => r.EmployeeId);
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
@@ -45,10 +57,17 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                 NormalizedName = "Empleado"
             };
 
+            var reparationState = new ReparationState()
+            {
+                Id = 1,
+                Name = "En proceso"
+            };
+
             modelBuilder.Entity<IdentityRole>()
                 .HasData(new List<IdentityRole>(){ rolAdmin,rolAdmin2});
 
-            
+            modelBuilder.Entity<ReparationState>()
+                .HasData(reparationState);
         }
     }
 }

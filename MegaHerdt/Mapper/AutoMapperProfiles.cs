@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.Phone;
+using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
@@ -33,6 +34,11 @@ namespace MegaHerdt.API.Mapper
             #region Address
             CreateMap<AddressCreationDTO, Address>();
             #endregion Address
+
+            #region Reparation
+            CreateMap<Reparation, ReparationDTO>().ReverseMap();
+            CreateMap<ReparationCreationDTO, Reparation>();
+            #endregion Reparation
         }
 
 

@@ -9,11 +9,11 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RoleController : ControllerBase
+    public class RolesController : ControllerBase
     {
         private readonly RoleService RoleService;
 
-        public RoleController(RoleService roleService)
+        public RolesController(RoleService roleService)
         {
             this.RoleService = roleService;
         }

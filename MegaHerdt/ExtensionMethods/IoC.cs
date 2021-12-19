@@ -99,6 +99,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<UserService>();
             builder.Services.AddTransient<RoleService>();
             builder.Services.AddTransient<HashService>();
+            builder.Services.AddTransient<ReparationService>();
             return builder;
         }
 
@@ -106,6 +107,7 @@ namespace MegaHerdt.API.ExtensionMethods
         {
             builder.Services.AddTransient<Repository<User>>();
             builder.Services.AddTransient<Repository<IdentityRole>>();
+            builder.Services.AddTransient<Repository<Reparation>>();
             return builder;
         }
     }

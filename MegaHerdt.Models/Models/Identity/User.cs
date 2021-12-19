@@ -15,5 +15,7 @@ namespace MegaHerdt.Models.Models.Identity
         public string Surname { get; set; }
         public List<Phone> Phones { get; set; }
         public List<Address> Addresses { get; set; }
+        public List<Reparation> ClientReparations { get; set; }
+        public List<Reparation> EmployeeReparations { get; set; }
     }
 }
