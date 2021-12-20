@@ -24,7 +24,7 @@ namespace MegaHerdt.API.Controllers
             this.Mapper = mapper;
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<ReparationDTO>> CreateReparation([FromBody] ReparationCreationDTO reparationDTO)
@@ -41,14 +41,65 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpPost("update")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult> UpdateReparation([FromBody] ReparationUpdateDTO reparationDTO)
+        {
+            try
+            {
+                var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
+                reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                await this.ReparationService.UpdateReparation(reparationDb);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("delete/{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult> ReparationDelete(int id)
+        {
+            try
+            {
+                var reparation = this.ReparationService.GetReparationById(id);
+                await ReparationService.DeleteReparation(reparation);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("clientReparations/{clientId}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<List<ReparationDTO>>> GetClientReparations(string clientId)
+        public ActionResult<List<ReparationDTO>> GetClientReparations(string clientId)
         {
             try
             {              
                 var clientReparations = this.ReparationService.GetClientReparations(clientId);
                 return this.Mapper.Map<List<ReparationDTO>>(clientReparations);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("employeeReparations/{employeeId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public ActionResult<List<ReparationDTO>> GetEmployeeReparations(string employeeId)
+        {
+            try
+            {
+                var employeeReparations = this.ReparationService.GetEmployeeReparations(employeeId);
+                return this.Mapper.Map<List<ReparationDTO>>(employeeReparations);
             }
             catch (Exception ex)
             {

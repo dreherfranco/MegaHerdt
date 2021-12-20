@@ -28,11 +28,13 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                    .HasOne(r => r.Client)
                    .WithMany(u => u.ClientReparations)
                    .HasForeignKey(r => r.ClientId);
+            //.OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Employee)
                    .WithMany(u => u.EmployeeReparations)
                    .HasForeignKey(r => r.EmployeeId);
+                 //  .OnDelete(DeleteBehavior.NoAction);
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);

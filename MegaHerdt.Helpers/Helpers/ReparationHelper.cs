@@ -18,7 +18,17 @@ namespace MegaHerdt.Helpers.Helpers
             return await this.repository.Add(reparation);
         }
 
-        public IQueryable<Reparation> GetClientReparations(Expression<Func<Reparation, bool>> filter = null)
+        public async Task UpdateReparation(Reparation reparation)
+        {
+            await this.repository.Update(reparation);
+        }
+
+        public async Task DeleteReparation(Reparation reparation)
+        {
+            await this.repository.Delete(reparation);
+        }
+
+        public IQueryable<Reparation> GetUserReparations(Expression<Func<Reparation, bool>> filter = null)
         {
             return repository.Get(filter)
                 .Include(x => x.Client)

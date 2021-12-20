@@ -40,10 +40,12 @@ namespace MegaHerdt.API.Mapper
             CreateMap<Reparation, ReparationDTO>()
                 .ReverseMap();
             CreateMap<ReparationCreationDTO, Reparation>();
+            CreateMap<ReparationUpdateDTO, Reparation>();
             #endregion Reparation
 
             #region ReparationState
             CreateMap<ReparationState, ReparationStateDTO>();
+            
             #endregion ReparationState
         }
 
