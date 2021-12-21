@@ -22,5 +22,6 @@ namespace MegaHerdt.Models.Models
         public ReparationState ReparationState { get; set; }
         public User Client { get; set; }
         public User Employee { get; set; }
+        public List<ReparationClaim> ReparationsClaims { get; set; }
     }
 }

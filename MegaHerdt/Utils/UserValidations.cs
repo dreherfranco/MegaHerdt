@@ -9,5 +9,12 @@ namespace MegaHerdt.API.Utils
             var userEmailClaim = httpContext.User.FindFirst(ClaimTypes.Email).Value;
             return userEmailClaim == userEmail;
         }
+
+        public static bool UserIdIsOk(string userId, HttpContext httpContext)
+        {
+            var userIdClaim = httpContext.User.FindFirst(ClaimTypes.Sid).Value;
+            return userIdClaim == userId;
+        }
+
     }
 }

@@ -27,6 +27,11 @@ namespace MegaHerdt.Services.Services
             await this.reparationHelper.DeleteReparation(reparation);
         }
 
+        public List<Reparation> GetAll()
+        {
+            return this.reparationHelper.GetUserReparations().ToList();
+        }
+
         public Reparation GetReparationById(int reparationId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.Id == reparationId;

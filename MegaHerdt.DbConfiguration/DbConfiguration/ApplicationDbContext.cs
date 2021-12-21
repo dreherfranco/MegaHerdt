@@ -13,6 +13,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
        public DbSet<Address> Addresses { get; set; }
        public DbSet<Reparation> Reparations { get; set; }
        public DbSet<ReparationState> ReparationsStates { get; set;}
+        public DbSet<ReparationClaim> ReparationsClaims { get; set;}
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
