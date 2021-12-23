@@ -1,9 +1,6 @@
-﻿using MegaHerdt.API.DTOs.Address;
-using MegaHerdt.API.DTOs.Phone;
-
-namespace MegaHerdt.API.DTOs.User
+﻿namespace MegaHerdt.API.DTOs.User
 {
-    public class UserDTO
+    public class UserDetailDTO
     {
         public string Id { get; set; }
         public string Email { get; set; }
@@ -11,7 +8,5 @@ namespace MegaHerdt.API.DTOs.User
         public string Dni { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public List<PhoneDTO> Phones { get; set; }
-        public List<AddressDTO> Addresses { get; set; }
     }
 }

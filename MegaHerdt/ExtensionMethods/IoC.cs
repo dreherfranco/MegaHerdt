@@ -93,6 +93,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<AuthHelper>();
             builder.Services.AddTransient<ReparationHelper>();
             builder.Services.AddTransient<ReparationClaimHelper>();
+            builder.Services.AddTransient<ReparationStateHelper>();
             return builder;
         }
 
@@ -103,6 +104,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<HashService>();
             builder.Services.AddTransient<ReparationService>();
             builder.Services.AddTransient<ReparationClaimService>();
+            builder.Services.AddTransient<ReparationStateService>();
             return builder;
         }
 
@@ -112,6 +114,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<IdentityRole>>();
             builder.Services.AddTransient<Repository<Reparation>>();
             builder.Services.AddTransient<Repository<ReparationClaim>>();
+            builder.Services.AddTransient<Repository<ReparationState>>();
             return builder;
         }
     }

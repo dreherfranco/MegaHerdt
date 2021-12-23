@@ -31,6 +31,7 @@ namespace MegaHerdt.API.Mapper
 
             CreateMap<UserToken, UserTokenDTO>().ReverseMap();
             CreateMap<UserLoginDTO, User>();
+            CreateMap<User, UserDetailDTO>().ReverseMap();
             #endregion User
 
             #region Address
@@ -42,10 +43,13 @@ namespace MegaHerdt.API.Mapper
                 .ReverseMap();
             CreateMap<ReparationCreationDTO, Reparation>();
             CreateMap<ReparationUpdateDTO, Reparation>();
+            CreateMap<Reparation, ReparationDetailDTO>();
             #endregion Reparation
 
             #region ReparationState
-            CreateMap<ReparationState, ReparationStateDTO>();
+            CreateMap<ReparationState, ReparationStateDTO>()
+                .ReverseMap();
+            CreateMap<ReparationStateCreationDTO, ReparationState>();
             #endregion ReparationState
 
             #region ReparationClaim
