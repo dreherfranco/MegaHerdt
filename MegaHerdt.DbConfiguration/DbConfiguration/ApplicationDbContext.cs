@@ -13,7 +13,10 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
        public DbSet<Address> Addresses { get; set; }
        public DbSet<Reparation> Reparations { get; set; }
        public DbSet<ReparationState> ReparationsStates { get; set;}
-        public DbSet<ReparationClaim> ReparationsClaims { get; set;}
+       public DbSet<ReparationClaim> ReparationsClaims { get; set;}
+       public DbSet<Article> Articles { get; set; }
+       public DbSet<ArticleBrand> ArticlesBrands { get; set; }
+       public DbSet<ArticleCategory> ArticlesCategories { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -23,6 +26,10 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         {
             modelBuilder.Entity<User>()
            .HasIndex(u => u.Email)
+           .IsUnique();
+
+            modelBuilder.Entity<Article>()
+           .HasIndex(u => u.Code)
            .IsUnique();
 
             modelBuilder.Entity<Reparation>()
