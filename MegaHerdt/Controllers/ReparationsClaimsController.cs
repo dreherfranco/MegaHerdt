@@ -23,7 +23,7 @@ namespace MegaHerdt.API.Controllers
             this.Mapper = mapper;
         }
 
-        [HttpGet("getByClientId/{id}")]
+        [HttpGet("getByClientId/{clientId}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public ActionResult<List<ReparationClaimDTO>> GetAllReparationsClaims(string clientId)
         {
@@ -60,9 +60,13 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var reparationClaim = Mapper.Map<ReparationClaim>(reparationClaimDTO);
-                var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);
-                return this.Mapper.Map<ReparationClaimDTO>(reparationClaimCreate);
+                if (UserValidations.UserIdIsOk(reparationClaimDTO.ClientId, HttpContext))
+                {
+                    var reparationClaim = Mapper.Map<ReparationClaim>(reparationClaimDTO);
+                    var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);
+                    return this.Mapper.Map<ReparationClaimDTO>(reparationClaimCreate);
+                }
+                throw new Exception("User id is incorrect");
             }
             catch (Exception ex)
             {
