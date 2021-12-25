@@ -7,6 +7,7 @@ using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.API.Controllers
 {
@@ -44,7 +45,8 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var reparationsStates = reparationStateService.GetById(id);
+                Expression<Func<ReparationState, bool>> filter = x => x.Id == id;
+                var reparationsStates = reparationStateService.GetBy(filter).FirstOrDefault();
                 return this.Mapper.Map<ReparationStateDTO>(reparationsStates);
             }
             catch (Exception ex)
@@ -58,6 +60,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
+                reparationStateDTO.Name = reparationStateDTO.Name.ToUpper();
                 var reparationState = this.Mapper.Map<ReparationState>(reparationStateDTO);
                 reparationState = await reparationStateService.Create(reparationState);
                 return this.Mapper.Map<ReparationStateDTO>(reparationState);
@@ -73,7 +76,9 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var reparationStateDb = this.reparationStateService.GetById(reparationStateDTO.Id);
+                Expression<Func<ReparationState, bool>> filter = x => x.Id == reparationStateDTO.Id;
+                var reparationStateDb = this.reparationStateService.GetBy(filter).FirstOrDefault();
+                reparationStateDTO.Name = reparationStateDTO.Name.ToUpper();
                 reparationStateDb = this.Mapper.Map(reparationStateDTO, reparationStateDb);
                 await reparationStateService.Update(reparationStateDb);
                 return NoContent();
@@ -89,7 +94,8 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var reparationState = this.reparationStateService.GetById(id);
+                Expression<Func<ReparationState, bool>> filter = x => x.Id == id;
+                var reparationState = this.reparationStateService.GetBy(filter).FirstOrDefault();
                 await reparationStateService.Delete(reparationState);
                 return NoContent();
             }

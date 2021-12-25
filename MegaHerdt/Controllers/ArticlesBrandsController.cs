@@ -61,6 +61,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
+                articleBrandDTO.Name = articleBrandDTO.Name.ToUpper();
                 var articleBrand = this.Mapper.Map<ArticleBrand>(articleBrandDTO);
                 articleBrand = await articleBrandService.Create(articleBrand);
                 return this.Mapper.Map<ArticleBrandDTO>(articleBrand);
@@ -72,13 +73,14 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Put([FromBody] ArticleBrandDTO reparationStateDTO)
+        public async Task<ActionResult> Put([FromBody] ArticleBrandDTO articleBrandDTO)
         {
             try
             {
-                Expression<Func<ArticleBrand, bool>> filter = x => x.Id == reparationStateDTO.Id;
+                Expression<Func<ArticleBrand, bool>> filter = x => x.Id == articleBrandDTO.Id;
                 var articleBrandDb = this.articleBrandService.GetBy(filter).FirstOrDefault();
-                articleBrandDb = this.Mapper.Map(reparationStateDTO, articleBrandDb);
+                articleBrandDTO.Name = articleBrandDTO.Name.ToUpper();
+                articleBrandDb = this.Mapper.Map(articleBrandDTO, articleBrandDb);
                 await articleBrandService.Update(articleBrandDb);
                 return NoContent();
             }

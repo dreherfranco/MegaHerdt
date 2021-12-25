@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.ArticleBrand;
+using MegaHerdt.API.DTOs.ArticleCategory;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.ReparationClaim;
@@ -65,6 +66,12 @@ namespace MegaHerdt.API.Mapper
                 .ReverseMap();
             CreateMap<ArticleBrandCreationDTO, ArticleBrand>();
             #endregion ArticleBrand
+
+            #region ArticleCategory
+            CreateMap<ArticleCategory, ArticleCategoryDTO>()
+                .ReverseMap();
+            CreateMap<ArticleCategoryCreationDTO, ArticleCategory>();
+            #endregion ArticleCategory
         }
 
 
