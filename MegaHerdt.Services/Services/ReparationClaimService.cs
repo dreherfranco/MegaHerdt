@@ -1,46 +1,27 @@
 ﻿using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Services.Services.Base;
 using System.Linq.Expressions;
 
 namespace MegaHerdt.Services.Services
 {
-    public class ReparationClaimService
+    public class ReparationClaimService: BaseService<ReparationClaim>
     {
-        private readonly ReparationClaimHelper reparationClaimHelper;
-        public ReparationClaimService(ReparationClaimHelper reparationClaimHelper)
+        public ReparationClaimService(ReparationClaimHelper reparationClaimHelper):
+            base(reparationClaimHelper)
         {
-            this.reparationClaimHelper = reparationClaimHelper;
         }
 
-        public async Task<ReparationClaim> Create(ReparationClaim reparationClaim)
-        {
-            return await this.reparationClaimHelper.Create(reparationClaim);
-        }
-
-        public async Task Update(ReparationClaim reparationClaim)
-        {
-            await this.reparationClaimHelper.Update(reparationClaim);
-        }
-
-        public async Task Delete(ReparationClaim reparationClaim)
-        {
-            await this.reparationClaimHelper.Delete(reparationClaim);
-        }
-
-        public List<ReparationClaim> GetAll()
-        {
-            return this.reparationClaimHelper.Get().ToList();
-        }
         public List<ReparationClaim> GetByClientId(string clientId)
         {
             Expression<Func<ReparationClaim, bool>> filter = x => x.ClientId == clientId;
-            return this.reparationClaimHelper.Get(filter).ToList();
+            return this.helper.Get(filter).ToList();
         }
 
         public ReparationClaim GetById(int reparationClaimId)
         {
             Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimId;
-            return this.reparationClaimHelper.Get(filter).FirstOrDefault();
+            return this.helper.Get(filter).FirstOrDefault();
         }
 
 

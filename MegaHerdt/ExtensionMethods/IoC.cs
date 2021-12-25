@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.DbConfiguration.DbConfiguration;
 using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Helpers.Helpers.Base;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Repository.Base;
@@ -94,6 +95,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ReparationHelper>();
             builder.Services.AddTransient<ReparationClaimHelper>();
             builder.Services.AddTransient<ReparationStateHelper>();
+            builder.Services.AddTransient<ArticleBrandHelper>();
             return builder;
         }
 
@@ -105,6 +107,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ReparationService>();
             builder.Services.AddTransient<ReparationClaimService>();
             builder.Services.AddTransient<ReparationStateService>();
+            builder.Services.AddTransient<ArticleBrandService>();
             return builder;
         }
 
@@ -115,6 +118,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<Reparation>>();
             builder.Services.AddTransient<Repository<ReparationClaim>>();
             builder.Services.AddTransient<Repository<ReparationState>>();
+            builder.Services.AddTransient<Repository<ArticleBrand>>();
             return builder;
         }
     }

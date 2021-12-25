@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Services.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,38 +10,18 @@ using System.Threading.Tasks;
 
 namespace MegaHerdt.Services.Services
 {
-    public class ReparationStateService
+    public class ReparationStateService: BaseService<ReparationState>
     {
-        private readonly ReparationStateHelper reparationStateHelper;
-        public ReparationStateService(ReparationStateHelper reparationStateHelper)
+        public ReparationStateService(ReparationStateHelper reparationStateHelper):
+            base(reparationStateHelper)
         {
-            this.reparationStateHelper = reparationStateHelper;
-        }
-
-        public async Task<ReparationState> Create(ReparationState reparationState)
-        {
-            return await this.reparationStateHelper.Create(reparationState);
-        }
-
-        public async Task Update(ReparationState reparationState)
-        {
-            await this.reparationStateHelper.Update(reparationState);
-        }
-
-        public async Task Delete(ReparationState reparationState)
-        {
-            await this.reparationStateHelper.Delete(reparationState);
-        }
-
-        public List<ReparationState> GetAll()
-        {
-            return this.reparationStateHelper.Get().ToList();
+           
         }
 
         public ReparationState GetById(int reparationStateId)
         {
             Expression<Func<ReparationState, bool>> filter = x => x.Id == reparationStateId;
-            return this.reparationStateHelper.Get(filter).FirstOrDefault();
+            return this.helper.Get(filter).FirstOrDefault();
         }
     }
 }

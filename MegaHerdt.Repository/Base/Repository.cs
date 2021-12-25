@@ -7,7 +7,7 @@ namespace MegaHerdt.Repository.Base
 {
     public class Repository<T> where T : class
     {
-        private ApplicationDbContext Context { get; set; }
+        protected ApplicationDbContext Context { get; set; }
         public Repository(ApplicationDbContext context)
         {
             Context = context;

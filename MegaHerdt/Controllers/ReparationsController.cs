@@ -32,7 +32,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparation = Mapper.Map<Reparation>(reparationDTO);
-                var reparationCreate = await this.ReparationService.CreateReparation(reparation);
+                var reparationCreate = await this.ReparationService.Create(reparation);
                 return this.Mapper.Map<ReparationDTO>(reparationCreate);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace MegaHerdt.API.Controllers
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
-                await this.ReparationService.UpdateReparation(reparationDb);
+                await this.ReparationService.Update(reparationDb);
                 return NoContent();
             }
             catch (Exception ex)
@@ -67,7 +67,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparation = this.ReparationService.GetReparationById(id);
-                await ReparationService.DeleteReparation(reparation);
+                await ReparationService.Delete(reparation);
                 return NoContent();
             }
             catch (Exception ex)

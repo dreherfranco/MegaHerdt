@@ -1,26 +1,21 @@
-﻿using MegaHerdt.Models.Models;
+﻿using MegaHerdt.Helpers.Helpers.Base;
+using MegaHerdt.Models.Models;
 using MegaHerdt.Repository.Base;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MegaHerdt.Helpers.Helpers
 {
-    public class ReparationClaimHelper
+    public class ReparationClaimHelper: BaseHelper<ReparationClaim>
     {
-        private readonly Repository<ReparationClaim> repository;
         private readonly Repository<Reparation> repositoryReparation;
-        public ReparationClaimHelper(Repository<ReparationClaim> repository, Repository<Reparation> repositoryReparation)
+        public ReparationClaimHelper(Repository<ReparationClaim> repository, Repository<Reparation> repositoryReparation):
+            base(repository)
         {
-            this.repository = repository;
             this.repositoryReparation = repositoryReparation;
         }
 
-        public async Task<ReparationClaim> Create(ReparationClaim reparationClaim)
+        public override async Task<ReparationClaim> Create(ReparationClaim reparationClaim)
         {
             if (validateReparationData(reparationClaim))
             {
@@ -30,7 +25,7 @@ namespace MegaHerdt.Helpers.Helpers
 
         }
 
-        public async Task Update(ReparationClaim reparationClaim)
+        public override async Task Update(ReparationClaim reparationClaim)
         {
             if (validateReparationData(reparationClaim))
             {
@@ -39,7 +34,7 @@ namespace MegaHerdt.Helpers.Helpers
             else { throw new Exception("reparation credentials are invalids"); }
         }
 
-        public async Task Delete(ReparationClaim reparationClaim)
+        public override async Task Delete(ReparationClaim reparationClaim)
         {
             if (validateReparationData(reparationClaim))
             {
@@ -47,7 +42,7 @@ namespace MegaHerdt.Helpers.Helpers
             }
         }
 
-        public IQueryable<ReparationClaim> Get(Expression<Func<ReparationClaim, bool>> filter = null)
+        public override IQueryable<ReparationClaim> Get(Expression<Func<ReparationClaim, bool>> filter = null)
         {
             return repository.Get(filter)
                 .Include(x => x.Client)
