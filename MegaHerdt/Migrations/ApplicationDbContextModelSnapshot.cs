@@ -83,9 +83,8 @@ namespace MegaHerdt.API.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("UnitValue")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<float>("UnitValue")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -347,16 +346,16 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "458078a3-0b7f-4a50-805e-a2e477f91744",
-                            Name = "Admin",
-                            NormalizedName = "Admin"
+                            ConcurrencyStamp = "dfcdc582-3dd2-40f5-8b32-05f23e1bac66",
+                            Name = "ADMIN",
+                            NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "8d9c9d36-0ba0-4314-83b0-33444e5f64f9",
-                            Name = "Empleado",
-                            NormalizedName = "Empleado"
+                            ConcurrencyStamp = "e647567d-2b19-4de5-af22-e0611c52ce3b",
+                            Name = "EMPLEADO",
+                            NormalizedName = "EMPLEADO"
                         });
                 });
 

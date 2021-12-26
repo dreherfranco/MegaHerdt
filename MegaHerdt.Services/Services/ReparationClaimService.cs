@@ -18,12 +18,6 @@ namespace MegaHerdt.Services.Services
             return this.helper.Get(filter).ToList();
         }
 
-        public ReparationClaim GetById(int reparationClaimId)
-        {
-            Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimId;
-            return this.helper.Get(filter).FirstOrDefault();
-        }
-
 
     }
 }

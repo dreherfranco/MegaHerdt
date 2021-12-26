@@ -10,6 +10,32 @@ namespace MegaHerdt.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "ArticlesBrands",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticlesBrands", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ArticlesCategories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ArticlesCategories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -63,6 +89,36 @@ namespace MegaHerdt.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ReparationsStates", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Articles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    BrandId = table.Column<int>(type: "INTEGER", nullable: false),
+                    CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Code = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    UnitValue = table.Column<float>(type: "REAL", nullable: false),
+                    Stock = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Articles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Articles_ArticlesBrands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "ArticlesBrands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Articles_ArticlesCategories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "ArticlesCategories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,15 +308,43 @@ namespace MegaHerdt.API.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "806947e9-8b8e-475f-8016-4c47c89515c5", "Admin", "Admin" });
+            migrationBuilder.CreateTable(
+                name: "ReparationsClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ClientId = table.Column<string>(type: "TEXT", nullable: false),
+                    ReparationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReparationsClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ReparationsClaims_AspNetUsers_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReparationsClaims_Reparations_ReparationId",
+                        column: x => x.ReparationId,
+                        principalTable: "Reparations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "abc6280b-4a47-402b-b749-c9760c2ced02", "Empleado", "Empleado" });
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "dfcdc582-3dd2-40f5-8b32-05f23e1bac66", "ADMIN", "ADMIN" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "e647567d-2b19-4de5-af22-e0611c52ce3b", "EMPLEADO", "EMPLEADO" });
 
             migrationBuilder.InsertData(
                 table: "ReparationsStates",
@@ -271,6 +355,22 @@ namespace MegaHerdt.API.Migrations
                 name: "IX_Addresses_UserId",
                 table: "Addresses",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_BrandId",
+                table: "Articles",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_CategoryId",
+                table: "Articles",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Articles_Code",
+                table: "Articles",
+                column: "Code",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -334,12 +434,25 @@ namespace MegaHerdt.API.Migrations
                 name: "IX_Reparations_ReparationStateId",
                 table: "Reparations",
                 column: "ReparationStateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReparationsClaims_ClientId",
+                table: "ReparationsClaims",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ReparationsClaims_ReparationId",
+                table: "ReparationsClaims",
+                column: "ReparationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "Addresses");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -360,10 +473,19 @@ namespace MegaHerdt.API.Migrations
                 name: "Phones");
 
             migrationBuilder.DropTable(
-                name: "Reparations");
+                name: "ReparationsClaims");
+
+            migrationBuilder.DropTable(
+                name: "ArticlesBrands");
+
+            migrationBuilder.DropTable(
+                name: "ArticlesCategories");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Reparations");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

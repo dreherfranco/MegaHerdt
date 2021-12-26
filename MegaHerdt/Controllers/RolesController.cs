@@ -40,7 +40,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var createRole = await this.RoleService.CreateRole(roleDTO.RoleName);
+                var createRole = await this.RoleService.CreateRole(roleDTO.RoleName.ToUpper());
                 if (!string.IsNullOrWhiteSpace(createRole))
                 {
                     return NoContent();
@@ -54,12 +54,12 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("assign-role")]
-    //    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
         {
             try
             {
-                var assignRole = await this.RoleService.AssignRole(roleDTO.RoleName, roleDTO.UserEmail);
+                var assignRole = await this.RoleService.AssignRole(roleDTO.RoleName.ToUpper(), roleDTO.UserEmail);
                 if (assignRole)
                 {
                     return NoContent();
@@ -78,7 +78,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var removeRole = await this.RoleService.RemoveRoleToUser(roleDTO.RoleName, roleDTO.UserEmail);
+                var removeRole = await this.RoleService.RemoveRoleToUser(roleDTO.RoleName.ToUpper(), roleDTO.UserEmail);
                 if (removeRole)
                 {
                     return NoContent();
@@ -97,7 +97,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                await this.RoleService.DeleteRole(roleDTO.RoleName);
+                await this.RoleService.DeleteRole(roleDTO.RoleName.ToUpper());
                 return NoContent();
             }
             catch (Exception ex)

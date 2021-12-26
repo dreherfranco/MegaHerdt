@@ -77,7 +77,9 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 userDTO.Password = hashService.Hash(userDTO.Password);
+                
                 var user = Mapper.Map<User>(userDTO);
+                user.UserName = userDTO.Email;
                 var userToken = await this.UserService.CreateUser(user, Configuration["jwt:key"]);
                 return Mapper.Map<UserTokenDTO>(userToken);
             }
@@ -116,6 +118,7 @@ namespace MegaHerdt.API.Controllers
                 if (userDTO.Password == userDb.Password && UserValidations.UserEmailIsOk(userDTO.Email, HttpContext))
                 {
                     var user = Mapper.Map(userDTO, userDb);
+                    user.UserName = userDTO.Email;
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
                     return Mapper.Map<UserTokenDTO>(userToken);
                 }

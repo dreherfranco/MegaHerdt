@@ -97,6 +97,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ReparationStateHelper>();
             builder.Services.AddTransient<ArticleBrandHelper>();
             builder.Services.AddTransient<ArticleCategoryHelper>();
+            builder.Services.AddTransient<ArticleHelper>();
             return builder;
         }
 
@@ -110,6 +111,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ReparationStateService>();
             builder.Services.AddTransient<ArticleBrandService>();
             builder.Services.AddTransient<ArticleCategoryService>();
+            builder.Services.AddTransient<ArticleService>();
             return builder;
         }
 
@@ -122,6 +124,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<ReparationState>>();
             builder.Services.AddTransient<Repository<ArticleBrand>>();
             builder.Services.AddTransient<Repository<ArticleCategory>>();
+            builder.Services.AddTransient<Repository<Article>>();
             return builder;
         }
     }

@@ -56,15 +56,15 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             var rolAdmin = new IdentityRole()
             {
                 Id = rolAdminId,
-                Name = "Admin",
-                NormalizedName = "Admin"
+                Name = "ADMIN",
+                NormalizedName = "ADMIN"
             };
 
             var rolAdmin2 = new IdentityRole()
             {
                 Id = rolAdminId2,
-                Name = "Empleado",
-                NormalizedName = "Empleado"
+                Name = "EMPLEADO",
+                NormalizedName = "EMPLEADO"
             };
 
             var reparationState = new ReparationState()

@@ -83,7 +83,6 @@ namespace MegaHerdt.Helpers.Helpers
                 new Claim(ClaimTypes.Name, user.Name),
                 new Claim(ClaimTypes.Email, user.Email),
                 new Claim(ClaimTypes.Surname, user.Surname),
-                //probar 
                 new Claim(ClaimTypes.Sid, user.Id)
             };
 

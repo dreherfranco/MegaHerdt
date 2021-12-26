@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.Phone;
+using System.ComponentModel.DataAnnotations;
 
 namespace MegaHerdt.API.DTOs.User
 {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.API.Controllers
 {
@@ -25,12 +26,28 @@ namespace MegaHerdt.API.Controllers
 
         [HttpGet("getByClientId/{clientId}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public ActionResult<List<ReparationClaimDTO>> GetAllReparationsClaims(string clientId)
+        public ActionResult<List<ReparationClaimDTO>> GetByClientId(string clientId)
         {
             try
             {
                 var reparationsClaims = this.ReparationClaimService.GetByClientId(clientId);
                 return this.Mapper.Map<List<ReparationClaimDTO>>(reparationsClaims);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<ReparationClaimDTO> GetById(int id)
+        {
+            try
+            {
+                Expression<Func<ReparationClaim, bool>> filter = x => x.Id == id;
+                var reparationClaim = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<ReparationClaimDTO>(reparationClaim);
             }
             catch (Exception ex)
             {
@@ -82,7 +99,8 @@ namespace MegaHerdt.API.Controllers
             {
                 if (UserValidations.UserIdIsOk(reparationClaimDTO.ClientId, HttpContext))
                 {
-                    var reparationClaimDb = this.ReparationClaimService.GetById(reparationClaimDTO.Id);
+                    Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimDTO.Id;
+                    var reparationClaimDb = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
                     reparationClaimDb = this.Mapper.Map(reparationClaimDTO, reparationClaimDb);
                     await this.ReparationClaimService.Update(reparationClaimDb);
                     return NoContent();
@@ -100,8 +118,9 @@ namespace MegaHerdt.API.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             try
-            {     
-                var reparationClaim = this.ReparationClaimService.GetById(id);
+            {
+                Expression<Func<ReparationClaim, bool>> filter = x => x.Id == id;
+                var reparationClaim = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
                 if (UserValidations.UserIdIsOk(reparationClaim.ClientId, HttpContext))
                 {
                     await ReparationClaimService.Delete(reparationClaim);
