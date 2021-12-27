@@ -41,7 +41,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var usersQueryable = this.UserService.Get();
+                var usersQueryable = this.UserService.Get().AsQueryable();
                 await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
 
                 var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();

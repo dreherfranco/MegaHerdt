@@ -13,7 +13,7 @@ namespace MegaHerdt.Services.Services
             this.AuthHelper = authHelper;
         }
 
-        public  IQueryable<User> Get()
+        public  IEnumerable<User> Get()
         {
             return AuthHelper.Get();
         }

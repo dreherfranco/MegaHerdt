@@ -30,14 +30,14 @@ namespace MegaHerdt.Services.Services.Base
             await this.helper.Delete(reparationState);
         }
 
-        public virtual List<T> GetAll()
+        public virtual IEnumerable<T> GetAll()
         {
-            return this.helper.Get().ToList();
+            return this.helper.Get();
         }
 
-        public virtual List<T> GetBy(Expression<Func<T, bool>> filter = null)
+        public virtual IEnumerable<T> GetBy(Expression<Func<T, bool>> filter = null)
         {
-            return this.helper.Get(filter).ToList();
+            return this.helper.Get(filter);
         }
 
     }

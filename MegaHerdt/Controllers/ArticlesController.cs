@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Article;
+using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
@@ -54,6 +55,36 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpGet("filter")]
+        public async Task<ActionResult<List<ArticleDTO>>> Filter([FromQuery] ArticleFilterDTO articleDTO )
+        {
+            try
+            {  
+                var articlesQueryable = this.articleService.GetAll().AsQueryable();
+                if(articleDTO.BrandId != 0)
+                {
+                    articlesQueryable = articlesQueryable.Where(x => x.BrandId == articleDTO.BrandId);
+                }
+                if(articleDTO.CategoryId != 0)
+                {
+                    articlesQueryable = articlesQueryable.Where(x => x.CategoryId == articleDTO.CategoryId);
+                }
+                if(!string.IsNullOrWhiteSpace(articleDTO.Name))
+                {
+                    articlesQueryable = articlesQueryable.Where(x => x.Name.ToUpper().Contains(articleDTO.Name.ToUpper()));
+                }
+                await HttpContext.InsertParametersPagination(articlesQueryable, articleDTO.RecordsPerPage);
+                var articles = articlesQueryable.Paginate(articleDTO.Pagination).ToList();
+
+                return this.Mapper.Map<List<ArticleDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
 
         [HttpPost("create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
