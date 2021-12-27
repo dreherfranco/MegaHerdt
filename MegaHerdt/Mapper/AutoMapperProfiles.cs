@@ -3,7 +3,9 @@ using MegaHerdt.API.DTOs.Address;
 using MegaHerdt.API.DTOs.Article;
 using MegaHerdt.API.DTOs.ArticleBrand;
 using MegaHerdt.API.DTOs.ArticleCategory;
+using MegaHerdt.API.DTOs.ArticleOffer;
 using MegaHerdt.API.DTOs.Phone;
+using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.ReparationClaim;
 using MegaHerdt.API.DTOs.ReparationState;
@@ -79,6 +81,19 @@ namespace MegaHerdt.API.Mapper
                .ReverseMap();
             CreateMap<ArticleCreationDTO, Article>();
             #endregion Article
+
+            #region ArticleOffer
+            CreateMap<ArticleOffer, ArticleOfferDTO>()
+               .ReverseMap();
+            CreateMap<ArticleOfferCreationDTO, ArticleOffer>();
+            #endregion ArticleOffer
+
+            #region Provider
+            CreateMap<Provider, ProviderDTO>()
+                .ReverseMap();
+            CreateMap<ProviderCreationDTO, Provider>();
+            #endregion Provider
+
         }
 
 

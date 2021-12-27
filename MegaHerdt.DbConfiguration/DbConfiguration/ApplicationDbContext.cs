@@ -17,6 +17,9 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
        public DbSet<Article> Articles { get; set; }
        public DbSet<ArticleBrand> ArticlesBrands { get; set; }
        public DbSet<ArticleCategory> ArticlesCategories { get; set; }
+        public DbSet<ArticleOffer> ArticlesOffers { get; set; }
+        public DbSet<Provider> Providers { get; set; }
+        public DbSet<ArticleProvider> ArticlesProviders { get; set; }
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
@@ -32,17 +35,18 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
            .HasIndex(u => u.Code)
            .IsUnique();
 
+            modelBuilder.Entity<ArticleProvider>()
+           .HasKey(x => new { x.ArticleId, x.ProviderId });
+
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Client)
                    .WithMany(u => u.ClientReparations)
                    .HasForeignKey(r => r.ClientId);
-            //.OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Employee)
                    .WithMany(u => u.EmployeeReparations)
                    .HasForeignKey(r => r.EmployeeId);
-                 //  .OnDelete(DeleteBehavior.NoAction);
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);

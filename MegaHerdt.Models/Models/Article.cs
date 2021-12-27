@@ -16,6 +16,8 @@ namespace MegaHerdt.Models.Models
         public float UnitValue { get; set; }
         public ArticleBrand Brand { get; set; }
         public ArticleCategory Category { get; set; }
+        public List<ArticleOffer> Offers { get; set; }
+        public List<ArticleProvider> ArticlesProviders { get; set; }
         private int _stock { get; set; }
 
         public int Stock
