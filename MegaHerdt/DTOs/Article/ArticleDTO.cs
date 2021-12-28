@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.API.DTOs.ArticleBrand;
 using MegaHerdt.API.DTOs.ArticleCategory;
+using MegaHerdt.API.DTOs.ArticleProvider;
 
 namespace MegaHerdt.API.DTOs.Article
 {

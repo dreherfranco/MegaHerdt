@@ -102,31 +102,10 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpPost("article-provider/add")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Post([FromBody] ArticleProviderDTO articleProviderDTO)
-        {
-            try
-            {
-                Expression<Func<Article, bool>> filter = x => x.Id == articleProviderDTO.ArticleId;
-                var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
-
-                var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
-                articleDb.ArticlesProviders.Add(articleProvider);
-                await articleService.Update(articleDb);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
         [HttpPost("update")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Put([FromBody] ArticleDTO articleDTO)
+      //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+     //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult> Put([FromBody] ArticleUpdateDTO articleDTO)
         {
             try
             {
@@ -159,5 +138,45 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(ex);
             }
         }
+
+        #region ArticleProvider
+        //Obtener articulos con los proveedores
+        [HttpGet("article-provider")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public ActionResult<List<ArticleDetailDTO>> GetArticlesProviders()
+        {
+            try
+            {
+                var articles = articleService.GetAll();
+                return this.Mapper.Map<List<ArticleDetailDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("article-provider/add")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult> Post([FromBody] ArticleProviderCreationDTO articleProviderDTO)
+        {
+            try
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == articleProviderDTO.ArticleId;
+                var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
+
+                var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
+                articleDb.ArticlesProviders.Add(articleProvider);
+                await articleService.Update(articleDb);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+        #endregion ArticleProvider
     }
 }

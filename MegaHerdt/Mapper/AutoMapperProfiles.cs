@@ -81,10 +81,13 @@ namespace MegaHerdt.API.Mapper
             CreateMap<Article, ArticleDTO>()
                .ReverseMap();
             CreateMap<ArticleCreationDTO, Article>();
+            CreateMap<ArticleUpdateDTO, Article>();
+            CreateMap<Article, ArticleDetailDTO>();              
             #endregion Article
 
             #region ArticleProvider
-            CreateMap<ArticleProviderDTO, ArticleProvider>();
+            CreateMap<ArticleProviderCreationDTO, ArticleProvider>();
+            CreateMap<ArticleProvider, ArticleProviderDetailDTO>();
             #endregion ArticleProvider
 
             #region ArticleOffer
@@ -227,21 +230,6 @@ namespace MegaHerdt.API.Mapper
         }
         #endregion UserUtilsMethods  
 
-        #region ArticlesUtilsMethods
-      /*  private List<ArticleProvider> ArticlesProvidersMap(ArticleCreationDTO articleDTO, Article article)
-        {
-            var articlesProviders = new List<ArticleProvider>();
-            if(articleDTO.Providers == null)
-            {
-                return articlesProviders;
-            }
-            foreach(var provider in articleDTO.Providers)
-            {
-                articlesProviders.Add(new ArticleProvider() { ProviderId = provider.ProviderId });
-            }
-            return articlesProviders;
-        }*/
-        #endregion
     }
 }
 

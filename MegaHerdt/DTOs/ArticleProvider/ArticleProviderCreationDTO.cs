@@ -2,7 +2,7 @@
 
 namespace MegaHerdt.API.DTOs.ArticleProvider
 {
-    public class ArticleProviderDTO
+    public class ArticleProviderCreationDTO
     {
         [Required]
         public int ProviderId { get; set; }

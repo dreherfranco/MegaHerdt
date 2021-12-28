@@ -12,5 +12,6 @@ namespace MegaHerdt.API.DTOs.Article
         public float UnitValue { get; set; }
         public ArticleBrandDTO Brand { get; set; }
         public ArticleCategoryDTO Category { get; set; }
+        public List<ArticleProviderDetailDTO> ArticlesProviders { get; set; }
     }
 }
