@@ -14,6 +14,23 @@ namespace MegaHerdt.Models.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public float UnitValue { get; set; }
+        public float UnitValueWithOffer 
+        {
+            get 
+            { 
+                var dateNow = DateTime.Now;
+                var value = UnitValue;
+                foreach(var offer in Offers)
+                {
+                    if(offer.StartDate <= dateNow && offer.EndDate > dateNow)
+                    {
+                        var discount = (offer.DiscountPercentage * UnitValue) / 100;
+                        value = value - discount;
+                    }
+                }
+                return value; 
+            }
+        }
         public ArticleBrand Brand { get; set; }
         public ArticleCategory Category { get; set; }
         public List<ArticleOffer> Offers { get; set; }

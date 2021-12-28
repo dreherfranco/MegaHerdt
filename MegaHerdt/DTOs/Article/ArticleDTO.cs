@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.API.DTOs.ArticleBrand;
 using MegaHerdt.API.DTOs.ArticleCategory;
+using MegaHerdt.API.DTOs.ArticleOffer;
 using MegaHerdt.API.DTOs.ArticleProvider;
 
 namespace MegaHerdt.API.DTOs.Article
@@ -10,7 +11,9 @@ namespace MegaHerdt.API.DTOs.Article
         public string Code { get; set; }
         public string Name { get; set; }
         public float UnitValue { get; set; }
+        public float UnitValueWithOffer { get; set; }
         public ArticleBrandDTO Brand { get; set; }
         public ArticleCategoryDTO Category { get; set; }
+        public List<ArticleOfferDetailDTO> Offers { get; set; }
     }
 }

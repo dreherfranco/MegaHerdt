@@ -94,6 +94,7 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ArticleOffer, ArticleOfferDTO>()
                .ReverseMap();
             CreateMap<ArticleOfferCreationDTO, ArticleOffer>();
+            CreateMap<ArticleOffer, ArticleOfferDetailDTO>();
             #endregion ArticleOffer
 
             #region Provider
