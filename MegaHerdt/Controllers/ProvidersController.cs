@@ -1,16 +1,20 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Provider;
+using MegaHerdt.API.Filters;
+using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Services.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   // [AuthorizeRoles(Role.Admin, Role.Empleado)]
     public class ProvidersController : ControllerBase
     {
         private readonly ProviderService providerService;

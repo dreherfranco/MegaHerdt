@@ -38,7 +38,10 @@ namespace MegaHerdt.Helpers.Helpers
         {
             return repository.Get(filter)
                 .Include(x => x.Brand)
-                .Include(x => x.Category);
+                .Include(x => x.Category)
+                .Include(x => x.Offers)
+                .Include(x => x.ArticlesProviders)
+                .ThenInclude(x => x.Provider);
         }
 
     }

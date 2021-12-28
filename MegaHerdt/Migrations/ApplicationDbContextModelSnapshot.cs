@@ -128,6 +128,56 @@ namespace MegaHerdt.API.Migrations
                     b.ToTable("ArticlesCategories");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleOffer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DiscountPercentage")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.ToTable("ArticlesOffers");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
+                {
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ArticleQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ProvisionDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Voucher")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ArticleId", "ProviderId");
+
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("ArticlesProviders");
+                });
+
             modelBuilder.Entity("MegaHerdt.Models.Models.Identity.User", b =>
                 {
                     b.Property<string>("Id")
@@ -230,6 +280,29 @@ namespace MegaHerdt.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Phones");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.Provider", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Providers");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
@@ -346,14 +419,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "dfcdc582-3dd2-40f5-8b32-05f23e1bac66",
+                            ConcurrencyStamp = "e7a939bc-a1ef-4c8b-ae90-bce121972e02",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "e647567d-2b19-4de5-af22-e0611c52ce3b",
+                            ConcurrencyStamp = "3c203db0-868a-4f58-a1fd-fb9efa631d71",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
@@ -491,6 +564,36 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleOffer", b =>
+                {
+                    b.HasOne("MegaHerdt.Models.Models.Article", "Article")
+                        .WithMany("Offers")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
+                {
+                    b.HasOne("MegaHerdt.Models.Models.Article", "Article")
+                        .WithMany("ArticlesProviders")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MegaHerdt.Models.Models.Provider", "Provider")
+                        .WithMany("ArticlesProviders")
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Provider");
+                });
+
             modelBuilder.Entity("MegaHerdt.Models.Models.Phone", b =>
                 {
                     b.HasOne("MegaHerdt.Models.Models.Identity.User", "User")
@@ -599,6 +702,13 @@ namespace MegaHerdt.API.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.Article", b =>
+                {
+                    b.Navigation("ArticlesProviders");
+
+                    b.Navigation("Offers");
+                });
+
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleBrand", b =>
                 {
                     b.Navigation("Articles");
@@ -620,6 +730,11 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("Phones");
 
                     b.Navigation("ReparationsClaims");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.Provider", b =>
+                {
+                    b.Navigation("ArticlesProviders");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>

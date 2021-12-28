@@ -4,6 +4,7 @@ using MegaHerdt.API.DTOs.Article;
 using MegaHerdt.API.DTOs.ArticleBrand;
 using MegaHerdt.API.DTOs.ArticleCategory;
 using MegaHerdt.API.DTOs.ArticleOffer;
+using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Reparation;
@@ -81,6 +82,10 @@ namespace MegaHerdt.API.Mapper
                .ReverseMap();
             CreateMap<ArticleCreationDTO, Article>();
             #endregion Article
+
+            #region ArticleProvider
+            CreateMap<ArticleProviderDTO, ArticleProvider>();
+            #endregion ArticleProvider
 
             #region ArticleOffer
             CreateMap<ArticleOffer, ArticleOfferDTO>()
@@ -220,11 +225,23 @@ namespace MegaHerdt.API.Mapper
             }
             return result;
         }
-        #endregion UserUtilsMethods
+        #endregion UserUtilsMethods  
 
-        #region ReparationUtilsMethods
-
-        #endregion ReparationUtilsMethods
+        #region ArticlesUtilsMethods
+      /*  private List<ArticleProvider> ArticlesProvidersMap(ArticleCreationDTO articleDTO, Article article)
+        {
+            var articlesProviders = new List<ArticleProvider>();
+            if(articleDTO.Providers == null)
+            {
+                return articlesProviders;
+            }
+            foreach(var provider in articleDTO.Providers)
+            {
+                articlesProviders.Add(new ArticleProvider() { ProviderId = provider.ProviderId });
+            }
+            return articlesProviders;
+        }*/
+        #endregion
     }
 }
 

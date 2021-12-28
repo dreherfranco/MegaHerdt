@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Article;
+using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
@@ -9,8 +10,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MegaHerdt.API.Controllers
 {
@@ -87,8 +86,8 @@ namespace MegaHerdt.API.Controllers
 
 
         [HttpPost("create")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+      //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<ArticleDTO>> Post([FromBody] ArticleCreationDTO articleDTO)
         {
             try
@@ -96,6 +95,27 @@ namespace MegaHerdt.API.Controllers
                 var article = this.Mapper.Map<Article>(articleDTO);
                 article = await articleService.Create(article);
                 return this.Mapper.Map<ArticleDTO>(article);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("article-provider/add")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        // [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult> Post([FromBody] ArticleProviderDTO articleProviderDTO)
+        {
+            try
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == articleProviderDTO.ArticleId;
+                var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
+
+                var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
+                articleDb.ArticlesProviders.Add(articleProvider);
+                await articleService.Update(articleDb);
+                return NoContent();
             }
             catch (Exception ex)
             {

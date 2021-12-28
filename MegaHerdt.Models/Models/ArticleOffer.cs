@@ -11,8 +11,8 @@ namespace MegaHerdt.Models.Models
         public int Id { get; set; }
         [ForeignKey("Article")]
         public int ArticleId { get; set; }
-        [Range(0,1)]
-        public float DiscountPercentage { get; set; }
+        [Range(0,100)]
+        public int DiscountPercentage { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
         [Required]
