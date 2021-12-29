@@ -26,11 +26,12 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ArticleDTO>> Get()
+        public ActionResult<List<ArticleDTO>> GetAllArticles()
         {
             try
             {
                 var articles = articleService.GetAll();
+                
                 return this.Mapper.Map<List<ArticleDTO>>(articles);
             }
             catch (Exception ex)
@@ -39,15 +40,28 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public ActionResult<ArticleDTO> Get(int id)
         {
             try
             {
                 Expression<Func<Article, bool>> filter = x => x.Id == id;
-                var articles = articleService.GetBy(filter).FirstOrDefault();
-                return this.Mapper.Map<ArticleDTO>(articles);
+                var article = articleService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<ArticleDTO>(article);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("articles-on-offers")]
+        public ActionResult<List<ArticleDTO>> GetAllArticlesOnOffer() 
+        { 
+            try
+            {
+                var articles = articleService.GetArticlesOnOffer();              
+                return this.Mapper.Map<List<ArticleDTO>>(articles);
             }
             catch (Exception ex)
             {
@@ -157,6 +171,21 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("article-provider/{id}")]
+        public ActionResult<ArticleDetailDTO> GetArticlesProviders(int id)
+        {
+            try
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == id;
+                var article = articleService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<ArticleDetailDTO>(article);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost("article-provider/add")]
         // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         // [AuthorizeRoles(Role.Admin, Role.Empleado)]
@@ -169,6 +198,7 @@ namespace MegaHerdt.API.Controllers
 
                 var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
                 articleDb.ArticlesProviders.Add(articleProvider);
+                articleDb.AddStock(articleProvider.ArticleQuantity);
                 await articleService.Update(articleDb);
                 return NoContent();
             }

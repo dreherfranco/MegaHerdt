@@ -1,5 +1,4 @@
-﻿using MegaHerdt.API.DTOs.ArticleProvider;
-
+﻿
 namespace MegaHerdt.API.DTOs.Article
 {
     public class ArticleCreationDTO

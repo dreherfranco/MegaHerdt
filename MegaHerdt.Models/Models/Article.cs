@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.Models.Models
 {
@@ -20,17 +21,21 @@ namespace MegaHerdt.Models.Models
             { 
                 var dateNow = DateTime.Now;
                 var value = UnitValue;
-                foreach(var offer in Offers)
+                if (Offers != null)
                 {
-                    if(offer.StartDate <= dateNow && offer.EndDate > dateNow)
+                    foreach (var offer in Offers)
                     {
-                        var discount = (offer.DiscountPercentage * UnitValue) / 100;
-                        value = value - discount;
+                        if (offer.StartDate <= dateNow && offer.EndDate > dateNow)
+                        {
+                            var discount = (offer.DiscountPercentage * UnitValue) / 100;
+                            value = value - discount;
+                        }
                     }
                 }
                 return value; 
             }
         }
+
         public ArticleBrand Brand { get; set; }
         public ArticleCategory Category { get; set; }
         public List<ArticleOffer> Offers { get; set; }
@@ -61,5 +66,18 @@ namespace MegaHerdt.Models.Models
         {
             this._stock += value;
         }
+
+        public IEnumerable<ArticleOffer> FutureOffers()
+        {
+            var dateNow = DateTime.Now;
+            return Offers.Where(x => x.StartDate > dateNow);
+        }
+
+        public IEnumerable<ArticleOffer> CurrentsOffers()
+        {
+            var dateNow = DateTime.Now;
+            return Offers.Where(x => x.StartDate <= dateNow && x.EndDate > dateNow);
+        }
+
     }
 }

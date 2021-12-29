@@ -35,8 +35,11 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
            .HasIndex(u => u.Code)
            .IsUnique();
 
-            modelBuilder.Entity<ArticleProvider>()
-           .HasKey(x => new { x.ArticleId, x.ProviderId });
+            modelBuilder.Entity<Article>()
+                .Ignore(x => x.UnitValueWithOffer);
+
+        //    modelBuilder.Entity<ArticleProvider>()
+        //   .HasKey(x => new { x.ArticleId, x.ProviderId });
 
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Client)

@@ -79,6 +79,8 @@ namespace MegaHerdt.API.Mapper
 
             #region Article
             CreateMap<Article, ArticleDTO>()
+                .ForMember(x=>x.CurrentsOffers, x=>x.MapFrom(this.CurrentsOffersMap))
+                .ForMember(x => x.FutureOffers, x => x.MapFrom(this.FutureOffersMap))
                .ReverseMap();
             CreateMap<ArticleCreationDTO, Article>();
             CreateMap<ArticleUpdateDTO, Article>();
@@ -231,6 +233,47 @@ namespace MegaHerdt.API.Mapper
         }
         #endregion UserUtilsMethods  
 
+        #region ArticleUtilsMethods
+        public List<ArticleOfferDetailDTO> FutureOffersMap(Article article, ArticleDTO articleDTO)
+        {
+            var result = new List<ArticleOfferDetailDTO>();
+            if (article.Offers == null) { return result; }
+
+            var futureOffers = article.FutureOffers().ToList();
+
+            foreach (var offer in futureOffers)
+            {
+                result.Add(new ArticleOfferDetailDTO()
+                {
+                    DiscountPercentage = offer.DiscountPercentage,
+                    Id = offer.Id,
+                    EndDate = offer.EndDate,
+                    StartDate = offer.StartDate
+                });
+            }
+            return result;
+        }
+
+        public List<ArticleOfferDetailDTO> CurrentsOffersMap(Article article, ArticleDTO articleDTO)
+        {
+            var result = new List<ArticleOfferDetailDTO>();
+            if (article.Offers == null) { return result; }
+
+            var currentsOffers = article.CurrentsOffers().ToList();
+
+            foreach(var offer in currentsOffers)
+            {
+                result.Add(new ArticleOfferDetailDTO() 
+                { 
+                    DiscountPercentage = offer.DiscountPercentage,
+                    Id = offer.Id,
+                    EndDate = offer.EndDate,
+                    StartDate = offer.StartDate
+                });
+            }
+            return result;
+        }
+        #endregion ArticleUtilsMethods
     }
 }
 

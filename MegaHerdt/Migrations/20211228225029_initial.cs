@@ -349,6 +349,8 @@ namespace MegaHerdt.API.Migrations
                 name: "ArticlesProviders",
                 columns: table => new
                 {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     ProviderId = table.Column<int>(type: "INTEGER", nullable: false),
                     ArticleId = table.Column<int>(type: "INTEGER", nullable: false),
                     Voucher = table.Column<string>(type: "TEXT", nullable: false),
@@ -357,7 +359,7 @@ namespace MegaHerdt.API.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArticlesProviders", x => new { x.ArticleId, x.ProviderId });
+                    table.PrimaryKey("PK_ArticlesProviders", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ArticlesProviders_Articles_ArticleId",
                         column: x => x.ArticleId,
@@ -403,12 +405,12 @@ namespace MegaHerdt.API.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "e7a939bc-a1ef-4c8b-ae90-bce121972e02", "ADMIN", "ADMIN" });
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "f8368f54-70fa-4e36-80c0-f4903778a56e", "ADMIN", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "3c203db0-868a-4f58-a1fd-fb9efa631d71", "EMPLEADO", "EMPLEADO" });
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "44eabb65-effb-4952-bac1-a46205c0194e", "EMPLEADO", "EMPLEADO" });
 
             migrationBuilder.InsertData(
                 table: "ReparationsStates",
@@ -439,6 +441,11 @@ namespace MegaHerdt.API.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ArticlesOffers_ArticleId",
                 table: "ArticlesOffers",
+                column: "ArticleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ArticlesProviders_ArticleId",
+                table: "ArticlesProviders",
                 column: "ArticleId");
 
             migrationBuilder.CreateIndex(

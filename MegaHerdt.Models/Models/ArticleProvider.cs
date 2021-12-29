@@ -1,10 +1,13 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MegaHerdt.Models.Models
 {
     public class ArticleProvider
     {
+        [Key]
+        public int Id { get; set; }
         [ForeignKey("Provider")]
         public int ProviderId { get; set; }
         [ForeignKey("Article")]

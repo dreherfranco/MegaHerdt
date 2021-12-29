@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211228021407_initial")]
+    [Migration("20211228225029_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,13 +157,17 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("ArticleId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ProviderId")
+                    b.Property<int>("ArticleQuantity")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("ArticleQuantity")
+                    b.Property<int>("ProviderId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("ProvisionDate")
@@ -173,7 +177,9 @@ namespace MegaHerdt.API.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ArticleId", "ProviderId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
 
                     b.HasIndex("ProviderId");
 
@@ -421,14 +427,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "e7a939bc-a1ef-4c8b-ae90-bce121972e02",
+                            ConcurrencyStamp = "f8368f54-70fa-4e36-80c0-f4903778a56e",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "3c203db0-868a-4f58-a1fd-fb9efa631d71",
+                            ConcurrencyStamp = "44eabb65-effb-4952-bac1-a46205c0194e",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
