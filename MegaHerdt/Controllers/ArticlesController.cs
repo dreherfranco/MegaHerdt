@@ -136,12 +136,26 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("update")]
       //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
      //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Put([FromBody] ArticleUpdateDTO articleDTO)
+        public async Task<ActionResult> Put([FromForm] ArticleUpdateDTO articleDTO)
         {
             try
             {
                 Expression<Func<Article, bool>> filter = x => x.Id == articleDTO.Id;
                 var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
+
+                if (articleDTO.Image != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await articleDTO.Image.CopyToAsync(memoryStream);
+                        var content = memoryStream.ToArray();
+                        var extension = Path.GetExtension(articleDTO.Image.FileName);
+                        articleDb.Image = await fileManager.EditFile(content, extension, container,
+                            articleDb.Image,
+                            articleDTO.Image.ContentType);
+                    }
+                }
+
                 articleDb = this.Mapper.Map(articleDTO, articleDb);
                 await articleService.Update(articleDb);
                 return NoContent();

@@ -34,7 +34,10 @@ namespace MegaHerdt.API.FileManager
         public async Task<string> EditFile(byte[] content, string extension, string container, string path,
             string contentType)
         {
-            await DeleteFile(path, container);
+            if (!string.IsNullOrWhiteSpace(path))
+            {
+                await DeleteFile(path, container);
+            }           
             return await SaveFile(content, extension, container, contentType);
         }
 
@@ -45,7 +48,7 @@ namespace MegaHerdt.API.FileManager
 
             if (string.IsNullOrWhiteSpace(env.WebRootPath))
             {
-                env.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Images");
+                env.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             }
 
             string folder = Path.Combine(env.WebRootPath, container);

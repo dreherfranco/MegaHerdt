@@ -84,7 +84,8 @@ namespace MegaHerdt.API.Mapper
                .ReverseMap();
             CreateMap<ArticleCreationDTO, Article>()
                 .ForMember(opt=>opt.Image, opt=> opt.Ignore());
-            CreateMap<ArticleUpdateDTO, Article>();
+            CreateMap<ArticleUpdateDTO, Article>()
+                .ForMember(opt => opt.Image, opt => opt.Ignore());
             CreateMap<Article, ArticleDetailDTO>();              
             #endregion Article
 
