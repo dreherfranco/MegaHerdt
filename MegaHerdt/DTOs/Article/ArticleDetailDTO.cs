@@ -9,6 +9,7 @@ namespace MegaHerdt.API.DTOs.Article
     {
         public int Id { get; set; }
         public string Code { get; set; }
+        public string Image { get; set; }
         public string Name { get; set; }
         public float UnitValue { get; set; }
         public int Stock { get; set; }

@@ -16,8 +16,7 @@ namespace MegaHerdt.API.Controllers
   //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
   //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
     public class ArticlesBrandsController : ControllerBase
-    {
-
+    {        
         private readonly ArticleBrandService articleBrandService;
         private readonly IMapper Mapper;
         public ArticlesBrandsController(ArticleBrandService articleBrandService, IMapper Mapper)

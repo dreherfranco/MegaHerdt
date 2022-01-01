@@ -14,28 +14,8 @@ namespace MegaHerdt.Models.Models
         public int CategoryId { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string Image { get; set; }
         public float UnitValue { get; set; }
-        public float UnitValueWithOffer 
-        {
-            get 
-            { 
-                var dateNow = DateTime.Now;
-                var value = UnitValue;
-                if (Offers != null)
-                {
-                    foreach (var offer in Offers)
-                    {
-                        if (offer.StartDate <= dateNow && offer.EndDate > dateNow)
-                        {
-                            var discount = (offer.DiscountPercentage * UnitValue) / 100;
-                            value = value - discount;
-                        }
-                    }
-                }
-                return value; 
-            }
-        }
-
         public ArticleBrand Brand { get; set; }
         public ArticleCategory Category { get; set; }
         public List<ArticleOffer> Offers { get; set; }
@@ -65,6 +45,27 @@ namespace MegaHerdt.Models.Models
         public void AddStock(int value)
         {
             this._stock += value;
+        }
+
+        public float UnitValueWithOffer
+        {
+            get
+            {
+                var dateNow = DateTime.Now;
+                var value = UnitValue;
+                if (Offers != null)
+                {
+                    foreach (var offer in Offers)
+                    {
+                        if (offer.StartDate <= dateNow && offer.EndDate > dateNow)
+                        {
+                            var discount = (offer.DiscountPercentage * UnitValue) / 100;
+                            value = value - discount;
+                        }
+                    }
+                }
+                return value;
+            }
         }
 
         public IEnumerable<ArticleOffer> FutureOffers()

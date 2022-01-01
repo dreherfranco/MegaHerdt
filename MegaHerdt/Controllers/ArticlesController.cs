@@ -2,6 +2,7 @@
 using MegaHerdt.API.DTOs.Article;
 using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.ExtensionMethods;
+using MegaHerdt.API.FileManager.Interface;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
@@ -19,10 +20,13 @@ namespace MegaHerdt.API.Controllers
     {
         private readonly ArticleService articleService;
         private readonly IMapper Mapper;
-        public ArticlesController(ArticleService articleService, IMapper Mapper)
+        private readonly IFileManager fileManager;
+        private readonly string container = "articles";
+        public ArticlesController(ArticleService articleService, IMapper Mapper, IFileManager fileManager)
         {
             this.articleService = articleService;
             this.Mapper = Mapper;
+            this.fileManager = fileManager;
         }
 
         [HttpGet]
@@ -100,13 +104,26 @@ namespace MegaHerdt.API.Controllers
 
 
         [HttpPost("create")]
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-      //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult<ArticleDTO>> Post([FromBody] ArticleCreationDTO articleDTO)
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<ArticleDTO>> Post([FromForm] ArticleCreationDTO articleDTO)
         {
             try
             {
                 var article = this.Mapper.Map<Article>(articleDTO);
+                
+                if (articleDTO.Image != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await articleDTO.Image.CopyToAsync(memoryStream);
+                        var content = memoryStream.ToArray();
+                        var extension = Path.GetExtension(articleDTO.Image.FileName);
+                        article.Image = await fileManager.SaveFile(content, extension, container,
+                            articleDTO.Image.ContentType);
+                    }
+                }
+            
                 article = await articleService.Create(article);
                 return this.Mapper.Map<ArticleDTO>(article);
             }

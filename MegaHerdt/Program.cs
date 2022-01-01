@@ -1,12 +1,6 @@
 using MegaHerdt.API.ExtensionMethods;
-using MegaHerdt.Helpers.Helpers;
-using MegaHerdt.Models.Models.Identity;
-using MegaHerdt.Repository.Base;
-using MegaHerdt.Services.Services;
-using Microsoft.AspNetCore.Http.Json;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.OpenApi.Models;
-using System.Text.Json;
+using MegaHerdt.API.FileManager;
+using MegaHerdt.API.FileManager.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +13,8 @@ IoC.SwaggerInjection(builder);
 //DEPENDENCY INJECTION
 IoC.DbConfiguration(builder);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Services.AddTransient<IFileManager, LocalFileManager>();
+builder.Services.AddHttpContextAccessor();
 IoC.HelpersInjection(builder);
 IoC.ServicesInjection(builder);
 IoC.RepositoryInjection(builder);

@@ -42,5 +42,7 @@ namespace MegaHerdt.Services.Services
 
             return articlesOnOffer;
         }
+
+
     }
 }
