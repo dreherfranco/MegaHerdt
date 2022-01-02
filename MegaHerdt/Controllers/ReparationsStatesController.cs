@@ -13,8 +13,8 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [AuthorizeRoles(Role.Admin, Role.Empleado)]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   // [AuthorizeRoles(Role.Admin, Role.Empleado)]
     public class ReparationsStatesController : ControllerBase
     {
        private readonly ReparationStateService reparationStateService;

@@ -14,13 +14,14 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
        public DbSet<Reparation> Reparations { get; set; }
        public DbSet<ReparationState> ReparationsStates { get; set;}
        public DbSet<ReparationClaim> ReparationsClaims { get; set;}
+       public DbSet<ReparationArticle> ReparationsArticles { get; set; }
        public DbSet<Article> Articles { get; set; }
        public DbSet<ArticleBrand> ArticlesBrands { get; set; }
        public DbSet<ArticleCategory> ArticlesCategories { get; set; }
         public DbSet<ArticleOffer> ArticlesOffers { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ArticleProvider> ArticlesProviders { get; set; }
-
+        
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -38,8 +39,6 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             modelBuilder.Entity<Article>()
                 .Ignore(x => x.UnitValueWithOffer);
 
-        //    modelBuilder.Entity<ArticleProvider>()
-        //   .HasKey(x => new { x.ArticleId, x.ProviderId });
 
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Client)
@@ -50,6 +49,9 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                    .HasOne(r => r.Employee)
                    .WithMany(u => u.EmployeeReparations)
                    .HasForeignKey(r => r.EmployeeId);
+
+            modelBuilder.Entity<ReparationArticle>()
+                .HasKey(x => new { x.ArticleId, x.ReparationId });
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);

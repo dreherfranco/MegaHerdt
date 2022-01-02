@@ -116,6 +116,7 @@ namespace MegaHerdt.API.Migrations
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
                     Code = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Image = table.Column<string>(type: "TEXT", nullable: false),
                     UnitValue = table.Column<float>(type: "REAL", nullable: false),
                     Stock = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -375,6 +376,32 @@ namespace MegaHerdt.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ReparationsArticles",
+                columns: table => new
+                {
+                    ArticleId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ReparationId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ArticleQuantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    ArticlePriceAtTheMoment = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ReparationsArticles", x => new { x.ArticleId, x.ReparationId });
+                    table.ForeignKey(
+                        name: "FK_ReparationsArticles_Articles_ArticleId",
+                        column: x => x.ArticleId,
+                        principalTable: "Articles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ReparationsArticles_Reparations_ReparationId",
+                        column: x => x.ReparationId,
+                        principalTable: "Reparations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ReparationsClaims",
                 columns: table => new
                 {
@@ -405,12 +432,12 @@ namespace MegaHerdt.API.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "f8368f54-70fa-4e36-80c0-f4903778a56e", "ADMIN", "ADMIN" });
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", "b41d0dca-0f22-464b-b3ee-a7eef0dfed2e", "ADMIN", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "44eabb65-effb-4952-bac1-a46205c0194e", "EMPLEADO", "EMPLEADO" });
+                values: new object[] { "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e", "3408483a-8c0e-4709-b04b-62c6097fdae0", "EMPLEADO", "EMPLEADO" });
 
             migrationBuilder.InsertData(
                 table: "ReparationsStates",
@@ -517,6 +544,11 @@ namespace MegaHerdt.API.Migrations
                 column: "ReparationStateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ReparationsArticles_ReparationId",
+                table: "ReparationsArticles",
+                column: "ReparationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ReparationsClaims_ClientId",
                 table: "ReparationsClaims",
                 column: "ClientId");
@@ -557,16 +589,19 @@ namespace MegaHerdt.API.Migrations
                 name: "Phones");
 
             migrationBuilder.DropTable(
-                name: "ReparationsClaims");
+                name: "ReparationsArticles");
 
             migrationBuilder.DropTable(
-                name: "Articles");
+                name: "ReparationsClaims");
 
             migrationBuilder.DropTable(
                 name: "Providers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Articles");
 
             migrationBuilder.DropTable(
                 name: "Reparations");

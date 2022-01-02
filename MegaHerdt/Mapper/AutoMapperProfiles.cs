@@ -8,6 +8,7 @@ using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Reparation;
+using MegaHerdt.API.DTOs.ReparationArticle;
 using MegaHerdt.API.DTOs.ReparationClaim;
 using MegaHerdt.API.DTOs.ReparationState;
 using MegaHerdt.API.DTOs.User;
@@ -46,9 +47,12 @@ namespace MegaHerdt.API.Mapper
 
             #region Reparation
             CreateMap<Reparation, ReparationDTO>()
+                .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleMap))
                 .ReverseMap();
-            CreateMap<ReparationCreationDTO, Reparation>();
-            CreateMap<ReparationUpdateDTO, Reparation>();
+            CreateMap<ReparationCreationDTO, Reparation>()
+                .ForMember(x=>x.ReparationsArticles, x=>x.MapFrom(this.ReparationArticleCreationMap));
+            CreateMap<ReparationUpdateDTO, Reparation>()
+                 .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleCreationMap));
             CreateMap<Reparation, ReparationDetailDTO>();
             #endregion Reparation
 
@@ -64,6 +68,10 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ReparationClaimCreationDTO, ReparationClaim>();
             CreateMap<ReparationClaimUpdateDTO, ReparationClaim>();
             #endregion ReparationClaim
+
+            /*#region ReparationArticle
+            CreateMap<ReparationArticleCreationDTO, ReparationArticle>();
+            #endregion ReparationArticle*/
 
             #region ArticleBrand
             CreateMap<ArticleBrand, ArticleBrandDTO>()
@@ -234,6 +242,44 @@ namespace MegaHerdt.API.Mapper
             return result;
         }
         #endregion UserUtilsMethods  
+
+        #region ReparationUtilsMethods
+        private List<ReparationArticleDTO> ReparationArticleMap(Reparation reparation, ReparationDTO reparationDTO)
+        {
+            var result = new List<ReparationArticleDTO>();
+            if (reparation.ReparationsArticles == null) { return result; }
+
+            foreach (var reparationArticle in reparation.ReparationsArticles)
+            {
+                result.Add(
+                    new ReparationArticleDTO()
+                    {
+                        ArticleQuantity = reparationArticle.ArticleQuantity,
+                        ArticleId = reparationArticle.ArticleId,
+                        ArticlePriceAtTheMoment = reparationArticle.ArticlePriceAtTheMoment
+                    });
+            }
+            return result;
+        }
+
+        private List<ReparationArticle> ReparationArticleCreationMap(ReparationCreationDTO reparationDTO, Reparation reparation)
+        {
+            var result = new List<ReparationArticle>();
+            if (reparationDTO.ReparationsArticles == null) { return result; }
+
+            foreach (var reparationArticle in reparationDTO.ReparationsArticles)
+            {
+                result.Add(
+                    new ReparationArticle()
+                    {
+                        ArticleQuantity = reparationArticle.ArticleQuantity,
+                        ArticleId = reparationArticle.ArticleId
+                    });
+            }
+            return result;
+        }
+
+        #endregion ReparationUtilsMethods
 
         #region ArticleUtilsMethods
         public List<ArticleOfferDetailDTO> FutureOffersMap(Article article, ArticleDTO articleDTO)

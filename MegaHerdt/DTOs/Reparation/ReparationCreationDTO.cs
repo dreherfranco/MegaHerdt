@@ -1,4 +1,6 @@
-﻿namespace MegaHerdt.API.DTOs.Reparation
+﻿using MegaHerdt.API.DTOs.ReparationArticle;
+
+namespace MegaHerdt.API.DTOs.Reparation
 {
     public class ReparationCreationDTO
     {
@@ -7,5 +9,6 @@
         public string ClientId { get; set; }
         public int Amount { get; set; }
         public DateTime Date { get; set; }
+        public List<ReparationArticleCreationDTO> ReparationsArticles { get; set; }
     }
 }

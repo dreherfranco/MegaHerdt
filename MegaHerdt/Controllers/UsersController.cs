@@ -35,8 +35,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-users")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+      //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+       // [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<List<UserDTO>>> GetAll([FromQuery] PaginationDTO paginationDTO)
         {
             try
@@ -56,7 +56,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-user/{email}")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
+     //   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public ActionResult<UserDTO> GetByEmail(string email)
         {
             try

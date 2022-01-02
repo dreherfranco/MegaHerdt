@@ -25,8 +25,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("create")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+      //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+  //      [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<ReparationDTO>> CreateReparation([FromBody] ReparationCreationDTO reparationDTO)
         {
             try
@@ -42,8 +42,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+      //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult> UpdateReparation([FromBody] ReparationUpdateDTO reparationDTO)
         {
             try
@@ -77,8 +77,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-all")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+       // [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public ActionResult<List<ReparationDTO>> GetAllReparations()
         {
             try

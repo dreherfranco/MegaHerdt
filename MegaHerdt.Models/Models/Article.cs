@@ -12,7 +12,9 @@ namespace MegaHerdt.Models.Models
         public int BrandId { get; set; }
         [ForeignKey("ArticleCategory")]
         public int CategoryId { get; set; }
+        [Required]
         public string Code { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Image { get; set; }
         public float UnitValue { get; set; }
@@ -20,6 +22,7 @@ namespace MegaHerdt.Models.Models
         public ArticleCategory Category { get; set; }
         public List<ArticleOffer> Offers { get; set; }
         public List<ArticleProvider> ArticlesProviders { get; set; }
+        public List<ReparationArticle> ReparationArticles { get; set;}
         private int _stock { get; set; }
 
         public int Stock

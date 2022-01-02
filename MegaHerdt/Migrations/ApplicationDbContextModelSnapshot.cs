@@ -349,6 +349,27 @@ namespace MegaHerdt.API.Migrations
                     b.ToTable("Reparations");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.ReparationArticle", b =>
+                {
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ReparationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<float>("ArticlePriceAtTheMoment")
+                        .HasColumnType("REAL");
+
+                    b.Property<int>("ArticleQuantity")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ArticleId", "ReparationId");
+
+                    b.HasIndex("ReparationId");
+
+                    b.ToTable("ReparationsArticles");
+                });
+
             modelBuilder.Entity("MegaHerdt.Models.Models.ReparationClaim", b =>
                 {
                     b.Property<int>("Id")
@@ -429,14 +450,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "3358f803-3076-43dd-bf22-b5a8a9941e2a",
+                            ConcurrencyStamp = "b41d0dca-0f22-464b-b3ee-a7eef0dfed2e",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "50ae7fc8-08f0-4c8f-9287-b0aeab4dc7de",
+                            ConcurrencyStamp = "3408483a-8c0e-4709-b04b-62c6097fdae0",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
@@ -642,6 +663,25 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("ReparationState");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.ReparationArticle", b =>
+                {
+                    b.HasOne("MegaHerdt.Models.Models.Article", "Article")
+                        .WithMany("ReparationArticles")
+                        .HasForeignKey("ArticleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MegaHerdt.Models.Models.Reparation", "Reparation")
+                        .WithMany("ReparationsArticles")
+                        .HasForeignKey("ReparationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Article");
+
+                    b.Navigation("Reparation");
+                });
+
             modelBuilder.Entity("MegaHerdt.Models.Models.ReparationClaim", b =>
                 {
                     b.HasOne("MegaHerdt.Models.Models.Identity.User", "Client")
@@ -717,6 +757,8 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("ArticlesProviders");
 
                     b.Navigation("Offers");
+
+                    b.Navigation("ReparationArticles");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleBrand", b =>
@@ -749,6 +791,8 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
                 {
+                    b.Navigation("ReparationsArticles");
+
                     b.Navigation("ReparationsClaims");
                 });
 

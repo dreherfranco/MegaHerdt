@@ -23,5 +23,6 @@ namespace MegaHerdt.Models.Models
         public User Client { get; set; }
         public User Employee { get; set; }
         public List<ReparationClaim> ReparationsClaims { get; set; }
+        public List<ReparationArticle> ReparationsArticles { get; set; }
     }
 }
