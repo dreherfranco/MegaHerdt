@@ -1,4 +1,5 @@
-﻿using MegaHerdt.API.DTOs.ReparationArticle;
+﻿using MegaHerdt.API.DTOs.Bill;
+using MegaHerdt.API.DTOs.ReparationArticle;
 
 namespace MegaHerdt.API.DTOs.Reparation
 {
@@ -10,5 +11,6 @@ namespace MegaHerdt.API.DTOs.Reparation
         public int Amount { get; set; }
         public DateTime Date { get; set; }
         public List<ReparationArticleCreationDTO> ReparationsArticles { get; set; }
+        public BillReparationCreationDTO Bill { get; set; }
     }
 }

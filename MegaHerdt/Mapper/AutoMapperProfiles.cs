@@ -5,6 +5,7 @@ using MegaHerdt.API.DTOs.ArticleBrand;
 using MegaHerdt.API.DTOs.ArticleCategory;
 using MegaHerdt.API.DTOs.ArticleOffer;
 using MegaHerdt.API.DTOs.ArticleProvider;
+using MegaHerdt.API.DTOs.Bill;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Reparation;
@@ -69,9 +70,11 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ReparationClaimUpdateDTO, ReparationClaim>();
             #endregion ReparationClaim
 
-            /*#region ReparationArticle
-            CreateMap<ReparationArticleCreationDTO, ReparationArticle>();
-            #endregion ReparationArticle*/
+            #region Bill
+            CreateMap<Bill, BillReparationDTO>()
+                .ReverseMap();
+            CreateMap<BillReparationCreationDTO, Bill>();
+            #endregion Bill
 
             #region ArticleBrand
             CreateMap<ArticleBrand, ArticleBrandDTO>()

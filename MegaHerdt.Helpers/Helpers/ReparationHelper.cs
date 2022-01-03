@@ -21,7 +21,8 @@ namespace MegaHerdt.Helpers.Helpers
                 .Include(x => x.Client)
                 .Include(x => x.Employee)
                 .Include(x => x.ReparationState)
-                .Include(x => x.ReparationsArticles);
+                .Include(x => x.ReparationsArticles)
+                .Include(x=>x.Bill);
         }
 
         public override async Task<Reparation> Create(Reparation entity)

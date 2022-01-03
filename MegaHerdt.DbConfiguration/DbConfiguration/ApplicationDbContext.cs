@@ -15,6 +15,9 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
        public DbSet<ReparationState> ReparationsStates { get; set;}
        public DbSet<ReparationClaim> ReparationsClaims { get; set;}
        public DbSet<ReparationArticle> ReparationsArticles { get; set; }
+        public DbSet<Bill> Bills { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
        public DbSet<Article> Articles { get; set; }
        public DbSet<ArticleBrand> ArticlesBrands { get; set; }
        public DbSet<ArticleCategory> ArticlesCategories { get; set; }
@@ -22,6 +25,8 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ArticleProvider> ArticlesProviders { get; set; }
         
+        public DbSet<Purchase> Purchases { get; set;}
+
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
         }
@@ -39,7 +44,6 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             modelBuilder.Entity<Article>()
                 .Ignore(x => x.UnitValueWithOffer);
 
-
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Client)
                    .WithMany(u => u.ClientReparations)
@@ -50,8 +54,18 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                    .WithMany(u => u.EmployeeReparations)
                    .HasForeignKey(r => r.EmployeeId);
 
+            modelBuilder.Entity<Reparation>()
+                .HasOne(x => x.Bill)
+                .WithOne(x => x.Reparation)
+                .HasForeignKey<Bill>(x => x.ReparationId);
+
             modelBuilder.Entity<ReparationArticle>()
                 .HasKey(x => new { x.ArticleId, x.ReparationId });
+
+            modelBuilder.Entity<Purchase>()
+                .HasOne(x => x.Bill)
+                .WithOne(x => x.Purchase)
+                .HasForeignKey<Bill>(x => x.PurchaseId);
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);

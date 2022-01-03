@@ -15,6 +15,7 @@ namespace MegaHerdt.Models.Models
         public string EmployeeId { get; set; }
         [ForeignKey("User")]
         public string ClientId { get; set; }
+        public int BillId { get; set; }
         [Required]
         public int Amount { get; set; }
         [Required]
@@ -24,5 +25,6 @@ namespace MegaHerdt.Models.Models
         public User Employee { get; set; }
         public List<ReparationClaim> ReparationsClaims { get; set; }
         public List<ReparationArticle> ReparationsArticles { get; set; }
+        public Bill Bill { get; set; }
     }
 }

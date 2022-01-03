@@ -93,8 +93,8 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 Expression<Func<Provider, bool>> filter = x => x.Id == id;
-                var articleOffer = this.providerService.GetBy(filter).FirstOrDefault();
-                await providerService.Delete(articleOffer);
+                var provider = this.providerService.GetBy(filter).FirstOrDefault();
+                await providerService.Delete(provider);
                 return NoContent();
             }
             catch (Exception ex)

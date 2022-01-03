@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220103021619_bills")]
+    partial class bills
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -197,9 +199,6 @@ namespace MegaHerdt.API.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("PurchaseId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int?>("ReparationId")
                         .HasColumnType("INTEGER");
 
@@ -208,9 +207,6 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("PurchaseId")
-                        .IsUnique();
 
                     b.HasIndex("ReparationId")
                         .IsUnique();
@@ -408,23 +404,6 @@ namespace MegaHerdt.API.Migrations
                     b.ToTable("Providers");
                 });
 
-            modelBuilder.Entity("MegaHerdt.Models.Models.Purchase", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("BillId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Purchases");
-                });
-
             modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
                 {
                     b.Property<int>("Id")
@@ -563,14 +542,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "8d24b79b-15d8-46f1-b67d-6600a24112c4",
+                            ConcurrencyStamp = "8e3475c8-a2fe-4a1b-b444-bf74dc888c19",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "05c433b9-6e0a-4de7-ae0a-6f1ded9351b8",
+                            ConcurrencyStamp = "71a1e56b-fecb-47ff-9d0e-485b3064ca69",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
@@ -740,15 +719,9 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Bill", b =>
                 {
-                    b.HasOne("MegaHerdt.Models.Models.Purchase", "Purchase")
-                        .WithOne("Bill")
-                        .HasForeignKey("MegaHerdt.Models.Models.Bill", "PurchaseId");
-
                     b.HasOne("MegaHerdt.Models.Models.Reparation", "Reparation")
                         .WithOne("Bill")
                         .HasForeignKey("MegaHerdt.Models.Models.Bill", "ReparationId");
-
-                    b.Navigation("Purchase");
 
                     b.Navigation("Reparation");
                 });
@@ -931,12 +904,6 @@ namespace MegaHerdt.API.Migrations
             modelBuilder.Entity("MegaHerdt.Models.Models.Provider", b =>
                 {
                     b.Navigation("ArticlesProviders");
-                });
-
-            modelBuilder.Entity("MegaHerdt.Models.Models.Purchase", b =>
-                {
-                    b.Navigation("Bill")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
