@@ -1,9 +1,13 @@
 <div class="card text-center mb-3">
     <img [src]="article.image" class="card-img-top">
     <div class="card-body">
-      <h5 class="card-title">{{article.name}}</h5>
-      <p class="card-text">{{article.description}}</p>
-      <p class="card-text">{{article.price}}€</p>
+      <h4 *ngIf="isOnOffer(article)" class="text-success"><b>Articulo en oferta</b></h4>
+      <h5 class="card-title">Nombre: {{article.name}}</h5>
+      <p class="card-text">Valor unitario: {{article.unitValue}}</p>
+      <p *ngIf="isOnOffer(article)" class="card-text">Valor con oferta: {{article.unitValueWithOffer}}</p>
+      <p class="card-text">Codigo: {{article.code}}</p>
+      <p class="card-text">Marca: {{article.brand.name}}</p>
+      <p class="card-text">Categoria: {{article.category.name}}</p>
     <!--
       <button class="btn btn-outline-success" (click)="addToCart()">
         <i class="fas fa-cart-plus"></i> Add to Cart</button>
