@@ -13,6 +13,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ArticleListComponent } from './components/articles/article-list/article-list.component';
 import { ArticleItemComponent } from './components/articles/article-item/article-item.component';
 import { RegisterComponent } from './components/users/register/register.component';
+import { AddressCreationComponent } from './components/address/address-creation/address-creation.component';
+import { AddressDetailComponent } from './components/address/address-detail/address-detail.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { RegisterComponent } from './components/users/register/register.componen
     FooterComponent,
     ArticleListComponent,
     ArticleItemComponent,
-    RegisterComponent
+    RegisterComponent,
+    AddressCreationComponent,
+    AddressDetailComponent
   ],
   imports: [
     BrowserModule,

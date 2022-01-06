@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { UserCreate } from '../../../models/User/UserCreate';
+import { PhoneCreation } from '../../../models/Phone/PhoneCreation';
+import { AddressCreation } from 'src/app/models/Address/AddressCreation';
 
 @Component({
   selector: 'app-register',
@@ -7,34 +9,40 @@ import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@ang
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  userForm: FormGroup ;
+  user: UserCreate ;
+  status: String;
   phoneNumber: string;
-
-  constructor(private fb: FormBuilder) {
-    this.phoneNumber= "";
-    this.userForm = new FormGroup(
-      {
-        name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        password: new FormControl('', Validators.required),
-        phones: new FormArray([]),
-        phoneNumber: new FormControl(this.phoneNumber)
-      });
+  addressAddOk: boolean;
+  constructor() {
+    this.user = new UserCreate('','','','',new Array<PhoneCreation>(), new Array<AddressCreation>());
+    this.status = "";
+    this.phoneNumber="";
+    this.addressAddOk=false;
    }
 
   ngOnInit(): void {
     
   }
 
-  onSubmit(){
-    console.log(this.userForm.value);
+  onSubmit(registerForm:any){
+    console.log(this.user);
   }
 
- get phones(): FormArray {
-    return this.userForm.get('phones') as FormArray;
+  addPhone() {
+    var phone = new PhoneCreation(this.phoneNumber);
+    this.user.phones.push(phone);
+    this.phoneNumber="";
   }
+removePhone(index:number){
+  this.user.phones.splice(index,1);
+}
 
-  addPhone(phoneNumber:string) {
-    const phone = new FormControl(phoneNumber);
-    (<FormArray>this.userForm.get('phones')).push(phone);
-  }
+   numberEmpty():boolean{
+     return this.phoneNumber == "";
+   }
+
+   addAddress(address:AddressCreation){
+    this.user.addresses.push(address);
+    this.addressAddOk = true;
+   }
 }

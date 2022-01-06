@@ -1,0 +1,48 @@
+<div>
+    <h5><b>Direccion:</b></h5>
+
+    <div>
+        <label for="streetName"><b>Nombre de calle:</b></label>
+        <input type="text" name="streetName" #streetName="ngModel" [(ngModel)]="address.streetName" required />
+        <span *ngIf="streetName.touched && !streetName.valid" class="error">Ingrese un nombre de calle valido</span>
+    </div>
+
+    <label for="streetNumber"><b>Numero de calle:</b></label>
+    <input type="text" name="streetNumber" #streetNumber="ngModel" [(ngModel)]="address.streetNumber" required />
+    <span *ngIf="streetNumber.touched && !streetNumber.valid" class="error">Ingrese un numero de calle valido</span>
+
+    <div>
+        <label for="department"><b>Departamento:</b></label>
+        <input type="text" name="department" #department="ngModel" [(ngModel)]="address.department" />
+        <span *ngIf="department.touched && !department.valid" class="error">Ingrese un departamento valido</span>
+    </div>
+
+    <div>
+        <label for="floor"><b>Piso:</b></label>
+        <input type="text" name="floor" #floor="ngModel" [(ngModel)]="address.floor" />
+        <span *ngIf="floor.touched && !floor.valid" class="error">Ingrese un piso valido</span>
+    </div>
+
+    <div>
+        <label for="postalCode"><b>Codigo Postal:</b></label>
+        <input type="text" name="postalCode" #postalCode="ngModel" [(ngModel)]="address.postalCode" required />
+        <span *ngIf="postalCode.touched && !postalCode.valid" class="error">Ingrese un numero postal valido</span>
+    </div>
+
+    <div>
+        <label for="province"><b>Provincia:</b></label>
+        <input type="text" name="province" #province="ngModel" [(ngModel)]="address.province" required />
+        <span *ngIf="province.touched && !province.valid" class="error">Ingrese una provincia valida</span>
+    </div>
+
+    <div>
+        <label for="townName"><b>Ciudad:</b></label>
+        <input type="text" name="townName" #townName="ngModel" [(ngModel)]="address.townName" required />
+        <span *ngIf="townName.touched && !townName.valid" class="error">Ingrese un nombre de ciudad valido</span>
+    </div>
+    <button (click)="addNewItem()" [disabled]="!townName.valid || !province.valid || !postalCode.valid 
+    || !streetNumber.valid || !streetName.valid">
+        +Añadir Direccion
+   </button>
+   <div *ngIf="addressStatus=='success'" class="alert alert-success">Direccion añadida con exito</div>
+</div>

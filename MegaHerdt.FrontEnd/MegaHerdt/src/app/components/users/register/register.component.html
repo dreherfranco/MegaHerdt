@@ -1,24 +1,57 @@
-<form novalidate (ngSubmit)="onSubmit()" [formGroup]="this.userForm">
-    <label>
-      <span>Full name</span>
-      <input
-        type="text"
-        placeholder="Your full name"
-        formControlName="name">
-    </label>
-    <label>
-        <span>Email address</span>
-        <input
-          type="password"
-          placeholder="Your passwornd"
-          formControlName="password">
-      </label>
-      <div formArrayName="phones">
-                <label>numero:</label><br />
-                <input type="text" name="phoneNumber"/>
-        </div>   
-      <button (click)="addPhone(this.phoneNumber)">
-        + Añadir
-    </button>
-    <button type="submit" [disabled]="userForm.invalid">Sign up</button>
+<div id="container" *ngIf="user">
+  <h2>Registrarse</h2>
+  <hr><br>
+  <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" name="email" #email="ngModel" [(ngModel)]="user.email" required />
+      <span *ngIf="email.touched && !email.valid" class="error">Ingrese un email valido</span>
+    </div>
+    <div>
+      <label for="dni">DNI:</label>
+      <input type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required />
+      <span *ngIf="dni.touched && !dni.valid" class="error">Ingrese un DNI valido</span>
+    </div>
+    <div>
+      <label for="name">Nombre:</label>
+      <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required />
+      <span *ngIf="name.touched && !name.valid" class="error">Ingrese un nombre valido</span>
+    </div>
+    <div>
+      <label for="surname">Apellido:</label>
+      <input type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname" required />
+      <span *ngIf="surname.touched && !surname.valid" class="error">Ingrese una apellido valido</span>
+    </div>
+
+    <div>
+      <label for="phoneNumber">Telefono:</label>
+      <input type="text" name="phoneNumber" #number="ngModel" [(ngModel)]="phoneNumber" pattern="(^[0-9]+)"
+        minlength="5" />
+      <span *ngIf="number.touched && !number.valid" class="error">Ingrese un numero de telefono valido</span>
+      <button (click)="addPhone()" [disabled]="!number.valid || numberEmpty()">+Añadir</button>
+      <br> Telefonos agregados:
+      <div *ngFor="let phone of user.phones; let i = index;">
+        <span>{{ phone.number }}</span><button (click)="removePhone(i)">Borrar</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
+      </app-address-creation>
+
+      <div class="col-md-6"> 
+        <h3 *ngIf="addressAddOk">Direcciones Cargadas</h3>
+        <div *ngFor="let address of user.addresses;">
+          <app-address-detail [address]="address"></app-address-detail>
+        </div>
+      </div>
+    </div>
+
+
+    <input type="submit" value="Enviar" [disabled]="!registerForm.form.valid" class="submit" />
   </form>
+  <p *ngIf="status == 'success'" class="success">El usuario se ha creado correctamente</p>
+  <p *ngIf="status == 'failed'" class="error">Error al crear el usuario</p>
+  <p *ngIf="status == 'success-update'" class="success">El usuario se ha actualizado correctamente</p>
+  <br>
+</div>

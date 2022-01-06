@@ -23,9 +23,7 @@ export class ArticleItemComponent implements OnInit {
   private instanceArticle(): Article {
     let brand = new Brand (0,'');
     let category = new Category (0,'');
-   // let offer = new ArticleOfferDetail(0,0,new Date(),new Date());
     let offers = new Array<ArticleOfferDetail>();
- //   offers.push(offer);
     let article = new Article(0,'','','',0,0,brand,category,offers, offers);
     return article;
   }
