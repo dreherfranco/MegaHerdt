@@ -4,7 +4,7 @@ export class ArticleOfferDetail{
     startDate: Date;
     endDate: Date;
 
-    constructor(id: number, discountPercentage:number, startDate:Date, endDate:Date) 
+    constructor(id: number, discountPercentage: number, startDate: Date, endDate: Date) 
     {
         this.id = id;
         this.discountPercentage = discountPercentage;

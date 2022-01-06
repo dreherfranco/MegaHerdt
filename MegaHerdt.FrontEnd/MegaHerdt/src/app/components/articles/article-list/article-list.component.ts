@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ArticleService} from '../../../services/articles/article.service';
 import { Article } from '../../../models/Article/Article';
+import { Paginate } from '../../../models/Paginate/Paginate';
 
 @Component({
   selector: 'app-article-list',
@@ -9,10 +10,12 @@ import { Article } from '../../../models/Article/Article';
 })
 export class ArticleListComponent implements OnInit {
   public articles: Article[] = [];
+  public paginate: Paginate;
 
-  constructor(
-    private _articleService: ArticleService
-  ) { }
+  constructor(private _articleService: ArticleService) 
+  { 
+    this.paginate = new Paginate(1,4);
+  }
 
   ngOnInit(): void {
     this.loadProducts();

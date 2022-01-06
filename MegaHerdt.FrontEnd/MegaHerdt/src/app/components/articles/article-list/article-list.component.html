@@ -1,7 +1,15 @@
 <div class="row">
  <h2 class="title">Articulos</h2>
-    <div class="col-md-6" *ngFor="let article of articles">
+    <div class="col-md-6" *ngFor="let article of articles | paginate: 
+    {
+        itemsPerPage: this.paginate.recordsPerPage, 
+        currentPage:this.paginate.page
+    }
+    ">
         <app-article-item [article]="article"></app-article-item>
     </div>
-    
+    <pagination-controls
+    (pageChange)="this.paginate.page = $event"
+    previosLabel="Anterior"
+    nextLabel="Siguiente"></pagination-controls>
 </div>

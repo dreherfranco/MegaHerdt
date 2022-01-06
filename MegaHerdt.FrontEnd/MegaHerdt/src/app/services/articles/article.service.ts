@@ -9,13 +9,13 @@ import { Global } from '../../utils/Global';
 })
 export class ArticleService {
   public url: String;
+  public headers =  new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private _http: HttpClient) {
     this.url = Global.url + "Articles";
    }
 
   getArticles(): Observable<any> {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this._http.get(this.url.toString(), {headers: headers});
+    return this._http.get(this.url.toString(),{headers: this.headers});
   }
 }

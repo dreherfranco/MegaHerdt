@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Article;
 using MegaHerdt.API.DTOs.ArticleProvider;
+using MegaHerdt.API.DTOs.Pagination;
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.FileManager.Interface;
 using MegaHerdt.API.Filters;
@@ -35,7 +36,6 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var articles = articleService.GetAll();
-                
                 return this.Mapper.Map<List<ArticleDTO>>(articles);
             }
             catch (Exception ex)

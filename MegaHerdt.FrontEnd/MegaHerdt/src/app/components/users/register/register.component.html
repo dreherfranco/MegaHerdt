@@ -1,0 +1,24 @@
+<form novalidate (ngSubmit)="onSubmit()" [formGroup]="this.userForm">
+    <label>
+      <span>Full name</span>
+      <input
+        type="text"
+        placeholder="Your full name"
+        formControlName="name">
+    </label>
+    <label>
+        <span>Email address</span>
+        <input
+          type="password"
+          placeholder="Your passwornd"
+          formControlName="password">
+      </label>
+      <div formArrayName="phones">
+                <label>numero:</label><br />
+                <input type="text" name="phoneNumber"/>
+        </div>   
+      <button (click)="addPhone(this.phoneNumber)">
+        + Añadir
+    </button>
+    <button type="submit" [disabled]="userForm.invalid">Sign up</button>
+  </form>
