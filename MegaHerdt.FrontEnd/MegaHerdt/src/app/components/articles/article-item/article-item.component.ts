@@ -29,6 +29,6 @@ export class ArticleItemComponent implements OnInit {
   }
 
   isOnOffer(article: Article):boolean{
-    return article.unitValueWithOffer == article.unitValue;
+    return article.unitValueWithOffer < article.unitValue;
   }
 }

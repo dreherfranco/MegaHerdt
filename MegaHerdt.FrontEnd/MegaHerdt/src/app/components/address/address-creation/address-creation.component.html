@@ -1,5 +1,6 @@
 <div>
     <h3><b>Direccion:</b></h3>
+    <form #addressForm="ngForm" action="#">
     <div class="row">
         <div class="form-group col-sm-6 mb-3">
             <label for="streetName"><b>Nombre de calle:</b></label>
@@ -27,7 +28,7 @@
 
         <div class="form-group col-sm-6 mb-3">
             <label for="floor"><b>Piso:</b></label>
-            <input class="form-control" type="text" name="floor" #floor="ngModel" [(ngModel)]="address.floor" />
+            <input class="form-control" type="text" name="floor" #floor="ngModel" [(ngModel)]="address.floor" pattern="(^[0-9]+)" />
             <span *ngIf="floor.touched && !floor.valid" class="text-danger">Ingrese un piso valido</span>
         </div>
     </div>
@@ -53,9 +54,10 @@
                 valido</span>
         </div>
     </div>
-    <button (click)="addNewItem()" [disabled]="!townName.valid || !province.valid || !postalCode.valid 
+    <button (click)="addNewItem(addressForm)" [disabled]="!townName.valid || !province.valid || !postalCode.valid 
     || !streetNumber.valid || !streetName.valid" class="btn btn-success">
-        +Añadir Direccion
+        +Añadir
     </button>
     <div *ngIf="addressStatus=='success'" class="alert alert-success mt-3">Direccion añadida con exito</div>
+</form>
 </div>

@@ -6,27 +6,34 @@
       <div class="container-form">
 
         <div class="form-group mb-3">
-          <label for="email">Email:</label>
-          <input class="form-control" type="text" name="email" #email="ngModel" [(ngModel)]="user.email"
+          <label for="email"><b>Email:</b></label>
+          <input class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="user.email"
             required />
           <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
         </div>
 
         <div class="form-group mb-3">
-          <label for="dni">DNI:</label>
+          <label for="password" ><b>Password:</b></label>
+          <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
+            required />
+          <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="dni"><b>DNI:</b></label>
           <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required />
           <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido</span>
         </div>
 
         <div class="row">
           <div class="form-group col-sm-6 mb-3">
-            <label for="name">Nombre:</label>
+            <label for="name"><b>Nombre:</b></label>
             <input class="form-control" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required />
             <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
           </div>
 
           <div class="form-group col-sm-6 mb-3">
-            <label for="surname">Apellido:</label>
+            <label for="surname"><b>Apellido:</b></label>
             <input class="form-control" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname"
               required />
             <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
@@ -34,7 +41,7 @@
         </div>
 
         <div class="form-group mb-3">
-          <label for="phoneNumber">Telefono:</label>
+          <label for="phoneNumber"><b>Telefono:</b></label>
           <input class="form-control" type="text" name="phoneNumber" #number="ngModel" [(ngModel)]="phoneNumber"
             pattern="(^[0-9]+)" minlength="5" />
           <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono valido</span>
@@ -57,17 +64,16 @@
       <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
       </app-address-creation>
 
+      <p *ngIf="statusSubmit == 'success'" class="alert alert-success">El usuario se ha creado correctamente</p>
+      <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear el usuario</p>
+      
       <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!registerForm.form.valid" />
     </form>
-
-    <p *ngIf="status == 'success'" class="success">El usuario se ha creado correctamente</p>
-    <p *ngIf="status == 'failed'" class="error">Error al crear el usuario</p>
-    <p *ngIf="status == 'success-update'" class="success">El usuario se ha actualizado correctamente</p>
-    <br>
+    
   </div>
 
   <div class="col-md-6">
-      <h3 *ngIf="addressAddOk">Direcciones Cargadas</h3>
+      <h2 *ngIf="addressAddOk">Direcciones Cargadas</h2>
       <div *ngFor="let address of user.addresses;">
         <hr>
         <app-address-detail [address]="address"></app-address-detail>

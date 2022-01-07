@@ -14,16 +14,17 @@ export class AddressCreationComponent implements OnInit {
   @Output() newItemEvent = new EventEmitter<AddressCreation>();
 
   constructor() {
-    this.address = new AddressCreation('',0,'',0,'','',0);
+    this.address = new AddressCreation('',0,'',0,'','','');
     this.addressStatus="";
    }
 
   ngOnInit(): void {
   }
 
-  addNewItem() {
+  addNewItem(form: any) {
     var newAddress = cloneDeep(this.address);
     this.newItemEvent.emit(newAddress);
     this.addressStatus="success";
+    form.reset();
   }
 }

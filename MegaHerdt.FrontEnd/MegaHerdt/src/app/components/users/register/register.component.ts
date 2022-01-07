@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserCreate } from '../../../models/User/UserCreate';
 import { PhoneCreation } from '../../../models/Phone/PhoneCreation';
 import { AddressCreation } from 'src/app/models/Address/AddressCreation';
+import { UserService } from 'src/app/services/users/user.service';
 
 @Component({
   selector: 'app-register',
@@ -10,14 +11,14 @@ import { AddressCreation } from 'src/app/models/Address/AddressCreation';
 })
 export class RegisterComponent implements OnInit {
   user: UserCreate;
-  status: String;
+  statusSubmit: String;
   phoneNumber: string;
   addressAddOk: boolean;
   phonesAddOk: boolean;
 
-  constructor() {
-    this.user = new UserCreate('', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
-    this.status = "";
+  constructor(private _userService: UserService) {
+    this.user = new UserCreate('','', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
+    this.statusSubmit = "";
     this.phoneNumber = "";
     this.addressAddOk = false;
     this.phonesAddOk = false;
@@ -27,8 +28,27 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  onSubmit(registerForm: any) {
+  onSubmit(form: any) {
     console.log(this.user);
+    this._userService.register(this.user).subscribe(
+      {
+        next: (response) => 
+        {
+          if(response.error)
+          {
+            this.statusSubmit = "failed";
+         }else{ 
+           this.statusSubmit="success";
+         console.log(response);
+         form.reset();}
+        },
+        error: (err) => 
+        {
+          this.statusSubmit = "failed";
+          console.log(err)
+        }
+      }
+    );
   }
 
   addPhone() {

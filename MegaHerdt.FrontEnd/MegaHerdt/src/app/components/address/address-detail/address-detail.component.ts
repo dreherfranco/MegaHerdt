@@ -10,7 +10,7 @@ export class AddressDetailComponent implements OnInit {
   @Input() address: AddressCreation;
   
   constructor() {
-    this.address = new AddressCreation('',0,'',0,'','',0);
+    this.address = new AddressCreation('',0,'',0,'','','');
    }
 
   ngOnInit(): void {
