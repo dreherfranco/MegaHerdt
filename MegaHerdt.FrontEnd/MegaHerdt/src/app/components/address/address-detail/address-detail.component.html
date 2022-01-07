@@ -1,33 +1,41 @@
 <div>
     <h5><b>Direccion:</b></h5>
-
-    <div>
-        <p><b>Nombre de calle:</b> {{ address.streetName }}</p>
+    <br>
+ <div class="row">
+    <div class="col-sm-4">
+        <div><b>Nombre de calle:</b> {{ address.streetName }}</div>
     </div>
 
-    <div>
-        <p><b>Numero de calle:</b> {{ address.streetNumber }}</p>
+    <div class="col-sm-4">
+        <div><b>Numero de calle:</b> {{ address.streetNumber }}</div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm-4"> 
+        <div><b>Departamento:</b> {{ address.department }}</div>
     </div>
 
-    <div>
-        <p><b>Departamento:</b> {{ address.department }}</p>
+    <div class="col-sm-4">
+        <div><b>Piso:</b> {{ address.floor }}</div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm-3">
+        <div><b>CodigoPostal:</b> {{ address.postalCode }}</div>
     </div>
 
-
-    <div>
-        <p><b>Piso:</b> {{ address.floor }}</p>
+    <div class="col-sm-3">
+        <div><b>Province:</b> {{ address.province }}</div>
     </div>
 
-    <div>
-        <p><b>CodigoPostal:</b> {{ address.postalCode }}</p>
+    <div class="col-sm-3">
+        <div><b>Ciudad:</b> {{ address.townName }}</div>
     </div>
-
-    <div>
-        <p><b>Province:</b> {{ address.province }}</p>
-    </div>
-
-    <div>
-        <p><b>Ciudad:</b> {{ address.townName }}</p>
-    </div>
+</div>
 
 </div>
+<br>

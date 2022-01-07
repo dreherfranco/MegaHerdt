@@ -9,40 +9,45 @@ import { AddressCreation } from 'src/app/models/Address/AddressCreation';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  user: UserCreate ;
+  user: UserCreate;
   status: String;
   phoneNumber: string;
   addressAddOk: boolean;
-  constructor() {
-    this.user = new UserCreate('','','','',new Array<PhoneCreation>(), new Array<AddressCreation>());
-    this.status = "";
-    this.phoneNumber="";
-    this.addressAddOk=false;
-   }
+  phonesAddOk: boolean;
 
-  ngOnInit(): void {
-    
+  constructor() {
+    this.user = new UserCreate('', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
+    this.status = "";
+    this.phoneNumber = "";
+    this.addressAddOk = false;
+    this.phonesAddOk = false;
   }
 
-  onSubmit(registerForm:any){
+  ngOnInit(): void {
+
+  }
+
+  onSubmit(registerForm: any) {
     console.log(this.user);
   }
 
   addPhone() {
     var phone = new PhoneCreation(this.phoneNumber);
     this.user.phones.push(phone);
-    this.phoneNumber="";
+    this.phoneNumber = "";
+    this.phonesAddOk = true;
   }
-removePhone(index:number){
-  this.user.phones.splice(index,1);
-}
 
-   numberEmpty():boolean{
-     return this.phoneNumber == "";
-   }
+  removePhone(index: number) {
+    this.user.phones.splice(index, 1);
+  }
 
-   addAddress(address:AddressCreation){
+  numberEmpty(): boolean {
+    return this.phoneNumber == "";
+  }
+
+  addAddress(address: AddressCreation) {
     this.user.addresses.push(address);
     this.addressAddOk = true;
-   }
+  }
 }
