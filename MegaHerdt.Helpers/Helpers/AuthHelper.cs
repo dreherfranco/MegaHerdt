@@ -80,15 +80,20 @@ namespace MegaHerdt.Helpers.Helpers
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, user.Name),
+                new Claim("name", user.Name),
+                new Claim("email", user.Email),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Surname, user.Surname),
-                new Claim(ClaimTypes.Sid, user.Id)
+                new Claim("surname", user.Surname),
+                new Claim(ClaimTypes.Sid, user.Id),
+                new Claim("id", user.Id),
             };
-
-            var identityUser = await this.userManager.FindByEmailAsync(user.Email);
             
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, identityUser.Id));
+           var roles = await userManager.GetRolesAsync(user);
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+            var identityUser = await this.userManager.FindByEmailAsync(user.Email);
 
             var claimsDb = await this.userManager.GetClaimsAsync(identityUser);
 
@@ -127,6 +132,13 @@ namespace MegaHerdt.Helpers.Helpers
             return await roleRepository.Get().Select(x => x.Name).ToListAsync();
         }
 
+        public async Task<List<string>> GetUserRoles(string userEmail)
+        {
+            var user = await this.userManager.FindByEmailAsync(userEmail);
+            var roles = await userManager.GetRolesAsync(user);
+            return roles.ToList();
+        }
+
         public async Task<string> CreateRole(string roleName)
         {
             var role = new IdentityRole() { Name=roleName };
@@ -144,6 +156,7 @@ namespace MegaHerdt.Helpers.Helpers
             }
             
             var addClaim = await userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, roleName));
+            await userManager.AddToRoleAsync(user, roleName);
             if (addClaim.Succeeded)
                 return true;
             return false;
@@ -159,6 +172,7 @@ namespace MegaHerdt.Helpers.Helpers
             }
          
             var removeClaim = await userManager.RemoveClaimAsync(user, new Claim(ClaimTypes.Role, roleName));
+            await userManager.RemoveFromRoleAsync(user, roleName);
             if (removeClaim.Succeeded)
                 return true;
             return false;

@@ -3,6 +3,7 @@ import { UserCreate } from '../../../models/User/UserCreate';
 import { PhoneCreation } from '../../../models/Phone/PhoneCreation';
 import { AddressCreation } from 'src/app/models/Address/AddressCreation';
 import { UserService } from 'src/app/services/users/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,8 +17,8 @@ export class RegisterComponent implements OnInit {
   addressAddOk: boolean;
   phonesAddOk: boolean;
 
-  constructor(private _userService: UserService) {
-    this.user = new UserCreate('','', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
+  constructor(private _userService: UserService, private _router: Router) {
+    this.user = new UserCreate('', '', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
     this.statusSubmit = "";
     this.phoneNumber = "";
     this.addressAddOk = false;
@@ -32,18 +33,15 @@ export class RegisterComponent implements OnInit {
     console.log(this.user);
     this._userService.register(this.user).subscribe(
       {
-        next: (response) => 
-        {
-          if(response.error)
-          {
+        next: (response) => {
+          if (response.error) {
             this.statusSubmit = "failed";
-         }else{ 
-           this.statusSubmit="success";
-         console.log(response);
-         form.reset();}
+          } else {
+            this.statusSubmit = "success";
+            this._router.navigate(['login']);
+          }
         },
-        error: (err) => 
-        {
+        error: (err) => {
           this.statusSubmit = "failed";
           console.log(err)
         }

@@ -43,5 +43,11 @@ namespace MegaHerdt.Services.Services
         {
             await AuthHelper.UserDelete(userEmail);
         }
+
+        public async Task<List<string>> GetUserRoles(string userEmail)
+        {
+            return await this.AuthHelper.GetUserRoles(userEmail);
+        }
+
     }
 }

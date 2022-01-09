@@ -1,6 +1,7 @@
 ﻿
 
 using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Models.Models.Identity;
 
 namespace MegaHerdt.Services.Services
 {

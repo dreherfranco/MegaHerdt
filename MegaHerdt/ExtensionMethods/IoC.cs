@@ -39,7 +39,7 @@ namespace MegaHerdt.API.ExtensionMethods
                                 ValidateIssuerSigningKey = true,
                                 IssuerSigningKey = new SymmetricSecurityKey(
                                 Encoding.UTF8.GetBytes(builder.Configuration["jwt:key"])),
-                                ClockSkew = TimeSpan.Zero
+                                ClockSkew = TimeSpan.Zero,
                             });
 
             builder.Services.Configure<IdentityOptions>(options =>
@@ -49,7 +49,7 @@ namespace MegaHerdt.API.ExtensionMethods
                 options.Password.RequireLowercase = true;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
+                options.Password.RequiredLength = 5;
                 options.Password.RequiredUniqueChars = 1;
             });
             return builder;

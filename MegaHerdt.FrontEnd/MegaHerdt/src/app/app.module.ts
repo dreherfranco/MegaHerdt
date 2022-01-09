@@ -15,6 +15,7 @@ import { ArticleItemComponent } from './components/articles/article-item/article
 import { RegisterComponent } from './components/users/register/register.component';
 import { AddressCreationComponent } from './components/address/address-creation/address-creation.component';
 import { AddressDetailComponent } from './components/address/address-detail/address-detail.component';
+import { LoginComponent } from './components/users/login/login.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AddressDetailComponent } from './components/address/address-detail/addr
     ArticleItemComponent,
     RegisterComponent,
     AddressCreationComponent,
-    AddressDetailComponent
+    AddressDetailComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

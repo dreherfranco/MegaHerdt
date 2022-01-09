@@ -7,7 +7,7 @@
 
         <div class="form-group mb-3">
           <label for="email"><b>Email:</b></label>
-          <input class="form-control" type="email" name="email" #email="ngModel" [(ngModel)]="user.email"
+          <input class="form-control" type="email" name="email" [email]="true" #email="ngModel" [(ngModel)]="user.email"
             required />
           <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
         </div>
@@ -15,7 +15,7 @@
         <div class="form-group mb-3">
           <label for="password" ><b>Password:</b></label>
           <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
-            required />
+            required  minlength="5"/>
           <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
         </div>
 
@@ -64,7 +64,6 @@
       <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
       </app-address-creation>
 
-      <p *ngIf="statusSubmit == 'success'" class="alert alert-success">El usuario se ha creado correctamente</p>
       <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear el usuario</p>
       
       <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!registerForm.form.valid" />

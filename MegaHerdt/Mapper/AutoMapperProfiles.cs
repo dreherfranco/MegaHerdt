@@ -12,9 +12,11 @@ using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.ReparationArticle;
 using MegaHerdt.API.DTOs.ReparationClaim;
 using MegaHerdt.API.DTOs.ReparationState;
+using MegaHerdt.API.DTOs.Role;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
+using Microsoft.AspNetCore.Identity;
 
 namespace MegaHerdt.API.Mapper
 {

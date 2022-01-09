@@ -90,15 +90,23 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<UserTokenDTO>> Login([FromBody] UserLoginDTO userDTO)
+        public async Task<ActionResult<UserCredentialsDTO>> Login([FromBody] UserLoginDTO userLoginDTO)
         {
             try
             {
-                userDTO.Password = hashService.Hash(userDTO.Password);
-                var user = Mapper.Map<User>(userDTO);
+                userLoginDTO.Password = hashService.Hash(userLoginDTO.Password);
+                var user = Mapper.Map<User>(this.UserService.GetByEmail(userLoginDTO.Email));
 
                 var userToken = await this.UserService.Login(user, Configuration["jwt:key"]);
-                return Mapper.Map<UserTokenDTO>(userToken);
+                var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
+                var userDTO = this.Mapper.Map<UserDTO>(user);
+                var roles = await this.UserService.GetUserRoles(user.Email);
+                return new UserCredentialsDTO() 
+                { 
+                    User = userDTO, 
+                    UserToken = userTokenDTO, 
+                    Roles = roles
+                };
             }
             catch (Exception ex)
             {
