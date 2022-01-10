@@ -1,37 +1,74 @@
+import { UserToken } from 'src/app/models/UserToken/UserToken'; 
 import { Injectable } from '@angular/core';
+import { UserDetail } from 'src/app/models/User/UserDetail';
+import { cloneDeep } from 'lodash';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  constructor() { }
+  private identity: UserDetail;
+  private token: UserToken;
 
-  getIdentity(){
+  constructor() 
+  { 
+    this.identity = new UserDetail('','','','','','', new Array<string>());
+    this.token = new UserToken('',new Date());
+  }
+
+  /**
+   * 
+   * @returns UserDetail
+   */
+  getIdentity(): any{
     let identity = localStorage.getItem('identity');
     
     if(identity && identity != 'undefined')
-      identity = JSON.parse(identity); 
+      this.identity = JSON.parse(identity); 
     else
-      identity = null;
-    return identity;
+      console.log("la identidad de usuario no existe");
+    return this.identity;
   }
   
+  setIdentity(response: any): void{
+      this.identity = cloneDeep(response.user);
+      this.identity.roles = response.roles;
+      localStorage.setItem('identity', JSON.stringify(this.identity));
+  }
+
+  /**
+   * 
+   * @returns UserToken
+   */
   getToken(): any{
     let token = localStorage.getItem('token');
     if(token){
-      return token;
+      this.token = cloneDeep(JSON.parse(token));
+      return this.token;
     }
     else{
       console.log("no existe el token");
     }
   }
 
+  setToken(token: any): void{
+    this.token = cloneDeep(token);
+    localStorage.setItem('token', JSON.stringify(token));
+  }
+
   isAuthenticated():boolean{
     let identity = localStorage.getItem('identity');
-    if(identity != null)
+    var dateNow = new Date();
+    this.token = cloneDeep(this.getToken());
+
+    if(identity != null /*&& dateNow < this.token.expiration*/)
       return true;
     else
       return false;
   }
 
+  logout(): void{
+    localStorage.removeItem('identity');
+    localStorage.removeItem('token')
+  }
 }

@@ -1,4 +1,4 @@
-<div class="container-fluid row" *ngIf="user">
+<div class="container-fluid row" *ngIf="!authenticated()">
   <div class="col-md-6">
     <h2>Registrarse</h2>
     <hr><br>
@@ -80,3 +80,4 @@
   </div>
 
 </div>
+<div *ngIf="authenticated()" class="alert alert-warning">Usted se encuentra logueado</div>

@@ -3,6 +3,7 @@ import { UserLogin } from 'src/app/models/User/UserLogin';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserService } from 'src/app/services/users/user.service';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,10 +14,14 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   statusSubmit: string;
 
-  constructor(private _userService: UserService, private _router: Router) {
+  constructor(
+    private _userService: UserService, 
+    private _router: Router, 
+    private _storageService: StorageService
+    ) 
+  {
     this.statusSubmit = "";
     this.loginForm = new FormGroup({});
-
   }
 
   ngOnInit(): void {
@@ -41,12 +46,14 @@ export class LoginComponent implements OnInit {
     this._userService.login(userLogin).subscribe(
       {
         next: (response) => {
+          console.log(response);
           if (response.error) {
             this.statusSubmit = "failed";
           }
           else {
-           // this._router.navigate(['']);
-            console.log(response);  
+            this._storageService.setToken(response.userToken); 
+            this._storageService.setIdentity(response);
+            this._router.navigate(['']);           
           }
         },
         error: (err) => {
@@ -54,8 +61,10 @@ export class LoginComponent implements OnInit {
           console.log(err)
         }
       });
-
   }
   
+  authenticated():boolean{
+    return this._storageService.isAuthenticated();
+  }
  
 }

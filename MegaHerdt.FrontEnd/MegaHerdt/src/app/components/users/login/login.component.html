@@ -1,4 +1,4 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)">
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" *ngIf="!authenticated()">
 
     <label for="email">Email: </label>
     <input id="email" type="text" formControlName="email">
@@ -16,3 +16,4 @@
 
     <input type="submit" [disabled]="loginForm.invalid" value="Enviar"/>
   </form>
+  <div *ngIf="authenticated()" class="alert alert-warning">Usted se encuentra logueado</div>

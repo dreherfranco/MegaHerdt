@@ -16,6 +16,7 @@ import { RegisterComponent } from './components/users/register/register.componen
 import { AddressCreationComponent } from './components/address/address-creation/address-creation.component';
 import { AddressDetailComponent } from './components/address/address-detail/address-detail.component';
 import { LoginComponent } from './components/users/login/login.component';
+import { LogoutComponent } from './components/users/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { LoginComponent } from './components/users/login/login.component';
     RegisterComponent,
     AddressCreationComponent,
     AddressDetailComponent,
-    LoginComponent
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

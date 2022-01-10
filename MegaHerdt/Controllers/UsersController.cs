@@ -94,18 +94,18 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                userLoginDTO.Password = hashService.Hash(userLoginDTO.Password);
-                var user = Mapper.Map<User>(this.UserService.GetByEmail(userLoginDTO.Email));
-
+                var user = Mapper.Map<User>(userLoginDTO);
+                user.Password = hashService.Hash(userLoginDTO.Password);
                 var userToken = await this.UserService.Login(user, Configuration["jwt:key"]);
                 var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
-                var userDTO = this.Mapper.Map<UserDTO>(user);
+                var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByEmail(user.Email));
                 var roles = await this.UserService.GetUserRoles(user.Email);
-                return new UserCredentialsDTO() 
-                { 
-                    User = userDTO, 
-                    UserToken = userTokenDTO, 
-                    Roles = roles
+
+                return new UserCredentialsDTO()
+                {
+                  User = userDTO,
+                  UserToken = userTokenDTO,
+                  Roles = roles
                 };
             }
             catch (Exception ex)

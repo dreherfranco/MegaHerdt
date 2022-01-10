@@ -4,6 +4,7 @@ import { PhoneCreation } from '../../../models/Phone/PhoneCreation';
 import { AddressCreation } from 'src/app/models/Address/AddressCreation';
 import { UserService } from 'src/app/services/users/user.service';
 import { Router } from '@angular/router';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,9 @@ export class RegisterComponent implements OnInit {
   addressAddOk: boolean;
   phonesAddOk: boolean;
 
-  constructor(private _userService: UserService, private _router: Router) {
+  constructor(private _userService: UserService, private _router: Router, 
+    private _storageService: StorageService) 
+    {
     this.user = new UserCreate('', '', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
     this.statusSubmit = "";
     this.phoneNumber = "";
@@ -67,5 +70,9 @@ export class RegisterComponent implements OnInit {
   addAddress(address: AddressCreation) {
     this.user.addresses.push(address);
     this.addressAddOk = true;
+  }
+
+  authenticated(): boolean{
+    return this._storageService.isAuthenticated();
   }
 }

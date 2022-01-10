@@ -16,9 +16,9 @@ export class UserCreate{
         this.email= email;
         this.password = password;
         this.dni = dni;
-        this.name=name;
-        this.surname=surname;
-        this.phones=phones;
-        this.addresses=addresses;
+        this.name = name;
+        this.surname = surname;
+        this.phones = phones;
+        this.addresses = addresses;
     }
 }

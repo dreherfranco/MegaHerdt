@@ -6,6 +6,7 @@
         <a class="p-2 text-dark" href="#">Support</a>
         <a class="p-2 text-dark" href="#">Pricing</a>
     </nav>
-    <a class="btn btn-outline-primary" [routerLink]="['login']" >Login</a>
-    <a class="btn btn-outline-primary" [routerLink]="['register']">Registro</a>
+    <a class="btn btn-outline-primary" [routerLink]="['login']" *ngIf="!authenticated()">Login</a>
+    <a class="btn btn-outline-primary" [routerLink]="['register']" *ngIf="!authenticated()">Registro</a>
+    <a class="btn btn-outline-danger" [routerLink]="['logout']" *ngIf="authenticated()">Logout</a>
 </div>
