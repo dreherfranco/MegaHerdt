@@ -3,3 +3,7 @@
 *{
     font-family: 'Roboto', sans-serif;
 }
+
+.height-hr-3{
+    height: 3px !important;
+}

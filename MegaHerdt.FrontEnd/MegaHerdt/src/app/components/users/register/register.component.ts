@@ -72,6 +72,10 @@ export class RegisterComponent implements OnInit {
     this.addressAddOk = true;
   }
 
+  removeAddress(index: number){
+    this.user.addresses.splice(index, 1);
+  }
+
   authenticated(): boolean{
     return this._storageService.isAuthenticated();
   }

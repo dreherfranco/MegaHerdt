@@ -1,0 +1,6 @@
+<div class="form-group mb-3">
+    <label for="phone"><b>Telefono:</b></label>
+    <input type="hidden" [(ngModel)]="phone.id" name="id">
+    <input class="form-control" type="text" name="number" #number="ngModel" [(ngModel)]="phone.number"
+      pattern="(^[0-9]+)" minlength="5" />
+</div>

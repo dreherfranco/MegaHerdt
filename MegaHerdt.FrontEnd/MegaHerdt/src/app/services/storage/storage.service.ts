@@ -46,14 +46,20 @@ export class StorageService {
       this.token = cloneDeep(JSON.parse(token));
       return this.token;
     }
-    else{
-      console.log("no existe el token");
+  }
+
+  getTokenValue(): any{
+    let token = localStorage.getItem('token');
+    if(token){
+      this.token = cloneDeep(JSON.parse(token));
+      return this.token.token;
     }
   }
 
   setToken(token: any): void{
     this.token = cloneDeep(token);
-    localStorage.setItem('token', JSON.stringify(token));
+    this.token.token = "Bearer " + this.token.token;
+    localStorage.setItem('token', JSON.stringify(this.token));
   }
 
   isAuthenticated():boolean{

@@ -117,18 +117,29 @@ namespace MegaHerdt.API.Controllers
         //INGRESAR CONTRASEÑA PARA ACTUALIZAR
         [HttpPost("update")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<UserTokenDTO>> UserUpdate([FromBody] UserUpdateDTO userDTO)
+        public async Task<ActionResult<UserCredentialsDTO>> UserUpdate([FromBody] UserUpdateDTO userUpdateDTO)
         {
             try
             {
-                var userDb = this.UserService.GetByEmail(userDTO.Email);
-                userDTO.Password = hashService.Hash(userDTO.Password);
-                if (userDTO.Password == userDb.Password && UserValidations.UserEmailIsOk(userDTO.Email, HttpContext))
+                var userDb = this.UserService.GetByEmail(userUpdateDTO.Email);
+                userUpdateDTO.Password = hashService.Hash(userUpdateDTO.Password);
+                if (userUpdateDTO.Password == userDb.Password 
+                    && 
+                    UserValidations.UserEmailIsOk(userUpdateDTO.Email, HttpContext))
                 {
-                    var user = Mapper.Map(userDTO, userDb);
-                    user.UserName = userDTO.Email;
+                    var user = Mapper.Map(userUpdateDTO, userDb);
+                    user.UserName = userUpdateDTO.Email;
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
-                    return Mapper.Map<UserTokenDTO>(userToken);
+                    var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
+                    var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByEmail(user.Email));
+                    var roles = await this.UserService.GetUserRoles(user.Email);
+
+                    return new UserCredentialsDTO()
+                    {
+                        User = userDTO,
+                        UserToken = userTokenDTO,
+                        Roles = roles
+                    };
                 }
                 return BadRequest(new { message = "enter password or email correctly to update" });
             }

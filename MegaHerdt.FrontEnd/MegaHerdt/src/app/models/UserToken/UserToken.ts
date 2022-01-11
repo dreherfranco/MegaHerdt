@@ -1,9 +1,9 @@
 export class UserToken{
-    token:string;
+    token: string;
     expiration:Date;
 
-    constructor(token:string, expiration:Date){
+    constructor(token: string, expiration: Date){
         this.token = token;
-        this.expiration=expiration;
+        this.expiration = expiration;
     }
 }

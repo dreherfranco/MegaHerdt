@@ -17,6 +17,9 @@ import { AddressCreationComponent } from './components/address/address-creation/
 import { AddressDetailComponent } from './components/address/address-detail/address-detail.component';
 import { LoginComponent } from './components/users/login/login.component';
 import { LogoutComponent } from './components/users/logout/logout.component';
+import { UpdateComponent } from './components/users/update/update.component';
+import { AddressUpdateComponent } from './components/address/address-update/address-update.component';
+import { PhoneUpdateComponent } from './components/phones/phone-update/phone-update.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +33,10 @@ import { LogoutComponent } from './components/users/logout/logout.component';
     AddressCreationComponent,
     AddressDetailComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    UpdateComponent,
+    AddressUpdateComponent,
+    PhoneUpdateComponent
   ],
   imports: [
     BrowserModule,

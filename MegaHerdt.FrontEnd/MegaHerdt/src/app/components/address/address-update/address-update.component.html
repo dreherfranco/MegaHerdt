@@ -2,6 +2,7 @@
     <h3><b>Direccion:</b></h3>
     <form #addressForm="ngForm" action="#">
     <div class="row">
+        <input type="hidden" [(ngModel)]="address.id" name="id"/>
         <div class="form-group col-sm-6 mb-3">
             <label for="streetName"><b>Nombre de calle:</b></label>
             <input class="form-control" type="text" name="streetName" #streetName="ngModel" [(ngModel)]="address.streetName" required />
@@ -21,7 +22,7 @@
     <div class="row">
         <div class="form-group col-sm-6 mb-3">
             <label for="department"><b>Departamento:</b></label>
-            <input class="form-control" type="text" name="department" #department="ngModel" [(ngModel)]="address.department" required/>
+            <input class="form-control" type="text" name="department" #department="ngModel" [(ngModel)]="address.department" />
             <span *ngIf="department.touched && !department.valid" class="text-danger">Ingrese un departamento
                 valido</span>
         </div>
@@ -54,10 +55,6 @@
                 valido</span>
         </div>
     </div>
-    <button (click)="addNewItem(addressForm)" [disabled]="!townName.valid || !province.valid || !postalCode.valid 
-    || !streetNumber.valid || !streetName.valid" class="btn btn-success">
-        +Añadir
-    </button>
-    <div *ngIf="addressStatus=='success'" class="alert alert-success mt-3">Direccion añadida con exito</div>
+
 </form>
 </div>

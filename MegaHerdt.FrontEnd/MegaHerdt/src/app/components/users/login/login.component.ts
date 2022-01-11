@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit {
       });
   }
   
-  authenticated():boolean{
+  authenticated(): boolean{
     return this._storageService.isAuthenticated();
   }
  

@@ -73,9 +73,12 @@
 
   <div class="col-md-6">
       <h2 *ngIf="addressAddOk">Direcciones Cargadas</h2>
-      <div *ngFor="let address of user.addresses;">
+      <div *ngFor="let address of user.addresses; let i = index;">
         <hr>
         <app-address-detail [address]="address"></app-address-detail>
+        <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
+          Borrar direccion
+        </button>
       </div>
   </div>
 
