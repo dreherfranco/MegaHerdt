@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
             this.statusSubmit = "failed";
           }
           else {
-            this._storageService.setToken(response.userToken); 
+            this._storageService.setTokenCredentials(response.userToken); 
             this._storageService.setIdentity(response);
             this._router.navigate(['']);           
           }

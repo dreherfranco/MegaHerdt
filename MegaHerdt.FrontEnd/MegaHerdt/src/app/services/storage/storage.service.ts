@@ -8,12 +8,12 @@ import { cloneDeep } from 'lodash';
 })
 export class StorageService {
   private identity: UserDetail;
-  private token: UserToken;
+  private tokenCreds: UserToken;
 
   constructor() 
   { 
     this.identity = new UserDetail('','','','','','', new Array<string>());
-    this.token = new UserToken('',new Date());
+    this.tokenCreds = new UserToken('',new Date());
   }
 
   /**
@@ -40,41 +40,67 @@ export class StorageService {
    * 
    * @returns UserToken
    */
-  getToken(): any{
+  getTokenCredentials(): any{
     let token = localStorage.getItem('token');
     if(token){
-      this.token = cloneDeep(JSON.parse(token));
-      return this.token;
+      this.tokenCreds = cloneDeep(JSON.parse(token));
+      return this.tokenCreds;
     }
   }
 
   getTokenValue(): any{
     let token = localStorage.getItem('token');
     if(token){
-      this.token = cloneDeep(JSON.parse(token));
-      return this.token.token;
+      this.tokenCreds = cloneDeep(JSON.parse(token));
+      return this.tokenCreds.token;
     }
   }
 
-  setToken(token: any): void{
-    this.token = cloneDeep(token);
-    this.token.token = "Bearer " + this.token.token;
-    localStorage.setItem('token', JSON.stringify(this.token));
+  setTokenCredentials(token: any): void{
+    this.tokenCreds = cloneDeep(token);
+    this.tokenCreds.token = "Bearer " + this.tokenCreds.token;
+    localStorage.setItem('token', JSON.stringify(this.tokenCreds));
   }
 
-  isAuthenticated():boolean{
+  isAuthenticated(): boolean{
     let identity = localStorage.getItem('identity');
-    var dateNow = new Date();
-    this.token = cloneDeep(this.getToken());
+   
 
-    if(identity != null /*&& dateNow < this.token.expiration*/)
+    if(identity != null && !this.isTokenExpired())
       return true;
     else
       return false;
+  }
+
+  isTokenExpired(): boolean{
+    var dateNow = new Date();
+    this.tokenCreds = cloneDeep(this.getTokenCredentials());
+    var dateTokenExpiration = new Date(this.tokenCreds.expiration);
+    if(dateNow > dateTokenExpiration){
+      return true;
+    }
+    return false;
   }
 
   logout(): void{
     localStorage.removeItem('identity');
     localStorage.removeItem('token')
   }
+
+  areExpectedRoles(expectedsRoles: Array<string>): boolean{
+    this.identity = this.getIdentity();
+    var areExpecteds = false;
+
+    this.identity.roles.forEach(role => {
+      expectedsRoles.forEach(expectedRole => {
+        if(role == expectedRole)
+        { 
+          areExpecteds=true;
+        }
+      });
+    });
+
+    return areExpecteds;
+  }
+
 }

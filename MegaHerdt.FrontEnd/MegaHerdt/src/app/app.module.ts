@@ -17,9 +17,11 @@ import { AddressCreationComponent } from './components/address/address-creation/
 import { AddressDetailComponent } from './components/address/address-detail/address-detail.component';
 import { LoginComponent } from './components/users/login/login.component';
 import { LogoutComponent } from './components/users/logout/logout.component';
-import { UpdateComponent } from './components/users/update/update.component';
+import { UserUpdateComponent } from './components/users/user-update/user-update.component';
 import { AddressUpdateComponent } from './components/address/address-update/address-update.component';
 import { PhoneUpdateComponent } from './components/phones/phone-update/phone-update.component';
+import { UserSettingsComponent } from './components/users/user-settings/user-settings.component';
+import { AdministrateComponent } from './components/administrate/administrate/administrate.component';
 
 @NgModule({
   declarations: [
@@ -34,9 +36,11 @@ import { PhoneUpdateComponent } from './components/phones/phone-update/phone-upd
     AddressDetailComponent,
     LoginComponent,
     LogoutComponent,
-    UpdateComponent,
+    UserUpdateComponent,
     AddressUpdateComponent,
-    PhoneUpdateComponent
+    PhoneUpdateComponent,
+    UserSettingsComponent,
+    AdministrateComponent
   ],
   imports: [
     BrowserModule,

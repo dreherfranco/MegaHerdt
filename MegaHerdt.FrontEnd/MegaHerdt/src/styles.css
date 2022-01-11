@@ -1,9 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Anton&family=Roboto:wght@300&display=swap');
 
 *{
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 .height-hr-3{
     height: 3px !important;
+}
+
+.button-custom{
+    background-color: #8F00FF !important;
+    color: whitesmoke !important;
+    font-size: 1.35rem !important;
+    font-weight: bold !important;
 }

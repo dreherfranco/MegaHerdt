@@ -7,11 +7,12 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 
 @Component({
-  selector: 'app-update',
-  templateUrl: './update.component.html',
-  styleUrls: ['./update.component.css']
+  selector: 'app-user-update',
+  templateUrl: './user-update.component.html',
+  styleUrls: ['./user-update.component.css']
 })
-export class UpdateComponent implements OnInit {
+
+export class UserUpdateComponent implements OnInit {
   user: UserUpdate;
   statusSubmit: String;
   phoneNumber: string;
@@ -39,7 +40,7 @@ export class UpdateComponent implements OnInit {
           this.statusSubmit="failed";
           console.log("no se actualizo correctamente");
         } else {
-          this._storageService.setToken(response.userToken); 
+          this._storageService.setTokenCredentials(response.userToken); 
           this._storageService.setIdentity(response);
           this.statusSubmit="success";
         }
