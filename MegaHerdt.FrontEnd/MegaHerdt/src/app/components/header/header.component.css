@@ -4,12 +4,17 @@
 
 .border-color-custom{
  border-color: #8F00FF !important;
+ border-width: 0.12rem !important;
 }
 
 .link-custom{
     background-color: white!important;
+    font-weight: bold !important;
+    font-size: larger !important;
+    box-shadow:inset 10px 10px 5px black !important;
 }
 
-.icon{
-    src: url("../../../assets/images/home.png");
+
+.link-custom:hover{
+    background-color: #8F00FF !important;
 }

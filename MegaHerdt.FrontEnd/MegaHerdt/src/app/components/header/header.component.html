@@ -1,20 +1,31 @@
-<div class="d-flex flex-column flex-md-row align-items-end p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm bg-image" >
-    <div class="w-15">
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm bg-image" >
+    <div class="my-2 my-md-0 mr-md-3 d-flex align-content-center w-15 flex-column m-1">
         <img src="../../../assets/images/megaherdt.jpg" class="img-fluid rounded" alt="Responsive image">
     </div>
     <nav class="my-2 my-md-0 mr-md-3 d-flex align-content-start flex-wrap">
-        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" [routerLink]="['']"><span class="material-icons">&#xE87C;</span> Inicio</a>
-        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" href="#">Enterprise</a>
-        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" href="#">Support</a>
-        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" [routerLink]="['user/settings']" *ngIf="authenticated()">
-            Ajustes de usuario
+        <a class="btn p-3 text-dark link-custom text-center border border-color-custom rounded" [routerLink]="['']">
+            <i class="bi bi-house"></i> Inicio 
+        </a>
+        
+        <a class="btn p-3 text-dark link-custom text-center border border-color-custom rounded" href="#">Enterprise</a>
+        <a class="btn p-3 text-dark link-custom text-center border border-color-custom rounded" href="#">Support</a>
+        <a class="p-3 text-dark link-custom text-center border border-color-custom rounded" [routerLink]="['user/settings']" *ngIf="authenticated()">
+            <i class="bi bi-person-fill"></i>Ajustes de usuario
         </a>
         <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" [routerLink]="['administrate']" *ngIf="authenticated() && isAdmin()">
-            Administrar
+            <i class="bi bi-list-task"></i>Administrar
         </a>
         
     </nav>
-    <a class="btn btn-outline-primary" [routerLink]="['login']" *ngIf="!authenticated()">Login</a>
-    <a class="btn btn-outline-primary" [routerLink]="['register']" *ngIf="!authenticated()">Registro</a>
-   <a class="btn btn-outline-danger" [routerLink]="['logout']" *ngIf="authenticated()">Logout</a>
+    <div class="my-2 my-md-0 mr-md-3 d-flex row flex-column flex-md-row align-items-center flex-wrap flex-row m-3">
+        <a class="p-3 btn btn-outline-primary link-custom text-center border border-color-custom rounded" [routerLink]="['login']" *ngIf="!authenticated()">
+            <i class="bi bi-box-arrow-in-right"></i>Login
+        </a>
+        <a class="p-3 btn btn-outline-primary link-custom text-center border border-color-custom rounded" [routerLink]="['register']" *ngIf="!authenticated()">
+            <i class="bi bi-person-plus"></i>Registro
+        </a>
+        <a class="p-3 btn btn-outline-danger link-custom text-center border border-color-custom rounded" [routerLink]="['logout']" *ngIf="authenticated()">
+            <i class="bi bi-box-arrow-left"></i> Logout
+        </a>
+    </div>
 </div>

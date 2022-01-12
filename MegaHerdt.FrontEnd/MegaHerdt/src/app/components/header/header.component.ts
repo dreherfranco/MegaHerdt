@@ -5,7 +5,7 @@ import { RoleEnum as Role} from 'src/app/utils/RoleEnum';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
 
