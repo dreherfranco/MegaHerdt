@@ -16,7 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
-  { path: 'user/settings', component: UserSettingsComponent, canActivate: [AuthGuard ] },
+  { path: 'user/settings', component: UserSettingsComponent, canActivate: [AuthGuard ]},
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },
   
   //ADMIN ROUTES

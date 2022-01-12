@@ -54,8 +54,7 @@
                 valido</span>
         </div>
     </div>
-    <button (click)="addNewItem(addressForm)" [disabled]="!townName.valid || !province.valid || !postalCode.valid 
-    || !streetNumber.valid || !streetName.valid" class="btn btn-success">
+    <button (click)="addNewItem(addressForm)" [disabled]="!addressForm.form.valid" class="btn btn-success">
         +Añadir
     </button>
     <div *ngIf="addressStatus=='success'" class="alert alert-success mt-3">Direccion añadida con exito</div>

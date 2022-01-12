@@ -22,6 +22,7 @@ import { AddressUpdateComponent } from './components/address/address-update/addr
 import { PhoneUpdateComponent } from './components/phones/phone-update/phone-update.component';
 import { UserSettingsComponent } from './components/users/user-settings/user-settings.component';
 import { AdministrateComponent } from './components/administrate/administrate/administrate.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AdministrateComponent } from './components/administrate/administrate/ad
     HttpClientModule,
     NgxPaginationModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

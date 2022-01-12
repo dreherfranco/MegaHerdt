@@ -4,13 +4,31 @@
     font-family: 'Roboto', sans-serif !important;
 }
 
+.bg-image{
+    background-image: url(../../../assets/images/background.png);
+    background-attachment: fixed;
+}
+
+/* hr CUSTOMS */
 .height-hr-3{
     height: 3px !important;
 }
 
+
+/* width CUSTOMS*/
+.w-15{
+    max-width: 15%;
+}
+
+
+/* buttons CUSTOMS */
 .button-custom{
     background-color: #8F00FF !important;
     color: whitesmoke !important;
     font-size: 1.35rem !important;
     font-weight: bold !important;
 }
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

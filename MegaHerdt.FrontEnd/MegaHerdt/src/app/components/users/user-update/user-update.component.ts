@@ -78,4 +78,29 @@ export class UserUpdateComponent implements OnInit {
   authenticated(): boolean{
     return this._storageService.isAuthenticated();
   }
+
+  removePhone(index: number) {
+    this.user.phones.splice(index, 1);
+  }
+
+  numberEmpty(): boolean {
+    return this.phoneNumber == "";
+  }
+
+  addPhone() {
+    var phone = new PhoneUpdate(0,this.phoneNumber);
+    this.user.phones.push(phone);
+    this.phoneNumber = "";
+    this.phonesAddOk = true;
+  }
+
+  addAddress(address: any) {
+    this.user.addresses.push(address);
+    this.addressAddOk = true;
+  }
+
+  removeAddress(index: number){
+    this.user.addresses.splice(index, 1);
+  }
+
 }

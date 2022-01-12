@@ -6,11 +6,12 @@
         currentPage:this.paginate.page
     }
     ">
-        <app-article-item [article]="article"></app-article-item>
+
+    <app-article-item [article]="article"></app-article-item>
     </div>
-    <pagination-controls 
+    <pagination-controls class="text-center"
     (pageChange)="this.paginate.page = $event" 
-    previosLabel="Anterior" 
+    previousLabel="Anterior" 
     nextLabel="Siguiente">
     </pagination-controls>
 

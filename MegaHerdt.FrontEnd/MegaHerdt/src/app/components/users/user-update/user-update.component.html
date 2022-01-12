@@ -34,14 +34,18 @@
           </div>
           <div>
             <hr>
-            <h3 class="text-center">Telefonos</h3>
-            <div *ngFor="let phone of user.phones">
-              <app-phone-update [phone]="phone"></app-phone-update>
+            <h2 class="text-center">Telefonos cargados</h2>
+            <div *ngFor="let phone of user.phones; let i = index;">
+             <p> <app-phone-update [phone]="phone"></app-phone-update>  
+              <button (click)="removePhone(i)" class="btn btn-danger mt-3 mb-3">
+                Borrar
+              </button></p>
             </div>
           </div>
         </div>
   
         <hr class="height-hr-3">
+        <h2 class="text-center">Direcciones cargadas</h2>
         <div *ngFor="let address of user.addresses" >
           <app-address-update [address]="address"></app-address-update>
         </div>
@@ -61,5 +65,20 @@
       </form>
   
     </div>
-  
+    <div class="col-md-6">
+      <h2 class="text-center">Agregar telefonos</h2>
+      <hr class="height-hr-3">
+    <input class="form-control" type="text" name="phoneNumber" #number="ngModel" [(ngModel)]="phoneNumber"
+      pattern="(^[0-9]+)" minlength="5" />
+    <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono valido</span>
+    <button (click)="addPhone()" [disabled]="!number.valid || numberEmpty()" class="btn btn-success mt-3 mb-3">
+      +Añadir
+    </button>
+
+    <hr class="height-hr-3">
+    <h2 class="text-center">Agregar direcciones</h2>
+    <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
+    </app-address-creation>
+
+    </div>
   </div>

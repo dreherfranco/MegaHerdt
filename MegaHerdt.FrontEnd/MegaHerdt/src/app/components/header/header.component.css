@@ -1,0 +1,15 @@
+*{
+    color: black !important;
+}
+
+.border-color-custom{
+ border-color: #8F00FF !important;
+}
+
+.link-custom{
+    background-color: white!important;
+}
+
+.icon{
+    src: url("../../../assets/images/home.png");
+}

@@ -1,15 +1,18 @@
-<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-    <h5 class="my-0 mr-md-auto font-weight-normal">MegaHerdt</h5>
-    <nav class="my-2 my-md-0 mr-md-3">
-        <a class="p-2 text-dark" [routerLink]="['']">Inicio</a>
-        <a class="p-2 text-dark" href="#">Enterprise</a>
-        <a class="p-2 text-dark" href="#">Support</a>
-        <a class="p-2 text-dark" [routerLink]="['user/settings']" *ngIf="authenticated()">
+<div class="d-flex flex-column flex-md-row align-items-end p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm bg-image" >
+    <div class="w-15">
+        <img src="../../../assets/images/megaherdt.jpg" class="img-fluid rounded" alt="Responsive image">
+    </div>
+    <nav class="my-2 my-md-0 mr-md-3 d-flex align-content-start flex-wrap">
+        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" [routerLink]="['']"><span class="material-icons">&#xE87C;</span> Inicio</a>
+        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" href="#">Enterprise</a>
+        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" href="#">Support</a>
+        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" [routerLink]="['user/settings']" *ngIf="authenticated()">
             Ajustes de usuario
         </a>
-        <a class="p-2 text-dark" [routerLink]="['administrate']" *ngIf="authenticated()">
+        <a class="p-2 text-dark link-custom text-center border border-color-custom rounded m-1" [routerLink]="['administrate']" *ngIf="authenticated() && isAdmin()">
             Administrar
         </a>
+        
     </nav>
     <a class="btn btn-outline-primary" [routerLink]="['login']" *ngIf="!authenticated()">Login</a>
     <a class="btn btn-outline-primary" [routerLink]="['register']" *ngIf="!authenticated()">Registro</a>

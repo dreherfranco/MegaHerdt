@@ -14,7 +14,7 @@ export class ArticleListComponent implements OnInit {
 
   constructor(private _articleService: ArticleService) 
   { 
-    this.paginate = new Paginate(1,4);
+    this.paginate = new Paginate(1,6);
   }
 
   ngOnInit(): void {
