@@ -22,6 +22,8 @@ import { PhoneUpdateComponent } from './components/phones/phone-update/phone-upd
 import { UserSettingsComponent } from './components/users/user-settings/user-settings.component';
 import { AdministrateComponent } from './components/administrate/administrate/administrate.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ShowUsersComponent } from './components/users/show-users/show-users.component';
+import { UserDetailAdministrateComponent } from './components/users/user-detail-administrate/user-detail-administrate.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AddressUpdateComponent,
     PhoneUpdateComponent,
     UserSettingsComponent,
-    AdministrateComponent
+    AdministrateComponent,
+    ShowUsersComponent,
+    UserDetailAdministrateComponent
   ],
   imports: [
     BrowserModule,

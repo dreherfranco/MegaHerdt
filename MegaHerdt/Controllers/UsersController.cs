@@ -35,18 +35,17 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-users")]
-      //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-       // [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult<List<UserDTO>>> GetAll([FromQuery] PaginationDTO paginationDTO)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<List<UserDetailDTO>>> GetAll(/*[FromQuery] PaginationDTO paginationDTO*/)
         {
             try
             {
-                var usersQueryable = this.UserService.Get().AsQueryable();
-                await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
+                var users = this.UserService.Get().ToList();
+               // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
 
-                var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
-                var usersDTO = Mapper.Map<List<UserDTO>>(entity);
-                return usersDTO;
+           //     var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
+                return Mapper.Map<List<UserDetailDTO>>(users);
             }
             catch (Exception ex)
             {

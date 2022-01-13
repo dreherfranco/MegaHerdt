@@ -10,6 +10,7 @@ import { UserSettingsComponent } from './components/users/user-settings/user-set
 import { RoleGuardService as RoleGuard } from './services/guard/role-guard/role-guard.service';
 import { RoleEnum as Role } from './utils/RoleEnum';
 import { AdministrateComponent } from './components/administrate/administrate/administrate.component';
+import { ShowUsersComponent } from './components/users/show-users/show-users.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,6 +25,11 @@ const routes: Routes = [
     path: 'administrate', component: AdministrateComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
+  { 
+    path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN ] }  
+  },
+
   { path: '**', component: HomeComponent }
 ];
 

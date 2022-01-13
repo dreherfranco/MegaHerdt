@@ -36,7 +36,11 @@ export class UserService {
   update(user: UserUpdate, token: string): Observable<any>{
     let params = JSON.stringify(user);
     this.headers = this.headers.set('Authorization', token);
-    return this._http.post(this.url+"/update", params, {headers: this.headers} );
+    return this._http.post(this.url+"/update", params, { headers: this.headers } );
   }
 
+  getUsers(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + "/get-users", { headers: this.headers });
+  }
 }

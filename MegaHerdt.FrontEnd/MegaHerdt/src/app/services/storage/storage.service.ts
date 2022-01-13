@@ -12,7 +12,7 @@ export class StorageService {
 
   constructor() 
   { 
-    this.identity = new UserDetail('','','','','','', new Array<string>());
+    this.identity = new UserDetail('','','','','', new Array<string>());
     this.tokenCreds = new UserToken('',new Date());
   }
 

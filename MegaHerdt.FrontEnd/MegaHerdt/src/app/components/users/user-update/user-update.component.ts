@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { PhoneUpdate } from 'src/app/models/Phone/PhoneUpdate';
 import { UserUpdate } from 'src/app/models/User/UserUpdate';
@@ -19,7 +18,7 @@ export class UserUpdateComponent implements OnInit {
   addressAddOk: boolean;
   phonesAddOk: boolean;
 
-  constructor(private _userService: UserService, private _router: Router, 
+  constructor(private _userService: UserService, 
     private _storageService: StorageService) 
     {
     this.user = new UserUpdate('', '', '', '', '', new Array<PhoneUpdate>(), new Array<AddressUpdate>());

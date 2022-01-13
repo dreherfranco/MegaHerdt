@@ -1,0 +1,15 @@
+
+.data-user{
+    font-weight: bold !important;
+    font-size:small !important;
+}
+
+.card{
+    box-shadow: 2px 2px 2px #8F00FF !important;
+}
+
+.link-custom{
+    font-weight: bold !important;
+    font-size:small !important;
+    color: #007BC1 !important;
+}
