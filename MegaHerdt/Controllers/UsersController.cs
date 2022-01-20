@@ -55,7 +55,6 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-user/{email}")]
-     //   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public ActionResult<UserDTO> GetByEmail(string email)
         {
             try
@@ -188,5 +187,6 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
     }
 }

@@ -5,7 +5,6 @@ import { Global } from '../../utils/Global';
 import { UserCreate } from 'src/app/models/User/UserCreate';
 import { UserLogin } from 'src/app/models/User/UserLogin';
 import { UserUpdate } from 'src/app/models/User/UserUpdate';
-import { UserToken } from 'src/app/models/UserToken/UserToken';
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +42,7 @@ export class UserService {
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url + "/get-users", { headers: this.headers });
   }
+
+  
 }
+

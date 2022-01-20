@@ -24,6 +24,8 @@ import { AdministrateComponent } from './components/administrate/administrate/ad
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShowUsersComponent } from './components/users/show-users/show-users.component';
 import { UserDetailAdministrateComponent } from './components/users/user-detail-administrate/user-detail-administrate.component';
+import { EditRoleUserComponent } from './components/users/edit-role-user/edit-role-user/edit-role-user.component';
+import { RolesUserComponent } from './components/roles/roles-user/roles-user/roles-user.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { UserDetailAdministrateComponent } from './components/users/user-detail-
     UserSettingsComponent,
     AdministrateComponent,
     ShowUsersComponent,
-    UserDetailAdministrateComponent
+    UserDetailAdministrateComponent,
+    EditRoleUserComponent,
+    RolesUserComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,7 @@ import { RoleGuardService as RoleGuard } from './services/guard/role-guard/role-
 import { RoleEnum as Role } from './utils/RoleEnum';
 import { AdministrateComponent } from './components/administrate/administrate/administrate.component';
 import { ShowUsersComponent } from './components/users/show-users/show-users.component';
+import { EditRoleUserComponent } from './components/users/edit-role-user/edit-role-user/edit-role-user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,7 +30,10 @@ const routes: Routes = [
     path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
-
+  { 
+    path: 'administrate/show-users/edit-role-user/:email', component: EditRoleUserComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN ] }  
+  },
   { path: '**', component: HomeComponent }
 ];
 

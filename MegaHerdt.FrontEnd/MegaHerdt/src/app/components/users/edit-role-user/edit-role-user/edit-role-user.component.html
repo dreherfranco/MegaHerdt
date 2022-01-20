@@ -1,3 +1,4 @@
+<div class="container-fluid">
 <div class="card text-center mb-3 m-2 border border-dark">
     
     <div class="card-body row">
@@ -10,9 +11,10 @@
             <p class="card-text d-flex flex-column flex-md-row data-user">APELLIDO: {{user.surname | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">DNI: {{ user.dni }}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">Email: {{ user.email }}</p>
+
+            <app-roles-user [email]="user.email"></app-roles-user>
         </div>
-        <div class="d-flex flex-column flex-md-row justify-content-end align-items-end mt-2">
-                <a class="btn link-custom" [routerLink]="['edit-role-user', user.email]">MODIFICAR ROLES</a>
-        </div>
+
     </div>
   </div>
+</div>

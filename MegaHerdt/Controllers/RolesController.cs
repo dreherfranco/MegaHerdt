@@ -9,6 +9,7 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
     public class RolesController : ControllerBase
     {
         private readonly RoleService RoleService;
@@ -19,7 +20,6 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-roles")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public async Task<ActionResult<List<string>>> GetRoles()
         {
             try
@@ -35,7 +35,6 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("create-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public async Task<ActionResult> CreateRole([FromBody] CreateRoleDTO roleDTO)
         {
             try
@@ -54,15 +53,14 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("assign-role")]
-     //   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult> AssignRole([FromBody] EditRoleDTO roleDTO)
+        public async Task<ActionResult<bool>> AssignRole([FromBody] EditRoleDTO roleDTO)
         {
             try
             {
                 var assignRole = await this.RoleService.AssignRole(roleDTO.RoleName.ToUpper(), roleDTO.UserEmail);
                 if (assignRole)
                 {
-                    return NoContent();
+                    return true;
                 }
                 throw new Exception("Role didn't be assigned");
             }
@@ -73,15 +71,15 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("remove-role-to-user")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
-        public async Task<ActionResult> RemoveRoleToUser([FromBody] EditRoleDTO roleDTO)
+        public async Task<ActionResult<bool>> RemoveRoleToUser([FromBody] EditRoleDTO roleDTO)
         {
             try
             {
+
                 var removeRole = await this.RoleService.RemoveRoleToUser(roleDTO.RoleName.ToUpper(), roleDTO.UserEmail);
                 if (removeRole)
                 {
-                    return NoContent();
+                    return true;
                 }
                 throw new Exception("Role didn't be removed");
             }
@@ -92,7 +90,6 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("delete-role")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
         public async Task<ActionResult> DeleteRole([FromBody] DeleteRoleDTO roleDTO)
         {
             try
@@ -103,6 +100,19 @@ namespace MegaHerdt.API.Controllers
             catch (Exception ex)
             {
                 throw new Exception(ex.Message);
+            }
+        }
+
+        [HttpGet("get-user-roles/{email}")]
+        public async Task<ActionResult<List<string>>> GetUserRoles(string email)
+        {
+            try
+            {
+                return await this.RoleService.GetUserRoles(email);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
             }
         }
     }

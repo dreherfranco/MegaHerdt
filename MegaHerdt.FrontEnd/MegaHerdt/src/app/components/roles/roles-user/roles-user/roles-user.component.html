@@ -1,0 +1,17 @@
+<br>
+<div class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
+    ROLES ASIGNADOS: 
+    <div  class="p-1" *ngFor="let role of userRoles; let i = index;">
+      {{ role }} <button class="btn btn-danger p-1" (click)="removeUserRole(role)">Quitar</button>
+    </div>
+</div>
+<br>
+<div *ngIf="roles" class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
+    ASIGNAR ROL: 
+    <div class=" d-flex flex-row">
+    <select class="form-select" aria-label="Default select example" [(ngModel)]="roleSelected">
+        <option *ngFor="let role of roles" value="{{ role }}">{{role}}</option>
+    </select> 
+    <button class="btn btn-success" (click)="assignRole()"> Asignar </button>
+</div>
+</div>
