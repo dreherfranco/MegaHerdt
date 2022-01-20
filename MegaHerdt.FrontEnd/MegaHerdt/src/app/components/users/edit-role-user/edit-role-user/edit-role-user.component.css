@@ -1,9 +1,13 @@
 
 .data-user{
     font-weight: bold !important;
-    font-size:small !important;
+    font-size:medium !important;
 }
 
 .card{
     box-shadow: 2px 2px 2px #8F00FF !important;
+}
+
+.img-user{
+    width: 15% !important;
 }

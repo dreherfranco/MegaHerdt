@@ -21,11 +21,13 @@ const routes: Routes = [
   { path: 'user/settings', component: UserSettingsComponent, canActivate: [AuthGuard ]},
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },
   
-  //ADMIN ROUTES
+  //EMPLOYEE AND ADMIN ROUTES
   { 
     path: 'administrate', component: AdministrateComponent, canActivate: [AuthGuard, RoleGuard], 
-      data: { expectedsRoles: [ Role.ADMIN ] }  
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
+
+  //ADMIN ROUTES
   { 
     path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
@@ -34,6 +36,7 @@ const routes: Routes = [
     path: 'administrate/show-users/edit-role-user/:email', component: EditRoleUserComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
+  
   { path: '**', component: HomeComponent }
 ];
 

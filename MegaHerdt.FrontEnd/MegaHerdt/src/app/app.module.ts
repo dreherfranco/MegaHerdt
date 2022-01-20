@@ -26,6 +26,7 @@ import { ShowUsersComponent } from './components/users/show-users/show-users.com
 import { UserDetailAdministrateComponent } from './components/users/user-detail-administrate/user-detail-administrate.component';
 import { EditRoleUserComponent } from './components/users/edit-role-user/edit-role-user/edit-role-user.component';
 import { RolesUserComponent } from './components/roles/roles-user/roles-user/roles-user.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { RolesUserComponent } from './components/roles/roles-user/roles-user/rol
     NgxPaginationModule,
     ReactiveFormsModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

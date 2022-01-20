@@ -1,11 +1,24 @@
 <div clas="container-fluid">
-    <div class="row">
+    <div class="input-group mb-3 w-50 mx-auto searcher">
+        <div class="input-group-prepend">
+          <div class="input-group-text">
+            <i class="bi bi-search"></i>
+          </div>
+        </div>
+        <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
+      </div>
 
-        <div class="col-md-4" *ngFor="let user of users | paginate: 
+    <div class="row">
+            
+        
+        <div class="col-md-4" *ngFor="let user of users 
+        | paginate: 
         {
             itemsPerPage: this.paginate.recordsPerPage, 
             currentPage:this.paginate.page
-        }">
+        }
+        | filter: searchText
+        ">
             <app-user-detail-administrate [user]="user"></app-user-detail-administrate>
         </div>
 

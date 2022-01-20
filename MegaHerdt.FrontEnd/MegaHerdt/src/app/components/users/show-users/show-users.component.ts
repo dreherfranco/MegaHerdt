@@ -13,10 +13,12 @@ import { UserService } from 'src/app/services/users/user.service';
 export class ShowUsersComponent implements OnInit {
   users: Array<UserDetail>;
   paginate: Paginate;
+  searchText: string;
 
   constructor(private _storageService: StorageService, private _userService: UserService) {
     this.users = new Array<UserDetail>();
     this.paginate = new Paginate(1,6);
+    this.searchText = "";
    }
 
   ngOnInit(): void {

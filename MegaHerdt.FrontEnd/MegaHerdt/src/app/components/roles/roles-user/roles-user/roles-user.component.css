@@ -3,3 +3,16 @@
     font-size:small !important;
 }
 
+.roles-text{
+    font-weight: bold !important;
+    font-size:medium !important;
+}
+.btn-remove-role:hover{
+    background-color: red !important;
+}
+
+.btn-add-role:hover{
+    transition: 1ms;
+    background-color: #007BC1 !important;
+    color: black;
+}

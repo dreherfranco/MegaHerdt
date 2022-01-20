@@ -9,12 +9,14 @@ import { Paginate } from '../../../models/Paginate/Paginate';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-  public articles: Article[] = [];
-  public paginate: Paginate;
-
+  articles: Article[] = [];
+  paginate: Paginate;
+  searchText: string;
+  
   constructor(private _articleService: ArticleService) 
   { 
     this.paginate = new Paginate(1,6);
+    this.searchText = "";
   }
 
   ngOnInit(): void {

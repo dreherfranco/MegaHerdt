@@ -19,9 +19,9 @@ export class HeaderComponent implements OnInit {
     return this._storageService.isAuthenticated();
   }
 
-  isAdmin(): boolean{
+  isEmployeeOrAdmin(): boolean{
     let expectedsRoles = new Array<string>();
-    expectedsRoles.push(Role.ADMIN);
+    expectedsRoles.push(Role.ADMIN, Role.EMPLEADO);
     return this._storageService.areExpectedRoles(expectedsRoles);
   }
 }

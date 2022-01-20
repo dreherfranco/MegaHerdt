@@ -12,7 +12,7 @@
         <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['user/settings']" *ngIf="authenticated()">
             <i class="bi bi-person-fill"></i> Ajustes de usuario
         </a>
-        <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['administrate']" *ngIf="authenticated() && isAdmin()">
+        <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['administrate']" *ngIf="authenticated() && isEmployeeOrAdmin()">
             <i class="bi bi-list-task"></i> Administrar
         </a>
         
