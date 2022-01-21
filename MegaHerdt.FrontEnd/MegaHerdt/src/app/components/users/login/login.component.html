@@ -1,19 +1,23 @@
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" *ngIf="!authenticated()">
-
-    <label for="email">Email: </label>
-    <input id="email" type="text" formControlName="email">
+<h1 class="text-center">Iniciar Sesion</h1>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" class="w-50 mx-auto" *ngIf="!authenticated()">
+  <div class="form-group mb-3">
+    <label for="email"><b>Email: </b></label>
+    <input id="email" placeholder="Ingrese su email" class="form-control" type="text" formControlName="email">
     <span *ngIf="loginForm.touched && loginForm.controls['email'].invalid" class="text-danger">
       Ingrese un email valido
     </span>
+  </div>
 
-    <label for="password">Password: </label>
-    <input id="password" type="password" formControlName="password">
+  <div class="form-group mb-3">
+    <label for="password"><b>Password: </b></label>
+    <input class="form-control" id="password" type="password" placeholder="Ingrese su contraseña" formControlName="password">
     <span *ngIf="loginForm.controls['password'].touched && loginForm.controls['password'].invalid" class="text-danger">
       Ingrese una contraseña valida
     </span>
+  </div>
 
     <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al loguearse</p>
 
-    <input type="submit" [disabled]="loginForm.invalid" value="Enviar"/>
-  </form>
+    <input type="submit" class="btn btn-primary w-25 h-25 mt-3" [disabled]="loginForm.invalid" value="Entrar"/>
+</form>
   <div *ngIf="authenticated()" class="alert alert-warning">Usted se encuentra logueado</div>

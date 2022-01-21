@@ -1,0 +1,8 @@
+.button-custom:hover{
+    background-color: black!important;
+    font-weight: bold !important;
+    color:white !important;
+}
+.button-custom{
+    color: black !important;
+}
