@@ -13,8 +13,6 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-  //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
     public class ArticlesCategoriesController : ControllerBase
     {
         private readonly ArticleCategoryService articleCategoryService;
@@ -56,6 +54,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<ArticleCategoryDTO>> Post([FromBody] ArticleCategoryCreationDTO articleCategoryDTO)
         {
             try
@@ -72,6 +72,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult> Put([FromBody] ArticleCategoryDTO articleCategoryDTO)
         {
             try
@@ -90,14 +92,16 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             try
             {
                 Expression<Func<ArticleCategory, bool>> filter = x => x.Id == id;
                 var articleCategory = this.articleCategoryService.GetBy(filter).FirstOrDefault();
                 await articleCategoryService.Delete(articleCategory);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

@@ -18,6 +18,6 @@
 
     <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al loguearse</p>
 
-    <input type="submit" class="btn btn-primary w-25 h-25 mt-3" [disabled]="loginForm.invalid" value="Entrar"/>
+    <input type="submit" class="btn btn-primary mt-3" [disabled]="loginForm.invalid" value="Entrar"/>
 </form>
   <div *ngIf="authenticated()" class="alert alert-warning">Usted se encuentra logueado</div>

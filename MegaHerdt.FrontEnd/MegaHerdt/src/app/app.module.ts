@@ -27,6 +27,9 @@ import { UserDetailAdministrateComponent } from './components/users/user-detail-
 import { EditRoleUserComponent } from './components/users/edit-role-user/edit-role-user/edit-role-user.component';
 import { RolesUserComponent } from './components/roles/roles-user/roles-user/roles-user.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AdministrateCategoriesComponent } from './components/categories/administrate-categories/administrate-categories.component';
+import { CreateCategoryComponent } from './components/categories/create-category/create-category.component';
+import { EditCategoriesComponent } from './components/categories/edit-categories/edit-categories.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +52,10 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     ShowUsersComponent,
     UserDetailAdministrateComponent,
     EditRoleUserComponent,
-    RolesUserComponent
+    RolesUserComponent,
+    AdministrateCategoriesComponent,
+    CreateCategoryComponent,
+    EditCategoriesComponent
   ],
   imports: [
     BrowserModule,
