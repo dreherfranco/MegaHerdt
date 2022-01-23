@@ -14,4 +14,14 @@
             <i class="bi bi-list"></i> Administrar marcas
         </a>   
     </div>
+    <div class="row mb-3">
+        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-providers']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
+            <i class="bi bi-list"></i> Administrar proveedores
+        </a>   
+    </div>
+    <div class="row mb-3">
+        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-articles']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
+            <i class="bi bi-list"></i> Administrar articulos
+        </a>   
+    </div>
 </div>

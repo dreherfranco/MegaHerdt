@@ -45,11 +45,26 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ArticleDTO> Get(int id)
+        public ActionResult<ArticleDTO> GetById(int id)
         {
             try
             {
                 Expression<Func<Article, bool>> filter = x => x.Id == id;
+                var article = articleService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<ArticleDTO>(article);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("get-by-code/{code}")]
+        public ActionResult<ArticleDTO> GetByCode(string code)
+        {
+            try
+            {
+                Expression<Func<Article, bool>> filter = x => x.Code == code;
                 var article = articleService.GetBy(filter).FirstOrDefault();
                 return this.Mapper.Map<ArticleDTO>(article);
             }
@@ -102,7 +117,7 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-
+       
         [HttpPost("create")]
         // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         //  [AuthorizeRoles(Role.Admin, Role.Empleado)]

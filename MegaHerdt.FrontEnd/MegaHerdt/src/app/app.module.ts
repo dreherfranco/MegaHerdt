@@ -36,6 +36,13 @@ import { CreateBrandComponent } from './components/brands/create-brand/create-br
 import { AdministrateBrandsComponent } from './components/brands/administrate-brands/administrate-brands.component';
 import { EditBrandsComponent } from './components/brands/edit-brands/edit-brands.component';
 import { DialogUpdateBrandComponent } from './components/brands/edit-brands/dialog-update-brand/dialog-update-brand.component';
+import { AdministrateProvidersComponent } from './components/providers/administrate-providers/administrate-providers.component';
+import { CreateProviderComponent } from './components/providers/create-provider/create-provider.component';
+import { EditProvidersComponent } from './components/providers/edit-providers/edit-providers.component';
+import { DialogUpdateProviderComponent } from './components/providers/edit-providers/dialog-update-provider/dialog-update-provider.component';
+import { AdministrateArticlesComponent } from './components/articles/administrate-articles/administrate-articles.component';
+import { CreateArticleComponent } from './components/articles/create-article/create-article.component';
+import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +73,14 @@ import { DialogUpdateBrandComponent } from './components/brands/edit-brands/dial
     CreateBrandComponent,
     AdministrateBrandsComponent,
     EditBrandsComponent,
-    DialogUpdateBrandComponent
+    DialogUpdateBrandComponent,
+    AdministrateProvidersComponent,
+    CreateProviderComponent,
+    EditProvidersComponent,
+    DialogUpdateProviderComponent,
+    AdministrateArticlesComponent,
+    CreateArticleComponent,
+    EditArticlesComponent
   ],
   imports: [
     BrowserModule,

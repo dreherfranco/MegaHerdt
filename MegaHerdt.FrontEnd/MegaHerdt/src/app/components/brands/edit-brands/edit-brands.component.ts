@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Brand } from 'src/app/models/ArticleBrand/Brand';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateBrandComponent } from './dialog-update-brand/dialog-update-brand.component';
 
 @Component({

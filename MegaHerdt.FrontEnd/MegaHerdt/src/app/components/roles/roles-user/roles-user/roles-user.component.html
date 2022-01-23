@@ -9,8 +9,8 @@
 <div *ngIf="roles" class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
     <p class="roles-text"> ASIGNAR ROL: </p>
     <div class=" d-flex flex-row">
-        <select class="form-select data-user" aria-label="Default select example" [(ngModel)]="roleSelected">
-            <option class="data-user" *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
+        <select class="form-select data-user" [(ngModel)]="roleSelected">
+            <option class="data-user" name="role" *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
         </select> 
         <button class="btn btn-add-role" (click)="assignRole()"><i class="bi bi-plus-circle-fill"></i></button>
     </div>

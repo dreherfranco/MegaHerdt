@@ -24,7 +24,7 @@ export class ArticleItemComponent implements OnInit {
     let brand = new Brand (0,'');
     let category = new Category (0,'');
     let offers = new Array<ArticleOfferDetail>();
-    let article = new Article(0,'','','',0,0,brand,category,offers, offers);
+    let article = new Article(0,'','',0,'',0,0,brand,category,offers, offers);
     return article;
   }
 

@@ -6,6 +6,7 @@ export class Article {
     id: number;
     name: string;
     code: string;
+    stock: number;
     image: string;
     unitValue: number;
     unitValueWithOffer: number;
@@ -14,13 +15,14 @@ export class Article {
     currentsOffers: ArticleOfferDetail[];
     futureOffers: ArticleOfferDetail[];
     
-    constructor(id: number, name: string, code: string, image:string, 
+    constructor(id: number, name: string, code: string, stock: number, image:string, 
         unitValue:number, unitValueWithOffer: number, brand: Brand, category: Category, 
         currentsOffers:ArticleOfferDetail[], futureOffers: ArticleOfferDetail[] ) 
     {       
         this.id = id;
         this.name = name;
         this.code = code;
+        this.stock = stock;
         this.image = image;
         this.unitValue = unitValue;
         this.unitValueWithOffer = unitValueWithOffer;

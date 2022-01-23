@@ -1,0 +1,55 @@
+<h1 class="text-center">Crear articulo</h1>
+<form enctype="multipart/form-data" #articleForm="ngForm" (ngSubmit)="onSubmit(articleForm)" class="w-50 mx-auto">
+    <div class="form-group mb-3">
+        <label for="name"><b>Nombre: </b></label>
+        <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre del articulo" name="name"
+            class="form-control" type="text" #name="ngModel" [(ngModel)]="article.name" required minlength="3">
+        <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="code"><b>Codigo: </b></label>
+        <input id="code" required placeholder="Codigo del articulo" name="code" class="form-control" type="text"
+            #code="ngModel" [(ngModel)]="article.code">
+        <span *ngIf="code.touched && !code.valid" class="text-danger">Ingrese un codigo valido</span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="unitValue"><b>Valor unitario: </b></label>
+        <input id="unitValue" required placeholder="Valor unitario" name="unitValue" class="form-control" type="text"
+            #unitValue="ngModel" [(ngModel)]="article.unitValue">
+        <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor unitario valido</span>
+    </div>
+    <div class="form-group mb-3">
+        <label for="stock"><b>Stock: </b></label>
+        <input id="stock" placeholder="Stock" name="stock" class="form-control" type="number" #stock="ngModel"
+            [(ngModel)]="article.stock">
+        <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor unitario valido</span>
+    </div>
+    
+    <div class="form-group mb-3">
+        <label for="image"><b>Imagen: </b></label>
+        <input id="image" name="image" class="form-control" type="file" (change)="onChange($event)">
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="category"><b>Categoria: </b></label>
+        <select class="form-select data-user" name="selectCategory" [(ngModel)]="categoryId">
+            <option class="data-user" name="category" *ngFor="let category of categories" [ngValue]="category.id">{{category.name}}</option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="brand"><b>Marca: </b></label>
+        <select class="form-select data-user" name="selectCategory" [(ngModel)]="brandId">
+            <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">{{brand.name}}</option>
+        </select>
+    </div>
+    <p>
+        <input type="submit" class="btn btn-primary mt-3" [disabled]="articleForm.invalid" value="Crear" />
+    </p>
+    <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
+        El articulo se creo correctamente
+    </p>
+    <p class=" alert alert-danger mt-3" *ngIf="statusSubmit == 'failed'">
+        Error al intentar crear el articulo
+    </p>
+</form>

@@ -14,6 +14,8 @@ import { ShowUsersComponent } from './components/users/show-users/show-users.com
 import { EditRoleUserComponent } from './components/users/edit-role-user/edit-role-user/edit-role-user.component';
 import { AdministrateCategoriesComponent } from './components/categories/administrate-categories/administrate-categories.component';
 import { AdministrateBrandsComponent } from './components/brands/administrate-brands/administrate-brands.component';
+import { AdministrateProvidersComponent } from './components/providers/administrate-providers/administrate-providers.component';
+import { AdministrateArticlesComponent } from './components/articles/administrate-articles/administrate-articles.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -34,6 +36,14 @@ const routes: Routes = [
   },
   { 
     path: 'administrate/administrate-brands', component: AdministrateBrandsComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/administrate-providers', component: AdministrateProvidersComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/administrate-articles', component: AdministrateArticlesComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   //ADMIN ROUTES
