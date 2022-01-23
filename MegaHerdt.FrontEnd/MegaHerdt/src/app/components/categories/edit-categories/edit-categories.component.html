@@ -1,3 +1,7 @@
+
+<div *ngIf="this.statusSubmit == 'success'" class="alert alert-primary">
+  Categoria actualizada correctamente
+</div>
 <div class="table-responsive">
 <table class="table">
     <thead>
@@ -14,10 +18,11 @@
     <tbody>
       <tr *ngFor="let category of categories; let i = index">
         <th scope="row">{{ i }}</th>
-        <td><input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{category.name}}" [(ngModel)]="category.name" ></td>
-        <td><button class="btn btn-success"  (click)="updateCategory(category)"> Actualizar </button></td>
-        <td><button class="btn btn-danger" (click)="deleteCategory(category.id)"> Eliminar </button></td>
+        <td><input class="form-control" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{category.name}}" [(ngModel)]="category.name" ></td>
+        <td><button class="btn btn-success"  (click)="openDialog(category)"> <i class="bi bi-pencil-square"></i> </button></td>
+        <td><button class="btn btn-danger" (click)="deleteCategory(category.id)"> <i class="bi bi-trash-fill"></i> </button></td>
       </tr>
     </tbody>
   </table>
+  
 </div>

@@ -4,6 +4,8 @@
     <label for="name"><b>Nombre: </b></label>
     <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre de la categoria" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="category.name" required minlength="3">
     <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de categoria valido</span>
-    <input type="submit" class="btn btn-primary mt-3" [disabled]="categoryForm.invalid" value="Crear"/>
+   <p>
+     <input type="submit" class="btn btn-primary mt-3" [disabled]="categoryForm.invalid" value="Crear"/>
+   </p> 
   </div>  
 </form>

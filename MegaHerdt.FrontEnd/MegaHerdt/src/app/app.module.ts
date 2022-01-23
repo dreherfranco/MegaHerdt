@@ -30,6 +30,12 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AdministrateCategoriesComponent } from './components/categories/administrate-categories/administrate-categories.component';
 import { CreateCategoryComponent } from './components/categories/create-category/create-category.component';
 import { EditCategoriesComponent } from './components/categories/edit-categories/edit-categories.component';
+import { DialogUpdateCategoryComponent } from './components/categories/edit-categories/dialog-update-category/dialog-update-category.component';
+import {MatDialogModule} from '@angular/material/dialog';
+import { CreateBrandComponent } from './components/brands/create-brand/create-brand.component';
+import { AdministrateBrandsComponent } from './components/brands/administrate-brands/administrate-brands.component';
+import { EditBrandsComponent } from './components/brands/edit-brands/edit-brands.component';
+import { DialogUpdateBrandComponent } from './components/brands/edit-brands/dialog-update-brand/dialog-update-brand.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,12 @@ import { EditCategoriesComponent } from './components/categories/edit-categories
     RolesUserComponent,
     AdministrateCategoriesComponent,
     CreateCategoryComponent,
-    EditCategoriesComponent
+    EditCategoriesComponent,
+    DialogUpdateCategoryComponent,
+    CreateBrandComponent,
+    AdministrateBrandsComponent,
+    EditBrandsComponent,
+    DialogUpdateBrandComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +76,8 @@ import { EditCategoriesComponent } from './components/categories/edit-categories
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

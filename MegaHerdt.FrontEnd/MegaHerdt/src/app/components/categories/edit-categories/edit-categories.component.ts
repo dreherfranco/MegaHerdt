@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Category } from 'src/app/models/ArticleCategory/Category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogUpdateCategoryComponent } from './dialog-update-category/dialog-update-category.component';
 
 @Component({
   selector: 'app-edit-categories',
@@ -12,7 +14,7 @@ export class EditCategoriesComponent implements OnInit {
   categories: Array<Category>;
   statusSubmit: string;
 
-  constructor(private _storageService: StorageService, private _categoryService: CategoryService) {
+  constructor(private _storageService: StorageService, private _categoryService: CategoryService,public dialog: MatDialog) {
     this.categories = new Array<Category>();
     this.statusSubmit = "";
   }
@@ -22,6 +24,20 @@ export class EditCategoriesComponent implements OnInit {
     this.loadCategories();
   }
 
+  openDialog(category: Category) {
+    const dialogRef = this.dialog.open(DialogUpdateCategoryComponent,
+      {
+        disableClose:true,
+        data: category
+      });
+
+    dialogRef.afterClosed().subscribe((result: Category) => {
+      if(result != undefined){
+        this.updateCategory(result);
+      }
+    });
+  }
+  
   loadCategories(){
     this._categoryService.getAll().subscribe({
         next: (response) => {

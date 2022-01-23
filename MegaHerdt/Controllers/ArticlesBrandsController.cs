@@ -13,8 +13,6 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-  //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
     public class ArticlesBrandsController : ControllerBase
     {        
         private readonly ArticleBrandService articleBrandService;
@@ -56,6 +54,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("create")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<ArticleBrandDTO>> Post([FromBody] ArticleBrandCreationDTO articleBrandDTO)
         {
             try
@@ -72,7 +72,9 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Put([FromBody] ArticleBrandDTO articleBrandDTO)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> Put([FromBody] ArticleBrandDTO articleBrandDTO)
         {
             try
             {
@@ -81,7 +83,7 @@ namespace MegaHerdt.API.Controllers
                 articleBrandDTO.Name = articleBrandDTO.Name.ToUpper();
                 articleBrandDb = this.Mapper.Map(articleBrandDTO, articleBrandDb);
                 await articleBrandService.Update(articleBrandDb);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
@@ -90,14 +92,16 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             try
             {
                 Expression<Func<ArticleBrand, bool>> filter = x => x.Id == id;
                 var articleBrand = this.articleBrandService.GetBy(filter).FirstOrDefault();
                 await articleBrandService.Delete(articleBrand);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

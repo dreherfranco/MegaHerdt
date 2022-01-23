@@ -13,6 +13,7 @@ import { AdministrateComponent } from './components/administrate/administrate/ad
 import { ShowUsersComponent } from './components/users/show-users/show-users.component';
 import { EditRoleUserComponent } from './components/users/edit-role-user/edit-role-user/edit-role-user.component';
 import { AdministrateCategoriesComponent } from './components/categories/administrate-categories/administrate-categories.component';
+import { AdministrateBrandsComponent } from './components/brands/administrate-brands/administrate-brands.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,6 +30,10 @@ const routes: Routes = [
   },
   { 
     path: 'administrate/administrate-categories', component: AdministrateCategoriesComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/administrate-brands', component: AdministrateBrandsComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   //ADMIN ROUTES

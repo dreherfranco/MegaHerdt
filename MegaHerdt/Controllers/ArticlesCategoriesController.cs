@@ -74,7 +74,7 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("update")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Put([FromBody] ArticleCategoryDTO articleCategoryDTO)
+        public async Task<ActionResult<bool>> Put([FromBody] ArticleCategoryDTO articleCategoryDTO)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace MegaHerdt.API.Controllers
                 articleCategoryDTO.Name = articleCategoryDTO.Name.ToUpper();
                 articleCategoryDb = this.Mapper.Map(articleCategoryDTO, articleCategoryDb);
                 await articleCategoryService.Update(articleCategoryDb);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

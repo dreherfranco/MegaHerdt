@@ -1,0 +1,27 @@
+<div *ngIf="this.statusSubmit == 'success'" class="alert alert-primary">
+    Categoria actualizada correctamente
+  </div>
+  <div class="table-responsive">
+  <table class="table">
+      <thead>
+          <tr>
+              <th>LISTADO DE CATEGORIAS</th>
+          </tr>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">#</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let brand of brands; let i = index">
+          <th scope="row">{{ i }}</th>
+          <td><input class="form-control" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{brand.name}}" [(ngModel)]="brand.name" ></td>
+          <td><button class="btn btn-success"  (click)="openDialog(brand)"> <i class="bi bi-pencil-square"></i> </button></td>
+          <td><button class="btn btn-danger" (click)="deleteBrand(brand.id)"> <i class="bi bi-trash-fill"></i> </button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+  </div>

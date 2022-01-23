@@ -1,0 +1,11 @@
+<h1 class="text-center">Crear marca</h1>
+<form #brandForm="ngForm" (ngSubmit)="onSubmit(brandForm)" class="w-50 mx-auto">
+  <div class="form-group mb-3">
+    <label for="name"><b>Nombre: </b></label>
+    <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre de la marca" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="brand.name" required minlength="3">
+    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de marca valido</span>
+   <p>
+     <input type="submit" class="btn btn-primary mt-3" [disabled]="brandForm.invalid" value="Crear"/>
+   </p> 
+  </div>  
+</form>
