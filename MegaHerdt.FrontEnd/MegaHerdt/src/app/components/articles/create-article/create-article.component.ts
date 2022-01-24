@@ -38,13 +38,14 @@ export class CreateArticleComponent implements OnInit {
   onSubmit(form: any) {
     this.article.categoryId = this.categoryId;
     this.article.brandId = this.brandId;
-    this._articleService.create(this.article, this._storageService.getTokenValue()).subscribe({
+    this._articleService.sendFormData(this.article, "create").subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("no se pudieron cargar las categorias");
+          console.log("no se pudo crear el articulo");
           this.statusSubmit = "failed";
         } else {
           this.statusSubmit = "success";
+          window.location.reload();
         }
       },
       error: (err) => {
@@ -73,13 +74,12 @@ export class CreateArticleComponent implements OnInit {
     this._brandService.getAll().subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+              console.log("no se pudieron cargar las marcas");
           } else {
             this.brands = response;
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
           console.log(err)
         }
     });

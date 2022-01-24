@@ -1,1 +1,27 @@
-<p>edit-articles works!</p>
+<h1 class="text-center"><b>Editar articulos</b></h1>
+
+<div class="input-group mb-3 w-50 searcher mx-auto">
+  <div class="input-group-prepend">
+    <div class="input-group-text">
+      <i class="bi bi-search"></i>
+    </div>
+  </div>
+  <input class="form-control w-50 mx-auto input-search" type="text" [(ngModel)]="searchText"
+    placeholder="Buscar articulos">
+</div>
+
+<div class="row">
+  <div class="col-md-3" *ngFor="let article of articles 
+    | paginate: 
+    {
+        itemsPerPage: this.paginate.recordsPerPage, 
+        currentPage:this.paginate.page
+    } 
+    | filter: searchText
+    ">
+    <app-edit-article [article]="article"></app-edit-article>
+  </div>
+  <pagination-controls class="text-center" (pageChange)="this.paginate.page = $event" previousLabel="Anterior"
+    nextLabel="Siguiente">
+  </pagination-controls>
+</div>

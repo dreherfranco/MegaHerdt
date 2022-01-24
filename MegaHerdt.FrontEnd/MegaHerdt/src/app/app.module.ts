@@ -43,6 +43,8 @@ import { DialogUpdateProviderComponent } from './components/providers/edit-provi
 import { AdministrateArticlesComponent } from './components/articles/administrate-articles/administrate-articles.component';
 import { CreateArticleComponent } from './components/articles/create-article/create-article.component';
 import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
+import { EditArticleComponent } from './components/articles/edit-articles/edit-article/edit-article.component';
+import { DialogUpdateArticleComponent } from './components/articles/edit-articles/dialog-update-article/dialog-update-article.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +82,9 @@ import { EditArticlesComponent } from './components/articles/edit-articles/edit-
     DialogUpdateProviderComponent,
     AdministrateArticlesComponent,
     CreateArticleComponent,
-    EditArticlesComponent
+    EditArticlesComponent,
+    EditArticleComponent,
+    DialogUpdateArticleComponent
   ],
   imports: [
     BrowserModule,

@@ -20,7 +20,7 @@ export class ArticleService {
     return this._http.get(this.url,{headers: this.headers});
   }
 
-  create(article: any, token: string): Observable<any>{
+  sendFormData(article: any, urlAction:string): Observable<any>{
     const formData: FormData = new FormData();
       var xhr = new XMLHttpRequest();
       
@@ -29,12 +29,17 @@ export class ArticleService {
       }
       
       //  xhr.setRequestHeader('Authorization',token);
-        xhr.open('POST', Global.url + "Articles/create", true );  
+        xhr.open('POST', Global.url + "Articles/"+ urlAction, true );  
         xhr.send(formData)
         return this.getByCode(article.code)
   }
 
   getByCode(code: string): Observable<any>{
     return this._http.get(this.url+"/get-by-code/"+code,{headers: this.headers});
+  }
+
+  delete(id: number, token:string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.delete(this.url + "/" + id, { headers: this.headers });
   }
 }

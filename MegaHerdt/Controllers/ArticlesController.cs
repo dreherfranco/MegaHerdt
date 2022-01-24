@@ -88,35 +88,6 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpGet("filter")]
-        public async Task<ActionResult<List<ArticleDTO>>> Filter([FromQuery] ArticleFilterDTO articleDTO )
-        {
-            try
-            {  
-                var articlesQueryable = this.articleService.GetAll().AsQueryable();
-                if(articleDTO.BrandId != 0)
-                {
-                    articlesQueryable = articlesQueryable.Where(x => x.BrandId == articleDTO.BrandId);
-                }
-                if(articleDTO.CategoryId != 0)
-                {
-                    articlesQueryable = articlesQueryable.Where(x => x.CategoryId == articleDTO.CategoryId);
-                }
-                if(!string.IsNullOrWhiteSpace(articleDTO.Name))
-                {
-                    articlesQueryable = articlesQueryable.Where(x => x.Name.ToUpper().Contains(articleDTO.Name.ToUpper()));
-                }
-                await HttpContext.InsertParametersPagination(articlesQueryable, articleDTO.RecordsPerPage);
-                var articles = articlesQueryable.Paginate(articleDTO.Pagination).ToList();
-
-                return this.Mapper.Map<List<ArticleDTO>>(articles);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-
        
         [HttpPost("create")]
         // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -151,7 +122,40 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("update")]
       //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
      //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Put([FromForm] ArticleUpdateDTO articleDTO)
+        public async Task<ActionResult<bool>> Put([FromForm] ArticleUpdateDTO articleDTO)
+        {
+            try
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == articleDTO.Id;
+                var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
+
+               /* if (articleDTO.Image != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await articleDTO.Image.CopyToAsync(memoryStream);
+                        var content = memoryStream.ToArray();
+                        var extension = Path.GetExtension(articleDTO.Image.FileName);
+                        articleDb.Image = await fileManager.EditFile(content, extension, container,
+                            articleDb.Image,
+                            articleDTO.Image.ContentType);
+                    }
+                }*/
+
+                articleDb = this.Mapper.Map(articleDTO, articleDb);
+                await articleService.Update(articleDb);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("update-image")]
+        //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> UpdateImage([FromForm] ArticleUpdateImageDTO articleDTO)
         {
             try
             {
@@ -171,9 +175,8 @@ namespace MegaHerdt.API.Controllers
                     }
                 }
 
-                articleDb = this.Mapper.Map(articleDTO, articleDb);
                 await articleService.Update(articleDb);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
@@ -184,14 +187,14 @@ namespace MegaHerdt.API.Controllers
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             try
             {
                 Expression<Func<Article, bool>> filter = x => x.Id == id;
                 var article = this.articleService.GetBy(filter).FirstOrDefault();
                 await articleService.Delete(article);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
