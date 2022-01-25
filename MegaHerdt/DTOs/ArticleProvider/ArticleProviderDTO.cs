@@ -5,6 +5,7 @@ namespace MegaHerdt.API.DTOs.ArticleProvider
 {
     public class ArticleProviderDTO
     {
+        public int Id { get; set; }
         public ArticleNameDTO Article { get; set; }
         public string Voucher { get; set; }
         public DateTime ProvisionDate { get; set; }

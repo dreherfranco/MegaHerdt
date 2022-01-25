@@ -52,6 +52,7 @@ import { DialogUpdateOfferComponent } from './components/offers/edit-offers/dial
 import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
 import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
 import { EditArticlesProvisionsComponent } from './components/articles-provisions/edit-articles-provisions/edit-articles-provisions.component';
+import { DialogUpdateArticleProvisionComponent } from './components/articles-provisions/edit-articles-provisions/dialog-update-article-provision/dialog-update-article-provision.component';
 
 @NgModule({
   declarations: [
@@ -98,7 +99,8 @@ import { EditArticlesProvisionsComponent } from './components/articles-provision
     DialogUpdateOfferComponent,
     AdministrateArticlesProvisionsComponent,
     CreateArticleProvisionComponent,
-    EditArticlesProvisionsComponent
+    EditArticlesProvisionsComponent,
+    DialogUpdateArticleProvisionComponent
   ],
   imports: [
     BrowserModule,

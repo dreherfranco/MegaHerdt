@@ -1,1 +1,65 @@
-<p>edit-articles-provisions works!</p>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LISTADO DE PROVISIONES</th>
+            </tr>
+            <tr>
+                <th scope="col">Articulo</th>
+                <th scope="col">Cantidad proveida</th>
+                <th scope="col">Proveedor</th>
+                <th scope="col">Fecha provision</th>
+                <th scope="col">Comprobante</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let articleProvider of articlesProviders; let i = index">
+                <th>
+                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.article.id">
+                        <option class="data-user" name="article" *ngFor="let article of articles"
+                            [ngValue]="article.id">{{article.name}}
+                        </option>
+                    </select>
+                </th>
+                <td>
+                    <input id="articleQuantity" name="articleQuantity" class="form-control" type="number" min="0"
+                        #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" required>
+                </td>
+                <td>
+                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.provider.id">
+                        <option class="data-user" name="provider" *ngFor="let provider of providers"
+                            [ngValue]="provider.id">{{provider.email}}
+                        </option>
+                    </select>
+                </td>
+                <td>
+                    <span class="form-control">
+                        {{articleProvider.provisionDate | date: 'dd/MM/yyyy' }}
+                    </span>
+                    <input id="provisionDate" name="provisionDate" class="form-control" type="date"
+                        #provisionDate="ngModel" [(ngModel)]="articleProvider.provisionDate" required>
+                </td>
+                <td>
+                   
+                    <a href="{{articleProvider.voucher}}" class="form-control voucher" target="_blank">
+                        <i class="bi bi-card-image"></i> Ver comprobante
+                     </a>
+                
+                    <input id="voucher" name="voucher" class="form-control" type="file" (change)="onChange($event, articleProvider)">
+                </td>
+                <td>
+                    <button class="btn btn-success" (click)="openDialog(articleProvider)">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteArticleProvider(articleProvider.id)">
+                        <i class="bi bi-trash-fill"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

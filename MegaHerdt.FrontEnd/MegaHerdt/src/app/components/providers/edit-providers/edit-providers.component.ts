@@ -42,7 +42,7 @@ export class EditProvidersComponent implements OnInit {
     this._providerService.getAll(this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+              console.log("no se pudieron cargar los proveedores");
           } else {
             this.providers = response;
           }

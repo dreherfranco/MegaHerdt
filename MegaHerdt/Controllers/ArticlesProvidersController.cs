@@ -47,8 +47,23 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpPost("article-provider/add")]     
-        public async Task<ActionResult> Post([FromForm] ArticleProviderCreationDTO articleProviderDTO)
+        [HttpGet("{id}")]
+        public ActionResult<ArticleProviderDTO> GetArticleProvider(int id)
+        {
+            try
+            {
+                Expression<Func<ArticleProvider, bool>> filter = x => x.Id == id;
+                var articleProviderDb = this.articleProviderService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<ArticleProviderDTO>(articleProviderDb);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("create")]     
+        public async Task<ActionResult<bool>> Post([FromForm] ArticleProviderCreationDTO articleProviderDTO)
         {
             try
             {
@@ -66,7 +81,7 @@ namespace MegaHerdt.API.Controllers
                     }
                 }
                 await articleProviderService.Create(articleProvider);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
@@ -74,5 +89,68 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpPost("update")]
+        public async Task<ActionResult<bool>> Put([FromBody] ArticleProviderUpdateDTO articleProviderDTO)
+        {
+            try
+            {
+                Expression<Func<ArticleProvider, bool>> filter = x => x.Id == articleProviderDTO.Id;
+                var articleProviderDb = this.articleProviderService.GetBy(filter).FirstOrDefault();
+
+                articleProviderDb = this.Mapper.Map(articleProviderDTO, articleProviderDb);
+                await articleProviderService.Update(articleProviderDb);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("update-voucher")]
+        public async Task<ActionResult<bool>> UpdateVoucher([FromForm] ArticleProviderVoucherUpdateDTO articleProviderDTO)
+        {
+            try
+            {
+                Expression<Func<ArticleProvider, bool>> filter = x => x.Id == articleProviderDTO.Id;
+                var articleProvider = this.articleProviderService.GetBy(filter).FirstOrDefault();
+                if (articleProviderDTO.Voucher != null)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await articleProviderDTO.Voucher.CopyToAsync(memoryStream);
+                        var content = memoryStream.ToArray();
+                        var extension = Path.GetExtension(articleProviderDTO.Voucher.FileName);
+                        articleProvider.Voucher = await fileManager.SaveFile(content, extension, container,
+                        articleProviderDTO.Voucher.ContentType);
+                    }
+                }
+
+                await articleProviderService.Update(articleProvider);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> Delete(int id)
+        {
+            try
+            {
+                Expression<Func<ArticleProvider, bool>> filter = x => x.Id == id;
+                var articleProvider = this.articleProviderService.GetBy(filter).FirstOrDefault();
+                await articleProviderService.Delete(articleProvider);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
     }
 }
