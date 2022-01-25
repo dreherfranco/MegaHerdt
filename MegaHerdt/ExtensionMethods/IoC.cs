@@ -100,6 +100,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ArticleHelper>();
             builder.Services.AddTransient<ArticleOfferHelper>();
             builder.Services.AddTransient<ProviderHelper>();
+            builder.Services.AddTransient<ArticleProviderHelper>();
             return builder;
         }
 
@@ -116,6 +117,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ArticleService>();
             builder.Services.AddTransient<ArticleOfferService>();
             builder.Services.AddTransient<ProviderService>();
+            builder.Services.AddTransient<ArticleProviderService>();
             return builder;
         }
 
@@ -131,6 +133,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<Article>>();
             builder.Services.AddTransient<Repository<ArticleOffer>>();
             builder.Services.AddTransient<Repository<Provider>>();
+            builder.Services.AddTransient<Repository<ArticleProvider>>();
             return builder;
         }
     }

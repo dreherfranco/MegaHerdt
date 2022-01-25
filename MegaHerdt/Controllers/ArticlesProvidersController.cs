@@ -52,13 +52,8 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-             //   Expression<Func<Article, bool>> filter = x => x.Id == articleProviderDTO.ArticleId;
-              //  var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
-
                 var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
-                //   articleDb.ArticlesProviders.Add(articleProvider);
-                // articleDb.AddStock(articleProvider.ArticleQuantity);
-                //     await articleService.Update(articleDb);
+
                 if (articleProviderDTO.Voucher != null)
                 {
                     using (var memoryStream = new MemoryStream())
@@ -67,7 +62,7 @@ namespace MegaHerdt.API.Controllers
                         var content = memoryStream.ToArray();
                         var extension = Path.GetExtension(articleProviderDTO.Voucher.FileName);
                         articleProvider.Voucher = await fileManager.SaveFile(content, extension, container,
-                            articleProviderDTO.Voucher.ContentType);
+                        articleProviderDTO.Voucher.ContentType);
                     }
                 }
                 await articleProviderService.Create(articleProvider);

@@ -106,6 +106,7 @@ namespace MegaHerdt.API.Mapper
             #region ArticleProvider
             CreateMap<ArticleProviderCreationDTO, ArticleProvider>();
             CreateMap<ArticleProvider, ArticleProviderDetailDTO>();
+            CreateMap<ArticleProvider, ArticleProviderDTO>();
             #endregion ArticleProvider
 
             #region ArticleOffer
