@@ -38,6 +38,14 @@ export class ArticleService {
     return this._http.get(this.url+"/get-by-code/"+code,{headers: this.headers});
   }
 
+  /**
+   * 
+   * @returns Array: ArticleName
+   */
+  getArticleNames(): Observable<any>{
+    return this._http.get(this.url+"/get-article-names",{headers: this.headers});
+  }
+
   delete(id: number, token:string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.delete(this.url + "/" + id, { headers: this.headers });

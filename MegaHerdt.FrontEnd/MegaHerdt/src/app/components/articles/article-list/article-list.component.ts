@@ -21,12 +21,13 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    
   }
 
   loadProducts(){
     this._articleService.getArticles().subscribe(
       {
-        next: (response) => this.articles = response,
+        next: (response) => {this.articles = response},
         error: (err) => console.log(err)
       }
     );

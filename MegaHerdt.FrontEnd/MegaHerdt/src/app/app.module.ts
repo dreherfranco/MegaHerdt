@@ -45,6 +45,10 @@ import { CreateArticleComponent } from './components/articles/create-article/cre
 import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
 import { EditArticleComponent } from './components/articles/edit-articles/edit-article/edit-article.component';
 import { DialogUpdateArticleComponent } from './components/articles/edit-articles/dialog-update-article/dialog-update-article.component';
+import { AdministrateOffersComponent } from './components/offers/administrate-offers/administrate-offers.component';
+import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
+import { EditOffersComponent } from './components/offers/edit-offers/edit-offers.component';
+import { DialogUpdateOfferComponent } from './components/offers/edit-offers/dialog-update-offer/dialog-update-offer.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +88,11 @@ import { DialogUpdateArticleComponent } from './components/articles/edit-article
     CreateArticleComponent,
     EditArticlesComponent,
     EditArticleComponent,
-    DialogUpdateArticleComponent
+    DialogUpdateArticleComponent,
+    AdministrateOffersComponent,
+    CreateOfferComponent,
+    EditOffersComponent,
+    DialogUpdateOfferComponent
   ],
   imports: [
     BrowserModule,
@@ -95,7 +103,8 @@ import { DialogUpdateArticleComponent } from './components/articles/edit-article
     FormsModule,
     BrowserAnimationsModule,
     Ng2SearchPipeModule,
-    MatDialogModule
+    MatDialogModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]

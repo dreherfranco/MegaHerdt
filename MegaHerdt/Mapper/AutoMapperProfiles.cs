@@ -99,7 +99,8 @@ namespace MegaHerdt.API.Mapper
                 .ForMember(opt=>opt.Image, opt=> opt.Ignore());
             CreateMap<ArticleUpdateDTO, Article>()
                 .ForMember(opt => opt.Image, opt => opt.Ignore());
-            CreateMap<Article, ArticleDetailDTO>();              
+            CreateMap<Article, ArticleDetailDTO>();
+            CreateMap<Article, ArticleNameDTO>();
             #endregion Article
 
             #region ArticleProvider

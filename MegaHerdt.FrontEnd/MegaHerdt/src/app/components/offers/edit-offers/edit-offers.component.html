@@ -1,0 +1,56 @@
+<p class="alert alert-success" *ngIf="statusSubmit == 'success' ">Se actualizo correctamente</p>
+<p class="alert alert-danger" *ngIf="statusSubmit == 'failed' ">No se pudo actualizar correctamente</p>
+
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LISTADO DE OFERTAS</th>
+            </tr>
+            <tr>
+                <th scope="col">Articulo</th>
+                <th scope="col">Porcentaje Descuento</th>
+                <th scope="col">Inicio</th>
+                <th scope="col">Fin</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let offer of offers; let i = index">
+                <th>
+                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="offer.articleId">
+                        <option class="data-user" name="article" *ngFor="let article of articles"
+                            [ngValue]="article.id">{{article.name}}
+                        </option>
+                    </select>
+                </th>
+                <td><input id="discount" name="discount" class="form-control" type="number" min="0" max="100"
+                        #discount="ngModel" [(ngModel)]="offer.discountPercentage" required>
+                </td>
+                <td>
+                    <span class="form-control">
+                        {{offer.startDate | date: 'dd/MM/yyyy' }}
+                    </span>
+                    <input id="startDate" name="startDate" class="form-control" type="date" #startDate="ngModel"
+                        [(ngModel)]="offer.startDate" required>
+                </td>
+                <td>
+                    <span class="form-control">
+                        {{offer.endDate | date: 'dd/MM/yyyy' }}
+                    </span>
+                    <input id="endDate" name="endDate" class="form-control" type="date" #endDate="ngModel"
+                        [(ngModel)]="offer.endDate" required>
+                </td>
+                <td><button class="btn btn-success" (click)="openDialog(offer)"> <i class="bi bi-pencil-square"></i>
+                    </button>
+                </td>
+                <td><button class="btn btn-danger" (click)="deleteOffer(offer.id)"> <i class="bi bi-trash-fill"></i>
+                    </button>
+                </td>
+                
+            </tr>
+        </tbody>
+    </table>
+
+</div>

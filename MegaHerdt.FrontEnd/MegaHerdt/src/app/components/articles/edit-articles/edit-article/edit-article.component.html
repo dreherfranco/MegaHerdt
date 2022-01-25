@@ -14,7 +14,7 @@
             </select>
         </p>
         <p class="card-text data-article">Categoria:
-            <select class="form-select data-user" name="selectCategory" [(ngModel)]="article.category.id">
+            <select class="form-select data-user" name="selectCategory" [(ngModel)]="article.category.id" required>
                 <option class="data-user" name="category" *ngFor="let category of categories" [ngValue]="category.id">
                     {{category.name}}</option>
             </select>

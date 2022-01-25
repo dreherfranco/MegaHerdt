@@ -13,8 +13,8 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-  //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    //[AuthorizeRoles(Role.Admin, Role.Empleado)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [AuthorizeRoles(Role.Admin, Role.Empleado)]
     public class ArticlesOffersController : ControllerBase
     {
         private readonly ArticleOfferService articleOfferService;
@@ -30,7 +30,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var articlesOffers = articleOfferService.GetAll();
+                var articlesOffers = articleOfferService.GetAll().OrderByDescending(x => x.StartDate);
                 return this.Mapper.Map<List<ArticleOfferDTO>>(articlesOffers);
             }
             catch (Exception ex)
@@ -71,7 +71,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Put([FromBody] ArticleOfferDTO articleOfferDTO)
+        public async Task<ActionResult<bool>> Put([FromBody] ArticleOfferDTO articleOfferDTO)
         {
             try
             {
@@ -79,7 +79,7 @@ namespace MegaHerdt.API.Controllers
                 var articleOfferDb = this.articleOfferService.GetBy(filter).FirstOrDefault();            
                 articleOfferDb = this.Mapper.Map(articleOfferDTO, articleOfferDb);
                 await articleOfferService.Update(articleOfferDb);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
@@ -88,14 +88,14 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             try
             {
                 Expression<Func<ArticleOffer, bool>> filter = x => x.Id == id;
                 var articleOffer = this.articleOfferService.GetBy(filter).FirstOrDefault();
                 await articleOfferService.Delete(articleOffer);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

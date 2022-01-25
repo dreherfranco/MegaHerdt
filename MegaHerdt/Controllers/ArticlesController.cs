@@ -44,6 +44,20 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("get-article-names")]
+        public ActionResult<List<ArticleNameDTO>> GetArticlesNames()
+        {
+            try
+            {
+                var articles = articleService.GetAll();
+                return this.Mapper.Map<List<ArticleNameDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpGet("{id}")]
         public ActionResult<ArticleDTO> GetById(int id)
         {
