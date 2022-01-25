@@ -49,6 +49,9 @@ import { AdministrateOffersComponent } from './components/offers/administrate-of
 import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
 import { EditOffersComponent } from './components/offers/edit-offers/edit-offers.component';
 import { DialogUpdateOfferComponent } from './components/offers/edit-offers/dialog-update-offer/dialog-update-offer.component';
+import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
+import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
+import { EditArticlesProvisionsComponent } from './components/articles-provisions/edit-articles-provisions/edit-articles-provisions.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +95,10 @@ import { DialogUpdateOfferComponent } from './components/offers/edit-offers/dial
     AdministrateOffersComponent,
     CreateOfferComponent,
     EditOffersComponent,
-    DialogUpdateOfferComponent
+    DialogUpdateOfferComponent,
+    AdministrateArticlesProvisionsComponent,
+    CreateArticleProvisionComponent,
+    EditArticlesProvisionsComponent
   ],
   imports: [
     BrowserModule,

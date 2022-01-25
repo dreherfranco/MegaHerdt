@@ -216,12 +216,9 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        #region ArticleProvider
         //Obtener articulos con los proveedores
         [HttpGet("article-provider")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public ActionResult<List<ArticleDetailDTO>> GetArticlesProviders()
+        public ActionResult<List<ArticleDetailDTO>> GetArticlesWithProvisions()
         {
             try
             {
@@ -235,7 +232,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("article-provider/{id}")]
-        public ActionResult<ArticleDetailDTO> GetArticlesProviders(int id)
+        public ActionResult<ArticleDetailDTO> GetArticlesWithProvision(int id)
         {
             try
             {
@@ -249,29 +246,6 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpPost("article-provider/add")]
-        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        // [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> Post([FromBody] ArticleProviderCreationDTO articleProviderDTO)
-        {
-            try
-            {
-                Expression<Func<Article, bool>> filter = x => x.Id == articleProviderDTO.ArticleId;
-                var articleDb = this.articleService.GetBy(filter).FirstOrDefault();
 
-                var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
-                articleDb.ArticlesProviders.Add(articleProvider);
-                articleDb.AddStock(articleProvider.ArticleQuantity);
-                await articleService.Update(articleDb);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex);
-            }
-        }
-        #endregion ArticleProvider
-
-        
     }
 }
