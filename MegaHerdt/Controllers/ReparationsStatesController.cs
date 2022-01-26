@@ -72,7 +72,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Put([FromBody] ReparationStateDTO reparationStateDTO)
+        public async Task<ActionResult<bool>> Put([FromBody] ReparationStateDTO reparationStateDTO)
         {
             try
             {
@@ -81,7 +81,7 @@ namespace MegaHerdt.API.Controllers
                 reparationStateDTO.Name = reparationStateDTO.Name.ToUpper();
                 reparationStateDb = this.Mapper.Map(reparationStateDTO, reparationStateDb);
                 await reparationStateService.Update(reparationStateDb);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
@@ -90,14 +90,14 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             try
             {
                 Expression<Func<ReparationState, bool>> filter = x => x.Id == id;
                 var reparationState = this.reparationStateService.GetBy(filter).FirstOrDefault();
                 await reparationStateService.Delete(reparationState);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

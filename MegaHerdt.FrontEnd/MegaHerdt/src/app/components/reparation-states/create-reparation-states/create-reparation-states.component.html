@@ -1,0 +1,11 @@
+<h1 class="text-center">Crear estado de reparacion</h1>
+<form #reparationStateForm="ngForm" (ngSubmit)="onSubmit(reparationStateForm)" class="w-50 mx-auto">
+  <div class="form-group mb-3">
+    <label for="name"><b>Nombre: </b></label>
+    <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre del estado" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="reparationState.name" required minlength="2">
+    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de estado valido</span>
+   <p>
+     <input type="submit" class="btn btn-primary mt-3" [disabled]="reparationStateForm.invalid" value="Crear"/>
+   </p> 
+  </div>  
+</form>

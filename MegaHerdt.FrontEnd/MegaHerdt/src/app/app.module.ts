@@ -53,6 +53,10 @@ import { AdministrateArticlesProvisionsComponent } from './components/articles-p
 import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
 import { EditArticlesProvisionsComponent } from './components/articles-provisions/edit-articles-provisions/edit-articles-provisions.component';
 import { DialogUpdateArticleProvisionComponent } from './components/articles-provisions/edit-articles-provisions/dialog-update-article-provision/dialog-update-article-provision.component';
+import { AdministrateReparationStatesComponent } from './components/reparation-states/administrate-reparation-states/administrate-reparation-states.component';
+import { CreateReparationStatesComponent } from './components/reparation-states/create-reparation-states/create-reparation-states.component';
+import { EditReparationStatesComponent } from './components/reparation-states/edit-reparation-states/edit-reparation-states.component';
+import { DialogUpdateReparationStateComponent } from './components/reparation-states/edit-reparation-states/dialog-update-reparation-state/dialog-update-reparation-state.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +104,11 @@ import { DialogUpdateArticleProvisionComponent } from './components/articles-pro
     AdministrateArticlesProvisionsComponent,
     CreateArticleProvisionComponent,
     EditArticlesProvisionsComponent,
-    DialogUpdateArticleProvisionComponent
+    DialogUpdateArticleProvisionComponent,
+    AdministrateReparationStatesComponent,
+    CreateReparationStatesComponent,
+    EditReparationStatesComponent,
+    DialogUpdateReparationStateComponent
   ],
   imports: [
     BrowserModule,
