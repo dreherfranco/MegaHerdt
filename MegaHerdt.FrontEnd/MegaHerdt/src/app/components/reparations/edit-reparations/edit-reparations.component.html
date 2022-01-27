@@ -1,1 +1,98 @@
-<p>edit-reparations works!</p>
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LISTADO DE OFERTAS</th>
+            </tr>
+            <tr>
+                <th scope="col">Articulos</th>
+                <th scope="col">Email empleado</th>
+                <th scope="col">Email cliente</th>
+                <th scope="col">Monto</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Factura</th>
+                <th scope="col">#</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reparation of reparations; let i = index">
+
+                <th>
+                    <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene
+                        articulos</span>
+                    <select class="form-select data-user"
+                        *ngFor="let reparationArticle of reparation.reparationsArticles" name="selectArticle"
+                        [(ngModel)]="reparationArticle.articleId">
+                        <option class="data-user" name="article" *ngFor="let article of articles"
+                            [ngValue]="article.id">{{article.name}}
+                        </option>
+                    </select>
+                </th>
+                <th>
+                    <span class="data-user form-control">{{ reparation.employee.email }}</span>
+                </th>
+                <th>
+                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="reparation.client.id">
+                        <option class="data-user" name="client" *ngFor="let client of clients" [ngValue]="client.id">
+                            {{client.email}}
+                        </option>
+                    </select>
+                </th>
+                <th>
+                    <input id="amount" name="amount" class="form-control" type="number" min="0" #amount="ngModel"
+                        [(ngModel)]="reparation.amount" required>
+                </th>
+                <th>
+                    <span class="form-control">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
+                    <input id="date" name="date" class="form-control" type="date" #date="ngModel"
+                        [(ngModel)]="reparation.date" required>
+                </th>
+                <th>
+                    <select class="form-select data-user" name="selectReparationState"
+                        [(ngModel)]="reparation.reparationState.id">
+                        <option class="data-user" name="reparationState"
+                            *ngFor="let reparationState of reparationsStates" [ngValue]="reparationState.id">
+                            {{reparationState.name}}
+                        </option>
+                    </select>
+                </th>
+                <th>
+                    <div *ngIf="reparation.bill != null">
+                        <p>
+                            <label for="billNumber"><b>Numero de factura: </b></label>
+                            <input id="billNumber" name="billNumber" class="form-control" type="number"
+                                #billNumber="ngModel" [(ngModel)]="reparation.bill.number" required>
+                        </p>
+                        <p>
+                            <label for="billType"><b>Tipo de factura: </b></label>
+                            <select class="form-select data-user" name="selectBillType"
+                                [(ngModel)]="reparation.bill.type">
+                                <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>
+                                    {{billTypes.A}}
+                                </option>
+                                <option class="data-user" name="billType" [ngValue]="billTypes.B">{{billTypes.B}}
+                                </option>
+                                <option class="data-user" name="billType" [ngValue]="billTypes.C">{{billTypes.C}}
+                                </option>
+                                <option class="data-user" name="billType" [ngValue]="billTypes.RECIBO">
+                                    {{billTypes.RECIBO}}
+                                </option>
+                            </select>
+                        </p>
+                    </div>
+                </th>
+                <td>
+                    <button class="btn btn-success" (click)="openDialog(reparation)"> <i
+                            class="bi bi-pencil-square"></i></button>
+                </td>
+                <td>
+                    <button class="btn btn-danger" (click)="deleteReparation(reparation.id)"> <i
+                            class="bi bi-trash-fill"></i></button>
+                </td>
+            </tr>
+        </tbody>-
+    </table>
+
+</div>

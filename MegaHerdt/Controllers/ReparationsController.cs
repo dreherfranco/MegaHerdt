@@ -44,14 +44,14 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("update")]
        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
       //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> UpdateReparation([FromBody] ReparationUpdateDTO reparationDTO)
+        public async Task<ActionResult<bool>> UpdateReparation([FromBody] ReparationUpdateDTO reparationDTO)
         {
             try
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {
@@ -62,13 +62,13 @@ namespace MegaHerdt.API.Controllers
         [HttpDelete("delete/{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult> ReparationDelete(int id)
+        public async Task<ActionResult<bool>> ReparationDelete(int id)
         {
             try
             {
                 var reparation = this.ReparationService.GetReparationById(id);
                 await ReparationService.Delete(reparation);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

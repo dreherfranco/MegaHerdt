@@ -8,6 +8,7 @@ import { ReparationState } from 'src/app/models/ReparationState/ReparationState'
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { ReparationStateService } from 'src/app/services/reparation-states/reparation-state.service';
+import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
@@ -25,17 +26,19 @@ export class CreateReparationComponent implements OnInit {
   reparationsStates: Array<ReparationState>;
   reparationArticle: ReparationArticleCreation;
   articlesAdded: Array<ReparationArticleAdded>;
+  statusSubmit: string;
 
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
-    private _reparationStateService: ReparationStateService) { 
+    private _reparationStateService: ReparationStateService, private _reparationService: ReparationService) {
     this.articles = new Array<ArticleName>();
     this.clients = new Array<UserDetail>();
-    this.reparation = new ReparationCreation(0,'','',0,new Date(),
-    new Array<ReparationArticleCreation>(),new BillCreation(0,''));
+    this.reparation = new ReparationCreation(0, '', '', 0, new Date(),
+      new Array<ReparationArticleCreation>(), new BillCreation(0, ''));
     this.reparationsStates = new Array<ReparationState>();
-    this.reparationArticle = new ReparationArticleCreation(0,0);
+    this.reparationArticle = new ReparationArticleCreation(0, 0);
     this.articlesAdded = new Array<ReparationArticleAdded>();
+    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -44,16 +47,30 @@ export class CreateReparationComponent implements OnInit {
     this.loadReparationsStates();
   }
 
-  onSubmit(form: any){
-    
+  onSubmit(form: any) {
+    var identity = this._storageService.getIdentity();
+    this.reparation.employeeId = identity.id;
+    this._reparationService.create(this.reparation, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          console.log("error al crear reparacion");
+          this.statusSubmit = "failed"
+        } else {
+          window.location.reload();
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    });
   }
 
-  loadArticles(){
+  loadArticles() {
     this._articleService.getArticleNames().subscribe({
-      next: (response) =>{
-        if(response.error){
+      next: (response) => {
+        if (response.error) {
           console.log("error al obtener articulos");
-        }else{
+        } else {
           this.articles = response;
         }
       },
@@ -63,12 +80,12 @@ export class CreateReparationComponent implements OnInit {
     })
   }
 
-  loadReparationsStates(){
+  loadReparationsStates() {
     this._reparationStateService.getAll().subscribe({
-      next: (response) =>{
-        if(response.error){
+      next: (response) => {
+        if (response.error) {
           console.log("error al obtener los estados de las reparaciones");
-        }else{
+        } else {
           this.reparationsStates = response;
         }
       },
@@ -78,12 +95,12 @@ export class CreateReparationComponent implements OnInit {
     })
   }
 
-  loadClients(){
+  loadClients() {
     this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
-      next: (response) =>{
-        if(response.error){
+      next: (response) => {
+        if (response.error) {
           console.log("error al obtener los usuarios");
-        }else{
+        } else {
           this.clients = response;
         }
       },
@@ -96,11 +113,11 @@ export class CreateReparationComponent implements OnInit {
   addArticleReparation(form: any) {
     var reparationArticle = new ReparationArticleCreation(this.reparationArticle.articleId, this.reparationArticle.articleQuantity);
     this.reparation.reparationsArticles.push(reparationArticle);
-    
-    var articleName="";
+
+    var articleName = "";
     //buscar el articulo para extraer el nombre
-    for(let article of this.articles){
-      if(article.id == this.reparationArticle.articleId)
+    for (let article of this.articles) {
+      if (article.id == this.reparationArticle.articleId)
         articleName = article.name;
     }
     var article = new ReparationArticleAdded(articleName, this.reparationArticle.articleQuantity)

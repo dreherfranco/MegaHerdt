@@ -60,6 +60,7 @@ import { DialogUpdateReparationStateComponent } from './components/reparation-st
 import { AdministrateReparationsComponent } from './components/reparations/administrate-reparations/administrate-reparations.component';
 import { CreateReparationComponent } from './components/reparations/create-reparation/create-reparation.component';
 import { EditReparationsComponent } from './components/reparations/edit-reparations/edit-reparations.component';
+import { DialogUpdateReparationComponent } from './components/reparations/edit-reparations/dialog-update-reparation/dialog-update-reparation.component';
 
 @NgModule({
   declarations: [
@@ -114,7 +115,8 @@ import { EditReparationsComponent } from './components/reparations/edit-reparati
     DialogUpdateReparationStateComponent,
     AdministrateReparationsComponent,
     CreateReparationComponent,
-    EditReparationsComponent
+    EditReparationsComponent,
+    DialogUpdateReparationComponent
   ],
   imports: [
     BrowserModule,
