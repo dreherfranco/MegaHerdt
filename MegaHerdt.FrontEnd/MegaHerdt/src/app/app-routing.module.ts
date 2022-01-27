@@ -19,6 +19,7 @@ import { AdministrateArticlesComponent } from './components/articles/administrat
 import { AdministrateOffersComponent } from './components/offers/administrate-offers/administrate-offers.component';
 import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
 import { AdministrateReparationStatesComponent } from './components/reparation-states/administrate-reparation-states/administrate-reparation-states.component';
+import { AdministrateReparationsComponent } from './components/reparations/administrate-reparations/administrate-reparations.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -59,6 +60,10 @@ const routes: Routes = [
   },
   { 
     path: 'administrate/administrate-reparation-states', component: AdministrateReparationStatesComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/administrate-reparations', component: AdministrateReparationsComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   //ADMIN ROUTES
