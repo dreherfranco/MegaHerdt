@@ -36,4 +36,9 @@ export class ReparationService {
     this.headers = this.headers.set('Authorization', token);
     return this._http.delete(this.url + "/delete/" + reparationId, { headers: this.headers });
   }
+
+  getClientReparations(clientId: string, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + "/clientReparations/" + clientId, { headers: this.headers });
+  }
 }

@@ -1,12 +1,10 @@
-export class ReparationArticle{
+export class ReparationArticleUpdate{
     articleId: number;
     articleQuantity: number;
     priceAtTheMoment: number;
-    articleName: string;
-    constructor(articleId: number, articleQuantity: number, priceAtTheMoment: number, articleName: string){
+    constructor(articleId: number, articleQuantity: number, priceAtTheMoment: number){
         this.articleId = articleId;
         this.articleQuantity = articleQuantity;
         this.priceAtTheMoment = priceAtTheMoment;
-        this.articleName = articleName;
     }
 }

@@ -1,6 +1,9 @@
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
+import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
+import { ReparationArticleUpdate } from 'src/app/models/Article/ReparationArticleUpdate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
@@ -24,6 +27,7 @@ export class EditReparationsComponent implements OnInit {
   clients: Array<UserDetail>;
   billTypes = BillTypeEnum;
   reparationsStates: Array<ReparationState>;
+  reparationArticle: ReparationArticle;
 
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
@@ -33,6 +37,7 @@ export class EditReparationsComponent implements OnInit {
     this.articles = new Array<ArticleName>();
     this.clients = new Array<UserDetail>();
     this.reparationsStates = new Array<ReparationState>();
+    this.reparationArticle = new ReparationArticle(0,0,0,"");
   }
 
   ngOnInit(): void {
@@ -152,5 +157,16 @@ export class EditReparationsComponent implements OnInit {
         console.log(err)
       }
     })
+  }
+
+  addArticleReparation(reparation: Reparation) {
+    var articleName = "";
+    //buscar el articulo para extraer el nombre
+    for (let article of this.articles) {
+      if (article.id == this.reparationArticle.articleId)
+        articleName = article.name;
+    }
+    var reparationArticle = new ReparationArticle(this.reparationArticle.articleId, this.reparationArticle.articleQuantity,0,articleName);
+    reparation.reparationsArticles.push(reparationArticle);
   }
 }

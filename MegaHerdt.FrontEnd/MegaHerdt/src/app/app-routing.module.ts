@@ -20,6 +20,7 @@ import { AdministrateOffersComponent } from './components/offers/administrate-of
 import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
 import { AdministrateReparationStatesComponent } from './components/reparation-states/administrate-reparation-states/administrate-reparation-states.component';
 import { AdministrateReparationsComponent } from './components/reparations/administrate-reparations/administrate-reparations.component';
+import { ReparationRecordComponent } from './components/reparations/reparation-record/reparation-record.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings', component: UserSettingsComponent, canActivate: [AuthGuard ]},
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },
+  { path: 'reparation/record', component: ReparationRecordComponent, canActivate: [AuthGuard] },
   
   //EMPLOYEE AND ADMIN ROUTES
   { 

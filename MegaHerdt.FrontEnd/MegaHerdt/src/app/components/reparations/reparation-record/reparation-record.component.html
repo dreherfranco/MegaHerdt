@@ -1,0 +1,58 @@
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Articulos</th>
+                    <th scope="col">Email empleado</th>
+                    <th scope="col">Email cliente</th>
+                    <th scope="col">Monto</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Factura</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reparation of reparations; let i = index">
+                    <th>
+                        <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene
+                            articulos</span>
+                        <span *ngFor="let article of reparation.reparationsArticles">
+                            {{ article.articleName }}
+                        </span>
+                    </th>
+                    <th>
+                        <span class="data-user form-control">{{ reparation.employee.email }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user form-control">{{ reparation.client.email }}</span>
+                    </th>
+                    <th>
+                        <span>{{ reparation.amount }}</span>
+                    </th>
+                    <th>
+                        <span class="form-control">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
+                        <input id="date" name="date" class="form-control" type="date" #date="ngModel"
+                            [(ngModel)]="reparation.date" required>
+                    </th>
+                    <th>
+                        <span>{{ reparation.reparationState.name }}</span>
+                    </th>
+                    <th>
+                        <div *ngIf="reparation.bill != null">
+                            <p>
+                                <label for="billNumber"><b>Numero de factura: </b></label>
+                                <span>{{ reparation.bill.number }}</span>
+                            </p>
+                            <p>
+                                <label for="billType"><b>Tipo de factura: </b></label>
+                                <span>{{ reparation.bill.type }}</span>
+                            </p>
+                        </div>
+                    </th>
+                    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

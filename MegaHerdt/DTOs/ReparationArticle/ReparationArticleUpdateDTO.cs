@@ -1,10 +1,8 @@
 ﻿namespace MegaHerdt.API.DTOs.ReparationArticle
 {
-    public class ReparationArticleDTO
+    public class ReparationArticleUpdateDTO
     {
         public int ArticleId { get; set; }
         public int ArticleQuantity { get; set; }
-        public float ArticlePriceAtTheMoment { get; set; }
-        public string ArticleName { get; set; }
     }
 }

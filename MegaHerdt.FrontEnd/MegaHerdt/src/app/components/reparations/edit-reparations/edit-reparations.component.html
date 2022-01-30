@@ -2,7 +2,9 @@
     <table class="table">
         <thead>
             <tr>
-                <th>LISTADO DE OFERTAS</th>
+                <th>LISTADO DE REPARACIONES</th>
+                <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                
             </tr>
             <tr>
                 <th scope="col">Articulos</th>
@@ -29,6 +31,39 @@
                             [ngValue]="article.id">{{article.name}}
                         </option>
                     </select>
+
+                    <form class="mt-5" #articleReparationForm="ngForm">
+                        <div class="form-group mb-1 text-primary d-flex row">
+                            <label for="article"><b>Agregar nuevo articulo:</b></label>
+                        </div>
+                        <div class="form-group mb-3 d-flex row">
+                            <div class="form-group mb-3 col">
+                                <label for="articleName"><b>Articulo</b></label>
+                                <select class="form-select data-user" name="selectArticle"
+                                    [(ngModel)]="reparationArticle.articleId">
+                                    <option class="data-user" name="article" *ngFor="let article of articles"
+                                        [ngValue]="article.id">{{article.name}}
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3 col">
+                                <label for="articleQuantity"><b>Cantidad </b></label>
+                                <input id="articleQuantity" name="articleQuantity" class="form-control" type="number"
+                                    min="1" #articleQuantity="ngModel" [(ngModel)]="reparationArticle.articleQuantity"
+                                    required>
+                                <span *ngIf="articleQuantity.touched && !articleQuantity.valid"
+                                    class="text-danger">Ingrese
+                                    un numero valido</span>
+                            </div>
+                            <div class="form-group mb-3 col">
+                                <p>
+                                    <button class="btn btn-success mt-3" (click)="addArticleReparation(reparation)"
+                                        [disabled]="articleReparationForm.invalid"><i class="bi bi-plus-circle-fill"></i></button>
+                                </p>
+                            </div>
+                        </div>
+
+                    </form>
                 </th>
                 <th>
                     <span class="data-user form-control">{{ reparation.employee.email }}</span>
@@ -92,7 +127,7 @@
                             class="bi bi-trash-fill"></i></button>
                 </td>
             </tr>
-        </tbody>-
+        </tbody>
     </table>
 
 </div>

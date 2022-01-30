@@ -55,7 +55,7 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ReparationCreationDTO, Reparation>()
                 .ForMember(x=>x.ReparationsArticles, x=>x.MapFrom(this.ReparationArticleCreationMap));
             CreateMap<ReparationUpdateDTO, Reparation>()
-                 .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleCreationMap));
+                 .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleUpdateMap));
             CreateMap<Reparation, ReparationDetailDTO>();
             #endregion Reparation
 
@@ -264,7 +264,8 @@ namespace MegaHerdt.API.Mapper
                     {
                         ArticleQuantity = reparationArticle.ArticleQuantity,
                         ArticleId = reparationArticle.ArticleId,
-                        ArticlePriceAtTheMoment = reparationArticle.ArticlePriceAtTheMoment
+                        ArticlePriceAtTheMoment = reparationArticle.ArticlePriceAtTheMoment,
+                        ArticleName = reparationArticle.Article.Name
                     });
             }
             return result;
@@ -287,6 +288,22 @@ namespace MegaHerdt.API.Mapper
             return result;
         }
 
+        private List<ReparationArticle> ReparationArticleUpdateMap(ReparationUpdateDTO reparationDTO, Reparation reparation)
+        {
+            var result = new List<ReparationArticle>();
+            if (reparationDTO.ReparationsArticles == null) { return result; }
+
+            foreach (var reparationArticle in reparationDTO.ReparationsArticles)
+            {
+                result.Add(
+                    new ReparationArticle()
+                    {
+                        ArticleQuantity = reparationArticle.ArticleQuantity,
+                        ArticleId = reparationArticle.ArticleId
+                    });
+            }
+            return result;
+        }
         #endregion ReparationUtilsMethods
 
         #region ArticleUtilsMethods

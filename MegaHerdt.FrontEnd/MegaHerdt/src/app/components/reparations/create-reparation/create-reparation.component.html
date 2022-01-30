@@ -42,7 +42,7 @@
                 <span *ngIf="articleQuantity.touched && !articleQuantity.valid" class="text-danger">Ingrese un numero valido</span>
             </div>
             <div class="form-group mb-3 col mt-4">
-                <button class="btn btn-success" (click)="addArticleReparation(articleReparationForm)"><i class="bi bi-plus-circle-fill"></i></button>
+                <button class="btn btn-success" [disabled]="articleReparationForm.invalid" (click)="addArticleReparation(articleReparationForm)"><i class="bi bi-plus-circle-fill"></i></button>
             </div>
         </div>
     </form>

@@ -1,4 +1,4 @@
-import { ReparationArticle } from "../Article/ReparationArticle";
+import { ReparationArticleUpdate } from "../Article/ReparationArticleUpdate";
 import { Bill } from "../Bill/Bill";
 
 export class ReparationUpdate {
@@ -8,11 +8,11 @@ export class ReparationUpdate {
     clientId: string;
     amount: number;
     date: Date;
-    reparationsArticles: Array<ReparationArticle>;
+    reparationsArticles: Array<ReparationArticleUpdate>;
     bill: Bill;
     
     constructor(id: number, reparationStateId: number, employeeId: string, clientId: string, amount: number,
-        date: Date, reparationsArticles: Array<ReparationArticle>, bill: Bill,) {
+        date: Date, reparationsArticles: Array<ReparationArticleUpdate>, bill: Bill,) {
         this.id = id;
         this.reparationStateId = reparationStateId;
         this.employeeId = employeeId;

@@ -22,6 +22,7 @@ namespace MegaHerdt.Helpers.Helpers
                 .Include(x => x.Employee)
                 .Include(x => x.ReparationState)
                 .Include(x => x.ReparationsArticles)
+                .ThenInclude(x => x.Article)
                 .Include(x=>x.Bill);
         }
 
