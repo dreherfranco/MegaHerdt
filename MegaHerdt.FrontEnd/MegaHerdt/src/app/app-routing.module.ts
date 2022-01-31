@@ -21,6 +21,7 @@ import { AdministrateArticlesProvisionsComponent } from './components/articles-p
 import { AdministrateReparationStatesComponent } from './components/reparation-states/administrate-reparation-states/administrate-reparation-states.component';
 import { AdministrateReparationsComponent } from './components/reparations/administrate-reparations/administrate-reparations.component';
 import { ReparationRecordComponent } from './components/reparations/reparation-record/reparation-record.component';
+import { CreateReparationClaimComponent } from './components/reparation-claims/create-reparation-claim/create-reparation-claim.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,8 +30,8 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings', component: UserSettingsComponent, canActivate: [AuthGuard ]},
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },
-  { path: 'reparation/record', component: ReparationRecordComponent, canActivate: [AuthGuard] },
-  
+  { path: 'reparations/record', component: ReparationRecordComponent, canActivate: [AuthGuard] },
+  { path: 'reparations/record/reparation/:id/claim', component: CreateReparationClaimComponent, canActivate: [AuthGuard] },
   //EMPLOYEE AND ADMIN ROUTES
   { 
     path: 'administrate', component: AdministrateComponent, canActivate: [AuthGuard, RoleGuard], 

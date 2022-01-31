@@ -63,6 +63,7 @@ import { EditReparationsComponent } from './components/reparations/edit-reparati
 import { DialogUpdateReparationComponent } from './components/reparations/edit-reparations/dialog-update-reparation/dialog-update-reparation.component';
 import { ReparationRecordComponent } from './components/reparations/reparation-record/reparation-record.component';
 import { DialogDeleteProfileComponent } from './components/users/user-settings/dialog-delete-profile/dialog-delete-profile.component';
+import { CreateReparationClaimComponent } from './components/reparation-claims/create-reparation-claim/create-reparation-claim.component';
 
 @NgModule({
   declarations: [
@@ -120,7 +121,8 @@ import { DialogDeleteProfileComponent } from './components/users/user-settings/d
     EditReparationsComponent,
     DialogUpdateReparationComponent,
     ReparationRecordComponent,
-    DialogDeleteProfileComponent
+    DialogDeleteProfileComponent,
+    CreateReparationClaimComponent
   ],
   imports: [
     BrowserModule,
