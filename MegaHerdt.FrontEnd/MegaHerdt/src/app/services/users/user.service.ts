@@ -38,6 +38,11 @@ export class UserService {
     return this._http.post(this.url+"/update", params, { headers: this.headers } );
   }
 
+  delete(userEmail: string, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.delete(this.url+"/delete/"+ userEmail, { headers: this.headers } );
+  }
+
   getUsers(token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url + "/get-users", { headers: this.headers });

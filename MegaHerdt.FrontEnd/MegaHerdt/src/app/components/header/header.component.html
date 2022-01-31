@@ -6,9 +6,14 @@
         <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['']">
             <i class="bi bi-house"></i> Inicio 
         </a>
-        
+        <a *ngIf="!authenticated()" class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['register']">
+            <i class="bi bi-person-plus"></i> Registro 
+        </a>
+        <a *ngIf="!authenticated()" class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['login']">
+            <i class="bi bi-box-arrow-in-right"></i> Login 
+        </a>
         <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['reparation/record']" *ngIf="authenticated()">
-            <i class="bi bi-person-fill"></i> Historial de reparaciones
+            <i class="bi bi-clock-history"></i> Historial de reparaciones
         </a>
 
         <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['user/settings']" *ngIf="authenticated()">
@@ -21,12 +26,6 @@
         
     </nav>
     <div class="my-2 my-md-0 mr-md-3 d-flex row flex-column flex-md-row align-items-center flex-wrap flex-row m-3">
-        <a class="p-3 btn btn-outline-primary link-custom text-center border border-color-custom" [routerLink]="['login']" *ngIf="!authenticated()">
-            <i class="bi bi-box-arrow-in-right"></i> Login
-        </a>
-        <a class="p-3 btn btn-outline-primary link-custom text-center border border-color-custom" [routerLink]="['register']" *ngIf="!authenticated()">
-            <i class="bi bi-person-plus"></i> Registro
-        </a>
         <a class="p-3 btn btn-outline-danger link-custom text-center border border-color-custom" [routerLink]="['logout']" *ngIf="authenticated()">
             <i class="bi bi-box-arrow-left"></i> Logout
         </a>

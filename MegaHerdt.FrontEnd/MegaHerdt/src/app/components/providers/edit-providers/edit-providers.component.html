@@ -17,11 +17,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let provider of providers; let i = index">
-        <th><input class="form-control" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{provider.name}}"
+        <th><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{provider.name}}"
             [(ngModel)]="provider.name"></th>
-        <td><input class="form-control" pattern="(^[0-9]+)" minlength="5" value="{{provider.phone}}"
+        <td><input class="form-control data-user" pattern="(^[0-9]+)" minlength="5" value="{{provider.phone}}"
             [(ngModel)]="provider.phone"></td>
-        <td><input class="form-control" required email type="email" value="{{provider.email}}"
+        <td><input class="form-control data-user" required email type="email" value="{{provider.email}}"
             [(ngModel)]="provider.email"></td>
         <td><button class="btn btn-success" (click)="openDialog(provider)"> <i class="bi bi-pencil-square"></i>
           </button></td>

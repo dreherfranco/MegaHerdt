@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { cloneDeep } from 'lodash';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { StorageService } from 'src/app/services/storage/storage.service';

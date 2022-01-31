@@ -149,14 +149,14 @@ namespace MegaHerdt.API.Controllers
 
         [HttpDelete("delete/{userEmail}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult> UserDelete(string userEmail)
+        public async Task<ActionResult<bool>> UserDelete(string userEmail)
         {
             try
             {    
                 if (UserValidations.UserEmailIsOk(userEmail, HttpContext))
                 {
                     await UserService.UserDelete(userEmail);
-                    return NoContent();
+                    return true;
                 }
                 throw new Exception("User email is incorrect");
             }

@@ -48,7 +48,7 @@
                             </div>
                             <div class="form-group mb-3 col">
                                 <label for="articleQuantity"><b>Cantidad </b></label>
-                                <input id="articleQuantity" name="articleQuantity" class="form-control" type="number"
+                                <input id="articleQuantity" name="articleQuantity" class="form-control data-user" type="number"
                                     min="1" #articleQuantity="ngModel" [(ngModel)]="reparationArticle.articleQuantity"
                                     required>
                                 <span *ngIf="articleQuantity.touched && !articleQuantity.valid"
@@ -76,12 +76,12 @@
                     </select>
                 </th>
                 <th>
-                    <input id="amount" name="amount" class="form-control" type="number" min="0" #amount="ngModel"
+                    <input id="amount" name="amount" class="form-control data-user" type="number" min="0" #amount="ngModel"
                         [(ngModel)]="reparation.amount" required>
                 </th>
                 <th>
-                    <span class="form-control">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
-                    <input id="date" name="date" class="form-control" type="date" #date="ngModel"
+                    <span class="form-control data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
+                    <input id="date" name="date" class="form-control data-user" type="date" #date="ngModel"
                         [(ngModel)]="reparation.date" required>
                 </th>
                 <th>
@@ -96,12 +96,12 @@
                 <th>
                     <div *ngIf="reparation.bill != null">
                         <p>
-                            <label for="billNumber"><b>Numero de factura: </b></label>
-                            <input id="billNumber" name="billNumber" class="form-control" type="number"
+                            <label for="billNumber" ><b>Numero </b></label>
+                            <input id="billNumber" name="billNumber" class="form-control data-user" type="number"
                                 #billNumber="ngModel" [(ngModel)]="reparation.bill.number" required>
                         </p>
                         <p>
-                            <label for="billType"><b>Tipo de factura: </b></label>
+                            <label for="billType"><b>Tipo </b></label>
                             <select class="form-select data-user" name="selectBillType"
                                 [(ngModel)]="reparation.bill.type">
                                 <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>

@@ -1,6 +1,7 @@
 <div class="container-fluid">
+    <p *ngIf="reparations.length == 0" class="alert alert-warning">No tiene reparaciones para mostrar</p>
     <div class="table-responsive">
-        <table class="table">
+        <table class="table" *ngIf="reparations.length != 0">
             <thead>
                 <tr>
                     <th scope="col">Articulos</th>
@@ -13,7 +14,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let reparation of reparations; let i = index">
+                <tr *ngFor="let reparation of reparations | paginate: 
+                {
+                    itemsPerPage: this.paginate.recordsPerPage, 
+                    currentPage:this.paginate.page
+                }">
                     <th>
                         <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene
                             articulos</span>
@@ -32,8 +37,6 @@
                     </th>
                     <th>
                         <span class="form-control">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
-                        <input id="date" name="date" class="form-control" type="date" #date="ngModel"
-                            [(ngModel)]="reparation.date" required>
                     </th>
                     <th>
                         <span>{{ reparation.reparationState.name }}</span>
@@ -52,6 +55,11 @@
                     </th>
                     
                 </tr>
+               <pagination-controls class="text-center mx-auto"
+                (pageChange)="this.paginate.page = $event" 
+                previousLabel="Anterior" 
+                nextLabel="Siguiente">
+                </pagination-controls>
             </tbody>
         </table>
     </div>

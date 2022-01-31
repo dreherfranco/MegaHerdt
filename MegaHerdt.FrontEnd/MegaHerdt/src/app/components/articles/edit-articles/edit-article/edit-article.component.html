@@ -3,10 +3,10 @@
     <input id="image" name="image" class="form-control" (change)="onChange($event)" type="file">
 
     <div class="card-body">
-        <h5 class="card-title data-article">Nombre:<input class="form-control" [(ngModel)]="article.name"></h5>
-        <p class="card-text data-article">Valor unitario: <input class="form-control" [(ngModel)]="article.unitValue"></p>
-        <p class="card-text data-article">Codigo: <input class="form-control" [(ngModel)]="article.code"></p>
-        <p class="card-text data-article">Stock: <input class="form-control" [(ngModel)]="article.stock"></p>
+        <h5 class="card-title data-article">Nombre:<input class="form-control data-user" [(ngModel)]="article.name"></h5>
+        <p class="card-text data-article">Valor unitario: <input class="form-control data-user" [(ngModel)]="article.unitValue"></p>
+        <p class="card-text data-article">Codigo: <input class="form-control data-user" [(ngModel)]="article.code"></p>
+        <p class="card-text data-article">Stock: <input class="form-control data-user" [(ngModel)]="article.stock"></p>
         <p class="card-text data-article">Marca:
             <select class="form-select data-user" name="selectBrand" [(ngModel)]="article.brand.id">
                 <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">{{brand.name}}

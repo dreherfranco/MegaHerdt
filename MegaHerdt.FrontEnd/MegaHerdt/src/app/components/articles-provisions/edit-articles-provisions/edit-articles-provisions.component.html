@@ -24,7 +24,7 @@
                     </select>
                 </th>
                 <td>
-                    <input id="articleQuantity" name="articleQuantity" class="form-control" type="number" min="0"
+                    <input id="articleQuantity" name="articleQuantity" class="form-control data-user" type="number" min="0"
                         #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" required>
                 </td>
                 <td>
@@ -35,15 +35,15 @@
                     </select>
                 </td>
                 <td>
-                    <span class="form-control">
+                    <span class="form-control data-user">
                         {{articleProvider.provisionDate | date: 'dd/MM/yyyy' }}
                     </span>
-                    <input id="provisionDate" name="provisionDate" class="form-control" type="date"
+                    <input id="provisionDate" name="provisionDate" class="form-control data-user" type="date"
                         #provisionDate="ngModel" [(ngModel)]="articleProvider.provisionDate" required>
                 </td>
                 <td>
                    
-                    <a href="{{articleProvider.voucher}}" class="form-control voucher" target="_blank">
+                    <a href="{{articleProvider.voucher}}" class="form-control voucher data-user" target="_blank">
                         <i class="bi bi-card-image"></i> Ver comprobante
                      </a>
                 
