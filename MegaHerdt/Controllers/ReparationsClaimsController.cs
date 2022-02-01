@@ -4,6 +4,7 @@ using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Services.Services;
+using MegaHerdt.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,10 +19,13 @@ namespace MegaHerdt.API.Controllers
     {
         private readonly ReparationClaimService ReparationClaimService;
         private readonly IMapper Mapper;
-        public ReparationsClaimsController(ReparationClaimService reparationClaimService, IMapper mapper)
+        private readonly IMailerService MailService;
+
+        public ReparationsClaimsController(ReparationClaimService reparationClaimService, IMapper mapper, IMailerService mailService)
         {
             this.ReparationClaimService = reparationClaimService;
             this.Mapper = mapper;
+            this.MailService = mailService;
         }
 
         [HttpGet("getByClientId/{clientId}")]
@@ -55,7 +59,7 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpGet("get-all")]
+        [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public ActionResult<List<ReparationClaimDTO>> GetAllReparationsClaims()
@@ -80,7 +84,7 @@ namespace MegaHerdt.API.Controllers
                 if (UserValidations.UserIdIsOk(reparationClaimDTO.ClientId, HttpContext))
                 {
                     var reparationClaim = Mapper.Map<ReparationClaim>(reparationClaimDTO);
-                    var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);
+                    var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);              
                     return this.Mapper.Map<ReparationClaimDTO>(reparationClaimCreate);
                 }
                 throw new Exception("User id is incorrect");

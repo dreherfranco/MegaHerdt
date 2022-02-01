@@ -1,0 +1,60 @@
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RECLAMOS DE REPARACIONES</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th scope="col">Id reclamo</th>
+                    <th scope="col">Descripcion reclamo</th>
+                    <th scope="col">Fecha emision</th>
+                    <th scope="col">Email empleado</th>
+                    <th scope="col">Email cliente</th>
+                    <th scope="col">Ver reparacion</th>
+                    <th scope="col">Contestar reclamo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let reparationClaim of reparationClaims 
+                | paginate: 
+                {
+                    itemsPerPage: this.paginate.recordsPerPage, 
+                    currentPage:this.paginate.page
+                }; 
+                let i = index">
+                    <th>
+                        <span class="data-user">{{ reparationClaim.id }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{ reparationClaim.description }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{ reparationClaim.date | date: 'dd/MM/yyyy' }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{ reparationClaim.reparation.employee.email }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{ reparationClaim.reparation.client.email }}</span>
+                    </th>
+                    <th>
+                        <button class="btn btn-primary">Ver reparacion</button>
+                    </th>
+                    <th>
+                        <button class="btn btn-primary">Contestar reclamo</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparationClaims.length > 6">
+        </pagination-controls>
+    </div>
+</div>

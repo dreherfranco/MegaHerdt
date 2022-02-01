@@ -1,6 +1,9 @@
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.FileManager;
 using MegaHerdt.API.FileManager.Interface;
+using MegaHerdt.Models.Models;
+using MegaHerdt.Services.Services;
+using MegaHerdt.Services.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,10 @@ builder.Services.AddHttpContextAccessor();
 IoC.HelpersInjection(builder);
 IoC.ServicesInjection(builder);
 IoC.RepositoryInjection(builder);
+
+//MAILER DEPENDENCY INJECTION
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+builder.Services.AddTransient<IMailerService, MailerService>();
 
 builder.Services.AddCors(options =>
 {

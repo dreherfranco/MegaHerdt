@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
 import { ReparationArticleUpdate } from 'src/app/models/Article/ReparationArticleUpdate';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
@@ -28,7 +29,8 @@ export class EditReparationsComponent implements OnInit {
   billTypes = BillTypeEnum;
   reparationsStates: Array<ReparationState>;
   reparationArticle: ReparationArticle;
-
+  paginate: Paginate;
+  
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
     private _reparationStateService: ReparationStateService, 
@@ -38,6 +40,7 @@ export class EditReparationsComponent implements OnInit {
     this.clients = new Array<UserDetail>();
     this.reparationsStates = new Array<ReparationState>();
     this.reparationArticle = new ReparationArticle(0,0,0,"");
+    this.paginate = new Paginate(1,6);
   }
 
   ngOnInit(): void {

@@ -22,6 +22,7 @@ import { AdministrateReparationStatesComponent } from './components/reparation-s
 import { AdministrateReparationsComponent } from './components/reparations/administrate-reparations/administrate-reparations.component';
 import { ReparationRecordComponent } from './components/reparations/reparation-record/reparation-record.component';
 import { CreateReparationClaimComponent } from './components/reparation-claims/create-reparation-claim/create-reparation-claim.component';
+import { ShowReparationClaimsComponent } from './components/reparation-claims/show-reparation-claims/show-reparation-claims.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -67,6 +68,10 @@ const routes: Routes = [
   },
   { 
     path: 'administrate/administrate-reparations', component: AdministrateReparationsComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/show-reparation-claims', component: ShowReparationClaimsComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   //ADMIN ROUTES
