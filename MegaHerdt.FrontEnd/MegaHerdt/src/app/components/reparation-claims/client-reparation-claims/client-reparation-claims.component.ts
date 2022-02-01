@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
+import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationClaim } from 'src/app/models/ReparationClaims/ReparationClaim';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationClaimService } from 'src/app/services/reparation-claims/reparation-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogShowReparationDetailComponent } from '../../reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 
 @Component({
   selector: 'app-client-reparation-claims',
@@ -15,13 +18,21 @@ export class ClientReparationClaimsComponent implements OnInit {
   paginate: Paginate;
 
   constructor(private _reparationClaimService: ReparationClaimService, 
-    private _storageService: StorageService) {
+    private _storageService: StorageService, public dialog: MatDialog) {
     this.reparationClaims = new Array<ReparationClaim>();
     this.paginate = new Paginate(1,6);
    }
 
   ngOnInit(): void {
     this.loadReparationClaims();
+  }
+
+  openDialog(reparation: Reparation){
+    this.dialog.open(DialogShowReparationDetailComponent,
+      {
+        disableClose:true,
+        data: reparation
+      });
   }
 
   loadReparationClaims(){

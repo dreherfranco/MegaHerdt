@@ -47,7 +47,14 @@ namespace MegaHerdt.Helpers.Helpers
             return repository.Get(filter)
                 .Include(x => x.Client)
                 .Include(x => x.Reparation)
-                .ThenInclude(x => x.Employee);
+                .ThenInclude(x => x.ReparationState)
+                .Include(x => x.Reparation)
+                .ThenInclude(x => x.Employee)
+                .Include(x => x.Reparation)
+                .ThenInclude(x => x.Bill)
+                .Include(x => x.Reparation)
+                .ThenInclude(x => x.ReparationsArticles)
+                .ThenInclude(x => x.Article);
         }
 
 

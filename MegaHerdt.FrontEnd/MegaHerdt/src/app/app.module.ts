@@ -68,6 +68,7 @@ import { CreateReparationClaimComponent } from './components/reparation-claims/c
 import { ShowReparationClaimsComponent } from './components/reparation-claims/show-reparation-claims/show-reparation-claims.component';
 import { AnswerReparationClaimComponent } from './components/reparation-claims/answer-reparation-claim/answer-reparation-claim.component';
 import { ClientReparationClaimsComponent } from './components/reparation-claims/client-reparation-claims/client-reparation-claims.component';
+import { DialogShowReparationDetailComponent } from './components/reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +130,8 @@ import { ClientReparationClaimsComponent } from './components/reparation-claims/
     CreateReparationClaimComponent,
     ShowReparationClaimsComponent,
     AnswerReparationClaimComponent,
-    ClientReparationClaimsComponent
+    ClientReparationClaimsComponent,
+    DialogShowReparationDetailComponent
   ],
   imports: [
     BrowserModule,

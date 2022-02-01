@@ -51,7 +51,7 @@
                         <span class="data-user text-danger" *ngIf="!reparationClaim.answered">NO</span>
                     </th>
                     <th>
-                        <button class="btn btn-primary">Ver reparacion</button>
+                        <button class="btn btn-primary" (click)="openDialog(reparationClaim.reparation)">Ver reparacion</button>
                     </th>
                     <th>
                         <button [routerLink]="['answer-reparation-claim', reparationClaim.id]"  class="btn btn-primary">Contestar reclamo</button>
