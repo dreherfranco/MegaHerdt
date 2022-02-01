@@ -16,7 +16,7 @@
                     <th scope="col">Id reclamo</th>
                     <th scope="col">Descripcion reclamo</th>
                     <th scope="col">Fecha emision</th>
-                    <th scope="col">Email empleado</th>
+                    <th scope="col">Empleado</th>
                     <th scope="col">Email cliente</th>
                     <th scope="col">Respondido</th>
                     <th scope="col">Ver reparacion</th>
@@ -41,7 +41,7 @@
                         <span class="data-user">{{ reparationClaim.date | date: 'dd/MM/yyyy' }}</span>
                     </th>
                     <th>
-                        <span class="data-user">{{ reparationClaim.reparation.employee.email }}</span>
+                        <span class="data-user">{{ reparationClaim.reparation.employee.name }} {{ reparationClaim.reparation.employee.surname }}</span>
                     </th>
                     <th>
                         <span class="data-user">{{ reparationClaim.reparation.client.email }}</span>

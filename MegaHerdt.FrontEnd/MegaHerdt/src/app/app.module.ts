@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,6 +66,8 @@ import { ReparationRecordComponent } from './components/reparations/reparation-r
 import { DialogDeleteProfileComponent } from './components/users/user-settings/dialog-delete-profile/dialog-delete-profile.component';
 import { CreateReparationClaimComponent } from './components/reparation-claims/create-reparation-claim/create-reparation-claim.component';
 import { ShowReparationClaimsComponent } from './components/reparation-claims/show-reparation-claims/show-reparation-claims.component';
+import { AnswerReparationClaimComponent } from './components/reparation-claims/answer-reparation-claim/answer-reparation-claim.component';
+import { ClientReparationClaimsComponent } from './components/reparation-claims/client-reparation-claims/client-reparation-claims.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +127,9 @@ import { ShowReparationClaimsComponent } from './components/reparation-claims/sh
     ReparationRecordComponent,
     DialogDeleteProfileComponent,
     CreateReparationClaimComponent,
-    ShowReparationClaimsComponent
+    ShowReparationClaimsComponent,
+    AnswerReparationClaimComponent,
+    ClientReparationClaimsComponent
   ],
   imports: [
     BrowserModule,
@@ -136,7 +141,7 @@ import { ShowReparationClaimsComponent } from './components/reparation-claims/sh
     BrowserAnimationsModule,
     Ng2SearchPipeModule,
     MatDialogModule,
-    
+    BsDropdownModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,6 +16,7 @@ namespace MegaHerdt.Models.Models
         public int ReparationId { get; set; }
         public string Description { get; set; }
         public DateTime Date { get; set; }
+        public bool Answered { get; set; } = false;
         public User Client { get; set; }
         public Reparation Reparation { get; set; }
     }

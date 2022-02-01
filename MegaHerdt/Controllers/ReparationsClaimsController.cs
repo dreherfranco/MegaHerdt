@@ -84,7 +84,7 @@ namespace MegaHerdt.API.Controllers
                 if (UserValidations.UserIdIsOk(reparationClaimDTO.ClientId, HttpContext))
                 {
                     var reparationClaim = Mapper.Map<ReparationClaim>(reparationClaimDTO);
-                    var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);              
+                    var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);
                     return this.Mapper.Map<ReparationClaimDTO>(reparationClaimCreate);
                 }
                 throw new Exception("User id is incorrect");
@@ -97,7 +97,7 @@ namespace MegaHerdt.API.Controllers
 
         [HttpPost("update")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult> Update([FromBody] ReparationClaimUpdateDTO reparationClaimDTO)
+        public async Task<ActionResult<bool>> Update([FromBody] ReparationClaimUpdateDTO reparationClaimDTO)
         {
             try
             {
@@ -107,7 +107,7 @@ namespace MegaHerdt.API.Controllers
                     var reparationClaimDb = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
                     reparationClaimDb = this.Mapper.Map(reparationClaimDTO, reparationClaimDb);
                     await this.ReparationClaimService.Update(reparationClaimDb);
-                    return NoContent();
+                    return true;
                 }
                 throw new Exception("Client id is incorrect");
             }
@@ -131,6 +131,33 @@ namespace MegaHerdt.API.Controllers
                     return NoContent();
                 }
                 throw new Exception("Client id is incorrect");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("answer")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> Answer([FromBody] ReparationClaimAnswerDTO reparationClaimDTO)
+        {
+            try
+            {
+                Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimDTO.Id;
+                var reparationClaimDb = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
+                var mailRequest = new MailRequest() 
+                { 
+                    ToEmail = reparationClaimDb.Client.Email, 
+                    Body = reparationClaimDTO.Answer, 
+                    Subject = "Respuesta a reclamo de reparacion" 
+                };
+                
+                await this.MailService.SendEmailAsync(mailRequest);
+                reparationClaimDb.Answered = true;
+                await this.ReparationClaimService.Update(reparationClaimDb);
+                return true;
             }
             catch (Exception ex)
             {
