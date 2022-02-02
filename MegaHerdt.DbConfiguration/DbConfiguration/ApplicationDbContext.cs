@@ -93,14 +93,28 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             var reparationState = new ReparationState()
             {
                 Id = 1,
-                Name = "En proceso"
+                Name = "INGRESO"
             };
-
+            var reparationState2 = new ReparationState()
+            {
+                Id = 2,
+                Name = "EN PRESUPUESTO"
+            };
+            var reparationState3 = new ReparationState()
+            {
+                Id = 3,
+                Name = "EN REPARACION"
+            };
+            var reparationState4 = new ReparationState()
+            {
+                Id = 4,
+                Name = "PREPARADO"
+            };
             modelBuilder.Entity<IdentityRole>()
                 .HasData(new List<IdentityRole>(){ rolAdmin,rolAdmin2});
 
             modelBuilder.Entity<ReparationState>()
-                .HasData(reparationState);
+                .HasData(new List<ReparationState>() { reparationState, reparationState2, reparationState3, reparationState4 });
         }
     }
 }

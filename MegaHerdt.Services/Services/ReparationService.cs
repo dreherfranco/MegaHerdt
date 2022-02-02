@@ -31,5 +31,19 @@ namespace MegaHerdt.Services.Services
             return this.helper.Get(filter).ToList();
         }
         
+        public bool isInBudget(string reparationStateName)
+        {
+            return reparationStateName.Contains("PRESUPUESTO");
+        }
+
+        public MailRequest mailRequest(Reparation reparation)
+        {
+            return new MailRequest()
+            {
+                ToEmail = reparation.Client.Email,
+                Subject = "ESTADO DE REPARACION",
+                Body = "El presupuesto de su reparacion está listo, su costo es de $" + reparation.Amount
+            };
+        }
     }
 }

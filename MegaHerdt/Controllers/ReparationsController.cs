@@ -4,6 +4,7 @@ using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Services.Services;
+using MegaHerdt.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -18,22 +19,33 @@ namespace MegaHerdt.API.Controllers
     {
         private readonly ReparationService ReparationService;
         private readonly IMapper Mapper;
-        public ReparationsController(ReparationService reparationService, IMapper mapper)
+        private readonly IMailerService MailService;
+
+        public ReparationsController(ReparationService reparationService, IMapper mapper, IMailerService mailService)
         {
             this.ReparationService = reparationService;
             this.Mapper = mapper;
+            this.MailService = mailService;
         }
 
         [HttpPost("create")]
-      //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-  //      [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<ReparationDTO>> CreateReparation([FromBody] ReparationCreationDTO reparationDTO)
         {
             try
             {
                 var reparation = Mapper.Map<Reparation>(reparationDTO);
-                var reparationCreate = await this.ReparationService.Create(reparation);
-                return this.Mapper.Map<ReparationDTO>(reparationCreate);
+                await this.ReparationService.Create(reparation);
+
+                var reparationCreated = this.ReparationService.GetReparationById(reparation.Id);
+                if (this.ReparationService.isInBudget(reparationCreated.ReparationState.Name))
+                {
+                    var mailRequest = this.ReparationService.mailRequest(reparationCreated);
+                    await this.MailService.SendEmailAsync(mailRequest);
+                }
+
+                return this.Mapper.Map<ReparationDTO>(reparationCreated);
             }
             catch (Exception ex)
             {
@@ -42,8 +54,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-      //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public async Task<ActionResult<bool>> UpdateReparation([FromBody] ReparationUpdateDTO reparationDTO)
         {
             try
@@ -51,6 +63,11 @@ namespace MegaHerdt.API.Controllers
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
+                if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
+                {
+                    var mailRequest = this.ReparationService.mailRequest(reparationDb);
+                    await this.MailService.SendEmailAsync(mailRequest);
+                }
                 return true;
             }
             catch (Exception ex)
@@ -77,8 +94,8 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-all")]
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-       // [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
         public ActionResult<List<ReparationDTO>> GetAllReparations()
         {
             try

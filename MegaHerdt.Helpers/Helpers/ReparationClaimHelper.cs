@@ -54,7 +54,8 @@ namespace MegaHerdt.Helpers.Helpers
                 .ThenInclude(x => x.Bill)
                 .Include(x => x.Reparation)
                 .ThenInclude(x => x.ReparationsArticles)
-                .ThenInclude(x => x.Article);
+                .ThenInclude(x => x.Article)
+                .OrderByDescending(x => x.Date);
         }
 
 

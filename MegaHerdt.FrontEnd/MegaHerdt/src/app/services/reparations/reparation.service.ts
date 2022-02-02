@@ -28,7 +28,9 @@ export class ReparationService {
     let params = JSON.stringify(reparation);
     return this._http.post(this.url + "/update", params, { headers: this.headers });
   }
-  getAll(): Observable<any>{
+  
+  getAll(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url+"/get-all", { headers: this.headers });
   }
 

@@ -66,7 +66,8 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var reparationsClaims = this.ReparationClaimService.GetAll();
+                var reparationsClaims = this.ReparationClaimService.GetAll()
+                    .OrderBy(x=>x.Answered);
                 return this.Mapper.Map<List<ReparationClaimDTO>>(reparationsClaims);
             }
             catch (Exception ex)
