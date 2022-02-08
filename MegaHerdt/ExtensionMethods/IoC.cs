@@ -95,12 +95,14 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<ReparationHelper>();
             builder.Services.AddTransient<ReparationClaimHelper>();
             builder.Services.AddTransient<ReparationStateHelper>();
+            builder.Services.AddTransient<ReparationPaymentHelper>();
             builder.Services.AddTransient<ArticleBrandHelper>();
             builder.Services.AddTransient<ArticleCategoryHelper>();
             builder.Services.AddTransient<ArticleHelper>();
             builder.Services.AddTransient<ArticleOfferHelper>();
             builder.Services.AddTransient<ProviderHelper>();
             builder.Services.AddTransient<ArticleProviderHelper>();
+            
             return builder;
         }
 
@@ -110,6 +112,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<RoleService>();
             builder.Services.AddTransient<HashService>();
             builder.Services.AddTransient<ReparationService>();
+            builder.Services.AddTransient<ReparationPaymentService>();
             builder.Services.AddTransient<ReparationClaimService>();
             builder.Services.AddTransient<ReparationStateService>();
             builder.Services.AddTransient<ArticleBrandService>();
@@ -126,6 +129,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<User>>();
             builder.Services.AddTransient<Repository<IdentityRole>>();
             builder.Services.AddTransient<Repository<Reparation>>();
+            builder.Services.AddTransient<Repository<Payment>>();
             builder.Services.AddTransient<Repository<ReparationClaim>>();
             builder.Services.AddTransient<Repository<ReparationState>>();
             builder.Services.AddTransient<Repository<ArticleBrand>>();

@@ -4,6 +4,7 @@ using MegaHerdt.API.FileManager.Interface;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Services.Services;
 using MegaHerdt.Services.Services.Interfaces;
+using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +26,7 @@ IoC.RepositoryInjection(builder);
 //MAILER DEPENDENCY INJECTION
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailerService, MailerService>();
+StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["apiKey"];
 
 builder.Services.AddCors(options =>
 {

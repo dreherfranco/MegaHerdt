@@ -25,6 +25,7 @@ import { CreateReparationClaimComponent } from './components/reparation-claims/c
 import { ShowReparationClaimsComponent } from './components/reparation-claims/show-reparation-claims/show-reparation-claims.component';
 import { AnswerReparationClaimComponent } from './components/reparation-claims/answer-reparation-claim/answer-reparation-claim.component';
 import { ClientReparationClaimsComponent } from './components/reparation-claims/client-reparation-claims/client-reparation-claims.component';
+import { ConfirmReparationPaymentComponent } from './components/reparationPayments/confirm-reparation-payment/confirm-reparation-payment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,6 +36,7 @@ const routes: Routes = [
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },
   { path: 'reparations/record', component: ReparationRecordComponent, canActivate: [AuthGuard] },
   { path: 'reparations/record/reparation/:id/claim', component: CreateReparationClaimComponent, canActivate: [AuthGuard] },
+  { path: 'reparations/record/reparation/:id/payment', component: ConfirmReparationPaymentComponent, canActivate: [AuthGuard] },
   { path: 'client-reparation-claims', component: ClientReparationClaimsComponent, canActivate: [AuthGuard] },
   //EMPLOYEE AND ADMIN ROUTES
   { 

@@ -1,0 +1,21 @@
+<form novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
+    <input type="text" formControlName="name" placeholder="Jane Doe">
+    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+    <button type="submit">
+        CREATE TOKEN
+    </button>
+</form>
+<hr>
+<hr>
+
+<div id="plans" *ngFor="let plan of availablePlans">
+    <form id="installment-plan-form">
+        <label><input id="immediate-plan" type="radio" name="installment_plan" (click)="selectPlan(plan)" />En
+            {{plan.count}} cuotas</label>
+    </form>
+    <button id="confirm-button" (click)="confirmPayment()">Confirm Payment</button>
+</div>
+
+<div id="result" hidden>
+    <p id="status-message"></p>
+</div>

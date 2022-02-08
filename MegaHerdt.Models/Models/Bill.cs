@@ -13,5 +13,6 @@ namespace MegaHerdt.Models.Models
         public int Number { get; set; }
         public Reparation? Reparation { get; set; }
         public Purchase? Purchase { get; set; }
+        public List<Payment> Payments { get; set; }
     }
 }

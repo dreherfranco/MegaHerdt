@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { NgxStripeModule } from 'ngx-stripe';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -69,6 +70,7 @@ import { ShowReparationClaimsComponent } from './components/reparation-claims/sh
 import { AnswerReparationClaimComponent } from './components/reparation-claims/answer-reparation-claim/answer-reparation-claim.component';
 import { ClientReparationClaimsComponent } from './components/reparation-claims/client-reparation-claims/client-reparation-claims.component';
 import { DialogShowReparationDetailComponent } from './components/reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
+import { ConfirmReparationPaymentComponent } from './components/reparationPayments/confirm-reparation-payment/confirm-reparation-payment.component';
 
 @NgModule({
   declarations: [
@@ -131,7 +133,8 @@ import { DialogShowReparationDetailComponent } from './components/reparations/di
     ShowReparationClaimsComponent,
     AnswerReparationClaimComponent,
     ClientReparationClaimsComponent,
-    DialogShowReparationDetailComponent
+    DialogShowReparationDetailComponent,
+    ConfirmReparationPaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -143,7 +146,8 @@ import { DialogShowReparationDetailComponent } from './components/reparations/di
     BrowserAnimationsModule,
     Ng2SearchPipeModule,
     MatDialogModule,
-    BsDropdownModule
+    BsDropdownModule,
+    NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
   ],
   providers: [],
   bootstrap: [AppComponent]

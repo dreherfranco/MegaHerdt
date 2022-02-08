@@ -18,6 +18,7 @@ namespace MegaHerdt.Models.Models
         [Range (0,100)]
         public int Tax { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
+        public Bill Bill { get; set; }
 
     }
 }

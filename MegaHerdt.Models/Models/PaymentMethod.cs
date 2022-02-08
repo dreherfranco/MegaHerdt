@@ -18,6 +18,7 @@ namespace MegaHerdt.Models.Models
         [Range(0, 100)]
         public int ClientInterest { get; set; }
         public string PriceType { get; set; }
+        public int InstallmentQuantity { get; set; }
         public DateTime StartValidity { get; set; }
         public DateTime EndValidity { get; set; }
         public List<Payment> Payments { get; set; }
