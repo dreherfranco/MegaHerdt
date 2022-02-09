@@ -90,8 +90,6 @@ namespace MegaHerdt.Helpers.Helpers
                 var options = new ProductCreateOptions
                 {
                     Name = "Reparacion de pc",
-                    //TaxCode for services
-                    TaxCode = "txcd_20030000"
                 };
                 productsStripe.Add(await service.CreateAsync(options));
             
@@ -134,7 +132,6 @@ namespace MegaHerdt.Helpers.Helpers
                         IntervalCount = installmentsQuantity,
                         UsageType = "licensed"
                     },
-                    TaxBehavior = "exclusive"
                 };
                 var price = await service.CreateAsync(options);
                 
@@ -166,7 +163,6 @@ namespace MegaHerdt.Helpers.Helpers
                 Items = subscriptionCreateOptions,
                 OffSession = true,
                 CancelAt = DateTime.Now.AddMonths(3),
-                 AutomaticTax = new SubscriptionAutomaticTaxOptions { Enabled = true }
                  
             };
 
