@@ -10,9 +10,12 @@ namespace MegaHerdt.Models.Models
 {
     public class Payment
     {
+        [Key]
         public int Id { get; set; }
         [ForeignKey("PaymentMethod")]
         public int PaymentMethodId { get; set; }
+        [ForeignKey("Bill")]
+        public int BillId { get; set; }
         public float Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         [Range (0,100)]

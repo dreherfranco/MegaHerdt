@@ -1,21 +1,23 @@
-<form novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest">
-    <input type="text" formControlName="name" placeholder="Jane Doe">
-    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
-    <button type="submit">
-        CREATE TOKEN
+<div class="container-fluid w-50">
+<form novalidate (ngSubmit)="createToken()" [formGroup]="stripeTest" *ngIf="showCreateTokenForm">
+    <input type="text" formControlName="name" class="form-control mb-2" placeholder="Nombre titular de la tarjeta">
+    <ngx-stripe-card [options]="cardOptions" class="form-control mb-2" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+    <button type="submit" class="btn btn-primary mb-2">
+        Enviar
     </button>
 </form>
-<hr>
-<hr>
 
-<div id="plans" *ngFor="let plan of availablePlans">
-    <form id="installment-plan-form">
-        <label><input id="immediate-plan" type="radio" name="installment_plan" (click)="selectPlan(plan)" />En
-            {{plan.count}} cuotas</label>
-    </form>
-    <button id="confirm-button" (click)="confirmPayment()">Confirm Payment</button>
-</div>
-
+<form id="installment-plan-form">
+    <div id="plans" class="form-check" >
+        
+            <p class="data-user" *ngFor="let plan of availablePlans"><input class="form-check-input" id="immediate-plan" type="radio" name="installment_plan" (click)="selectPlan(plan)" />{{ (reparationAmount / plan.count) | number: '1.0-2'  }} en
+                {{plan.count}} pago/s
+            </p>
+                   
+    </div>
+    <button id="confirm-button"class="btn btn-warning" *ngIf="availablePlans.length > 0" (click)="confirmPayment()">Confirmar pago</button>
+</form>
 <div id="result" hidden>
     <p id="status-message"></p>
+</div>
 </div>

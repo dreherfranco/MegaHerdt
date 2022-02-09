@@ -34,6 +34,11 @@ export class ReparationService {
     return this._http.get(this.url+"/get-all", { headers: this.headers });
   }
 
+  getById(id:number, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url+ "/" + id, { headers: this.headers });
+  }
+
   delete(reparationId: number, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.delete(this.url + "/delete/" + reparationId, { headers: this.headers });

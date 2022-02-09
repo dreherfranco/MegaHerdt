@@ -138,6 +138,8 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<ArticleOffer>>();
             builder.Services.AddTransient<Repository<Provider>>();
             builder.Services.AddTransient<Repository<ArticleProvider>>();
+            builder.Services.AddTransient<Repository<Bill>>();
+
             return builder;
         }
     }

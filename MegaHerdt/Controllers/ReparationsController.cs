@@ -124,6 +124,21 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("{reparationId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<ReparationDTO> GetById(int reparationId)
+        {
+            try
+            {
+                var reparation = this.ReparationService.GetReparationById(reparationId);
+                return this.Mapper.Map<ReparationDTO>(reparation);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpGet("employeeReparations/{employeeId}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]

@@ -6,6 +6,7 @@ import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-s
 import { PaymentConfirm } from 'src/app/models/Payment/PaymentConfirm';
 import { PaymentPlan } from 'src/app/models/Payment/PaymentPlan';
 import { ReparationPaymentService } from 'src/app/services/reparation-payments/reparation-payment.service';
+import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
@@ -19,6 +20,8 @@ export class ConfirmReparationPaymentComponent implements OnInit {
   paymentIntentId: string;
   planSelected: PaymentPlan;
   stripeToken: string;
+  reparationAmount: number;
+  showCreateTokenForm: boolean;
 
   cardOptions: StripeCardElementOptions = {
     style: {
@@ -44,7 +47,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private stripeService: StripeService,
      private _reparationPaymentService: ReparationPaymentService, private _storageService: StorageService,
-     private _route: ActivatedRoute) {
+     private _route: ActivatedRoute, private _reparationService: ReparationService) {
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
     });
@@ -53,10 +56,22 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     this.paymentIntentId = '';
     this.planSelected = new PaymentPlan(0,'','');
     this.stripeToken = "";
+    this.reparationAmount = 0;
+    this.showCreateTokenForm = true;
   }
 
   ngOnInit(): void {
+    this.getReparation();
+  }
 
+  getReparation(){
+    var id = this.getReparationId();
+    this._reparationService.getById(id,this._storageService.getTokenValue()).subscribe({
+      next: (result) =>{
+          this.reparationAmount = result.amount;
+        console.log(result)
+      }
+    })
   }
 
   getReparationId(): number{
@@ -118,6 +133,11 @@ export class ConfirmReparationPaymentComponent implements OnInit {
         //TEST DATA
         this.availablePlans = [
           {
+            "count": 1,
+            "interval": "month",
+            "type": "fixed_count"
+          },
+          {
             "count": 3,
             "interval": "month",
             "type": "fixed_count"
@@ -137,6 +157,8 @@ export class ConfirmReparationPaymentComponent implements OnInit {
             "interval": "month",
             "type": "fixed_count"
           }];
+          
+          this.showCreateTokenForm = false;
       //}
  //   });
   }

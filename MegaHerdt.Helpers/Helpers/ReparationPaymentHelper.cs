@@ -10,10 +10,12 @@ namespace MegaHerdt.Helpers.Helpers
     public class ReparationPaymentHelper
     {
         private readonly Repository<Reparation> reparationRepository;
+        private readonly Repository<Bill> billRepository;
 
-        public ReparationPaymentHelper(Repository<Reparation> reparationRepository)
+        public ReparationPaymentHelper(Repository<Reparation> reparationRepository, Repository<Bill> billRepository)
         {
             this.reparationRepository = reparationRepository;
+            this.billRepository = billRepository;
         }
 
         public async Task<Subscription> AddPayment(ReparationPaymentData reparationPaymentData)
@@ -21,14 +23,30 @@ namespace MegaHerdt.Helpers.Helpers
             Expression<Func<Reparation, bool>> filter = x => x.Id == reparationPaymentData.ReparationId;
             var reparation = this.reparationRepository.Get(filter)
                 .Include(x => x.Client)
-                .Include(x => x.ReparationsArticles)
+                .Include(x => x.ReparationsArticles)             
                 .ThenInclude(x => x.Article)
+                .Include(x => x.Bill)
                 .FirstOrDefault();
             var customer = await this.CreateCustomer(reparation.Client.Email, reparationPaymentData.StripeToken);
             var stripeProducts = await this.CreateProduct(reparation.ReparationsArticles);
             var prices = await this.CreatePrice(reparationPaymentData.Installments, reparation.ReparationsArticles, stripeProducts, reparation);
             var subscription = await this.CreateSubscription(customer, prices, reparation.ReparationsArticles);
-            return subscription;
+           
+            if (subscription.Status == "active")
+            {
+                //save payment in DB
+                var payments = this.InstancePayments(subscription, reparation, reparationPaymentData);
+                var bill = this.billRepository.Get(x => x.Id == reparation.BillId).FirstOrDefault();
+                bill.Payments = payments;
+                await this.billRepository.Update(bill);
+               
+                return subscription;
+            }
+            else
+            {
+                throw new Exception("The payment has failed");
+            }
+
         }
 
         private async Task<Customer> CreateCustomer(string customerEmail,string stripeToken)
@@ -38,7 +56,7 @@ namespace MegaHerdt.Helpers.Helpers
             var customer = await customerService.CreateAsync(new CustomerCreateOptions
             {
                 Email = customerEmail,
-                Source = stripeToken,               
+                Source = stripeToken        
             });
             return customer;
         }
@@ -68,11 +86,12 @@ namespace MegaHerdt.Helpers.Helpers
                        productsStripe.Add(await service.CreateAsync(options));
                    }
                }
-            */
-
+            */          
                 var options = new ProductCreateOptions
                 {
                     Name = "Reparacion de pc",
+                    //TaxCode for services
+                    TaxCode = "txcd_20030000"
                 };
                 productsStripe.Add(await service.CreateAsync(options));
             
@@ -113,8 +132,9 @@ namespace MegaHerdt.Helpers.Helpers
                     {
                         Interval = "month",
                         IntervalCount = installmentsQuantity,
-                        UsageType = "licensed",
+                        UsageType = "licensed"
                     },
+                    TaxBehavior = "exclusive"
                 };
                 var price = await service.CreateAsync(options);
                 
@@ -133,7 +153,7 @@ namespace MegaHerdt.Helpers.Helpers
              //   var reparationArticle = reparationsArticles.Where(x=>x.Article.Name.Contains(product.Name)).FirstOrDefault();
                 var subscriptionItemOptions = new SubscriptionItemOptions
                 {
-                    Price = price.Id,
+                    Price = price.Id, 
                     Quantity = 1 /*reparationArticle.ArticleQuantity*/
                 };
                 subscriptionCreateOptions.Add(subscriptionItemOptions);
@@ -146,11 +166,35 @@ namespace MegaHerdt.Helpers.Helpers
                 Items = subscriptionCreateOptions,
                 OffSession = true,
                 CancelAt = DateTime.Now.AddMonths(3),
+                 AutomaticTax = new SubscriptionAutomaticTaxOptions { Enabled = true }
+                 
             };
 
             var serviceSub = new SubscriptionService();
             var subscription = await serviceSub.CreateAsync(optionsSub);
             return subscription;
+        }
+
+        private List<Payment> InstancePayments(Subscription subscription,Reparation reparation, ReparationPaymentData reparationPaymentData)
+        {
+            var payments = new List<Payment>();
+            for (var i = 0; i < reparationPaymentData.Installments; i++) {
+                var paymentMethod = new Models.Models.PaymentMethod()
+                {
+                    InstallmentQuantity = 3,
+                    StartValidity = DateTime.Now.AddMonths(i),
+                    EndValidity = DateTime.Now.AddMonths(i + 1),
+                };
+                var payment = new Payment()
+                {
+                    Amount = (reparation.Amount / reparationPaymentData.Installments),
+                    PaymentDate = DateTime.Now,
+                    PaymentMethod = paymentMethod,
+                    BillId = reparation.BillId
+                };
+                payments.Add(payment);
+            }
+            return payments;
         }
     }
 }
