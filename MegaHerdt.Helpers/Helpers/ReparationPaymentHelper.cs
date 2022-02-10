@@ -27,6 +27,7 @@ namespace MegaHerdt.Helpers.Helpers
                 .ThenInclude(x => x.Article)
                 .Include(x => x.Bill)
                 .FirstOrDefault();
+            
             var customer = await this.CreateCustomer(reparation.Client.Email, reparationPaymentData.StripeToken);
             var stripeProducts = await this.CreateProduct(reparation.ReparationsArticles);
             var prices = await this.CreatePrice(reparationPaymentData.Installments, reparation.ReparationsArticles, stripeProducts, reparation);
@@ -124,7 +125,7 @@ namespace MegaHerdt.Helpers.Helpers
                 {
                     Nickname = "Installment",
                     Product = stripeProduct.Id,
-                    UnitAmount = (long)reparation.Amount * 100,
+                    UnitAmount = (long)(reparation.Amount * 100) / installmentsQuantity,
                     Currency = "ars",
                     Recurring = new PriceRecurringOptions
                     {
@@ -150,7 +151,7 @@ namespace MegaHerdt.Helpers.Helpers
              //   var reparationArticle = reparationsArticles.Where(x=>x.Article.Name.Contains(product.Name)).FirstOrDefault();
                 var subscriptionItemOptions = new SubscriptionItemOptions
                 {
-                    Price = price.Id, 
+                    Price = price.Id,  
                     Quantity = 1 /*reparationArticle.ArticleQuantity*/
                 };
                 subscriptionCreateOptions.Add(subscriptionItemOptions);
@@ -192,5 +193,6 @@ namespace MegaHerdt.Helpers.Helpers
             }
             return payments;
         }
+
     }
 }

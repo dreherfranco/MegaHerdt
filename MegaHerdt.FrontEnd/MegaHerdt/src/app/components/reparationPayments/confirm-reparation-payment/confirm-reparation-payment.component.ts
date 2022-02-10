@@ -22,6 +22,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
   stripeToken: string;
   reparationAmount: number;
   showCreateTokenForm: boolean;
+  subscriptionActive: boolean;
 
   cardOptions: StripeCardElementOptions = {
     style: {
@@ -58,6 +59,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     this.stripeToken = "";
     this.reparationAmount = 0;
     this.showCreateTokenForm = true;
+    this.subscriptionActive = false;
   }
 
   ngOnInit(): void {
@@ -69,8 +71,8 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     this._reparationService.getById(id,this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
           this.reparationAmount = result.amount;
-        console.log(result)
-      }
+      },
+      error: (err) => console.log(err)
     })
   }
 
@@ -157,7 +159,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
             "interval": "month",
             "type": "fixed_count"
           }];
-          
+
           this.showCreateTokenForm = false;
       //}
  //   });
@@ -173,6 +175,9 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     this._reparationPaymentService.confirmPayment(paymentConfirm, this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
         console.log(result);
+        if(result.subscription.status == "active"){
+          this.subscriptionActive = true;
+        }
       }
     });
   }

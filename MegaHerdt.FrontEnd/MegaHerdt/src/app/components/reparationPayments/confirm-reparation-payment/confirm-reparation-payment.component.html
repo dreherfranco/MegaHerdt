@@ -7,7 +7,7 @@
     </button>
 </form>
 
-<form id="installment-plan-form">
+<form id="installment-plan-form" *ngIf="!subscriptionActive">
     <div id="plans" class="form-check" >
         
             <p class="data-user" *ngFor="let plan of availablePlans"><input class="form-check-input" id="immediate-plan" type="radio" name="installment_plan" (click)="selectPlan(plan)" />{{ (reparationAmount / plan.count) | number: '1.0-2'  }} en
@@ -17,6 +17,9 @@
     </div>
     <button id="confirm-button"class="btn btn-warning" *ngIf="availablePlans.length > 0" (click)="confirmPayment()">Confirmar pago</button>
 </form>
+<div *ngIf="subscriptionActive" class="alert alert-success">
+    Pago efectuado correctamente
+</div>
 <div id="result" hidden>
     <p id="status-message"></p>
 </div>

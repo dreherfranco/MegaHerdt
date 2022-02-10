@@ -28,9 +28,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparationPaymentData = this.mapper.Map<ReparationPaymentData>(reparationPaymentDTO);
-                TaxCodeService taxCodeService = new TaxCodeService();
-                var tax = taxCodeService.Get("txcd_20030000");
-                var subscription =  this.reparationPaymentService.AddPayment(reparationPaymentData);
+                var subscription =  await this.reparationPaymentService.AddPayment(reparationPaymentData);
                 return Ok(new { subscription = subscription });
             }
             catch (Exception ex)
