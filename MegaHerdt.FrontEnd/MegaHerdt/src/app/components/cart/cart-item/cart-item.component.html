@@ -4,6 +4,9 @@
     <strong class="m-1 data-user">${{cartArticle.article.unitValueWithOffer}} </strong>
 </p>
 <p> 
-    <strong class="m-1 data-user">Unidades: {{cartArticle.purchaseArticle.articleQuantity}} </strong>
+    <strong class="m-1 data-user">Unidades: {{cartArticle.purchaseArticle.articleQuantity}} 
+        <button class="btn btn-outline-danger m-1 p-1 h-btn" (click)="removeUnits(cartArticle)" ><i class="bi bi-dash-circle-fill text-center m-auto"></i></button>
+        <button class="btn btn-outline-primary p-1 h-btn" (click)="addToCart(cartArticle.article, cartArticle.purchaseArticle)"><i class="bi bi-plus-circle-fill"></i></button>
+    </strong>
     <strong class="m-1 data-user">Total: ${{ cartArticle.purchaseArticle.articleQuantity * cartArticle.article.unitValueWithOffer | number : '1.1-2'}}</strong>
 </p>

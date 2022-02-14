@@ -14,39 +14,54 @@ export class CartService {
     this.cartArticlesDetails = new Array<Article>();
   }
 
-  setCartArticlesDetail(article: Article, purchaseArticle: PurchaseArticleCreation){
-    var cartArticlesDetails: Array<CartArticleDetail> = this.getCartArticlesDetail();
-    var cartArticleDetail = new CartArticleDetail(article, purchaseArticle);
-    if(this.existsArticleInCartArticleDetail(article)){
-      var purchasesArticles: Array<PurchaseArticleCreation> = this.getCart();
-      //sumar una unidad al articulo
-      for(var j=0; j<purchasesArticles.length; j++){
-        if(purchasesArticles[j].articleId == article.id){
-          for(var i=0; i<cartArticlesDetails.length; i++){
-            var articleDetail = cartArticlesDetails[i];
-            if(articleDetail.purchaseArticle.articleId == article.id){
-              cartArticlesDetails[i].purchaseArticle.articleQuantity = purchasesArticles[j].articleQuantity;            
-            }
+  AddToCart(article: Article, purchaseArticle: PurchaseArticleCreation){
+    if(this.availableStock(article)){
+      var cartArticlesDetails: Array<CartArticleDetail> = this.getCart();
+      var cartArticleDetail = new CartArticleDetail(article, purchaseArticle);
+      if(this.existsArticleInCartArticleDetail(article)){       
+        for(var i=0; i<cartArticlesDetails.length; i++){
+          if(cartArticlesDetails[i].article.id == article.id){
+            cartArticlesDetails[i].purchaseArticle.articleQuantity++;
           }
         }
+      }else if(cartArticlesDetails == null){
+        cartArticlesDetails = new Array<CartArticleDetail>();  
+        cartArticlesDetails.push(cartArticleDetail);
       }
-    }else if(cartArticlesDetails == null){
-      cartArticlesDetails = new Array<CartArticleDetail>();  
-      cartArticlesDetails.push(cartArticleDetail);
-    }
-    else{
-      cartArticlesDetails.push(cartArticleDetail);
-    }
+      else{
+        cartArticlesDetails.push(cartArticleDetail);
+      }
 
-    localStorage.setItem('cartArticlesDetails', JSON.stringify(cartArticlesDetails));
+      localStorage.setItem('cart', JSON.stringify(cartArticlesDetails));
+    }
   }
 
+  removeUnits(article: Article){
+    var cartArticlesDetails: Array<CartArticleDetail> = this.getCart();
+    for(var i=0; i<cartArticlesDetails.length; i++){
+      if(cartArticlesDetails[i].article.id == article.id){
+        cartArticlesDetails = this.verifyAndRemoveUnits(cartArticlesDetails, i);
+      }
+    }
+    localStorage.setItem('cart', JSON.stringify(cartArticlesDetails));
+  }
+
+  verifyAndRemoveUnits(cartArticlesDetails: Array<CartArticleDetail>, index: number): Array<CartArticleDetail>{
+    if(cartArticlesDetails[index].purchaseArticle.articleQuantity > 0){
+      --cartArticlesDetails[index].purchaseArticle.articleQuantity;
+      if(cartArticlesDetails[index].purchaseArticle.articleQuantity == 0){
+        //remove from cart
+        cartArticlesDetails.splice(index,1);
+      }
+    }
+    return cartArticlesDetails;
+  }
   /**
    * 
    * @returns Array<Article> || null
    */
-  getCartArticlesDetail(): any{
-    var articlesDetail = localStorage.getItem('cartArticlesDetails');
+  getCart(): any{
+    var articlesDetail = localStorage.getItem('cart');
     if(articlesDetail != null){
      this.cartArticlesDetails = JSON.parse(articlesDetail);
      return this.cartArticlesDetails;
@@ -55,48 +70,8 @@ export class CartService {
     }
   }
 
-  setCart(purchaseArticle: PurchaseArticleCreation){ 
-    if(!this.existsArticleInCart(purchaseArticle)){
-      var cartArticles = this.getCart();
-      if(cartArticles == null){
-        cartArticles = new Array<PurchaseArticleCreation>();   
-      }
-      cartArticles.push(purchaseArticle);
-      localStorage.setItem('cartArticles', JSON.stringify(cartArticles));
-    }
-  }
-
-  /**
-   * 
-   * @returns Array<PurchaseArticleCreation> || null
-   */
-  getCart(): any{
-    var cartArticles = localStorage.getItem('cartArticles');
-    if(cartArticles != null){
-     this.cartArticles = JSON.parse(cartArticles);
-     return this.cartArticles;
-    }else { 
-      console.log("no existen articulos en el carrito"); 
-    }
-    return this.cartArticles;
-  }
-
-  existsArticleInCart(purchaseArticle: PurchaseArticleCreation): boolean{
-    var cartArticles: Array<PurchaseArticleCreation> = this.getCart();
-    if(cartArticles != null){
-      for(var i=0; i<cartArticles.length; i++){
-        if(cartArticles[i].articleId == purchaseArticle.articleId){
-          ++cartArticles[i].articleQuantity;
-          localStorage.setItem('cartArticles', JSON.stringify(cartArticles));        
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-
   existsArticleInCartArticleDetail(articleDetail: Article): boolean{
-    var cartArticlesDetails: Array<CartArticleDetail> = this.getCartArticlesDetail();
+    var cartArticlesDetails: Array<CartArticleDetail> = this.getCart();
     if(cartArticlesDetails != null){
       for(var i=0; i<cartArticlesDetails.length; i++){
         if(cartArticlesDetails[i].article.id == articleDetail.id){       
@@ -105,5 +80,13 @@ export class CartService {
       }
     }
     return false;   
+  }
+
+  availableStock(article: Article){
+    return article.stock > 0;
+  }
+
+  emptyCart(){
+    localStorage.removeItem("cart");
   }
 }

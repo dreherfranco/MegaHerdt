@@ -5,6 +5,7 @@ import { Category } from 'src/app/models/ArticleCategory/Category';
 import { ArticleOfferDetail } from 'src/app/models/ArticleOffer/ArticleOfferDetail';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
   selector: 'app-cart-item',
@@ -14,11 +15,18 @@ import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/Purchase
 export class CartItemComponent implements OnInit {
   @Input() cartArticle: CartArticleDetail;
   
-  constructor() {
+  constructor(private _cartService: CartService) {
     this.cartArticle = new CartArticleDetail(new Article(0,'','',0,'',0,0,new Brand(0,''),new Category(0,''),new Array<ArticleOfferDetail>(),new Array<ArticleOfferDetail>()), new PurchaseArticleCreation(0,0,0))
    }
 
   ngOnInit(): void {
   }
 
+  addToCart(article: Article, purchaseArticle: PurchaseArticleCreation){
+    this._cartService.AddToCart(article,purchaseArticle);
+  }
+
+  removeUnits(cartArticleDetail: CartArticleDetail){
+    this._cartService.removeUnits(cartArticleDetail.article);
+  }
 }

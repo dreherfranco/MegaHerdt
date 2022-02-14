@@ -19,7 +19,7 @@ export class ArticleItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this._cartService.getCartArticlesDetail())
+    console.log(this._cartService.getCart())
     console.log(this._cartService.getCart())
   }
 
@@ -37,7 +37,6 @@ export class ArticleItemComponent implements OnInit {
 
   addToCart(){
     var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer);
-    this._cartService.setCart(purchaseArticle);
-    this._cartService.setCartArticlesDetail(this.article, purchaseArticle);
+    this._cartService.AddToCart(this.article, purchaseArticle);
   }
 }

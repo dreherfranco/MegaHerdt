@@ -1,6 +1,7 @@
+
 <div  *ngIf="cartArticles.length > 0">
     <div class="alert alert-info text-center">
-        <h4>Carrito</h4>
+        <h2 class="data-user">Carrito</h2>
     </div>
     <div class="tetx-center">
         <ul class="list-group">
@@ -17,7 +18,7 @@
           </ul>
     </div>
     <div class="alert alert-warning text-center">
-        <strong>Total: </strong>{{total}} €
+        <strong>Total: </strong>${{total}} 
     </div>
     <button class="btn btn-outline-danger btn-block mb-2" (click)="emptyCart()">
         <i class="fas fa-ban"></i> Vaciar carrito
