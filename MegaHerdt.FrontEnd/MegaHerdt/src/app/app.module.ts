@@ -71,6 +71,8 @@ import { AnswerReparationClaimComponent } from './components/reparation-claims/a
 import { ClientReparationClaimsComponent } from './components/reparation-claims/client-reparation-claims/client-reparation-claims.component';
 import { DialogShowReparationDetailComponent } from './components/reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 import { ConfirmReparationPaymentComponent } from './components/reparationPayments/confirm-reparation-payment/confirm-reparation-payment.component';
+import { CartComponent } from './components/cart/cart/cart.component';
+import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 
 @NgModule({
   declarations: [
@@ -134,7 +136,9 @@ import { ConfirmReparationPaymentComponent } from './components/reparationPaymen
     AnswerReparationClaimComponent,
     ClientReparationClaimsComponent,
     DialogShowReparationDetailComponent,
-    ConfirmReparationPaymentComponent
+    ConfirmReparationPaymentComponent,
+    CartComponent,
+    CartItemComponent,
   ],
   imports: [
     BrowserModule,

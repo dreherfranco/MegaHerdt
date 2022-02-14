@@ -3,8 +3,8 @@
     <div class="card-body">
       <h4 *ngIf="isOnOffer(article)" class="text-success"><b>Articulo en oferta</b></h4>
       <h5 class="card-title data-article">Nombre: {{article.name}}</h5>
-      <p class="card-text data-article">Valor unitario: {{article.unitValue}}</p>
-      <p *ngIf="isOnOffer(article)" class="card-text data-article">Valor con oferta: {{article.unitValueWithOffer}}</p>
+      <p class="card-text data-article">Valor unitario: ${{article.unitValue}}</p>
+      <p *ngIf="isOnOffer(article)" class="card-text data-article">Valor con oferta: ${{article.unitValueWithOffer}}</p>
       <p class="card-text data-article">Codigo: {{article.code}}</p>
       <p class="card-text data-article">Marca: {{article.brand.name}}</p>
       <p class="card-text data-article">Categoria: {{article.category.name}}</p>
