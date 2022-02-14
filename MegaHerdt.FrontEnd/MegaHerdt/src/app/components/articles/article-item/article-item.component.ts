@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
+import { CartService } from 'src/app/services/cart/cart.service';
 import { Article } from '../../../models/Article/Article';
 import { Brand } from '../../../models/ArticleBrand/Brand';
 import { Category } from '../../../models/ArticleCategory/Category';
@@ -10,14 +12,15 @@ import { ArticleOfferDetail } from '../../../models/ArticleOffer/ArticleOfferDet
   styleUrls: ['./article-item.component.css']
 })
 export class ArticleItemComponent implements OnInit {
-
   @Input() article: Article;
 
-  constructor() { 
-    this.article = this.instanceArticle() ;
+  constructor(private _cartService: CartService) { 
+    this.article = this.instanceArticle();
   }
 
   ngOnInit(): void {
+    console.log(this._cartService.getCartArticlesDetail())
+    console.log(this._cartService.getCart())
   }
 
   private instanceArticle(): Article {
@@ -30,5 +33,11 @@ export class ArticleItemComponent implements OnInit {
 
   isOnOffer(article: Article):boolean{
     return article.unitValueWithOffer < article.unitValue;
+  }
+
+  addToCart(){
+    var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer);
+    this._cartService.setCart(purchaseArticle);
+    this._cartService.setCartArticlesDetail(this.article, purchaseArticle);
   }
 }
