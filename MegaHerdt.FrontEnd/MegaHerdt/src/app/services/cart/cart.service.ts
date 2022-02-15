@@ -25,7 +25,7 @@ export class CartService {
           }
         }
       }else if(cartArticlesDetails == null){
-        cartArticlesDetails = new Array<CartArticleDetail>();  
+        cartArticlesDetails = new Array<CartArticleDetail>(); 
         cartArticlesDetails.push(cartArticleDetail);
       }
       else{
@@ -82,11 +82,18 @@ export class CartService {
     return false;   
   }
 
-  availableStock(article: Article){
-    return article.stock > 0;
+  isEmpty(): boolean{
+    return localStorage.getItem("cart") == null || localStorage.getItem("cart") == 'undefined';
   }
 
-  emptyCart(){
+  availableStock(article: Article): boolean{
+    return article.stock > 0;
+  }
+  
+  availableStockCart(article: Article, purchaseArticle: PurchaseArticleCreation): boolean{
+    return article.stock - purchaseArticle.articleQuantity > 0 ;
+  }
+  emptyCart(): void{
     localStorage.removeItem("cart");
   }
 }

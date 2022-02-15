@@ -19,7 +19,7 @@
     | filter: searchText
     ">
 
-    <app-article-item [article]="article"></app-article-item>
+    <app-article-item [article]="article" (cartEvent)="emitCartEvent($event)"></app-article-item>
     </div>
     <pagination-controls class="text-center data-user"
     (pageChange)="this.paginate.page = $event" 

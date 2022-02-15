@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { Article } from '../../../models/Article/Article';
@@ -13,7 +14,8 @@ import { ArticleOfferDetail } from '../../../models/ArticleOffer/ArticleOfferDet
 })
 export class ArticleItemComponent implements OnInit {
   @Input() article: Article;
-
+  @Output() cartEvent = new EventEmitter<Array<CartArticleDetail>>();
+  
   constructor(private _cartService: CartService) { 
     this.article = this.instanceArticle();
   }
@@ -38,5 +40,10 @@ export class ArticleItemComponent implements OnInit {
   addToCart(){
     var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer);
     this._cartService.AddToCart(this.article, purchaseArticle);
+    
+    if(this._cartService.availableStock(this.article)){
+      --this.article.stock;
+    }
+    this.cartEvent.emit(this._cartService.getCart());
   }
 }

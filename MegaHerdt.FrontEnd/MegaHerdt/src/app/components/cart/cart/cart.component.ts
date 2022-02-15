@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Article } from 'src/app/models/Article/Article';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { CartService } from 'src/app/services/cart/cart.service';
 
@@ -8,8 +9,10 @@ import { CartService } from 'src/app/services/cart/cart.service';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  cartArticles: Array<CartArticleDetail>;
+  @Input() cartArticles: Array<CartArticleDetail>;
+  @Input() articles: Article[] = [];
   total: number;
+  
   constructor(private _cartService: CartService) {
     this.cartArticles = new Array<CartArticleDetail>();
     this.total = 0;
@@ -33,4 +36,19 @@ export class CartComponent implements OnInit {
   emptyCart(){
     this._cartService.emptyCart();
   }
+
+  receiveCartEvent(cartArticleDetail: Array<CartArticleDetail>){
+    this.cartArticles = cartArticleDetail;
+  }
+
+  removeArticleFromCart(cartArticleDetail: CartArticleDetail){
+    if(cartArticleDetail.purchaseArticle.articleQuantity == 0){
+      for(var i=0; i<this.cartArticles.length; i++){
+        if(this.cartArticles[i].article.id == cartArticleDetail.article.id){
+          this.cartArticles.splice(i,1);
+        }
+      }
+    }
+  }
+
 }
