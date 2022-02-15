@@ -35,6 +35,7 @@ export class CartComponent implements OnInit {
   
   emptyCart(){
     this._cartService.emptyCart();
+    this.cartArticles = [];
   }
 
   receiveCartEvent(cartArticleDetail: Array<CartArticleDetail>){
