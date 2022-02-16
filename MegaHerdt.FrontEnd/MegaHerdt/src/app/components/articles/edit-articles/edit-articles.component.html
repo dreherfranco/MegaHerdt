@@ -12,12 +12,12 @@
 
 <div class="row">
   <div class="col-md-3" *ngFor="let article of articles 
+    | filter: searchText
     | paginate: 
     {
         itemsPerPage: this.paginate.recordsPerPage, 
         currentPage:this.paginate.page
-    } 
-    | filter: searchText
+    }
     ">
     <app-edit-article [article]="article"></app-edit-article>
   </div>

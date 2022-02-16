@@ -8,24 +8,23 @@
         <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
       </div>
 
-    <div class="row">
-            
-        
+    <div class="row">                  
         <div class="col-md-4" *ngFor="let user of users 
+        | filter: searchText
         | paginate: 
         {
             itemsPerPage: this.paginate.recordsPerPage, 
             currentPage:this.paginate.page
         }
-        | filter: searchText
         ">
             <app-user-detail-administrate [user]="user"></app-user-detail-administrate>
         </div>
-
+    
         <pagination-controls class="text-center"
         (pageChange)="this.paginate.page = $event" 
         previousLabel="Anterior" 
         nextLabel="Siguiente">
         </pagination-controls>
+        
     </div>
 </div>
