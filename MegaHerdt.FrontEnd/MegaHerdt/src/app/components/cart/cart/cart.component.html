@@ -11,7 +11,8 @@
                         <app-cart-item 
                         [cartArticle]="cartArticle" 
                         (removeArticleEvent)="removeArticleFromCart($event)" 
-                        [articles]="articles"                     
+                        [articles]="articles"   
+                        (totalEvent)="receiveTotalEvent()"                 
                         >
                         </app-cart-item>
                     </div>

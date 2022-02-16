@@ -93,7 +93,16 @@ export class CartService {
   availableStockCart(article: Article, purchaseArticle: PurchaseArticleCreation): boolean{
     return article.stock - purchaseArticle.articleQuantity > 0 ;
   }
+
   emptyCart(): void{
     localStorage.removeItem("cart");
+  }
+
+  getTotal(cartArticles: Array<CartArticleDetail>){
+    var total = 0;
+    for(var i=0; i< cartArticles.length; i++){
+      total += (cartArticles[i].purchaseArticle.articleQuantity * cartArticles[i].purchaseArticle.priceAtTheMoment);
+    }
+    return total;
   }
 }

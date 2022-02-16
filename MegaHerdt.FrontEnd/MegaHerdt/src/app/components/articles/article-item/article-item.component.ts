@@ -15,7 +15,8 @@ import { ArticleOfferDetail } from '../../../models/ArticleOffer/ArticleOfferDet
 export class ArticleItemComponent implements OnInit {
   @Input() article: Article;
   @Output() cartEvent = new EventEmitter<Array<CartArticleDetail>>();
-  
+  @Output() totalEvent = new EventEmitter();
+
   constructor(private _cartService: CartService) { 
     this.article = this.instanceArticle();
   }
@@ -45,5 +46,6 @@ export class ArticleItemComponent implements OnInit {
       --this.article.stock;
     }
     this.cartEvent.emit(this._cartService.getCart());
+    this.totalEvent.emit();
   }
 }

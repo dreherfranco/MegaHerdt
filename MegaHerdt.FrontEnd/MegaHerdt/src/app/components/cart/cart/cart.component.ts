@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Article } from 'src/app/models/Article/Article';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
+import { ArticleService } from 'src/app/services/articles/article.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
@@ -11,31 +12,33 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class CartComponent implements OnInit {
   @Input() cartArticles: Array<CartArticleDetail>;
   @Input() articles: Article[] = [];
-  total: number;
+  @Output() emptyCartEvent = new EventEmitter<Array<Article>>();
+  @Input() total: number;
   
-  constructor(private _cartService: CartService) {
+  constructor(private _cartService: CartService, private _articleService: ArticleService) {
     this.cartArticles = new Array<CartArticleDetail>();
     this.total = 0;
    }
 
   ngOnInit(): void {
     this.cartArticles = this._cartService.getCart();
-    this.setTotal();
+    this.total = this._cartService.getTotal(this.cartArticles);
   }
 
   deleteCartArticle(index: number){
 
   }
-
-  setTotal(){
-    for(var i=0; i< this.cartArticles.length; i++){
-      this.total += (this.cartArticles[i].purchaseArticle.articleQuantity * this.cartArticles[i].purchaseArticle.priceAtTheMoment);
-    }
-  }
   
   emptyCart(){
     this._cartService.emptyCart();
     this.cartArticles = [];
+    this._articleService.getArticles().subscribe({
+      next: result =>{
+        this.articles = result;
+        this.emptyCartEvent.emit(this.articles);
+      }
+    })
+
   }
 
   receiveCartEvent(cartArticleDetail: Array<CartArticleDetail>){
@@ -52,4 +55,7 @@ export class CartComponent implements OnInit {
     }
   }
 
+  receiveTotalEvent(){
+    this.total = this._cartService.getTotal(this.cartArticles);
+  }
 }

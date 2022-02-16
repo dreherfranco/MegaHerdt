@@ -16,6 +16,7 @@ export class CartItemComponent implements OnInit {
   @Input() cartArticle: CartArticleDetail;
   @Output() removeArticleEvent = new EventEmitter<CartArticleDetail>();
   @Input() articles: Article[] = [];
+  @Output() totalEvent = new EventEmitter();
 
   constructor(private _cartService: CartService) {
     this.cartArticle = new CartArticleDetail(new Article(0, '', '', 0, '', 0, 0, new Brand(0, ''), new Category(0, ''), new Array<ArticleOfferDetail>(), new Array<ArticleOfferDetail>()), new PurchaseArticleCreation(0, 0, 0))
@@ -33,6 +34,7 @@ export class CartItemComponent implements OnInit {
       for (var i = 0; i < this.articles.length; i++) {
         if (this.articles[i].id == this.cartArticle.article.id) {
           --this.articles[i].stock;
+          this.totalEvent.emit();
         }
       }
 
@@ -44,7 +46,8 @@ export class CartItemComponent implements OnInit {
     if (cartArticleDetail.purchaseArticle.articleQuantity > 0) {
       --this.cartArticle.purchaseArticle.articleQuantity;
       this.removeArticleEvent.emit(this.cartArticle);
-
+      this.totalEvent.emit();
+      
       //update article in home view
       for (var i = 0; i < this.articles.length; i++) {
         if (this.articles[i].id == this.cartArticle.article.id) {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {ArticleService} from '../../../services/articles/article.service';
 import { Article } from '../../../models/Article/Article';
 import { Paginate } from '../../../models/Paginate/Paginate';
@@ -11,16 +11,19 @@ import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-  articles: Article[] = [];
+  @Input() articles: Article[] = [];
   paginate: Paginate;
   searchText: string;
+  cartArticles: Array<CartArticleDetail>;
   @Output() cartEvent = new EventEmitter<Array<CartArticleDetail>>();
   @Output() articlesEvent = new EventEmitter<Article[]>();
-
+  @Output() totalEvent = new EventEmitter();
+  
   constructor(private _articleService: ArticleService, private _cartService: CartService) 
   { 
     this.paginate = new Paginate(1,6);
     this.searchText = "";
+    this.cartArticles = this._cartService.getCart();
   }
 
   ngOnInit(): void {
@@ -43,11 +46,11 @@ export class ArticleListComponent implements OnInit {
   }
 
   updateArticlesStock(){
-    var cartArticles: Array<CartArticleDetail> = this._cartService.getCart();
+    this.cartArticles = this._cartService.getCart();
     for(var i=0; i < this.articles.length; i++){
-      for(var j=0; j < cartArticles.length; j++){       
-        if(this.articles[i].id == cartArticles[j].article.id){
-          this.articles[i].stock = (this.articles[i].stock - cartArticles[j].purchaseArticle.articleQuantity);
+      for(var j=0; j < this.cartArticles.length; j++){       
+        if(this.articles[i].id == this.cartArticles[j].article.id){
+          this.articles[i].stock = (this.articles[i].stock - this.cartArticles[j].purchaseArticle.articleQuantity);
         }
       }      
     }
@@ -60,5 +63,9 @@ export class ArticleListComponent implements OnInit {
 
   emitArticlesEvent(){
     this.articlesEvent.emit(this.articles);
+  }
+
+  receiveTotalEvent(){
+    this.totalEvent.emit();
   }
 }
