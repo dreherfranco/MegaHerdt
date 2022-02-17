@@ -1,20 +1,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-8">
-            <app-article-list [articles]="articles" 
-            (cartEvent)="receiveCartEvent($event)" 
-            (articlesEvent)="receiveArticlesEvent($event)" 
-            (totalEvent)="receiveTotalEvent()"
-            >
-        </app-article-list>
+            <app-article-list>
+            </app-article-list>
         </div>
-       
+
         <div class="col-md-4">
-            <app-cart [cartArticles]="cartArticles"
-            [articles]="articles"
-            (emptyCartEvent)="receiveEmptyCartEvent($event)"
-            [total]="total"
-            >
+            <app-cart>
             </app-cart>
         </div>
 

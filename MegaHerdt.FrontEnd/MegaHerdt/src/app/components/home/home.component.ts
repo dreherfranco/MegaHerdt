@@ -9,32 +9,12 @@ import { CartService } from 'src/app/services/cart/cart.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  cartArticles: Array<CartArticleDetail>;
-  articles: Article[] = [];
-  total: number;
 
-  constructor(private _cartService: CartService) {
-    this.cartArticles = new Array<CartArticleDetail>();
-    this.total = 0;
+  constructor() {
    }
 
   ngOnInit(): void {
     
   }
   
-  receiveCartEvent(cartArticleDetail: Array<CartArticleDetail>){
-    this.cartArticles = cartArticleDetail;
-  }
-
-  receiveArticlesEvent(articles: Article[]){
-    this.articles = articles;
-  }
-
-  receiveEmptyCartEvent(articles: Article[]){
-    this.articles = articles;
-  }
-
-  receiveTotalEvent(){
-    this.total = this._cartService.getTotal(this.cartArticles);
-  }
 }

@@ -14,16 +14,12 @@ import { ArticleOfferDetail } from '../../../models/ArticleOffer/ArticleOfferDet
 })
 export class ArticleItemComponent implements OnInit {
   @Input() article: Article;
-  @Output() cartEvent = new EventEmitter<Array<CartArticleDetail>>();
-  @Output() totalEvent = new EventEmitter();
 
   constructor(private _cartService: CartService) { 
     this.article = this.instanceArticle();
   }
 
   ngOnInit(): void {
-    console.log(this._cartService.getCart())
-    console.log(this._cartService.getCart())
   }
 
   private instanceArticle(): Article {
@@ -40,12 +36,6 @@ export class ArticleItemComponent implements OnInit {
 
   addToCart(){
     var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer);
-    this._cartService.AddToCart(this.article, purchaseArticle);
-    
-    if(this._cartService.availableStock(this.article)){
-      --this.article.stock;
-    }
-    this.cartEvent.emit(this._cartService.getCart());
-    this.totalEvent.emit();
+    this._cartService.addToCart(this.article, purchaseArticle);
   }
 }

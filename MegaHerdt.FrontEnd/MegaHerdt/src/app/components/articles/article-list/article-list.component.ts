@@ -11,14 +11,11 @@ import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-  @Input() articles: Article[] = [];
+  articles: Article[] = [];
   paginate: Paginate;
   searchText: string;
   cartArticles: Array<CartArticleDetail>;
-  @Output() cartEvent = new EventEmitter<Array<CartArticleDetail>>();
-  @Output() articlesEvent = new EventEmitter<Article[]>();
-  @Output() totalEvent = new EventEmitter();
-  
+
   constructor(private _articleService: ArticleService, private _cartService: CartService) 
   { 
     this.paginate = new Paginate(1,6);
@@ -28,6 +25,15 @@ export class ArticleListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadProducts();
+    this._cartService.cartArticlesDetails.subscribe({
+      next: result => 
+      {
+        this.cartArticles=result
+      }
+    })
+    this._cartService.articles.subscribe({
+      next: result=>{ this.articles = result }
+    })
   }
 
   loadProducts(){
@@ -36,36 +42,11 @@ export class ArticleListComponent implements OnInit {
         next: (response) => 
         {
           this.articles = response;
-          this.updateArticlesStock();
-          this.emitArticlesEvent();
+          this._cartService.setArticles(this.articles);
         },
         error: (err) => console.log(err)
       }
     );
     
-  }
-
-  updateArticlesStock(){
-    this.cartArticles = this._cartService.getCart();
-    for(var i=0; i < this.articles.length; i++){
-      for(var j=0; j < this.cartArticles.length; j++){       
-        if(this.articles[i].id == this.cartArticles[j].article.id){
-          this.articles[i].stock = (this.articles[i].stock - this.cartArticles[j].purchaseArticle.articleQuantity);
-        }
-      }      
-    }
-  }
-
-  emitCartEvent(cartArticleDetail: Array<CartArticleDetail>){
-    this.cartEvent.emit(cartArticleDetail);
-    this.emitArticlesEvent();
-  }
-
-  emitArticlesEvent(){
-    this.articlesEvent.emit(this.articles);
-  }
-
-  receiveTotalEvent(){
-    this.totalEvent.emit();
   }
 }
