@@ -82,7 +82,7 @@ export class CartService {
 
     if (this.availableStock(article)) {
       var cartArticleDetail = new CartArticleDetail(article, purchaseArticle);
-      if (this.existsArticleInCartArticleDetail(article)) {
+      if (this.existsArticleInCart(article)) {
         for (var i = 0; i < cart.length; i++) {
           if (cart[i].article.id == article.id) {
             cart[i].purchaseArticle.articleQuantity++;
@@ -129,9 +129,7 @@ export class CartService {
     return cartArticlesDetails;
   }
 
-  
-
-  existsArticleInCartArticleDetail(articleDetail: Article): boolean {
+  existsArticleInCart(articleDetail: Article): boolean {
     var cartArticlesDetails: Array<CartArticleDetail> = this.getCartFromStorage();
     if (cartArticlesDetails != null) {
       for (var i = 0; i < cartArticlesDetails.length; i++) {

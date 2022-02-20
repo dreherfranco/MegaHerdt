@@ -4,20 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MegaHerdt.Models.Models
 {
-    public class Purchase
+    public class PurchaseClaim
     {
         [Key]
         public int Id { get; set; }
         [ForeignKey("User")]
         public string ClientId { get; set; }
-        [ForeignKey("Bill")]
-        public int BillId { get; set; }
+        [ForeignKey("Purchase")]
+        public int PurchaseId { get; set; }
+        public string Description { get; set; }
         public DateTime Date { get; set; }
-        public Bill Bill { get; set; }
-        public List<PurchaseClaim> PurchasesClaims { get; set; }
+        public bool Answered { get; set; } = false;
         public User Client { get; set; }
-        public Shipment? Shipment { get; set; }
-        public List<PurchaseArticle> PurchasesArticles { get; set; }
-
+        public Purchase Purchase { get; set; }
     }
 }
