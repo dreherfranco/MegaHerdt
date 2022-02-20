@@ -1,4 +1,4 @@
-export class PaymentConfirm {
+export class ReparationPaymentConfirm {
     installments: number;
     reparationId: number;
     stripeToken: string;

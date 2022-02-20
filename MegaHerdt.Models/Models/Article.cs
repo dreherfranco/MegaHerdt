@@ -23,7 +23,7 @@ namespace MegaHerdt.Models.Models
         public List<ArticleOffer> Offers { get; set; }
         public List<ArticleProvider> ArticlesProviders { get; set; }
         public List<ReparationArticle> ReparationArticles { get; set;}
-        public List<ReparationArticle> PurchaseArticles { get; set; }
+        public List<PurchaseArticle> PurchaseArticles { get; set; }
         private int _stock { get; set; }
 
         public int Stock

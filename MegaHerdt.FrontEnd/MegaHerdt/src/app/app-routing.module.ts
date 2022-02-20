@@ -26,6 +26,7 @@ import { ShowReparationClaimsComponent } from './components/reparation-claims/sh
 import { AnswerReparationClaimComponent } from './components/reparation-claims/answer-reparation-claim/answer-reparation-claim.component';
 import { ClientReparationClaimsComponent } from './components/reparation-claims/client-reparation-claims/client-reparation-claims.component';
 import { ConfirmReparationPaymentComponent } from './components/reparationPayments/confirm-reparation-payment/confirm-reparation-payment.component';
+import { ConfirmPurchasePaymentComponent } from './components/purchase-payments/confirm-purchase-payment/confirm-purchase-payment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -38,6 +39,8 @@ const routes: Routes = [
   { path: 'reparations/record/reparation/:id/claim', component: CreateReparationClaimComponent, canActivate: [AuthGuard] },
   { path: 'reparations/record/reparation/:id/payment', component: ConfirmReparationPaymentComponent, canActivate: [AuthGuard] },
   { path: 'client-reparation-claims', component: ClientReparationClaimsComponent, canActivate: [AuthGuard] },
+  { path: 'confirm-purchase', component: ConfirmPurchasePaymentComponent, canActivate: [AuthGuard] },
+  
   //EMPLOYEE AND ADMIN ROUTES
   { 
     path: 'administrate', component: AdministrateComponent, canActivate: [AuthGuard, RoleGuard], 
@@ -83,6 +86,7 @@ const routes: Routes = [
     path: 'administrate/show-reparation-claims/answer-reparation-claim/:idReparationClaim', component: AnswerReparationClaimComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
+ 
   //ADMIN ROUTES
   { 
     path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 

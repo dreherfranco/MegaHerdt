@@ -10,7 +10,6 @@ namespace MegaHerdt.Models.Models
         public int Id { get; set; }
         [ForeignKey("User")]
         public string ClientId { get; set; }
-        [ForeignKey("Bill")]
         public int BillId { get; set; }
         public DateTime Date { get; set; }
         public Bill Bill { get; set; }

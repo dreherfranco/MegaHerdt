@@ -73,6 +73,7 @@ import { DialogShowReparationDetailComponent } from './components/reparations/di
 import { ConfirmReparationPaymentComponent } from './components/reparationPayments/confirm-reparation-payment/confirm-reparation-payment.component';
 import { CartComponent } from './components/cart/cart/cart.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
+import { ConfirmPurchasePaymentComponent } from './components/purchase-payments/confirm-purchase-payment/confirm-purchase-payment.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { CartItemComponent } from './components/cart/cart-item/cart-item.compone
     ConfirmReparationPaymentComponent,
     CartComponent,
     CartItemComponent,
+    ConfirmPurchasePaymentComponent,
   ],
   imports: [
     BrowserModule,

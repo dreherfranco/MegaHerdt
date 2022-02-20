@@ -3,11 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
-import { PaymentConfirm } from 'src/app/models/Payment/PaymentConfirm';
+import { ReparationPaymentConfirm } from 'src/app/models/Payment/ReparationPaymentConfirm';
 import { PaymentPlan } from 'src/app/models/Payment/PaymentPlan';
 import { ReparationPaymentService } from 'src/app/services/reparation-payments/reparation-payment.service';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { availablePlans } from 'src/app/utils/AvailablePlans';
+import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 
 @Component({
   selector: 'app-confirm-reparation-payment',
@@ -17,28 +19,13 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ConfirmReparationPaymentComponent implements OnInit {
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
   availablePlans: Array<PaymentPlan>;
-  paymentIntentId: string;
+ // paymentIntentId: string;
   planSelected: PaymentPlan;
   stripeToken: string;
   reparationAmount: number;
   showCreateTokenForm: boolean;
   subscriptionActive: boolean;
-
-  cardOptions: StripeCardElementOptions = {
-    style: {
-      base: {
-        iconColor: '#666EE8',
-        color: '#31325F',
-        fontWeight: '300',
-        fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-        fontSize: '18px',
-        '::placeholder': {
-          color: '#CFD7E0'
-        }
-      }
-    },
-    hidePostalCode: true
-  };
+  cardOptions: StripeCardElementOptions = cardOptions;
 
   elementsOptions: StripeElementsOptions = {
     locale: 'es'
@@ -54,7 +41,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     });
     this.card = new StripeCardComponent(new StripeElementsService(stripeService))
     this.availablePlans = new Array<PaymentPlan>();
-    this.paymentIntentId = '';
+  //  this.paymentIntentId = '';
     this.planSelected = new PaymentPlan(0,'','');
     this.stripeToken = "";
     this.reparationAmount = 0;
@@ -133,32 +120,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
         //var availablePlans = result.available_plans;
       //  this.paymentIntentId = result.intent_id;
         //TEST DATA
-        this.availablePlans = [
-          {
-            "count": 1,
-            "interval": "month",
-            "type": "fixed_count"
-          },
-          {
-            "count": 3,
-            "interval": "month",
-            "type": "fixed_count"
-          },
-          {
-            "count": 6,
-            "interval": "month",
-            "type": "fixed_count"
-          },
-          {
-            "count": 9,
-            "interval": "month",
-            "type": "fixed_count"
-          },
-          {
-            "count": 12,
-            "interval": "month",
-            "type": "fixed_count"
-          }];
+        this.availablePlans = availablePlans;
 
           this.showCreateTokenForm = false;
       //}
@@ -171,7 +133,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
 
   confirmPayment(){
     var reparationId = this.getReparationId();
-    var paymentConfirm = new PaymentConfirm(this.planSelected.count, reparationId, this.stripeToken) ;
+    var paymentConfirm = new ReparationPaymentConfirm(this.planSelected.count, reparationId, this.stripeToken) ;
     this._reparationPaymentService.confirmPayment(paymentConfirm, this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
         console.log(result);

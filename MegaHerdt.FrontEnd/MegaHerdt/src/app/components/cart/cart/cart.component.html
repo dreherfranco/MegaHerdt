@@ -26,7 +26,9 @@
         <strong>Total: </strong>${{total}} 
     </div>
     <button class="btn btn-outline-danger btn-block mb-2" (click)="emptyCart()">
-        <i class="fas fa-ban"></i> Vaciar carrito
+        <i class="bi bi-cart-x"></i> Vaciar carrito
     </button>
-    
+    <button class="btn btn-outline-primary btn-block m-2 mt-0" [routerLink]="['/confirm-purchase']">
+        <i class="bi bi-bag-fill"></i> Comprar
+    </button>
 </div>

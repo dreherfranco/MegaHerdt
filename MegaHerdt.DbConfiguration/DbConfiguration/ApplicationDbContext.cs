@@ -69,6 +69,9 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                 .HasOne(x => x.Bill)
                 .WithOne(x => x.Purchase)
                 .HasForeignKey<Bill>(x => x.PurchaseId);
+            
+            modelBuilder.Entity<PurchaseArticle>()
+                .HasKey(x => new { x.ArticleId, x.PurchaseId });
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
