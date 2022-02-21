@@ -3,9 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
+import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { PaymentPlan } from 'src/app/models/Payment/PaymentPlan';
+import { UserAddresses } from 'src/app/models/User/UserAddresses';
+import { UserDetail } from 'src/app/models/User/UserDetail';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { UserService } from 'src/app/services/users/user.service';
 import { availablePlans } from 'src/app/utils/AvailablePlans';
 import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 
@@ -21,9 +25,14 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   planSelected: PaymentPlan = new PaymentPlan(0, '', '');
   stripeToken: string = "";
   showCreateTokenForm: boolean = true;
-  subscriptionActive: boolean = false;
+  isTokenValid: boolean = false;
   purchaseAmount: number = 0;
   cardOptions: StripeCardElementOptions = cardOptions;
+  userAddresses: UserAddresses = new UserAddresses(new Array<AddressUpdate>());
+  addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
+  hasShipment: boolean = false;
+  isShipmentConfirm: boolean = false;
+  isAddressSelected: boolean = false;
 
   elementsOptions: StripeElementsOptions = {
     locale: 'es'
@@ -33,7 +42,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private stripeService: StripeService,
     private _storageService: StorageService,
-    private _route: ActivatedRoute, private _cartService: CartService) {
+    private _route: ActivatedRoute, private _cartService: CartService, private _userService: UserService) {
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
     });
@@ -53,11 +62,55 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         if (result.token) {
           console.log(result.token.id);
           this.stripeToken = result.token.id;
+          this.isTokenValid = true;
           this.createPaymentMethod();
+          this.getUserAddresses();
         } else if (result.error) {
           console.log(result.error.message);
         }
       });
+  }
+
+  selectPlan(plan: PaymentPlan) {
+    this.planSelected = plan;
+  }
+
+  confirmPayment() {
+   
+  }
+
+  selectIfHasShipment(hasShipment: boolean){
+    this.hasShipment = hasShipment;
+  }
+
+  getUserAddresses(){
+    var identity: UserDetail = this._storageService.getIdentity();
+    this._userService.getByEmail(identity.email).subscribe({
+      next: (result) =>{
+        this.userAddresses.addresses = result.addresses;
+        this.showCreateTokenForm = false;
+      }
+    });
+  }
+
+  selectAddress(address: AddressUpdate) {
+    this.addressSelected = address;
+    this.isAddressSelected = true;
+  }
+
+  confirmShipment(){
+    if(this.hasShipment && this.isAddressSelected){
+      this.isShipmentConfirm = true;
+    }else if(!this.hasShipment){
+      this.isShipmentConfirm = true;
+    }else{
+      this.isShipmentConfirm = false;
+    }
+  }
+
+  comeBackInShipmentForm(){
+    this.isTokenValid = false;
+    this.showCreateTokenForm = true;
   }
 
   createPaymentMethod() {
@@ -78,15 +131,6 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   handleInstallmentPlans() {
     this.availablePlans = availablePlans;
-
-    this.showCreateTokenForm = false;
   }
 
-  selectPlan(plan: PaymentPlan) {
-    this.planSelected = plan;
-  }
-
-  confirmPayment() {
-   
-  }
 }

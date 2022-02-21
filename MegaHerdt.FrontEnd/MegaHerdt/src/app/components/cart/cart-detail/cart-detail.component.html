@@ -1,0 +1,13 @@
+<h2 class="text-center data-user alert alert-info">Carrito</h2>
+<div *ngFor="let cartArticle of cartArticles">
+    <p>
+        <img src="{{cartArticle.article.image}}" class="img-thumbnail w-25 m-1" />
+        <strong class="m-1 data-user">{{cartArticle.article.name}} </strong>
+        <strong class="m-1 data-user">${{cartArticle.article.unitValueWithOffer}} </strong>
+    </p>
+    <p> 
+        <strong class="m-1 data-user">Unidades: {{cartArticle.purchaseArticle.articleQuantity}}</strong>
+        <strong class="m-1 data-user">Total: ${{ cartArticle.purchaseArticle.articleQuantity * cartArticle.article.unitValueWithOffer | number : '1.1-2'}}</strong>
+    </p>
+    <hr>
+</div>

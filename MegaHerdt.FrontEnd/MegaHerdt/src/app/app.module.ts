@@ -74,6 +74,7 @@ import { ConfirmReparationPaymentComponent } from './components/reparationPaymen
 import { CartComponent } from './components/cart/cart/cart.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 import { ConfirmPurchasePaymentComponent } from './components/purchase-payments/confirm-purchase-payment/confirm-purchase-payment.component';
+import { CartDetailComponent } from './components/cart/cart-detail/cart-detail.component';
 
 @NgModule({
   declarations: [
@@ -141,6 +142,7 @@ import { ConfirmPurchasePaymentComponent } from './components/purchase-payments/
     CartComponent,
     CartItemComponent,
     ConfirmPurchasePaymentComponent,
+    CartDetailComponent,
   ],
   imports: [
     BrowserModule,
