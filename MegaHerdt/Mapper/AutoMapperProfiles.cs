@@ -8,19 +8,19 @@ using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.DTOs.Bill;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
+using MegaHerdt.API.DTOs.PurchaseArticle;
 using MegaHerdt.API.DTOs.PurchaseClaim;
+using MegaHerdt.API.DTOs.PurchasePayment;
 using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.ReparationArticle;
 using MegaHerdt.API.DTOs.ReparationClaim;
 using MegaHerdt.API.DTOs.ReparationPayment;
 using MegaHerdt.API.DTOs.ReparationState;
-using MegaHerdt.API.DTOs.Role;
 using MegaHerdt.API.DTOs.TransportCompany;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Models.Models.PaymentData;
-using Microsoft.AspNetCore.Identity;
 
 namespace MegaHerdt.API.Mapper
 {
@@ -127,9 +127,9 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ProviderCreationDTO, Provider>();
             #endregion Provider
 
-            #region Payment
+            #region ReparationPayment
             CreateMap<ReparationPaymentConfirmDTO, ReparationPaymentData>();
-            #endregion
+            #endregion ReparationPayment
 
             #region PurchaseClaim
             CreateMap<PurchaseClaim, PurchaseClaimDTO>()
@@ -137,6 +137,14 @@ namespace MegaHerdt.API.Mapper
             CreateMap<PurchaseClaimCreationDTO, PurchaseClaim>();
             CreateMap<PurchaseClaimUpdateDTO, PurchaseClaim>();
             #endregion PurchaseClaim
+
+            #region PurchaseArticle
+            CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();
+            #endregion PurchaseArticle
+
+            #region PurchasePayment
+            CreateMap<PurchasePaymentConfirmDTO, PurchasePaymentData>();
+            #endregion PurchasePayment
 
             #region TransportCompany
             CreateMap<TransportCompany, TransportCompanyDTO>()

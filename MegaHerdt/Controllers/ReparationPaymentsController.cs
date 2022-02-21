@@ -13,12 +13,10 @@ namespace MegaHerdt.API.Controllers
     public class ReparationPaymentsController : ControllerBase
     {
         private readonly ReparationPaymentService reparationPaymentService;
-        private readonly ReparationService reparationService;
         private readonly IMapper mapper;
-        public ReparationPaymentsController(ReparationPaymentService reparationPaymentService, ReparationService reparationService, IMapper mapper)
+        public ReparationPaymentsController(ReparationPaymentService reparationPaymentService, IMapper mapper)
         {
             this.reparationPaymentService = reparationPaymentService;
-            this.reparationService = reparationService;
             this.mapper = mapper;
         }
 
