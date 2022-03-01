@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <p *ngIf="purchases.length == 0" class="alert alert-warning">No tiene compras para mostrar</p>
+    <div class="table-responsive">
+        <table class="table" *ngIf="purchases.length != 0">
+            <thead>
+                <tr>
+                    <th scope="col">Articulos</th>
+                    <th scope="col">Reclamar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let purchase of purchases | paginate: 
+                {
+                    itemsPerPage: this.paginate.recordsPerPage, 
+                    currentPage:this.paginate.page
+                }">
+                    <th>
+                        <span *ngIf="purchase.purchasesArticles.length == 0" class="text-secondary"> No contiene
+                            articulos</span>
+                        <span *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
+                            {{ purchaseArticle.article.name }}
+                        </span>
+                    </th>
+                    
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center data-user"
+        (pageChange)="this.paginate.page = $event" 
+        previousLabel="Anterior" 
+        nextLabel="Siguiente"
+        *ngIf="purchases.length > 6">
+        </pagination-controls>
+    </div>
+</div>

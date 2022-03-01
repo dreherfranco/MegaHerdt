@@ -8,6 +8,7 @@ using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.DTOs.Bill;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
+using MegaHerdt.API.DTOs.Purchase;
 using MegaHerdt.API.DTOs.PurchaseArticle;
 using MegaHerdt.API.DTOs.PurchaseClaim;
 using MegaHerdt.API.DTOs.PurchasePayment;
@@ -16,6 +17,7 @@ using MegaHerdt.API.DTOs.ReparationArticle;
 using MegaHerdt.API.DTOs.ReparationClaim;
 using MegaHerdt.API.DTOs.ReparationPayment;
 using MegaHerdt.API.DTOs.ReparationState;
+using MegaHerdt.API.DTOs.Shipment;
 using MegaHerdt.API.DTOs.TransportCompany;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
@@ -131,6 +133,11 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ReparationPaymentConfirmDTO, ReparationPaymentData>();
             #endregion ReparationPayment
 
+            #region Purchase
+            CreateMap<Purchase, PurchaseDTO>()
+               .ReverseMap();
+            #endregion Purchase
+
             #region PurchaseClaim
             CreateMap<PurchaseClaim, PurchaseClaimDTO>()
                .ReverseMap();
@@ -140,6 +147,7 @@ namespace MegaHerdt.API.Mapper
 
             #region PurchaseArticle
             CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();
+            CreateMap<PurchaseArticle, PurchaseArticleDTO>();
             #endregion PurchaseArticle
 
             #region PurchasePayment
@@ -151,6 +159,11 @@ namespace MegaHerdt.API.Mapper
                 .ReverseMap();
             CreateMap<TransportCompanyCreationDTO, TransportCompany>();
             #endregion TransportCompany
+
+            #region Shipment
+            CreateMap<Shipment, ShipmentDTO>();
+            #endregion Shipment
+
         }
 
 

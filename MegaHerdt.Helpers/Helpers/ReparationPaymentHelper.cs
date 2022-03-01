@@ -66,28 +66,7 @@ namespace MegaHerdt.Helpers.Helpers
         {
             var service = new ProductService();
             var productsStripe = new List<Product>();
-
-            /*
-               foreach(var reparationArticle in reparationsArticles)
-               {
-                   if (service.Get(reparationArticle.ArticleId.ToString()) != null)
-                   {
-                       var options = new ProductUpdateOptions
-                       {
-                           Name = reparationArticle.Article.Name,
-                       };
-                       productsStripe.Add(await service.UpdateAsync(reparationArticle.ArticleId.ToString(), options));
-                   }
-                   else
-                   {
-                       var options = new ProductCreateOptions
-                       {
-                           Name = reparationArticle.Article.Name,
-                       };
-                       productsStripe.Add(await service.CreateAsync(options));
-                   }
-               }
-            */          
+      
                 var options = new ProductCreateOptions
                 {
                     Name = "Reparacion de pc",
@@ -101,24 +80,7 @@ namespace MegaHerdt.Helpers.Helpers
         {
             var service = new PriceService();
             var prices = new List<Price>();
-            /*
-            foreach (var stripeProduct in stripeProducts)
-            {
-                var reparationArticle = reparationsArticles.Where(x => x.Article.Name.Contains(stripeProduct.Name)).FirstOrDefault();
-                var options = new PriceCreateOptions
-                {
-                    Nickname = "Installment",
-                    Product = stripeProduct.Id,
-                    UnitAmount = (long) reparationArticle.ArticlePriceAtTheMoment,
-                    Currency = "ars",
-                    Recurring = new PriceRecurringOptions
-                    {
-                        Interval = "month",
-                        IntervalCount = installmentsQuantity,
-                        UsageType = "licensed",
-                    },
-                };
-            */
+
             foreach (var stripeProduct in stripeProducts)
             {
                 var options = new PriceCreateOptions
@@ -147,8 +109,6 @@ namespace MegaHerdt.Helpers.Helpers
             var subscriptionCreateOptions = new List<SubscriptionItemOptions>();
             foreach (var price in prices)
             {
-               // var product = productService.Get(price.ProductId);
-             //   var reparationArticle = reparationsArticles.Where(x=>x.Article.Name.Contains(product.Name)).FirstOrDefault();
                 var subscriptionItemOptions = new SubscriptionItemOptions
                 {
                     Price = price.Id,  

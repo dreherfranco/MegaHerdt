@@ -10,7 +10,6 @@
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
                 </tr>
                 <tr>
                     <th scope="col">Id reclamo</th>
@@ -20,7 +19,6 @@
                     <th scope="col">Email cliente</th>
                     <th scope="col">Respondido</th>
                     <th scope="col">Ver reparacion</th>
-                    <th scope="col">Contestar reclamo</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,9 +51,7 @@
                     <th>
                         <button class="btn btn-primary" (click)="openDialog(reparationClaim.reparation)">Ver reparacion</button>
                     </th>
-                    <th>
-                        <button [routerLink]="['answer-reparation-claim', reparationClaim.id]"  class="btn btn-primary">Contestar reclamo</button>
-                    </th>
+                    
                 </tr>
             </tbody>
         </table>
