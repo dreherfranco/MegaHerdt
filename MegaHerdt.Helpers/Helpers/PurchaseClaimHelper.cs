@@ -45,6 +45,9 @@ namespace MegaHerdt.Helpers.Helpers
         {
             return repository.Get(filter)
                 .Include(x => x.Client)
+                .Include(x => x.Purchase)
+                .ThenInclude(x => x.PurchasesArticles)
+                .ThenInclude(x => x.Article)
                 .OrderByDescending(x => x.Date);
         }
 

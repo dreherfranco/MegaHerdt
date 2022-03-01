@@ -75,8 +75,10 @@ import { CartComponent } from './components/cart/cart/cart.component';
 import { CartItemComponent } from './components/cart/cart-item/cart-item.component';
 import { ConfirmPurchasePaymentComponent } from './components/purchase-payments/confirm-purchase-payment/confirm-purchase-payment.component';
 import { CartDetailComponent } from './components/cart/cart-detail/cart-detail.component';
-import { ClientPurchaseClaimComponent } from './components/purchase-claims/client-purchase-claim/client-purchase-claim.component';
 import { PurchaseRecordComponent } from './components/purchases/purchase-record/purchase-record.component';
+import { CreatePurchaseClaimComponent } from './components/purchase-claims/create-purchase-claim/create-purchase-claim.component';
+import { ClientPurchaseClaimsComponent } from './components/purchase-claims/client-purchase-claims/client-purchase-claims.component';
+import { DialogShowPurchaseDetailComponent } from './components/purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
 
 @NgModule({
   declarations: [
@@ -145,8 +147,10 @@ import { PurchaseRecordComponent } from './components/purchases/purchase-record/
     CartItemComponent,
     ConfirmPurchasePaymentComponent,
     CartDetailComponent,
-    ClientPurchaseClaimComponent,
     PurchaseRecordComponent,
+    CreatePurchaseClaimComponent,
+    ClientPurchaseClaimsComponent,
+    DialogShowPurchaseDetailComponent,
   ],
   imports: [
     BrowserModule,

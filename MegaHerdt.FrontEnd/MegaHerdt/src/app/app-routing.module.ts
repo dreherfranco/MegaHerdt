@@ -28,6 +28,8 @@ import { ClientReparationClaimsComponent } from './components/reparation-claims/
 import { ConfirmReparationPaymentComponent } from './components/reparationPayments/confirm-reparation-payment/confirm-reparation-payment.component';
 import { ConfirmPurchasePaymentComponent } from './components/purchase-payments/confirm-purchase-payment/confirm-purchase-payment.component';
 import { PurchaseRecordComponent } from './components/purchases/purchase-record/purchase-record.component';
+import { CreatePurchaseClaimComponent } from './components/purchase-claims/create-purchase-claim/create-purchase-claim.component';
+import { ClientPurchaseClaimsComponent } from './components/purchase-claims/client-purchase-claims/client-purchase-claims.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,6 +44,8 @@ const routes: Routes = [
   { path: 'client-reparation-claims', component: ClientReparationClaimsComponent, canActivate: [AuthGuard] },
   { path: 'confirm-purchase', component: ConfirmPurchasePaymentComponent, canActivate: [AuthGuard] },
   { path: 'purchases/record', component: PurchaseRecordComponent, canActivate: [AuthGuard] },
+  { path: 'purchases/record/purchase/:id/claim', component: CreatePurchaseClaimComponent, canActivate: [AuthGuard] },
+  { path: 'client-purchase-claims', component: ClientPurchaseClaimsComponent, canActivate: [AuthGuard] },
 
   //EMPLOYEE AND ADMIN ROUTES
   { 

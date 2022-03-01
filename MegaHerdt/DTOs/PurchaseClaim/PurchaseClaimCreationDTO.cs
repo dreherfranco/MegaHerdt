@@ -7,7 +7,7 @@ namespace MegaHerdt.API.DTOs.PurchaseClaim
         [Required]
         public string ClientId { get; set; }
         [Required]
-        public int ReparationId { get; set; }
+        public int PurchaseId { get; set; }
         public string Description { get; set; }
         [Required]
         public DateTime Date { get; set; }

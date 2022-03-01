@@ -1,4 +1,6 @@
-﻿namespace MegaHerdt.API.DTOs.PurchaseClaim
+﻿using MegaHerdt.API.DTOs.Purchase;
+
+namespace MegaHerdt.API.DTOs.PurchaseClaim
 {
     public class PurchaseClaimDTO
     {
@@ -6,6 +8,6 @@
         public string Description { get; set; }
         public DateTime Date { get; set; }
         public bool Answered { get; set; }
-        //public PurchaseDTO Purchase { get; set; }
+        public PurchaseDTO Purchase { get; set; }
     }
 }
