@@ -4,10 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
+import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { PaymentPlan } from 'src/app/models/Payment/PaymentPlan';
+import { PurchasePaymentConfirm } from 'src/app/models/Payment/PurchasePaymentConfirm';
+import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { UserAddresses } from 'src/app/models/User/UserAddresses';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { PurchasePaymentService } from 'src/app/services/purchase-payments/purchase-payment.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { availablePlans } from 'src/app/utils/AvailablePlans';
@@ -42,7 +46,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private stripeService: StripeService,
     private _storageService: StorageService,
-    private _route: ActivatedRoute, private _cartService: CartService, private _userService: UserService) {
+    private _purchasePaymentService: PurchasePaymentService, private _cartService: CartService, private _userService: UserService) {
     this.stripeTest = this.fb.group({
       name: ['', [Validators.required]]
     });
@@ -75,9 +79,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this.planSelected = plan;
   }
 
-  confirmPayment() {
-   
-  }
+  
 
   selectIfHasShipment(hasShipment: boolean){
     this.hasShipment = hasShipment;
@@ -133,4 +135,28 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this.availablePlans = availablePlans;
   }
 
+  confirmPayment() {
+    var identity: UserDetail = this._storageService.getIdentity();
+    var purchasesArticles = this.getPurchasesArticles();
+    var purchasePaymentConfirm = new PurchasePaymentConfirm(this.planSelected.count, identity.email,
+    identity.id, this.stripeToken, this.hasShipment, this.addressSelected.id, purchasesArticles);
+    
+    this._purchasePaymentService.confirmPayment(purchasePaymentConfirm, this._storageService.getTokenValue()).subscribe({
+      next: (result) => {
+        if(result.subscription.status == "active"){
+          //this.subscriptionActive = true;
+          console.log(result);
+        }
+      }
+    });
+  }
+
+  getPurchasesArticles(): PurchaseArticleCreation[]{
+    var cartArticles: CartArticleDetail[] = this._cartService.getCartFromStorage();
+    var purchasesArticles: PurchaseArticleCreation[] = [];
+    for(var i=0; i<cartArticles.length; i++){
+       purchasesArticles.push(cartArticles[i].purchaseArticle);
+    }
+    return purchasesArticles;
+  }
 }

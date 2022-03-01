@@ -8,12 +8,10 @@ namespace MegaHerdt.Helpers.Helpers
     public class PurchasePaymentHelper
     {
         private readonly Repository<Purchase> purchaseRepository;
-        private readonly Repository<Bill> billRepository;
 
-        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository, Repository<Bill> billRepository)
+        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository)
         {
             this.purchaseRepository = purchaseRepository;
-            this.billRepository = billRepository;
         }
 
         public async Task<Subscription> AddPayment(PurchasePaymentData purchasePaymentData)
@@ -26,12 +24,6 @@ namespace MegaHerdt.Helpers.Helpers
             if (subscription.Status == "active")
             {
                 var purchase = await this.CreatePurchase(purchasePaymentData);
-                //save payment in DB
-                var payments = this.InstancePayments(subscription, purchase, purchasePaymentData);
-                var bill = this.billRepository.Get(x => x.Id == purchase.BillId).FirstOrDefault();
-                bill.Payments = payments;
-                await this.billRepository.Update(bill);
-
                 return subscription;
             }
             else
@@ -44,7 +36,8 @@ namespace MegaHerdt.Helpers.Helpers
         {
             
             var purchase = new Purchase() { ClientId = purchasePaymentData.ClientId, Date = DateTime.Now};
-            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number=123335554 };
+            var payments = this.InstancePayments(purchasePaymentData);
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number=123335554, Payments = payments };
             purchase.Bill = bill;
 
             var purchasesArticles = new List<PurchaseArticle>();
@@ -84,26 +77,20 @@ namespace MegaHerdt.Helpers.Helpers
             var service = new ProductService();
             var productsStripe = new List<Product>();
 
-            foreach (var purchaseArticle in purchasesArticles)
-            {
-                if (service.Get(purchaseArticle.ArticleId.ToString()) != null)
-                {
-                    var options = new ProductUpdateOptions
-                    {
-                        Name = purchaseArticle.ArticleName,
-                    };
-                    productsStripe.Add(await service.UpdateAsync(purchaseArticle.ArticleId.ToString(), options));
-                }
-                else
-                {
+            /* foreach (var purchaseArticle in purchasesArticles)
+             {
+                 var options = new ProductCreateOptions
+                 {
+                     Name = purchaseArticle.ArticleName,
+                 };
+                  productsStripe.Add(await service.CreateAsync(options));
 
-                    var options = new ProductCreateOptions
-                    {
-                        Name = purchaseArticle.ArticleName,
-                    };
-                    productsStripe.Add(await service.CreateAsync(options));
-                }
-            }
+             }*/
+            var options = new ProductCreateOptions
+            {
+                Name = "Purchase",
+            };
+            productsStripe.Add(await service.CreateAsync(options));
 
             return productsStripe;
         }
@@ -112,15 +99,17 @@ namespace MegaHerdt.Helpers.Helpers
         {
             var service = new PriceService();
             var prices = new List<Price>();
+            var total = 0.0;
 
-            foreach (var stripeProduct in stripeProducts)
-            {
-                var purchaseArticle = purchasesArticles.Where(x => x.ArticleName.Contains(stripeProduct.Name)).FirstOrDefault();
+            /*foreach (var stripeProduct in stripeProducts)
+            {       
+                
+                var purchaseArticle = purchasesArticles.Where(x => x.ArticleName.Contains(stripeProduct.Name)).FirstOrDefault();      
                 var options = new PriceCreateOptions
                 {
                     Nickname = "Installment",
                     Product = stripeProduct.Id,
-                    UnitAmount = (long)purchaseArticle.ArticlePriceAtTheMoment,
+                    UnitAmount = (long)purchaseArticle.ArticlePriceAtTheMoment * 100,
                     Currency = "ars",
                     Recurring = new PriceRecurringOptions
                     {
@@ -132,8 +121,29 @@ namespace MegaHerdt.Helpers.Helpers
                 var price = await service.CreateAsync(options);
 
                 prices.Add(price);
-            }                            
-            
+            }*/
+            foreach(var purchaseArticle in purchasesArticles)
+            {
+                total += purchaseArticle.ArticlePriceAtTheMoment;
+            }
+
+            var options = new PriceCreateOptions
+            {
+                Nickname = "Installment",
+                Product = stripeProducts[0].Id,
+                UnitAmount = (long)(total * 100),
+                Currency = "ars",
+                Recurring = new PriceRecurringOptions
+                {
+                    Interval = "month",
+                    IntervalCount = installmentsQuantity,
+                    UsageType = "licensed",
+                },
+            };
+            var price = await service.CreateAsync(options);
+
+            prices.Add(price);
+
             return prices;
         }
 
@@ -144,11 +154,11 @@ namespace MegaHerdt.Helpers.Helpers
             foreach (var price in prices)
             {
                 var product = productService.Get(price.ProductId);
-                var purchaseArticle = purchasesArticles.Where(x=>x.ArticleName.Contains(product.Name)).FirstOrDefault();
+           //     var purchaseArticle = purchasesArticles.Where(x => x.ArticleName.Contains(product.Name)).FirstOrDefault();
                 var subscriptionItemOptions = new SubscriptionItemOptions
                 {
                     Price = price.Id,
-                    Quantity = purchaseArticle.ArticleQuantity
+                    Quantity = 1
                 };
                 subscriptionCreateOptions.Add(subscriptionItemOptions);
             }
@@ -158,8 +168,8 @@ namespace MegaHerdt.Helpers.Helpers
             {
                 Customer = customer.Id,
                 Items = subscriptionCreateOptions,
-                OffSession = true,
-                CancelAt = DateTime.Now.AddMonths(3),
+                OffSession = true,         
+                CancelAt = DateTime.Now.AddMonths(1)
             };
 
             var subscriptionService = new SubscriptionService();
@@ -167,7 +177,7 @@ namespace MegaHerdt.Helpers.Helpers
             return subscription;
         }
 
-        private List<Payment> InstancePayments(Subscription subscription, Purchase purchase, PurchasePaymentData purchasePaymentData)
+        private List<Payment> InstancePayments(PurchasePaymentData purchasePaymentData)
         {
             var payments = new List<Payment>();
             var amount = 0.0;
@@ -185,11 +195,12 @@ namespace MegaHerdt.Helpers.Helpers
                     Amount =(float)(amount / purchasePaymentData.Installments),
                     PaymentDate = DateTime.Now,
                     PaymentMethod = paymentMethod,
-                    BillId = purchase.BillId
                 };
                 payments.Add(payment);
             }
             return payments;
         }
+
+
     }
 }

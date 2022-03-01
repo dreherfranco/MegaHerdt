@@ -61,7 +61,7 @@ export class CartService {
     if (cartArticles != null) {
       var total = 0;
       for (var i = 0; i < cartArticles.length; i++) {
-        total += (cartArticles[i].purchaseArticle.articleQuantity * cartArticles[i].purchaseArticle.priceAtTheMoment);
+        total += (cartArticles[i].purchaseArticle.articleQuantity * cartArticles[i].purchaseArticle.articlePriceAtTheMoment);
       }
       this.total.next(total);
     }
@@ -79,6 +79,8 @@ export class CartService {
 
   addToCart(article: Article, purchaseArticle: PurchaseArticleCreation) {
     let cart = this.getCartFromStorage();
+    purchaseArticle.articleName = article.name;
+    purchaseArticle.articlePriceAtTheMoment = article.unitValueWithOffer;
 
     if (this.availableStock(article)) {
       var cartArticleDetail = new CartArticleDetail(article, purchaseArticle);

@@ -35,7 +35,7 @@ export class ArticleItemComponent implements OnInit {
   }
 
   addToCart(){
-    var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer);
+    var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer, this.article.name);
     this._cartService.addToCart(this.article, purchaseArticle);
   }
 }
