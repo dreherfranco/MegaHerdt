@@ -79,6 +79,8 @@ import { PurchaseRecordComponent } from './components/purchases/purchase-record/
 import { CreatePurchaseClaimComponent } from './components/purchase-claims/create-purchase-claim/create-purchase-claim.component';
 import { ClientPurchaseClaimsComponent } from './components/purchase-claims/client-purchase-claims/client-purchase-claims.component';
 import { DialogShowPurchaseDetailComponent } from './components/purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
+import { ShowPurchaseClaimsComponent } from './components/purchase-claims/show-purchase-claims/show-purchase-claims.component';
+import { AnswerPurchaseClaimsComponent } from './components/purchase-claims/answer-purchase-claims/answer-purchase-claims.component';
 
 @NgModule({
   declarations: [
@@ -151,6 +153,8 @@ import { DialogShowPurchaseDetailComponent } from './components/purchases/dialog
     CreatePurchaseClaimComponent,
     ClientPurchaseClaimsComponent,
     DialogShowPurchaseDetailComponent,
+    ShowPurchaseClaimsComponent,
+    AnswerPurchaseClaimsComponent,
   ],
   imports: [
     BrowserModule,

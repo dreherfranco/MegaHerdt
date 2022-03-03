@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PurchaseClaimAnswer } from 'src/app/models/PurchaseClaim/PurchaseClaimAnswer';
 import { PurchaseClaimCreation } from 'src/app/models/PurchaseClaim/PurchaseClaimCreation';
 import { Global } from 'src/app/utils/Global';
 
@@ -25,5 +26,16 @@ export class PurchaseClaimService {
   getByClientId(clientId: string, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url + "/getByClientId/" + clientId, { headers: this.headers })
+  }
+
+  getAll(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url, { headers: this.headers })
+  }
+
+  answerClaim(answer: PurchaseClaimAnswer,token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(answer);
+    return this._http.post(this.url + "/answer", params, { headers: this.headers });
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
@@ -29,13 +28,13 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   planSelected: PaymentPlan = new PaymentPlan(0, '', '');
   stripeToken: string = "";
   showCreateTokenForm: boolean = true;
-  isTokenValid: boolean = false;
+  showShipmentForm: boolean = false;
+  showPlanSelectForm: boolean = false;
   purchaseAmount: number = 0;
   cardOptions: StripeCardElementOptions = cardOptions;
   userAddresses: UserAddresses = new UserAddresses(new Array<AddressUpdate>());
   addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
   hasShipment: boolean = false;
-  isShipmentConfirm: boolean = false;
   isAddressSelected: boolean = false;
 
   elementsOptions: StripeElementsOptions = {
@@ -66,7 +65,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         if (result.token) {
           console.log(result.token.id);
           this.stripeToken = result.token.id;
-          this.isTokenValid = true;
+          this.showCreateTokenForm = false;
+         this.showShipmentForm = true; 
           this.createPaymentMethod();
           this.getUserAddresses();
         } else if (result.error) {
@@ -90,7 +90,6 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this._userService.getByEmail(identity.email).subscribe({
       next: (result) =>{
         this.userAddresses.addresses = result.addresses;
-        this.showCreateTokenForm = false;
       }
     });
   }
@@ -101,17 +100,12 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   }
 
   confirmShipment(){
-    if(this.hasShipment && this.isAddressSelected){
-      this.isShipmentConfirm = true;
-    }else if(!this.hasShipment){
-      this.isShipmentConfirm = true;
-    }else{
-      this.isShipmentConfirm = false;
-    }
+    this.showShipmentForm = false;
+    this.showPlanSelectForm = true;
   }
 
   comeBackInShipmentForm(){
-    this.isTokenValid = false;
+    this.showShipmentForm = false;
     this.showCreateTokenForm = true;
   }
 
@@ -133,6 +127,11 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   handleInstallmentPlans() {
     this.availablePlans = availablePlans;
+  }
+
+  comeBackInPlanSelectForm(){
+    this.showPlanSelectForm = false;
+    this.showShipmentForm = true;
   }
 
   confirmPayment() {

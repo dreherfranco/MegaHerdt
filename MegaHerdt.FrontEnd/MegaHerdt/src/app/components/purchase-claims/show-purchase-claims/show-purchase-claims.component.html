@@ -1,0 +1,56 @@
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>RECLAMOS DE COMPRAS</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <th scope="col">Id reclamo</th>
+                    <th scope="col">Descripcion reclamo</th>
+                    <th scope="col">Fecha emision</th>
+                    <th scope="col">Respondido</th>
+                    <th scope="col">Ver compra</th>
+                    <th scope="col">Contestar reclamo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let purchaseClaim of purchaseClaims 
+                | paginate: 
+                {
+                    itemsPerPage: this.paginate.recordsPerPage, 
+                    currentPage:this.paginate.page
+                }; 
+                let i = index">
+                    <th>
+                        <span class="data-user">{{ purchaseClaim.id }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{ purchaseClaim.description }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{ purchaseClaim.date | date: 'dd/MM/yyyy' }}</span>
+                    </th>
+                    <th>
+                        <span class="data-user text-success" *ngIf="purchaseClaim.answered">SI</span>
+                        <span class="data-user text-danger" *ngIf="!purchaseClaim.answered">NO</span>
+                    </th>
+                    <th>
+                        <button class="btn btn-primary" (click)="openDialog(purchaseClaim.purchase)">Ver compra</button>
+                    </th>
+                    <th>
+                        <button [routerLink]="['answer-purchase-claim', purchaseClaim.id]"  class="btn btn-primary">Contestar reclamo</button>
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="purchaseClaims.length > 6">
+        </pagination-controls>
+    </div>
+</div>

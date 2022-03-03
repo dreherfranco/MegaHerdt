@@ -11,7 +11,7 @@
             </button>
         </form>
 
-        <div *ngIf="isTokenValid && !isShipmentConfirm">
+        <div *ngIf="showShipmentForm">
             <form>
                 <p class="data-user">Desea que enviemos su producto: </p>
                 <p class="data-user">
@@ -37,7 +37,7 @@
             <button class="btn btn-primary" (click)="confirmShipment()">Siguiente</button>
         </div>
 
-        <form id="installment-plan-form" *ngIf="isShipmentConfirm">
+        <form id="installment-plan-form" *ngIf="showPlanSelectForm">
             <div id="plans" class="form-check">
                 <p class="data-user" *ngFor="let plan of availablePlans"><input class="form-check-input"
                         id="immediate-plan" type="radio" name="installment_plan" (click)="selectPlan(plan)" />${{
@@ -46,7 +46,7 @@
                     {{plan.count}} pago/s
                 </p>
             </div>
-            <button class="btn btn-danger" (click)="comeBackInShipmentForm()">Regresar</button>
+            <button class="btn btn-danger" (click)="comeBackInPlanSelectForm()">Regresar</button>
             <button id="confirm-button" class="btn btn-warning" *ngIf="availablePlans.length > 0"
                 (click)="confirmPayment()">Confirmar pago</button>
         </form>

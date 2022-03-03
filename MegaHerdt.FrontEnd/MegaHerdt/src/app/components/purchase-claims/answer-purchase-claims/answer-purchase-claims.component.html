@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <p class="alert alert-danger" *ngIf="statusSubmit == 'failed' "> Error al efectuar la respuesta del reclamo </p>
+    <p class="alert alert-success" *ngIf="statusSubmit == 'success' "> La respuesta al reclamo se efectuo correctamente </p>
+      <h1 class="text-center">Responder al reclamo</h1>
+  <form #purchaseClaimForm="ngForm" (ngSubmit)="onSubmit(purchaseClaimForm)" class="w-50 mx-auto">
+    <div class="form-group mb-3">
+      <label for="answerClaim"><b>Respuesta al reclamo: </b></label>
+      <textarea id="answerClaim" required  placeholder="Ingrese su respuesta" minlength="1" name="answerClaim" class="form-control" #answerClaim="ngModel" [(ngModel)]="answer">
+      </textarea>
+        <span *ngIf="answerClaim.touched && !answerClaim.valid" class="text-danger">Ingrese una respuesta valida</span>
+    </div>  
+    <p>
+      <input type="submit" class="btn btn-primary mt-3" [disabled]="purchaseClaimForm.invalid" value="Enviar"/>
+    </p> 
+  </form>
+  
+  </div>
