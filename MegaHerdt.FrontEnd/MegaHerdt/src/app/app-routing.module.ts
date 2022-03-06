@@ -32,6 +32,7 @@ import { CreatePurchaseClaimComponent } from './components/purchase-claims/creat
 import { ClientPurchaseClaimsComponent } from './components/purchase-claims/client-purchase-claims/client-purchase-claims.component';
 import { ShowPurchaseClaimsComponent } from './components/purchase-claims/show-purchase-claims/show-purchase-claims.component';
 import { AnswerPurchaseClaimsComponent } from './components/purchase-claims/answer-purchase-claims/answer-purchase-claims.component';
+import { AdministrateTransportCompaniesComponent } from './components/transport-companies/administrate-transport-companies/administrate-transport-companies.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -102,7 +103,11 @@ const routes: Routes = [
     path: 'administrate/show-purchase-claims/answer-purchase-claim/:idPurchaseClaim', component: AnswerPurchaseClaimsComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
-
+  { 
+    path: 'administrate/administrate-transport-companies', component: AdministrateTransportCompaniesComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  
   //ADMIN ROUTES
   { 
     path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 

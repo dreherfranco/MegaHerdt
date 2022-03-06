@@ -81,6 +81,10 @@ import { ClientPurchaseClaimsComponent } from './components/purchase-claims/clie
 import { DialogShowPurchaseDetailComponent } from './components/purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
 import { ShowPurchaseClaimsComponent } from './components/purchase-claims/show-purchase-claims/show-purchase-claims.component';
 import { AnswerPurchaseClaimsComponent } from './components/purchase-claims/answer-purchase-claims/answer-purchase-claims.component';
+import { CreateTransportCompanyComponent } from './components/transport-companies/create-transport-company/create-transport-company.component';
+import { EditTransportCompaniesComponent } from './components/transport-companies/edit-transport-companies/edit-transport-companies.component';
+import { AdministrateTransportCompaniesComponent } from './components/transport-companies/administrate-transport-companies/administrate-transport-companies.component';
+import { DialogUpdateTransportCompanyComponent } from './components/transport-companies/edit-transport-companies/dialog-update-transport-company/dialog-update-transport-company.component';
 
 @NgModule({
   declarations: [
@@ -155,6 +159,10 @@ import { AnswerPurchaseClaimsComponent } from './components/purchase-claims/answ
     DialogShowPurchaseDetailComponent,
     ShowPurchaseClaimsComponent,
     AnswerPurchaseClaimsComponent,
+    CreateTransportCompanyComponent,
+    EditTransportCompaniesComponent,
+    AdministrateTransportCompaniesComponent,
+    DialogUpdateTransportCompanyComponent,
   ],
   imports: [
     BrowserModule,

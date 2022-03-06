@@ -45,6 +45,11 @@
         </a>   
     </div>
     <div class="row mb-3">
+        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-transport-companies']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
+            <i class="bi bi-list"></i> Administrar companias de transporte
+        </a>   
+    </div>
+    <div class="row mb-3">
         <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['show-reparation-claims']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
             <i class="bi bi-envelope-exclamation-fill"></i> Ver reclamos de reparaciones
         </a>   
