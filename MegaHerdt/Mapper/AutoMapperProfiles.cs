@@ -52,6 +52,7 @@ namespace MegaHerdt.API.Mapper
 
             #region Address
             CreateMap<AddressCreationDTO, Address>();
+            CreateMap<Address, AddressDTO>();
             #endregion Address
 
             #region Reparation

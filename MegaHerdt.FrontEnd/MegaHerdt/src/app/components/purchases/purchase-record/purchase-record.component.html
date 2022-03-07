@@ -28,10 +28,14 @@
                     </th>
                     <th>
                         <span *ngIf="purchase.shipment == null" class="text-secondary">
+                            Esta compra no posee envío
+                        </span>
+                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" class="text-secondary">
                             No se ha asignado un envío aún
                         </span>
-                        <span *ngIf="purchase.shipment != null" class="data-user">
+                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
                         direccion: {{purchase.shipment.address.streetName}}
+                        seguimiento: {{purchase.shipment.transportCompany.url}}
                         </span>
                     </th>
                     <th>
