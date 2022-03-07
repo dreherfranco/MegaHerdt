@@ -24,7 +24,7 @@ import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 export class ConfirmPurchasePaymentComponent implements OnInit {
 
   @ViewChild(StripeCardComponent) card: StripeCardComponent;
-  availablePlans: Array<PaymentPlan> = new Array<PaymentPlan>();
+  availablePlans: Array<PaymentPlan> = availablePlans;
   planSelected: PaymentPlan = new PaymentPlan(0, '', '');
   stripeToken: string = "";
   showCreateTokenForm: boolean = true;
@@ -36,6 +36,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
   hasShipment: boolean = false;
   isAddressSelected: boolean = false;
+  subscriptionActive: boolean = false;
 
   elementsOptions: StripeElementsOptions = {
     locale: 'es'
@@ -54,7 +55,6 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.purchaseAmount = this._cartService.total.getValue();
-    console.log(this.purchaseAmount)
   }
 
   createToken(): void {
@@ -63,11 +63,11 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
       .createToken(this.card.element, { name })
       .subscribe((result) => {
         if (result.token) {
-          console.log(result.token.id);
-          this.stripeToken = result.token.id;
+          this.stripeToken = result.token.id;        
           this.showCreateTokenForm = false;
-         this.showShipmentForm = true; 
-          this.createPaymentMethod();
+          this.showShipmentForm = true; 
+          this.hasShipment = false;
+          this.createPaymentMethod();         
           this.getUserAddresses();
         } else if (result.error) {
           console.log(result.error.message);
@@ -83,6 +83,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   selectIfHasShipment(hasShipment: boolean){
     this.hasShipment = hasShipment;
+    this.isAddressSelected = false;
   }
 
   getUserAddresses(){
@@ -104,6 +105,16 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this.showPlanSelectForm = true;
   }
 
+  shipmentFormOk(): boolean{
+    if(this.hasShipment && this.isAddressSelected){
+      return true;
+    }else if(!this.hasShipment){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   comeBackInShipmentForm(){
     this.showShipmentForm = false;
     this.showCreateTokenForm = true;
@@ -117,7 +128,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     }).subscribe({
       next: (result) => {
         if (result.error) {
-          console.log("error")
+          console.log(result.error)
         } else {
           this.handleInstallmentPlans();
         }
@@ -132,6 +143,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   comeBackInPlanSelectForm(){
     this.showPlanSelectForm = false;
     this.showShipmentForm = true;
+    this.planSelected = new PaymentPlan(0, '', '');
+    this.hasShipment = false;
   }
 
   confirmPayment() {
@@ -143,8 +156,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this._purchasePaymentService.confirmPayment(purchasePaymentConfirm, this._storageService.getTokenValue()).subscribe({
       next: (result) => {
         if(result.subscription.status == "active"){
-          //this.subscriptionActive = true;
-          console.log(result);
+          this.subscriptionActive = true;
+          this.showPlanSelectForm = false;
         }
       }
     });
@@ -157,5 +170,9 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
        purchasesArticles.push(cartArticles[i].purchaseArticle);
     }
     return purchasesArticles;
+  }
+
+  confirmPaymentFormOk(): boolean{
+      return this.planSelected.count != 0;
   }
 }

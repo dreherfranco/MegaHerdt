@@ -29,12 +29,12 @@
                     <h3 class="data-user">Seleccione una direccion</h3>
                     <p class="data-user" *ngFor="let address of userAddresses.addresses"><input class="form-check-input"
                             id="immediate-plan" type="radio" name="installment_plan" (click)="selectAddress(address)" />
-                        Calle: {{address.streetName}}
+                        {{address.streetName}} {{address.streetNumber}} - {{address.townName}}, {{address.province}}
                     </p>
                 </div>
             </form>
             <button class="btn btn-danger" (click)="comeBackInShipmentForm()">Regresar</button>
-            <button class="btn btn-primary" (click)="confirmShipment()">Siguiente</button>
+            <button class="btn btn-primary" (click)="confirmShipment()" [disabled]="!shipmentFormOk()">Siguiente</button>
         </div>
 
         <form id="installment-plan-form" *ngIf="showPlanSelectForm">
@@ -48,9 +48,14 @@
             </div>
             <button class="btn btn-danger" (click)="comeBackInPlanSelectForm()">Regresar</button>
             <button id="confirm-button" class="btn btn-warning" *ngIf="availablePlans.length > 0"
-                (click)="confirmPayment()">Confirmar pago</button>
+                (click)="confirmPayment()" [disabled]="!confirmPaymentFormOk()">Confirmar pago</button>
         </form>
+        
+        <div *ngIf="subscriptionActive" class="alert alert-success">
+            Pago efectuado correctamente
+        </div>
     </div>
+    
     <div class="w-25 ml-auto">
         <app-cart-detail></app-cart-detail>
     </div>
