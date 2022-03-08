@@ -1,0 +1,38 @@
+<h1 class="text-center">Asignar envio a la compra</h1>
+<form #shipmentForm="ngForm" (ngSubmit)="onSubmit(shipmentForm)" class="w-50 mx-auto">
+    <div class="form-group mb-3">
+        <label for="shipmentDate"><b>Fecha de envío: </b></label>
+        <input id="shipmentDate" name="shipmentDate" class="form-control" type="date" #shipmentDate="ngModel"
+            [(ngModel)]="purchase.shipment.shipmentDate" required>
+        <span *ngIf="shipmentDate.touched && !shipmentDate.valid" class="text-danger">Ingrese una fecha valida</span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="amount"><b>Monto: </b></label>
+        <input id="amount" name="amount" class="form-control" type="number" min="0" #amount="ngModel"
+            [(ngModel)]="purchase.shipment.amount" required>
+        <span *ngIf="amount.touched && !amount.valid" class="text-danger">Ingrese un numero valido</span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="transportCompany"><b>Empresa de transporte: </b></label>
+        <select class="form-select data-user" name="selectTransportCompany" [(ngModel)]="purchase.shipment.transportCompany">
+            <option class="data-user" name="transportCompany" *ngFor="let transportCompany of transportCompanies" [ngValue]="transportCompany">{{transportCompany.name}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="trackingNumber"><b>Numero de seguimiento: </b></label>
+        <input id="trackingNumber" name="trackingNumber" class="form-control" type="number" min="0" #trackingNumber="ngModel"
+            [(ngModel)]="purchase.shipment.trackingNumber" required>
+        <span *ngIf="trackingNumber.touched && !trackingNumber.valid" class="text-danger">Ingrese un numero valido</span>
+    </div>
+
+    <p>
+        <input type="submit" class="btn btn-primary mt-3" [disabled]="shipmentForm.invalid" value="Asignar envio" />
+    </p>
+
+    <p class="alert alert-success" *ngIf="statusSubmit == 'success' ">El envio se asigno correctamente a la compra</p>
+    <p class="alert alert-danger" *ngIf="statusSubmit == 'failed' ">El envio no se pudo asignar correctamente</p>
+</form>

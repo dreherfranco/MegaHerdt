@@ -33,6 +33,8 @@ import { ClientPurchaseClaimsComponent } from './components/purchase-claims/clie
 import { ShowPurchaseClaimsComponent } from './components/purchase-claims/show-purchase-claims/show-purchase-claims.component';
 import { AnswerPurchaseClaimsComponent } from './components/purchase-claims/answer-purchase-claims/answer-purchase-claims.component';
 import { AdministrateTransportCompaniesComponent } from './components/transport-companies/administrate-transport-companies/administrate-transport-companies.component';
+import { AdministratePurchasesShipmentsComponent } from './components/shipments/administrate-purchases-shipments/administrate-purchases-shipments.component';
+import { AssignPurchaseShipmentComponent } from './components/shipments/assign-purchase-shipment/assign-purchase-shipment.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -107,7 +109,15 @@ const routes: Routes = [
     path: 'administrate/administrate-transport-companies', component: AdministrateTransportCompaniesComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
-  
+  { 
+    path: 'administrate/administrate-purchases-shipments', component: AdministratePurchasesShipmentsComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/administrate-purchases-shipments/purchase/:purchaseId/assign-shipment', component: AssignPurchaseShipmentComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+
   //ADMIN ROUTES
   { 
     path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 

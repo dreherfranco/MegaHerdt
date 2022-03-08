@@ -5,9 +5,10 @@
             <thead>
                 <tr>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Email cliente</th>
                     <th scope="col">Articulos</th>
                     <th scope="col">Envio</th>
-                    <th scope="col">Reclamar</th>
+                    <th scope="col">Agregar Envio</th>
                 </tr>
             </thead>
             <tbody>
@@ -18,6 +19,9 @@
                 }">
                     <th>
                         <span class="data-user">{{purchase.date | date: 'dd/MM/yyyy'}} </span>
+                    </th>
+                    <th>
+                        <span class="data-user">{{purchase.client.email}} </span>
                     </th>
                     <th>
                         <span *ngIf="purchase.purchasesArticles.length == 0" class="text-secondary"> No contiene
@@ -33,13 +37,13 @@
                         <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" class="text-secondary">
                             No se ha asignado un envío aún
                         </span>
-                        <div *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
-                            <p class="d-flex row">Direccion: {{purchase.shipment.address.streetName}} {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}}, {{purchase.shipment.address.province}}</p> 
-                            <a href="{{purchase.shipment.transportCompany.url}}/{{purchase.shipment.trackingNumber}}"><p class="row"> URL de seguimiento </p> </a>
-                        </div>
+                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
+                        direccion: {{purchase.shipment.address.streetName}}
+                        seguimiento: {{purchase.shipment.transportCompany.url}}
+                        </span>
                     </th>
                     <th>
-                        <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']" > <i class="bi bi-exclamation-circle-fill" ></i> </button>
+                        <button class="btn btn-primary" [routerLink]="['purchase', purchase.id, 'assign-shipment']" > Agregar envio </button>
                     </th>
                 </tr>
             </tbody>

@@ -85,6 +85,9 @@ import { CreateTransportCompanyComponent } from './components/transport-companie
 import { EditTransportCompaniesComponent } from './components/transport-companies/edit-transport-companies/edit-transport-companies.component';
 import { AdministrateTransportCompaniesComponent } from './components/transport-companies/administrate-transport-companies/administrate-transport-companies.component';
 import { DialogUpdateTransportCompanyComponent } from './components/transport-companies/edit-transport-companies/dialog-update-transport-company/dialog-update-transport-company.component';
+import { ShowAllPurchasesComponent } from './components/purchases/show-all-purchases/show-all-purchases.component';
+import { AdministratePurchasesShipmentsComponent } from './components/shipments/administrate-purchases-shipments/administrate-purchases-shipments.component';
+import { AssignPurchaseShipmentComponent } from './components/shipments/assign-purchase-shipment/assign-purchase-shipment.component';
 
 @NgModule({
   declarations: [
@@ -163,6 +166,9 @@ import { DialogUpdateTransportCompanyComponent } from './components/transport-co
     EditTransportCompaniesComponent,
     AdministrateTransportCompaniesComponent,
     DialogUpdateTransportCompanyComponent,
+    ShowAllPurchasesComponent,
+    AdministratePurchasesShipmentsComponent,
+    AssignPurchaseShipmentComponent,
   ],
   imports: [
     BrowserModule,

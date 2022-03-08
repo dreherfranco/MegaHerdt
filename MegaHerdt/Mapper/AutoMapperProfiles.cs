@@ -52,7 +52,8 @@ namespace MegaHerdt.API.Mapper
 
             #region Address
             CreateMap<AddressCreationDTO, Address>();
-            CreateMap<Address, AddressDTO>();
+            CreateMap<Address, AddressDTO>()
+                .ReverseMap();
             #endregion Address
 
             #region Reparation
@@ -163,6 +164,7 @@ namespace MegaHerdt.API.Mapper
 
             #region Shipment
             CreateMap<Shipment, ShipmentDTO>();
+            CreateMap<ShipmentUpdateDTO, Shipment>();
             #endregion Shipment
 
         }

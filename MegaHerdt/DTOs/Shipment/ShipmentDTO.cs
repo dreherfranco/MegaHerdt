@@ -6,6 +6,7 @@ namespace MegaHerdt.API.DTOs.Shipment
     public class ShipmentDTO
     {
         public int Id { get; set; }
+        public int PurchaseId { get; set; }
         public float Amount { get; set; }
         public DateTime ShipmentDate { get; set; }
         public int TrackingNumber { get; set; }
