@@ -61,9 +61,13 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 articleCategoryDTO.Name = articleCategoryDTO.Name.ToUpper();
-                var articleCategory = this.Mapper.Map<ArticleCategory>(articleCategoryDTO);      
-                articleCategory = await articleCategoryService.Create(articleCategory);
-                return this.Mapper.Map<ArticleCategoryDTO>(articleCategory);
+                if (!this.articleCategoryService.Exist(articleCategoryDTO.Name))
+                {
+                    var articleCategory = this.Mapper.Map<ArticleCategory>(articleCategoryDTO);
+                    articleCategory = await articleCategoryService.Create(articleCategory);
+                    return this.Mapper.Map<ArticleCategoryDTO>(articleCategory);
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -77,13 +81,17 @@ namespace MegaHerdt.API.Controllers
         public async Task<ActionResult<bool>> Put([FromBody] ArticleCategoryDTO articleCategoryDTO)
         {
             try
-            {
-                Expression<Func<ArticleCategory, bool>> filter = x => x.Id == articleCategoryDTO.Id;
-                var articleCategoryDb = this.articleCategoryService.GetBy(filter).FirstOrDefault();
+            {            
                 articleCategoryDTO.Name = articleCategoryDTO.Name.ToUpper();
-                articleCategoryDb = this.Mapper.Map(articleCategoryDTO, articleCategoryDb);
-                await articleCategoryService.Update(articleCategoryDb);
-                return true;
+                if (!this.articleCategoryService.Exist(articleCategoryDTO.Name))
+                {
+                    Expression<Func<ArticleCategory, bool>> filter = x => x.Id == articleCategoryDTO.Id;
+                    var articleCategoryDb = this.articleCategoryService.GetBy(filter).FirstOrDefault();
+                    articleCategoryDb = this.Mapper.Map(articleCategoryDTO, articleCategoryDb);
+                    await articleCategoryService.Update(articleCategoryDb);
+                    return true;
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {

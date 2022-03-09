@@ -158,6 +158,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         if(result.subscription.status == "active"){
           this.subscriptionActive = true;
           this.showPlanSelectForm = false;
+          this._cartService.emptyCart();
         }
       }
     });

@@ -13,5 +13,13 @@ namespace MegaHerdt.Services.Services
 
         }
 
+        public bool IsValid(ArticleOffer offer)
+        {
+            if(offer.StartDate < offer.EndDate && offer.ArticleId != 0)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

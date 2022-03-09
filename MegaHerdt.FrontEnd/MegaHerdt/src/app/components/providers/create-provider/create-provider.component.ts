@@ -22,7 +22,7 @@ export class CreateProviderComponent implements OnInit {
   onSubmit(form: any){
     this._providerService.create(this.provider, this._storageService.getTokenValue()).subscribe(
         {
-          next: (response) => {
+          next: (response) => {          
             if (response.error) {
               this.statusSubmit = "failed";
             } else {

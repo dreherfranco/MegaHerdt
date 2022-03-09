@@ -61,8 +61,12 @@ namespace MegaHerdt.API.Controllers
             try
             {              
                 var articleOffer = this.Mapper.Map<ArticleOffer>(articleOfferDTO);
-                articleOffer = await articleOfferService.Create(articleOffer);
-                return this.Mapper.Map<ArticleOfferDTO>(articleOffer);
+                if (this.articleOfferService.IsValid(articleOffer))
+                {
+                    articleOffer = await articleOfferService.Create(articleOffer);
+                    return this.Mapper.Map<ArticleOfferDTO>(articleOffer);
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -75,11 +79,16 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                Expression<Func<ArticleOffer, bool>> filter = x => x.Id == articleOfferDTO.Id;
-                var articleOfferDb = this.articleOfferService.GetBy(filter).FirstOrDefault();            
-                articleOfferDb = this.Mapper.Map(articleOfferDTO, articleOfferDb);
-                await articleOfferService.Update(articleOfferDb);
-                return true;
+                var articleOffer = this.Mapper.Map<ArticleOffer>(articleOfferDTO);
+                if (this.articleOfferService.IsValid(articleOffer))
+                {
+                    Expression<Func<ArticleOffer, bool>> filter = x => x.Id == articleOfferDTO.Id;
+                    var articleOfferDb = this.articleOfferService.GetBy(filter).FirstOrDefault();
+                    articleOfferDb = this.Mapper.Map(articleOfferDTO, articleOfferDb);
+                    await articleOfferService.Update(articleOfferDb);
+                    return true;
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {

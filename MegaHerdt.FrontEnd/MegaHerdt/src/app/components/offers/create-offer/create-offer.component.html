@@ -24,7 +24,7 @@
 
     <div class="form-group mb-3">
         <label for="article"><b>Articulo: </b></label>
-        <select class="form-select data-user" name="selectArticle" [(ngModel)]="offer.articleId">
+        <select class="form-select data-user" name="selectArticle" [(ngModel)]="offer.articleId" required>
             <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">{{article.name}}
             </option>
         </select>

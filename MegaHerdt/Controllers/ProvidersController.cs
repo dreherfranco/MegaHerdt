@@ -59,10 +59,14 @@ namespace MegaHerdt.API.Controllers
         public async Task<ActionResult<ProviderDTO>> Post([FromBody] ProviderCreationDTO providerDTO)
         {
             try
-            {
+            {              
                 var provider = this.Mapper.Map<Provider>(providerDTO);
-                provider = await providerService.Create(provider);
-                return this.Mapper.Map<ProviderDTO>(provider);
+                if (!this.providerService.Exist(provider.Email))
+                {
+                    provider = await providerService.Create(provider);
+                    return this.Mapper.Map<ProviderDTO>(provider);
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -71,15 +75,19 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Put([FromBody] ProviderDTO providerDTO)
+        public async Task<ActionResult<bool>> Put([FromBody] ProviderDTO providerDTO)
         {
             try
             {
-                Expression<Func<Provider, bool>> filter = x => x.Id == providerDTO.Id;
-                var providerDb = this.providerService.GetBy(filter).FirstOrDefault();
-                providerDb = this.Mapper.Map(providerDTO, providerDb);
-                await providerService.Update(providerDb);
-                return NoContent();
+                if (!this.providerService.Exist(providerDTO.Email))
+                {
+                    Expression<Func<Provider, bool>> filter = x => x.Id == providerDTO.Id;
+                    var providerDb = this.providerService.GetBy(filter).FirstOrDefault();
+                    providerDb = this.Mapper.Map(providerDTO, providerDb);
+                    await providerService.Update(providerDb);
+                    return true;
+                }
+                throw new Exception("provider email already exists");
             }
             catch (Exception ex)
             {
@@ -88,14 +96,14 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult<Boolean>> Delete(int id)
         {
             try
             {
                 Expression<Func<Provider, bool>> filter = x => x.Id == id;
                 var provider = this.providerService.GetBy(filter).FirstOrDefault();
                 await providerService.Delete(provider);
-                return NoContent();
+                return true;
             }
             catch (Exception ex)
             {

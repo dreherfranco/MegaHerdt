@@ -44,7 +44,6 @@ export class EditTransportCompaniesComponent implements OnInit {
               console.log("no se pudieron cargar las empresas de transporte");
           } else {
             this.transportCompanies = response;
-            console.log(response)
           }
         },
         error: (err) => {

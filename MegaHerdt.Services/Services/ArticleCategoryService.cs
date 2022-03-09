@@ -16,5 +16,15 @@ namespace MegaHerdt.Services.Services
         {
 
         }
+
+        public bool Exist(string categoryName)
+        {
+            var category = this.helper.Get(x => x.Name.Equals(categoryName)).FirstOrDefault();
+            if (category == null)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

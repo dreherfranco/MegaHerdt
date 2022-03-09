@@ -85,6 +85,7 @@ export class StorageService {
   logout(): void{
     localStorage.removeItem('identity');
     localStorage.removeItem('token')
+    localStorage.removeItem('cart')
   }
 
   areExpectedRoles(expectedsRoles: Array<string>): boolean{

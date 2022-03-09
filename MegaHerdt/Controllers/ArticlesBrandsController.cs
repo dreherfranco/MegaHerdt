@@ -61,9 +61,13 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 articleBrandDTO.Name = articleBrandDTO.Name.ToUpper();
-                var articleBrand = this.Mapper.Map<ArticleBrand>(articleBrandDTO);
-                articleBrand = await articleBrandService.Create(articleBrand);
-                return this.Mapper.Map<ArticleBrandDTO>(articleBrand);
+                if (!this.articleBrandService.Exist(articleBrandDTO.Name))
+                {
+                    var articleBrand = this.Mapper.Map<ArticleBrand>(articleBrandDTO);
+                    articleBrand = await articleBrandService.Create(articleBrand);
+                    return this.Mapper.Map<ArticleBrandDTO>(articleBrand);
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -77,13 +81,17 @@ namespace MegaHerdt.API.Controllers
         public async Task<ActionResult<bool>> Put([FromBody] ArticleBrandDTO articleBrandDTO)
         {
             try
-            {
-                Expression<Func<ArticleBrand, bool>> filter = x => x.Id == articleBrandDTO.Id;
-                var articleBrandDb = this.articleBrandService.GetBy(filter).FirstOrDefault();
+            {            
                 articleBrandDTO.Name = articleBrandDTO.Name.ToUpper();
-                articleBrandDb = this.Mapper.Map(articleBrandDTO, articleBrandDb);
-                await articleBrandService.Update(articleBrandDb);
-                return true;
+                if (!this.articleBrandService.Exist(articleBrandDTO.Name))
+                {
+                    Expression<Func<ArticleBrand, bool>> filter = x => x.Id == articleBrandDTO.Id;
+                    var articleBrandDb = this.articleBrandService.GetBy(filter).FirstOrDefault();
+                    articleBrandDb = this.Mapper.Map(articleBrandDTO, articleBrandDb);
+                    await articleBrandService.Update(articleBrandDb);
+                    return true;
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {

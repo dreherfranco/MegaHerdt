@@ -30,12 +30,10 @@ export class CreateOfferComponent implements OnInit {
     this._offerService.create(this.offer, this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
-          console.log("error al guardar oferta");
           this.statusSubmit = "failed";
         }else{
-          console.log("la oferta se creo correctamente");
           this.statusSubmit = "success";
-          form.reset();
+          window.location.reload();
         }
 
       },
