@@ -38,14 +38,16 @@ export class CartService {
 
   setArticles(articles: Article[]) {
     let cartArticlesDetails = this.getCartFromStorage();
-    for (var i = 0; i < articles.length; i++) {
-      for (var j = 0; j < cartArticlesDetails.length; j++) {
-        if (articles[i].id == cartArticlesDetails[j].article.id) {
-          articles[i].stock = (articles[i].stock - cartArticlesDetails[j].purchaseArticle.articleQuantity);
+    if (cartArticlesDetails != null) {
+      for (var i = 0; i < articles.length; i++) {
+        for (var j = 0; j < cartArticlesDetails.length; j++) {
+          if (articles[i].id == cartArticlesDetails[j].article.id) {
+            articles[i].stock = (articles[i].stock - cartArticlesDetails[j].purchaseArticle.articleQuantity);
+          }
         }
       }
+      this.updateArticles(articles);
     }
-    this.updateArticles(articles);
   }
 
   updateCartArticlesDetails(cartArticlesDetails: Array<CartArticleDetail>) {

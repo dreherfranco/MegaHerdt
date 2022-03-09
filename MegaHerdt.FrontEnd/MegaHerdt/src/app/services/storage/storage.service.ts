@@ -2,6 +2,7 @@ import { UserToken } from 'src/app/models/UserToken/UserToken';
 import { Injectable } from '@angular/core';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { cloneDeep } from 'lodash';
+import { CartService } from '../cart/cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +66,6 @@ export class StorageService {
   isAuthenticated(): boolean{
     let identity = localStorage.getItem('identity');
    
-
     if(identity != null && !this.isTokenExpired())
       return true;
     else
@@ -85,7 +85,6 @@ export class StorageService {
   logout(): void{
     localStorage.removeItem('identity');
     localStorage.removeItem('token')
-    localStorage.removeItem('cart')
   }
 
   areExpectedRoles(expectedsRoles: Array<string>): boolean{
