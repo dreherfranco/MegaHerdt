@@ -88,6 +88,7 @@ import { DialogUpdateTransportCompanyComponent } from './components/transport-co
 import { ShowAllPurchasesComponent } from './components/purchases/show-all-purchases/show-all-purchases.component';
 import { AdministratePurchasesShipmentsComponent } from './components/shipments/administrate-purchases-shipments/administrate-purchases-shipments.component';
 import { AssignPurchaseShipmentComponent } from './components/shipments/assign-purchase-shipment/assign-purchase-shipment.component';
+import { UserChangePasswordComponent } from './components/users/user-change-password/user-change-password.component';
 
 @NgModule({
   declarations: [
@@ -169,6 +170,7 @@ import { AssignPurchaseShipmentComponent } from './components/shipments/assign-p
     ShowAllPurchasesComponent,
     AdministratePurchasesShipmentsComponent,
     AssignPurchaseShipmentComponent,
+    UserChangePasswordComponent,
   ],
   imports: [
     BrowserModule,

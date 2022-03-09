@@ -35,6 +35,7 @@ import { AnswerPurchaseClaimsComponent } from './components/purchase-claims/answ
 import { AdministrateTransportCompaniesComponent } from './components/transport-companies/administrate-transport-companies/administrate-transport-companies.component';
 import { AdministratePurchasesShipmentsComponent } from './components/shipments/administrate-purchases-shipments/administrate-purchases-shipments.component';
 import { AssignPurchaseShipmentComponent } from './components/shipments/assign-purchase-shipment/assign-purchase-shipment.component';
+import { UserChangePasswordComponent } from './components/users/user-change-password/user-change-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings', component: UserSettingsComponent, canActivate: [AuthGuard ]},
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },
+  { path: 'user/settings/change-password', component: UserChangePasswordComponent, canActivate: [AuthGuard ]},
   { path: 'reparations/record', component: ReparationRecordComponent, canActivate: [AuthGuard] },
   { path: 'reparations/record/reparation/:id/claim', component: CreateReparationClaimComponent, canActivate: [AuthGuard] },
   { path: 'reparations/record/reparation/:id/payment', component: ConfirmReparationPaymentComponent, canActivate: [AuthGuard] },

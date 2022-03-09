@@ -121,9 +121,7 @@ namespace MegaHerdt.API.Controllers
             {
                 var userDb = this.UserService.GetByEmail(userUpdateDTO.Email);
                 userUpdateDTO.Password = hashService.Hash(userUpdateDTO.Password);
-                if (userUpdateDTO.Password == userDb.Password 
-                    && 
-                    UserValidations.UserEmailIsOk(userUpdateDTO.Email, HttpContext))
+                if (userUpdateDTO.Password == userDb.Password && UserValidations.UserEmailIsOk(userUpdateDTO.Email, HttpContext))
                 {
                     var user = Mapper.Map(userUpdateDTO, userDb);
                     user.UserName = userUpdateDTO.Email;
@@ -159,6 +157,28 @@ namespace MegaHerdt.API.Controllers
                     return true;
                 }
                 throw new Exception("User email is incorrect");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("change-password")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<UserTokenDTO>> ChangePassword([FromBody] UserChangePasswordDTO userChangePasswordDTO)
+        {
+            try
+            {
+                if (UserValidations.UserEmailIsOk(userChangePasswordDTO.Email, HttpContext))
+                {
+                    var currentPassword = hashService.Hash(userChangePasswordDTO.CurrentPassword);
+                    var newPassword = hashService.Hash(userChangePasswordDTO.NewPassword);
+
+                    var userToken = await this.UserService.ChangePassword(userChangePasswordDTO.Email, currentPassword, newPassword, Configuration["jwt:key"]);
+                    return Mapper.Map<UserTokenDTO>(userToken);                    
+                }
+                return BadRequest();
             }
             catch (Exception ex)
             {

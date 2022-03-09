@@ -62,6 +62,17 @@ namespace MegaHerdt.Helpers.Helpers
             throw new Exception("User doesn't exists");
         }
 
+        public async Task<UserToken> ChangePassword(string userEmail, string currentPassword,string newPassword, string jwtKey)
+        {
+            var userDb = await userManager.FindByEmailAsync(userEmail);
+            if (userDb != null)
+            {
+                await this.userManager.ChangePasswordAsync(userDb, currentPassword, newPassword);
+                return await BuildToken(userDb, jwtKey);
+            }
+            throw new Exception("User doesn't exists");
+        }
+
         public async Task UserDelete(string userEmail)
         {
             var userDb = await userManager.FindByEmailAsync(userEmail);

@@ -39,6 +39,11 @@ namespace MegaHerdt.Services.Services
         {
             return await AuthHelper.UserUpdate(user, jwtKey);
         }
+        public async Task<UserToken> ChangePassword(string userEmail, string currentPassword, string newPassword, string jwtKey)
+        {
+            return await this.AuthHelper.ChangePassword(userEmail, currentPassword, newPassword, jwtKey);
+        }
+
         public async Task UserDelete(string userEmail)
         {
             await AuthHelper.UserDelete(userEmail);
@@ -48,6 +53,6 @@ namespace MegaHerdt.Services.Services
         {
             return await this.AuthHelper.GetUserRoles(userEmail);
         }
-
+       
     }
 }
