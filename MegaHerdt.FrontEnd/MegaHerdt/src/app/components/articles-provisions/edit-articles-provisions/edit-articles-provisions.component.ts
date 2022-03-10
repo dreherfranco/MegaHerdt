@@ -9,6 +9,7 @@ import { ArticleProvisionService } from 'src/app/services/articles-provisions/ar
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateArticleProvisionComponent } from './dialog-update-article-provision/dialog-update-article-provision.component';
 
 @Component({
@@ -36,7 +37,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this.loadArticlesProviders();
   }
 
-  openDialog(articleProvider: ArticleProvider){     
+  openDialogUpdate(articleProvider: ArticleProvider){     
       const dialogRef = this.dialog.open(DialogUpdateArticleProvisionComponent,
         {
           disableClose:true,
@@ -72,7 +73,21 @@ export class EditArticlesProvisionsComponent implements OnInit {
     });
   }
 
-  deleteArticleProvider(id:number){
+  openDialogDelete(articleProviderId: number){     
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: articleProviderId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteArticleProvider(result);
+      }
+    });
+}
+
+  deleteArticleProvider(id: number){
     this._articleProvisionService.delete(id, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {

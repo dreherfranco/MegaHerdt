@@ -13,6 +13,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateReparationComponent } from './dialog-update-reparation/dialog-update-reparation.component';
 
 @Component({
@@ -48,7 +49,7 @@ export class EditReparationsComponent implements OnInit {
     this.loadReparationsStates();
   }
 
-  openDialog(reparation: Reparation){
+  openDialogUpdate(reparation: Reparation){
     const dialogRef = this.dialog.open(DialogUpdateReparationComponent,
       {
         disableClose:true,
@@ -58,6 +59,20 @@ export class EditReparationsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Reparation) => {
       if(result != undefined){
         this.update(result);
+      }
+    });
+  }
+
+  openDialogDelete(reparationId: number){
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: reparationId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteReparation(result);
       }
     });
   }

@@ -4,6 +4,7 @@ import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateProviderComponent } from './dialog-update-provider/dialog-update-provider.component';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @Component({
   selector: 'app-edit-providers',
@@ -24,7 +25,7 @@ export class EditProvidersComponent implements OnInit {
     this.loadProviders();
   }
 
-  openDialog(provider: Provider) {
+  openDialogUpdate(provider: Provider) {
     const dialogRef = this.dialog.open(DialogUpdateProviderComponent,
       {
         disableClose:true,
@@ -51,6 +52,20 @@ export class EditProvidersComponent implements OnInit {
           this.statusSubmit = "failed";
           console.log(err)
         }
+    });
+  }
+
+  openDialogDelete(providerId: number) {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: providerId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteProvider(result);
+      }
     });
   }
 

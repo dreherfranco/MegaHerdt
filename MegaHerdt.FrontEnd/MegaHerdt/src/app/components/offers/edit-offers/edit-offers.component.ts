@@ -5,6 +5,7 @@ import { ArticleOffer } from 'src/app/models/ArticleOffer/ArticleOffer';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { OfferService } from 'src/app/services/offers/offer.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateOfferComponent } from './dialog-update-offer/dialog-update-offer.component';
 
 @Component({
@@ -30,7 +31,7 @@ export class EditOffersComponent implements OnInit {
     this.loadArticles();
   }
 
-  openDialog(offer: ArticleOffer){
+  openDialogUpdate(offer: ArticleOffer){
     const dialogRef = this.dialog.open(DialogUpdateOfferComponent,
       {
         disableClose:true,
@@ -40,6 +41,20 @@ export class EditOffersComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: ArticleOffer) => {
       if(result != undefined){
         this.updateOffer(result);
+      }
+    });
+  }
+
+  openDialogDelete(offerId: number){
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: offerId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteOffer(result);
       }
     });
   }

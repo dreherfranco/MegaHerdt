@@ -4,6 +4,7 @@ import { BrandService } from 'src/app/services/brand/brand.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateBrandComponent } from './dialog-update-brand/dialog-update-brand.component';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @Component({
   selector: 'app-edit-brands',
@@ -24,7 +25,7 @@ export class EditBrandsComponent implements OnInit {
     this.loadBrands();
   }
 
-  openDialog(brand: Brand) {
+  openDialogUpdate(brand: Brand) {
     const dialogRef = this.dialog.open(DialogUpdateBrandComponent,
       {
         disableClose:true,
@@ -51,6 +52,20 @@ export class EditBrandsComponent implements OnInit {
           this.statusSubmit = "failed";
           console.log(err)
         }
+    });
+  }
+
+  openDialogDelete(brandId: number) {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: brandId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteBrand(result);
+      }
     });
   }
 

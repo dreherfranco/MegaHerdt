@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
 import { ReparationStateService } from 'src/app/services/reparation-states/reparation-state.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateReparationStateComponent } from './dialog-update-reparation-state/dialog-update-reparation-state.component';
 
 @Component({
@@ -25,7 +26,7 @@ export class EditReparationStatesComponent implements OnInit {
     this.loadReparationsStates();
   }
 
-  openDialog(reparationState: ReparationState) {
+  openDialogUpdate(reparationState: ReparationState) {
     const dialogRef = this.dialog.open(DialogUpdateReparationStateComponent,
       {
         disableClose:true,
@@ -51,6 +52,20 @@ export class EditReparationStatesComponent implements OnInit {
         error: (err) => {
           console.log(err)
         }
+    });
+  }
+
+  openDialogDelete(reparationStateId: number) {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: reparationStateId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteReparationState(result);
+      }
     });
   }
 

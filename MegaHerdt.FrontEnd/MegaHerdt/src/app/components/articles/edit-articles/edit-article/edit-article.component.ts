@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { Article } from 'src/app/models/Article/Article';
 import { ArticleUpdate } from 'src/app/models/Article/ArticleUpdate';
 import { ArticleUpdateImage } from 'src/app/models/Article/ArticleUpdateImage';
@@ -83,7 +84,7 @@ export class EditArticleComponent implements OnInit {
     this._articleService.sendFormData(articleImage,"update-image")
   }
 
-  openDialog() {
+  openDialogUpdate() {
     const dialogRef = this.dialog.open(DialogUpdateArticleComponent,
       {
         disableClose:true,
@@ -113,6 +114,20 @@ export class EditArticleComponent implements OnInit {
     });
   }
 
+   openDialogDelete() {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: this.article
+      });
+
+    dialogRef.afterClosed().subscribe((result: Article) => {
+      if(result != undefined){
+        this.delete();
+      }
+    });
+  }
+  
   delete(){
     this._articleService.delete(this.article.id, this._storageService.getTokenValue()).subscribe({
       next: (response) => {

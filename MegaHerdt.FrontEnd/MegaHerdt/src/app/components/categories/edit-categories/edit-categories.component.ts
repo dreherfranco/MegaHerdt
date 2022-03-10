@@ -4,6 +4,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateCategoryComponent } from './dialog-update-category/dialog-update-category.component';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @Component({
   selector: 'app-edit-categories',
@@ -24,7 +25,7 @@ export class EditCategoriesComponent implements OnInit {
     this.loadCategories();
   }
 
-  openDialog(category: Category) {
+  openDialogUpdate(category: Category) {
     const dialogRef = this.dialog.open(DialogUpdateCategoryComponent,
       {
         disableClose:true,
@@ -51,6 +52,20 @@ export class EditCategoriesComponent implements OnInit {
           this.statusSubmit = "failed";
           console.log(err)
         }
+    });
+  }
+
+  openDialogDelete(categoryId: number) {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: categoryId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteCategory(result);
+      }
     });
   }
 

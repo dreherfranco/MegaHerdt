@@ -20,8 +20,8 @@
           <th scope="row" class="data-user">{{ i }}</th>
           <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" [(ngModel)]="transportCompany.name" ></td>
           <td><input class="form-control data-user" [(ngModel)]="transportCompany.url" ></td>
-          <td><button class="btn btn-success"  (click)="openDialog(transportCompany)"> <i class="bi bi-pencil-square"></i> </button></td>
-          <td><button class="btn btn-danger" (click)="deleteBrand(transportCompany.id)"> <i class="bi bi-trash-fill"></i> </button></td>
+          <td><button class="btn btn-success"  (click)="openDialogUpdate(transportCompany)"> <i class="bi bi-pencil-square"></i> </button></td>
+          <td><button class="btn btn-danger" (click)="openDialogDelete(transportCompany.id)"> <i class="bi bi-trash-fill"></i> </button></td>
         </tr>
       </tbody>
     </table>

@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TransportCompany } from 'src/app/models/TransportCompany/TransportCompany';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { TransportCompanyService } from 'src/app/services/transport-companies/transport-company.service';
+import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateTransportCompanyComponent } from './dialog-update-transport-company/dialog-update-transport-company.component';
 
 @Component({
@@ -23,7 +24,7 @@ export class EditTransportCompaniesComponent implements OnInit {
     this.loadTransportCompanies();
   }
 
-  openDialog(transportCompany: TransportCompany) {
+  openDialogUpdate(transportCompany: TransportCompany) {
     const dialogRef = this.dialog.open(DialogUpdateTransportCompanyComponent,
       {
         disableClose:true,
@@ -50,6 +51,20 @@ export class EditTransportCompaniesComponent implements OnInit {
           this.statusSubmit = "failed";
           console.log(err)
         }
+    });
+  }
+
+  openDialogDelete(transportCompanyId: number) {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: transportCompanyId
+      });
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result != undefined){
+        this.deleteBrand(result);
+      }
     });
   }
 

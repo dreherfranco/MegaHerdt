@@ -50,12 +50,12 @@
                     <input id="voucher" name="voucher" class="form-control" type="file" (change)="onChange($event, articleProvider)">
                 </td>
                 <td>
-                    <button class="btn btn-success" (click)="openDialog(articleProvider)">
+                    <button class="btn btn-success" (click)="openDialogUpdate(articleProvider)">
                         <i class="bi bi-pencil-square"></i>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-danger" (click)="deleteArticleProvider(articleProvider.id)">
+                    <button class="btn btn-danger" (click)="openDialogDelete(articleProvider.id)">
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>

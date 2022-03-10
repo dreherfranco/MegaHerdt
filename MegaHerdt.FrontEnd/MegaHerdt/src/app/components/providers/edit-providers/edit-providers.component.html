@@ -23,9 +23,9 @@
             [(ngModel)]="provider.phone"></td>
         <td><input class="form-control data-user" required email type="email" value="{{provider.email}}"
             [(ngModel)]="provider.email"></td>
-        <td><button class="btn btn-success" (click)="openDialog(provider)"> <i class="bi bi-pencil-square"></i>
+        <td><button class="btn btn-success" (click)="openDialogUpdate(provider)"> <i class="bi bi-pencil-square"></i>
           </button></td>
-        <td><button class="btn btn-danger" (click)="deleteProvider(provider.id)"> <i class="bi bi-trash-fill"></i>
+        <td><button class="btn btn-danger" (click)="openDialogDelete(provider.id)"> <i class="bi bi-trash-fill"></i>
           </button></td>
       </tr>
     </tbody>

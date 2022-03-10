@@ -89,6 +89,7 @@ import { ShowAllPurchasesComponent } from './components/purchases/show-all-purch
 import { AdministratePurchasesShipmentsComponent } from './components/shipments/administrate-purchases-shipments/administrate-purchases-shipments.component';
 import { AssignPurchaseShipmentComponent } from './components/shipments/assign-purchase-shipment/assign-purchase-shipment.component';
 import { UserChangePasswordComponent } from './components/users/user-change-password/user-change-password.component';
+import { DialogConfirmDeleteComponent } from './components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @NgModule({
   declarations: [
@@ -171,6 +172,7 @@ import { UserChangePasswordComponent } from './components/users/user-change-pass
     AdministratePurchasesShipmentsComponent,
     AssignPurchaseShipmentComponent,
     UserChangePasswordComponent,
+    DialogConfirmDeleteComponent,
   ],
   imports: [
     BrowserModule,

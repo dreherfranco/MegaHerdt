@@ -19,8 +19,8 @@
       <tr *ngFor="let category of categories; let i = index">
         <th scope="row" class="data-user">{{ i }}</th>
         <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{category.name}}" [(ngModel)]="category.name" ></td>
-        <td><button class="btn btn-success"  (click)="openDialog(category)"> <i class="bi bi-pencil-square"></i> </button></td>
-        <td><button class="btn btn-danger" (click)="deleteCategory(category.id)"> <i class="bi bi-trash-fill"></i> </button></td>
+        <td><button class="btn btn-success"  (click)="openDialogUpdate(category)"> <i class="bi bi-pencil-square"></i> </button></td>
+        <td><button class="btn btn-danger" (click)="openDialogDelete(category.id)"> <i class="bi bi-trash-fill"></i> </button></td>
       </tr>
     </tbody>
   </table>
