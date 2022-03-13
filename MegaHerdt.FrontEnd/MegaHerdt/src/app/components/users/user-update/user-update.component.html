@@ -1,73 +1,82 @@
 <div class="container-fluid row" *ngIf="authenticated()">
-    <div class="col-md-6">
-      <h2 >Actualizar datos</h2>
-      <hr class="height-hr-3"><br>
-      <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
-        <div class="container-form">
-  
-          <div class="form-group mb-3">
-            <label for="email"><b>Email:</b></label>
-            <input class="form-control" type="email" name="email" [email]="true" #email="ngModel" [(ngModel)]="user.email"
+  <div class="col-md-6">
+    <h2>Actualizar datos</h2>
+    <hr class="height-hr-3"><br>
+    <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
+      <div class="container-form">
+
+        <div class="form-group mb-3">
+          <label for="email"><b>Email:</b></label>
+          <input class="form-control" type="email" name="email" [email]="true" #email="ngModel" [(ngModel)]="user.email"
+            required />
+          <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="dni"><b>DNI:</b></label>
+          <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required />
+          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido</span>
+        </div>
+
+        <div class="row">
+          <div class="form-group col-sm-6 mb-3">
+            <label for="name"><b>Nombre:</b></label>
+            <input class="form-control" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required />
+            <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
+          </div>
+
+          <div class="form-group col-sm-6 mb-3">
+            <label for="surname"><b>Apellido:</b></label>
+            <input class="form-control" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname"
               required />
-            <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
+            <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
           </div>
-  
-          <div class="form-group mb-3">
-            <label for="dni"><b>DNI:</b></label>
-            <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required />
-            <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido</span>
-          </div>
-  
-          <div class="row">
-            <div class="form-group col-sm-6 mb-3">
-              <label for="name"><b>Nombre:</b></label>
-              <input class="form-control" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required />
-              <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
-            </div>
-  
-            <div class="form-group col-sm-6 mb-3">
-              <label for="surname"><b>Apellido:</b></label>
-              <input class="form-control" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname"
-                required />
-              <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
-            </div>
-          </div>
-          <div>
-            <hr>
+        </div>
+        <div>
+          <div *ngIf="user.phones.length > 0">
+          <hr>          
             <h2 class="text-center">Telefonos cargados</h2>
             <div *ngFor="let phone of user.phones; let i = index;">
-             <p> <app-phone-update [phone]="phone"></app-phone-update>  
-              <button (click)="removePhone(i)" class="btn btn-danger mt-3 mb-3">
-                Borrar
-              </button></p>
+              <p>
+                <app-phone-update [phone]="phone"></app-phone-update>
+                <button (click)="removePhone(i)" class="btn btn-danger mt-3 mb-3">
+                  Borrar
+                </button>
+              </p>
             </div>
           </div>
         </div>
-  
         <hr class="height-hr-3">
+      </div>
+
+      <div *ngIf="user.addresses.length > 0">
         <h2 class="text-center">Direcciones cargadas</h2>
-        <div *ngFor="let address of user.addresses" >
+        <div *ngFor="let address of user.addresses; let i = index;">
           <app-address-update [address]="address"></app-address-update>
+          <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
+            Borrar direccion
+          </button>
         </div>
-  
+
         <hr class="height-hr-3">
-        <h3 class="alert alert-warning">Ingrese su contraseña antes de actualizar</h3>
-        <div class="form-group mb-3">
-          <label for="password"><b>Password:</b></label>
-          <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
-            required minlength="5" />
-          <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
-        </div>
-        <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!updateForm.form.valid" />
-        
-        <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger mt-3">Error al actualizar</p>
-        <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizo correctamente</p>
-      </form>
-  
-    </div>
-    <div class="col-md-6">
-      <h2 class="text-center">Agregar telefonos</h2>
-      <hr class="height-hr-3">
+      </div>
+      <h3 class="alert alert-warning">Ingrese su contraseña antes de actualizar</h3>
+      <div class="form-group mb-3">
+        <label for="password"><b>Password:</b></label>
+        <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
+          required minlength="5" />
+        <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
+      </div>
+      <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!updateForm.form.valid" />
+
+      <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger mt-3">Error al actualizar</p>
+      <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizo correctamente</p>
+    </form>
+
+  </div>
+  <div class="col-md-6">
+    <h2 class="text-center">Agregar telefonos</h2>
+    <hr class="height-hr-3">
     <input class="form-control" type="text" name="phoneNumber" #number="ngModel" [(ngModel)]="phoneNumber"
       pattern="(^[0-9]+)" minlength="5" />
     <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono valido</span>
@@ -80,5 +89,5 @@
     <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
     </app-address-creation>
 
-    </div>
   </div>
+</div>

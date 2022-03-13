@@ -30,7 +30,7 @@ export class ArticleItemComponent implements OnInit {
     return article;
   }
 
-  isOnOffer(article: Article):boolean{
+  isOnOffer(article: Article): boolean{
     return article.unitValueWithOffer < article.unitValue;
   }
 

@@ -8,10 +8,11 @@ namespace MegaHerdt.Helpers.Helpers
     public class PurchasePaymentHelper
     {
         private readonly Repository<Purchase> purchaseRepository;
-
-        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository)
+        private readonly Repository<Article> articleRepository;
+        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository, Repository<Article> articleRepository)
         {
             this.purchaseRepository = purchaseRepository;
+            this.articleRepository = articleRepository;
         }
 
         public async Task<Subscription> AddPayment(PurchasePaymentData purchasePaymentData)
@@ -24,6 +25,7 @@ namespace MegaHerdt.Helpers.Helpers
             if (subscription.Status == "active")
             {
                 var purchase = await this.CreatePurchase(purchasePaymentData);
+                await this.UpdateArticlesStock(purchasePaymentData.PurchaseArticles);
                 return subscription;
             }
             else
@@ -60,6 +62,15 @@ namespace MegaHerdt.Helpers.Helpers
             return await this.purchaseRepository.Add(purchase);
         }
 
+        private async Task UpdateArticlesStock(List<PurchaseArticleData> purchaseArticles)
+        {
+            foreach(var purchaseArticle in purchaseArticles)
+            {
+                var article = this.articleRepository.Get(x => x.Id == purchaseArticle.ArticleId).FirstOrDefault();
+                article.DiscountStock(purchaseArticle.ArticleQuantity);
+                await this.articleRepository.Update(article);
+            }
+        }
         private async Task<Customer> CreateCustomer(string customerEmail, string stripeToken)
         {
             var customerService = new CustomerService();

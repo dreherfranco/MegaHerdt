@@ -19,6 +19,7 @@ export class CreateArticleComponent implements OnInit {
   brands: Array<Brand>;
   categoryId: number;
   brandId: number;
+  imageOk: boolean = false;
 
   constructor(private _storageService: StorageService, private _articleService: ArticleService,
     private _categoryService: CategoryService, private _brandService: BrandService) {
@@ -86,6 +87,11 @@ export class CreateArticleComponent implements OnInit {
   }
 
   onChange(fileInput: any){
-    this.article.image = <File>fileInput.target.files[0]
+    this.article.image = <File>fileInput.target.files[0];
+    this.imageOk = true;
+  }
+
+  disabledForm(articleForm:any): boolean{
+    return articleForm.invalid || !this.imageOk || this.categoryId == 0 || this.brandId == 0;
   }
 }

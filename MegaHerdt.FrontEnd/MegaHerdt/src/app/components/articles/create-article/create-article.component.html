@@ -45,7 +45,7 @@
         </select>
     </div>
     <p>
-        <input type="submit" class="btn btn-primary mt-3" [disabled]="articleForm.invalid" value="Crear" />
+        <input type="submit" class="btn btn-primary mt-3" [disabled]="disabledForm(articleForm)" value="Crear" />
     </p>
     <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
         El articulo se creo correctamente

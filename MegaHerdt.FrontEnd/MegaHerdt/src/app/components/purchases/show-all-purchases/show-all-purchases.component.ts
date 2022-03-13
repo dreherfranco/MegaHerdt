@@ -25,6 +25,7 @@ export class ShowAllPurchasesComponent implements OnInit {
     this._purchaseService.getAll(this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
         this.purchases = result;
+        console.log(result)
       },
       error: (err) => {
         console.log(err);

@@ -1,7 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Article } from 'src/app/models/Article/Article';
+import { Component, OnInit } from '@angular/core';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
-import { ArticleService } from 'src/app/services/articles/article.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
@@ -12,7 +10,7 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class CartComponent implements OnInit {
   cartArticles: Array<CartArticleDetail>;
   total: number;
-  
+
   constructor(private _cartService: CartService) {
     this.cartArticles = new Array<CartArticleDetail>();
     this.total = 0;
