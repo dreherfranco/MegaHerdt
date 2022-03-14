@@ -26,6 +26,7 @@ export class PurchaseRecordComponent implements OnInit {
     var identity: UserDetail = this._storageService.getIdentity();
     this._purchaseService.getClientPurchases(identity.id, this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
+        console.log(result)
         this.purchases = result;
       },
       error: (err) => {

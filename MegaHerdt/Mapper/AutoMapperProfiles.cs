@@ -78,6 +78,7 @@ namespace MegaHerdt.API.Mapper
                 .ReverseMap();
             CreateMap<ReparationClaimCreationDTO, ReparationClaim>();
             CreateMap<ReparationClaimUpdateDTO, ReparationClaim>();
+            CreateMap<ReparationClaim, ReparationClaimDetailDTO>();
             #endregion ReparationClaim
 
             #region Bill
@@ -133,6 +134,7 @@ namespace MegaHerdt.API.Mapper
 
             #region ReparationPayment
             CreateMap<ReparationPaymentConfirmDTO, ReparationPaymentData>();
+            CreateMap<Payment, ReparationPaymentDTO>();
             #endregion ReparationPayment
 
             #region Purchase
@@ -145,6 +147,7 @@ namespace MegaHerdt.API.Mapper
                .ReverseMap();
             CreateMap<PurchaseClaimCreationDTO, PurchaseClaim>();
             CreateMap<PurchaseClaimUpdateDTO, PurchaseClaim>();
+            CreateMap<PurchaseClaim, PurchaseClaimDetailDTO>();
             #endregion PurchaseClaim
 
             #region PurchaseArticle

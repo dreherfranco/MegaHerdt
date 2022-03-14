@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.API.DTOs.Bill;
 using MegaHerdt.API.DTOs.ReparationArticle;
+using MegaHerdt.API.DTOs.ReparationClaim;
 using MegaHerdt.API.DTOs.ReparationState;
 using MegaHerdt.API.DTOs.User;
 
@@ -15,5 +16,6 @@ namespace MegaHerdt.API.DTOs.Reparation
         public ReparationStateDTO ReparationState { get; set; }
         public List<ReparationArticleDTO> ReparationsArticles { get; set; }
         public BillReparationDTO Bill { get; set; }
+        public List<ReparationClaimDetailDTO> ReparationsClaims { get; set; }
     }
 }

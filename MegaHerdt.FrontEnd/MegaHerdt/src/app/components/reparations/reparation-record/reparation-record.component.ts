@@ -13,7 +13,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ReparationRecordComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
-  
+
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService) { 
     this.reparations = new Array<Reparation>();
@@ -32,6 +32,7 @@ export class ReparationRecordComponent implements OnInit {
           console.log("error al obtener reparaciones");
         } else {
           this.reparations = response;
+          console.log(response)
         }
       },
       error: (err) => {

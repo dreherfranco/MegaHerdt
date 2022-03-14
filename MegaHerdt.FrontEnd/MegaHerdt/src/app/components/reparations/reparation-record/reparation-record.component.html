@@ -51,19 +51,26 @@
                         <span class="data-user">{{ reparation.bill.type }}</span>
                     </th>
                     <th>
-                       <button class="btn btn-danger" [routerLink]="['reparation', reparation.id, 'claim']" > <i class="bi bi-exclamation-circle-fill" ></i> </button>
+                        <button class="btn btn-danger w-25" [routerLink]="['reparation', reparation.id, 'claim']"> <i
+                                class="bi bi-exclamation-circle-fill"></i> </button>
+                        <div class="alert alert-warning mt-1" role="alert" *ngIf="reparation.reparationsClaims.length > 0">
+                            <i class="bi bi-exclamation-diamond"></i> 
+                            {{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación
+                        </div>
                     </th>
                     <th>
-                        <button class="btn btn-primary" [routerLink]="['reparation', reparation.id, 'payment']" > Pagar </button>
-                     </th>
+                        <p class="alert alert-warning" *ngIf="reparation.bill.payments.length > 0">
+                            <i class="bi bi-exclamation-diamond"></i>
+                            Ya existen pagos de esta reparación
+                        </p>
+                        <button *ngIf="reparation.bill.payments.length == 0" class="btn btn-primary"
+                            [routerLink]="['reparation', reparation.id, 'payment']"> Pagar </button>
+                    </th>
                 </tr>
             </tbody>
         </table>
-        <pagination-controls class="text-center data-user"
-        (pageChange)="this.paginate.page = $event" 
-        previousLabel="Anterior" 
-        nextLabel="Siguiente"
-        *ngIf="reparations.length > 6">
+        <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 6">
         </pagination-controls>
     </div>
 </div>

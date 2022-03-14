@@ -40,6 +40,10 @@
                     </th>
                     <th>
                         <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']" > <i class="bi bi-exclamation-circle-fill" ></i> </button>
+                        <div class="alert alert-warning mt-1" role="alert" *ngIf="purchase.purchasesClaims.length > 0">
+                            <i class="bi bi-exclamation-diamond"></i> 
+                            {{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta reparación
+                        </div>
                     </th>
                 </tr>
             </tbody>

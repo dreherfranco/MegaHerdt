@@ -12,5 +12,6 @@ namespace MegaHerdt.API.DTOs.Purchase
         public UserDetailDTO Client { get; set; }
         public ShipmentDTO? Shipment { get; set; }
         public List<PurchaseArticleDTO> PurchasesArticles { get; set; }
+        public List<PurchaseClaimDetailDTO> PurchasesClaims { get; set; }
     }
 }

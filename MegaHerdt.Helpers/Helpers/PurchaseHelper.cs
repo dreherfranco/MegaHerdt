@@ -18,6 +18,7 @@ namespace MegaHerdt.Helpers.Helpers
         {
             return repository.Get(filter)
                 .Include(x => x.Client)
+                .Include(x=> x.PurchasesClaims)
                 .Include(x => x.PurchasesArticles)
                 .ThenInclude(x => x.Article)
                 .Include(x => x.Shipment)
