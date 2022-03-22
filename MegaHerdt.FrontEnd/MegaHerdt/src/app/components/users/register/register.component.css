@@ -1,3 +1,7 @@
 .container-form{
     width: 50%;
 }
+
+.btn{
+    padding: 0.1rem 0.2rem !important;
+}

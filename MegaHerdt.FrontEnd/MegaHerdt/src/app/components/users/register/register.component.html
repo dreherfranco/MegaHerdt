@@ -1,5 +1,5 @@
 <div class="container-fluid row" *ngIf="!authenticated()">
-  <div class="col-md-6">
+  <div class="col-md-12">
     <h2>Registrarse</h2>
     <hr><br>
     <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
@@ -7,80 +7,94 @@
 
         <div class="form-group mb-3">
           <label for="email"><b>Email:</b></label>
-          <input class="form-control" placeholder="Ingrese su email" type="email" name="email" [email]="true" #email="ngModel" [(ngModel)]="user.email"
-            required />
+          <input class="form-control" placeholder="Ingrese su email" type="email" name="email" [email]="true"
+            #email="ngModel" [(ngModel)]="user.email" required />
           <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
         </div>
 
         <div class="form-group mb-3">
-          <label for="password" ><b>Password:</b></label>
-          <input class="form-control" placeholder="Ingrese su contraseña" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
-            required  minlength="5"/>
+          <label for="password"><b>Password:</b></label>
+          <input class="form-control" placeholder="Ingrese su contraseña" type="password" name="password"
+            #password="ngModel" [(ngModel)]="user.password" required minlength="5" />
           <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
         </div>
 
         <div class="form-group mb-3">
           <label for="dni"><b>DNI:</b></label>
-          <input class="form-control" placeholder="Ingrese su DNI" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required />
+          <input class="form-control" placeholder="Ingrese su DNI" type="text" name="dni" #dni="ngModel"
+            [(ngModel)]="user.dni" required />
           <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido</span>
         </div>
 
         <div class="row">
           <div class="form-group col-sm-6 mb-3">
             <label for="name"><b>Nombre:</b></label>
-            <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Nombre" name="name" #name="ngModel" [(ngModel)]="user.name" required />
+            <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Nombre"
+              name="name" #name="ngModel" [(ngModel)]="user.name" required />
             <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
           </div>
 
           <div class="form-group col-sm-6 mb-3">
             <label for="surname"><b>Apellido:</b></label>
-            <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Apellido" name="surname" #surname="ngModel" [(ngModel)]="user.surname"
-              required />
+            <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Apellido"
+              name="surname" #surname="ngModel" [(ngModel)]="user.surname" required />
             <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
           </div>
         </div>
 
-        <div class="form-group mb-3">
-          <label for="phoneNumber"><b>Telefono:</b></label>
-          <input class="form-control" placeholder="Ingrese un numero de telefono" type="text" name="phoneNumber" #number="ngModel" [(ngModel)]="phoneNumber"
-            pattern="(^[0-9]+)" minlength="5" />
-          <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono valido</span>
-          <button (click)="addPhone()" [disabled]="!number.valid || numberEmpty()" class="btn btn-success mt-3 mb-3">
-            +Añadir
-          </button>
-          <br> <h4>Telefonos agregados:</h4>
-          <div *ngFor="let phone of user.phones; let i = index;">
-            <span><h4>{{ phone.number }}
-              <button (click)="removePhone(i)" class="btn btn-danger mt-3 mb-3">
-              Borrar
+        <div class="row">
+          <div class="form-group mb-3 col-md-6">
+            <label for="phoneNumber"><b>Telefono:</b></label>
+            <input class="form-control" placeholder="Ingrese un numero de telefono" type="text" name="phoneNumber"
+              #number="ngModel" [(ngModel)]="phoneNumber" pattern="(^[0-9]+)" minlength="5" />
+            <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono
+              valido</span>
+            <button (click)="addPhone()" [disabled]="!number.valid || numberEmpty()" class="btn btn-success mt-3 mb-3">
+              +Añadir
             </button>
-          </h4>
-          </span>
+            <br>
+          </div>
+          <div class="form-group mb-3 col-md-6 mt-3 data-user">
+            <p class="data-user" *ngIf="user.phones.length > 0" >Telefonos agregados:</p>
+            <div *ngFor="let phone of user.phones; let i = index;">
+              <span>
+                <p>
+                  {{ phone.number }}
+                  <button (click)="removePhone(i)" class="btn btn-danger">
+                    <i class="bi bi-x-circle"></i>
+                  </button>
+                </p>
+              </span>
+            </div>
           </div>
         </div>
       </div>
 
       <hr>
-      <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
-      </app-address-creation>
+      <div class="row">
+        <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
+        </app-address-creation>
 
-      <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear el usuario</p>
-      
-      <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!registerForm.form.valid" />
-    </form>
-    
-  </div>
+        <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear el usuario</p>
 
-  <div class="col-md-6">
-      <h2 *ngIf="addressAddOk">Direcciones Cargadas</h2>
-      <div *ngFor="let address of user.addresses; let i = index;">
-        <hr>
-        <app-address-detail [address]="address"></app-address-detail>
-        <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
-          Borrar direccion
-        </button>
+        <div class="col-md-6">
+          <h2 *ngIf="addressAddOk">Direcciones Cargadas</h2>
+          <div *ngFor="let address of user.addresses; let i = index;">
+            <hr>
+            <app-address-detail [address]="address"></app-address-detail>
+            <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
+              Borrar direccion
+            </button>
+          </div>
+        </div>
       </div>
+      <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar"
+        [disabled]="!registerForm.form.valid" />
+    </form>
+
   </div>
+
+
 
 </div>
 <div *ngIf="authenticated()" class="alert alert-warning">Usted se encuentra logueado</div>
