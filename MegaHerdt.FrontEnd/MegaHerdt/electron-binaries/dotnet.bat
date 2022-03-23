@@ -1,0 +1,1 @@
+cd ../../../Megaherdt && dotnet run
