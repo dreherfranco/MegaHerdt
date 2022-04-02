@@ -1,67 +1,65 @@
-<div class="container-fluid">
-    <div class="row mb-3">
-        <a *ngIf="isAdmin()" [routerLink]="['show-users']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar usuarios
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-categories']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar categorias
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-brands']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar marcas
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-providers']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar proveedores
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-articles']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar articulos
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-offers']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar ofertas
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-provisions']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar provisiones
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-reparation-states']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar estados de reparaciones
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-reparations']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar reparaciones
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-transport-companies']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar companias de transporte
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['administrate-purchases-shipments']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-list"></i> Administrar envios de compras
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['show-reparation-claims']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-envelope-exclamation-fill"></i> Ver reclamos de reparaciones
-        </a>   
-    </div>
-    <div class="row mb-3">
-        <a *ngIf="isEmployeeOrAdmin()" [routerLink]="['show-purchase-claims']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-envelope-exclamation-fill"></i> Ver reclamos de compras
-        </a>   
-    </div>
-</div>
+<li role="menuitem">
+    <a *ngIf="isAdmin()" [routerLink]="['administrate/show-users']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Administrar usuarios
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-categories']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Categorias
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-brands']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Marcas
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-providers']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Proveedores
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-articles']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Articulos
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-offers']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Ofertas
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-provisions']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Provisiones
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-reparation-states']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Estados de reparaciones
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-reparations']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Reparaciones
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-transport-companies']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Companias de transporte
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/administrate-purchases-shipments']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-list"></i> Envios de compra
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/show-reparation-claims']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-envelope-exclamation-fill"></i> Ver reclamos de reparaciones
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['administrate/show-purchase-claims']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-envelope-exclamation-fill"></i> Ver reclamos de compras
+    </a>
+</li>

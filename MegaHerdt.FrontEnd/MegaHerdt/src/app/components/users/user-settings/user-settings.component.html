@@ -1,18 +1,15 @@
-<div class="container-fluid">
-    <div class="row mb-3">
-        <a [routerLink]="['update']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-arrow-clockwise"></i> Actualizar datos
-        </a>
-        
-    </div>
-    <div class="row mb-3">
-        <a [routerLink]="['change-password']" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-lock-fill"></i> Cambiar contraseña
-        </a>
-    </div>
-    <div class="row mb-3">
-        <a (click)="openDialog()" class="btn button-custom btn-lg active btn-block col-md-6 mx-auto">
-            <i class="bi bi-person-x-fill"></i> Eliminar perfil
-        </a>
-    </div>
-</div>
+<li role="menuitem">
+    <a [routerLink]="['user/settings/update']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-arrow-clockwise"></i> Actualizar datos
+    </a>
+</li>
+<li role="menuitem">
+    <a [routerLink]="['user/settings/change-password']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-lock-fill"></i> Cambiar contraseña
+    </a>
+</li>
+<li role="menuitem">
+    <a (click)="openDialogDeleteProfile()" class="dropdown-item btn text-dark link-custom border border-color-custom">
+        <i class="bi bi-person-x-fill"></i> Eliminar perfil
+    </a>
+</li>

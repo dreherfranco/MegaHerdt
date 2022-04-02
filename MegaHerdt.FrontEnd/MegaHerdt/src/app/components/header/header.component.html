@@ -63,16 +63,31 @@
             </ul>
         </div>
 
-        <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['user/settings']"
-            *ngIf="authenticated()">
-            <i class="bi bi-person-fill"></i> Ajustes de usuario
-        </a>
+        <div class="btn-group" dropdown *ngIf="authenticated()" >
+            <button id="button-basic" dropdownToggle type="button"
+                class="btn p-3 text-dark link-custom text-center border border-color-custom dropdown-toggle"
+                aria-controls="dropdown-basic">
+                Ajustes de usuario <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu m-0 p-0" role="menu" aria-labelledby="button-basic">
+                
+                <app-user-settings></app-user-settings>
+                
+            </ul>
+        </div>
 
-        <a class="btn p-3 text-dark link-custom text-center border border-color-custom" [routerLink]="['administrate']"
-            *ngIf="authenticated() && isEmployeeOrAdmin()">
-            <i class="bi bi-list-task"></i> Administrar
-        </a>
-
+        <div class="btn-group" dropdown *ngIf="authenticated() && isEmployeeOrAdmin()" >
+            <button id="button-basic" dropdownToggle type="button"
+                class="btn p-3 text-dark link-custom text-center border border-color-custom dropdown-toggle"
+                aria-controls="dropdown-basic">
+                Administrar <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu m-0 p-0" role="menu" aria-labelledby="button-basic">
+                
+                <app-administrate></app-administrate>
+                
+            </ul>
+        </div>
     </nav>
     <div class="my-2 my-md-0 mr-md-3 d-flex row flex-column flex-md-row align-items-center flex-wrap flex-row m-3">
         <a class="p-3 btn btn-outline-danger link-custom text-center border border-color-custom"

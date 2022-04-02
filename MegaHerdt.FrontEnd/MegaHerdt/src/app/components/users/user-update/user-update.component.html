@@ -61,7 +61,7 @@
         <hr class="height-hr-3">
       </div>
 
-      <div *ngIf="user.addresses.length > 0" class="row">
+      <div class="row">
 
         <div class="col-md-6 ml-3">
           <h2 class="text-center">Agregar direcciones</h2>
@@ -70,7 +70,7 @@
         </div>
       
 
-      <div class="col-md-4">
+      <div class="col-md-4" *ngIf="user.addresses.length > 0">
         <h2 class="text-center">Direcciones cargadas</h2>
         <div *ngFor="let address of user.addresses; let i = index;">
           <app-address-update [address]="address"></app-address-update>

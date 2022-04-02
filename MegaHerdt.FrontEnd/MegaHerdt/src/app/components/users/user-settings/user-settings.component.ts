@@ -18,7 +18,7 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  openDialog(){
+  openDialogDeleteProfile(){
     var identity: UserDetail = this._storageService.getIdentity();
 
     const dialogRef = this.dialog.open(DialogDeleteProfileComponent,
