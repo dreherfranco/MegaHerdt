@@ -42,7 +42,6 @@ import { AdministrateProvidersComponent } from './components/providers/administr
 import { CreateProviderComponent } from './components/providers/create-provider/create-provider.component';
 import { EditProvidersComponent } from './components/providers/edit-providers/edit-providers.component';
 import { DialogUpdateProviderComponent } from './components/providers/edit-providers/dialog-update-provider/dialog-update-provider.component';
-import { AdministrateArticlesComponent } from './components/articles/administrate-articles/administrate-articles.component';
 import { CreateArticleComponent } from './components/articles/create-article/create-article.component';
 import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
 import { EditArticleComponent } from './components/articles/edit-articles/edit-article/edit-article.component';
@@ -125,7 +124,6 @@ import { DialogConfirmDeleteComponent } from './components/general/dialog-confir
     CreateProviderComponent,
     EditProvidersComponent,
     DialogUpdateProviderComponent,
-    AdministrateArticlesComponent,
     CreateArticleComponent,
     EditArticlesComponent,
     EditArticleComponent,

@@ -1,56 +1,76 @@
 <li role="menuitem">
     <a *ngIf="isAdmin()" [routerLink]="['administrate/show-users']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Administrar usuarios
+        Administrar usuarios
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-categories']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Categorias
+         Categorias
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-brands']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Marcas
+        Marcas
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-providers']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Proveedores
+        Proveedores
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-articles']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Articulos
+        Articulos
     </a>
+</li>
+<li role="menuitem" dropdown triggers="mouseover" placement="bottom right" container="body">
+        <button id="button-nested" type="button" dropdownToggle
+            class="dropdown-item dropdown-toggle btn text-dark link-custom border border-color-custom"
+            aria-controls="dropdown-basic">
+            Articulos <span class="caret"></span>
+        </button>
+        <ul *dropdownMenu class="dropdown-menu dropdown-menu-right m-0 p-0" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" >
+                <a [routerLink]="['administrate/administrate-articles/create']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+                    Crear
+                </a>
+            </li>
+            <li role="menuitem">
+                <a [routerLink]="['administrate/administrate-articles/edit']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+                    Editar
+                </a>
+            </li>
+        </ul>
+
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-offers']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Ofertas
+        Ofertas
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-provisions']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Provisiones
+        Provisiones
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-reparation-states']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Estados de reparaciones
+        Estados de reparaciones
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-reparations']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Reparaciones
+        Reparaciones
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-transport-companies']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Companias de transporte
+        Companias de transporte
     </a>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-purchases-shipments']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        <i class="bi bi-list"></i> Envios de compra
+        Envios de compra
     </a>
 </li>
 <li role="menuitem">
