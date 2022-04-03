@@ -45,26 +45,42 @@ export class UserUpdateComponent implements OnInit {
     return this.user.phones[0].number !== '';
   }
 
+  addNewAddress(){
+    let addressUpdate = new AddressUpdate(0, this.newAddress.streetName,
+      this.newAddress.streetNumber, this.newAddress.department,
+      this.newAddress.postalCode, this.newAddress.province,
+      this.newAddress.townName, this.newAddress.floor)    
+    this.newAddressAdded = true;
+    this.user.addresses.push(addressUpdate);
+  }
+
+  addNewPhone(){
+    let phoneUpdate = new PhoneUpdate(0,this.phoneNumber);
+    this.newPhoneAdded = true;
+    this.user.phones.push(phoneUpdate);
+  }
+
   onSubmit(form: any) {
     if (this.user.addresses.length == 0) {
-      let addressUpdate = new AddressUpdate(0, this.newAddress.streetName,
-        this.newAddress.streetNumber, this.newAddress.department,
-        this.newAddress.postalCode, this.newAddress.province,
-        this.newAddress.townName, this.newAddress.floor)    
-      this.newAddressAdded = true;
-      this.user.addresses.push(addressUpdate);
+      this.addNewAddress();
     }
 
     if (this.user.phones.length == 0) {
-      let phoneUpdate = new PhoneUpdate(0,'');
-      this.newPhoneAdded = true;
-      this.user.phones.push(phoneUpdate);
+      this.addNewPhone();
     }
 
     this.addressOk = this.isValidAddress();
     this.phoneOk = this.isValidPhone();
 
-    if (this.addressOk && this.phoneOk && this.user.addresses.length > 0){
+    if(!this.addressOk && this.user.addresses.length == 1){
+      this.user.addresses = [];
+    }
+
+    if(!this.phoneOk && this.user.phones.length == 1){
+      this.user.phones = [];
+    }
+
+    if (this.addressOk && this.phoneOk && this.user.addresses.length > 0 && this.user.phones.length > 0){
 
       this._userService.update(this.user, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
