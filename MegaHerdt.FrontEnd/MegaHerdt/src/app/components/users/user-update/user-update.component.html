@@ -1,9 +1,9 @@
-<div class="container-fluid row" *ngIf="authenticated()">
-  <div class="col-md-12">
-    <h2>Actualizar datos</h2>
-    <hr class="height-hr-3"><br>
-    <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
-      <div class="container-form">
+<div class="container-fluid" *ngIf="authenticated()">
+  <h2>Actualizar datos</h2>
+  <hr class="height-hr-3"><br>
+  <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
+    <div class="row">
+      <div class="col-md-6">
 
         <div class="form-group mb-3">
           <label for="email"><b>Email:</b></label>
@@ -34,15 +34,12 @@
         </div>
         <hr class="height-hr-3">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6" *ngIf="user.phones.length == 0">
             <h2 class="text-center">Agregar telefonos</h2>
             <input class="form-control mt-4" type="text" name="phoneNumber" #number="ngModel" [(ngModel)]="phoneNumber"
               pattern="(^[0-9]+)" minlength="5" />
             <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono
               valido</span>
-            <button (click)="addPhone()" [disabled]="!number.valid || numberEmpty()" class="btn btn-success mt-4 mb-3">
-              +Añadir
-            </button>
           </div>
           <div class="col-md-6">
             <div *ngIf="user.phones.length > 0">
@@ -60,26 +57,22 @@
         </div>
         <hr class="height-hr-3">
       </div>
-
-      <div class="row">
-
-        <div class="col-md-6 ml-3">
+      <div class="col-md-6">
+        <div *ngIf="user.addresses.length == 0">
           <h2 class="text-center">Agregar direcciones</h2>
-          <app-address-creation (newItemEvent)="addAddress($event)" class="col-md-6">
+          <app-address-creation [address]="this.newAddress" class="col-md-6">
           </app-address-creation>
         </div>
-      
-
-      <div class="col-md-4" *ngIf="user.addresses.length > 0">
-        <h2 class="text-center">Direcciones cargadas</h2>
-        <div *ngFor="let address of user.addresses; let i = index;">
-          <app-address-update [address]="address"></app-address-update>
-          <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
-            <i class="bi bi-x-circle"></i>
-          </button>
+        <div *ngIf="user.addresses.length > 0">
+          <h2 class="text-center">Direcciones cargadas</h2>
+          <div *ngFor="let address of user.addresses; let i = index;">
+            <app-address-update [address]="address"></app-address-update>
+            <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>
       <h3 class="alert alert-warning">Ingrese su contraseña antes de actualizar</h3>
       <div class="form-group mb-3">
         <label for="password"><b>Password:</b></label>
@@ -87,12 +80,14 @@
           required minlength="5" />
         <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
       </div>
-      <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!updateForm.form.valid" />
+    </div>
+    <input class="btn btn-primary w-25 h-25 mt-3" type="submit" value="Enviar" [disabled]="!updateForm.form.valid" />
 
-      <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger mt-3">Error al actualizar</p>
-      <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizo correctamente</p>
-    </form>
+    <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger mt-3">Error al actualizar</p>
+    <p *ngIf="!addressOk" class="alert alert-danger m-3">Ingrese una direccion valida</p>
+    <p *ngIf="!phoneOk" class="alert alert-danger m-3">Ingrese un numero telefono</p>
+    <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizo correctamente</p>
 
-  </div>
+  </form>
 
 </div>
