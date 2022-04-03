@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AddressCreation } from 'src/app/models/Address/AddressCreation';
-import { Output, EventEmitter } from '@angular/core';
-import { cloneDeep } from 'lodash';
 
 @Component({
   selector: 'app-address-creation',
@@ -9,22 +7,13 @@ import { cloneDeep } from 'lodash';
   styleUrls: ['./address-creation.component.css']
 })
 export class AddressCreationComponent implements OnInit {
-  address: AddressCreation;
-  addressStatus: string;
-  @Output() newItemEvent = new EventEmitter<AddressCreation>();
+  @Input() address: AddressCreation;
 
   constructor() {
     this.address = new AddressCreation('',0,'',0,'','','');
-    this.addressStatus="";
    }
 
   ngOnInit(): void {
   }
 
-  addNewItem(form: any) {
-    var newAddress = cloneDeep(this.address);
-    this.newItemEvent.emit(newAddress);
-    this.addressStatus="success";
-    form.reset();
-  }
 }

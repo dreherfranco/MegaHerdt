@@ -14,68 +14,55 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class RegisterComponent implements OnInit {
   user: UserCreate;
   statusSubmit: String;
-  phoneNumber: string;
-  addressAddOk: boolean;
-  phonesAddOk: boolean;
+  addressOk: boolean = true;
+  phoneOk: boolean = true;
 
-  constructor(private _userService: UserService, private _router: Router, 
-    private _storageService: StorageService) 
-    {
+  constructor(private _userService: UserService, private _router: Router,
+    private _storageService: StorageService) {
     this.user = new UserCreate('', '', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
+    this.user.addresses.push(new AddressCreation('', 0, '', 0, '', '', ''));
+    this.user.phones.push(new PhoneCreation(''));
     this.statusSubmit = "";
-    this.phoneNumber = "";
-    this.addressAddOk = false;
-    this.phonesAddOk = false;
   }
 
   ngOnInit(): void {
 
   }
 
+  isValidAddress(): boolean {
+    let address = this.user.addresses[0];
+    return address.department !== '' && address.postalCode !== 0 && address.streetName !== '' &&
+      address.streetNumber !== 0 && address.townName !== '';
+  }
+
+  isValidPhone(): boolean{
+    return this.user.phones[0].number != '';
+  }
+
   onSubmit(form: any) {
-    this._userService.register(this.user).subscribe(
-      {
-        next: (response) => {
-          if (response.error) {
+    this.addressOk = this.isValidAddress();
+    this.phoneOk = this.isValidPhone();
+    if (this.addressOk && this.phoneOk) {
+      this._userService.register(this.user).subscribe(
+        {
+          next: (response) => {
+            if (response.error) {
+              this.statusSubmit = "failed";
+            } else {
+              this.statusSubmit = "success";
+              this._router.navigate(['login']);
+            }
+          },
+          error: (err) => {
             this.statusSubmit = "failed";
-          } else {
-            this.statusSubmit = "success";
-            this._router.navigate(['login']);
+            console.log(err)
           }
-        },
-        error: (err) => {
-          this.statusSubmit = "failed";
-          console.log(err)
         }
-      }
-    );
+      );
+    }
   }
 
-  addPhone() {
-    var phone = new PhoneCreation(this.phoneNumber);
-    this.user.phones.push(phone);
-    this.phoneNumber = "";
-    this.phonesAddOk = true;
-  }
-
-  removePhone(index: number) {
-    this.user.phones.splice(index, 1);
-  }
-
-  numberEmpty(): boolean {
-    return this.phoneNumber == "";
-  }
-
-  addAddress(address: AddressCreation) {
-    this.user.addresses.push(address);
-    this.addressAddOk = true;
-  }
-
-  removeAddress(index: number){
-    this.user.addresses.splice(index, 1);
-  }
-
-  authenticated(): boolean{
+  authenticated(): boolean {
     return this._storageService.isAuthenticated();
   }
 }
