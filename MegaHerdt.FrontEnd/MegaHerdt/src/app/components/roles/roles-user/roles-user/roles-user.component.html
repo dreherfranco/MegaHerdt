@@ -1,14 +1,27 @@
 <br>
-<div class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
+<div class="card-text d-flex flex-column text-center d-flex align-items-start data-user" *ngIf="userRoles.length > 0">
     <p class="roles-text">ROLES ASIGNADOS: </p>
+    
     <div  class="p-1" *ngFor="let role of userRoles; let i = index;">
       {{ role }} <a class="btn btn-remove-role" (click)="removeUserRole(role)"><i class="bi bi-trash-fill"></i></a>
     </div>
 </div>
+
+<div class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
+    <alert *ngIf="statusRemoveRole === 'failed' " type="danger" [dismissible]="true">Error al remover rol</alert>
+    <alert *ngIf="statusRemoveRole === 'success' " type="success" [dismissible]="true">Rol removido con exito</alert>
+</div>
+
 <br>
-<div *ngIf="roles" class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
+
+<div class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
+    <alert *ngIf="statusAssignRole === 'success' " type="success" [dismissible]="true">El rol se asignó correctamente</alert>
+    <alert *ngIf="statusAssignRole === 'failed' " type="danger" [dismissible]="true">Error al intentar asignar rol</alert>
+</div>
+
+<div *ngIf="roles && roles.length > 0" class="card-text d-flex flex-column text-center d-flex align-items-start data-user">
     <p class="roles-text"> ASIGNAR ROL: </p>
-    <div class=" d-flex flex-row">
+    <div class="d-flex flex-row">
         <select class="form-select data-user" [(ngModel)]="roleSelected">
             <option class="data-user" name="role" *ngFor="let role of roles" [ngValue]="role">{{role}}</option>
         </select> 

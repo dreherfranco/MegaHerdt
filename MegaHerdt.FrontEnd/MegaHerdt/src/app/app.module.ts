@@ -5,6 +5,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxStripeModule } from 'ngx-stripe';
+import { AlertModule, AlertConfig } from 'ngx-bootstrap/alert';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -183,6 +184,7 @@ import { DialogConfirmDeleteComponent } from './components/general/dialog-confir
     Ng2SearchPipeModule,
     MatDialogModule,
     BsDropdownModule,
+    AlertModule,
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
   ],
   providers: [],

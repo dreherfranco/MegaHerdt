@@ -13,88 +13,113 @@ export class RolesUserComponent implements OnInit {
   roles: Array<string>;
   roleSelected: string;
   @Input() email: string;
+  statusAssignRole: string = '';
+  statusRemoveRole: string = '';
 
   constructor(
     private _storageService: StorageService,
     private _roleService: RoleService
-  ) 
-    {
-      this.userRoles = new Array<string>();
-      this.email = "";
-      this.roles = new Array<string>();
-      this.roleSelected="";
-     }
+  ) {
+    this.userRoles = new Array<string>();
+    this.email = "";
+    this.roles = new Array<string>();
+    this.roleSelected = "";
+  }
 
   ngOnInit(): void {
-
-    setTimeout(()=>{
-      this.getUserRoles();
-      this.getRoles();
-    },250);
-    
+    this.getAllRoles();
   }
-  
-  getUserRoles(){
+
+  getUserRoles() {
     this._roleService.getUserRoles(this.email, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se encontro el usuario");
         } else {
-            this.userRoles = response; 
+          this.userRoles = response;
         }
       },
-      error: (err) => {          
+      error: (err) => {
         console.log(err);
       }
     })
   }
 
-  removeUserRole(roleName: string){
-    let roleUser = new RoleUser(roleName,this.email);
+  removeUserRole(roleName: string) {
+    let roleUser = new RoleUser(roleName, this.email);
     this._roleService.removeUserRole(roleUser, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se encontro el usuario");
+          this.statusRemoveRole = 'failed';
         }
-        else{
+        else {
           console.log("rol removido correctamente");
-          this.getUserRoles();
+          this.statusRemoveRole = 'success';
+          this.getAllRoles();
         }
       },
-      error: (err) => {          
+      error: (err) => {
+        this.statusRemoveRole = 'failed';
         console.log(err);
       }
     })
   }
 
-  getRoles(){
+  updateRoles() {
+    for (let i = 0; i < this.userRoles.length; i++) {
+      for (let j = 0; j < this.roles.length; j++) {
+        if (this.userRoles[i] === this.roles[j]) {
+          this.roles.splice(j, 1);
+        }
+      }
+    }
+  }
+
+  getRoles() {
     this._roleService.getRoles(this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se encontro el usuario");
         } else {
-            this.roles = response;   
+          this.roles = response;
+          this.updateRoles();
         }
       },
-      error: (err) => {          
+      error: (err) => {
         console.log(err);
       }
     })
   }
 
-  assignRole(){
+  getAllRoles(){
+    setTimeout(() => {
+      this.getUserRoles();
+    }, 350);
+
+    setTimeout(() => {
+      this.getRoles();
+    }, 500);
+  }
+
+  assignRole() {
     let roleUser = new RoleUser(this.roleSelected, this.email);
+
     this._roleService.assignRole(roleUser, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se encontro el usuario");
+          this.statusAssignRole = 'failed';
         }
-        else{
+        else {
           console.log("rol asignado correctamente");
-          this.getUserRoles();
+          this.statusAssignRole = 'success';
+         
+          this.getAllRoles();
         }
       },
-      error: (err) => {          
+      error: (err) => {
+        this.statusAssignRole = 'failed';
         console.log(err);
       }
     })
