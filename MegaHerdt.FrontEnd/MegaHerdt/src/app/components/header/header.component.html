@@ -85,10 +85,19 @@
         </div>
     </nav>
 
-    <div class="my-2 my-md-0 mr-md-3 d-flex row flex-column flex-md-row align-items-center flex-wrap flex-row m-3">
-        <a class="p-3 btn btn-outline-danger link-custom text-center border border-color-custom"
-            [routerLink]="['logout']" *ngIf="authenticated()">
-            <i class="bi bi-box-arrow-left"></i> Cerrar sesion
-        </a>
+    <div class="btn-group my-2 my-md-0 mr-md-3 d-flex row flex-column flex-md-row align-items-center flex-wrap flex-row m-3" dropdown *ngIf="authenticated()" >
+        <button id="button-basic" dropdownToggle type="button"
+            class="btn p-3 text-dark link-custom text-center border border-color-custom dropdown-toggle"
+            aria-controls="dropdown-basic">
+            <i class="bi bi-person-circle"></i> {{userAuthenticated.name}} {{userAuthenticated.surname}}<span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu m-0 p-0" role="menu" aria-labelledby="button-basic">  
+            <li role="menuitem">
+                <a class="dropdown-item p-2 btn btn-outline-danger link-custom text-center border border-color-custom"
+                [routerLink]="['logout']" *ngIf="authenticated()">
+                <i class="bi bi-box-arrow-left"></i> Cerrar sesion
+                </a>
+            </li>
+        </ul>
     </div>
 </div>
