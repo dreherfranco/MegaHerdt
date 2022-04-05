@@ -15,7 +15,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userAuthenticated = this._storageService.getIdentity();
+    this._storageService.identityObserver.subscribe({
+      next: (res) =>{
+        this.userAuthenticated = res;
+      }
+    });
+    
   }
 
   authenticated(): boolean{

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { cloneDeep } from 'lodash';
 import { CartService } from '../cart/cart.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { CartService } from '../cart/cart.service';
 export class StorageService {
   private identity: UserDetail;
   private tokenCreds: UserToken;
+  identityObserver: BehaviorSubject<UserDetail> = new BehaviorSubject<UserDetail>(this.getIdentity());
 
   constructor() 
   { 
@@ -17,6 +19,9 @@ export class StorageService {
     this.tokenCreds = new UserToken('',new Date());
   }
 
+  updateIdentityObserver(identity: UserDetail){
+    this.identityObserver.next(identity);
+  }
   /**
    * 
    * @returns UserDetail
@@ -34,6 +39,7 @@ export class StorageService {
   setIdentity(response: any): void{
       this.identity = cloneDeep(response.user);
       this.identity.roles = response.roles;
+      this.updateIdentityObserver(this.identity);
       localStorage.setItem('identity', JSON.stringify(this.identity));
   }
 
