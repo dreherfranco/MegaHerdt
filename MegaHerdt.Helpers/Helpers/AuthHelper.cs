@@ -41,10 +41,11 @@ namespace MegaHerdt.Helpers.Helpers
 
         public async Task<UserToken> Login(User user, string jwtKey)
         {
+            var findUser = await this.userManager.FindByEmailAsync(user.Email);
             var result = await this.signInManager.PasswordSignInAsync(user.Email, user.Password, isPersistent: false, lockoutOnFailure: false);
-            if (result.Succeeded)
-            {
-                var findUser = await this.userManager.FindByEmailAsync(user.Email);
+            
+            if (findUser != null && findUser.Enabled && result.Succeeded)
+            {    
                 return await BuildToken(findUser, jwtKey);
             }
             throw new Exception("Invalid login attempt.");
@@ -78,7 +79,8 @@ namespace MegaHerdt.Helpers.Helpers
             var userDb = await userManager.FindByEmailAsync(userEmail);
             if (userDb != null)
             {
-                await this.userRepository.Delete(userDb);
+                userDb.Enabled = false;
+                await this.userRepository.Update(userDb);
             }
         }
 

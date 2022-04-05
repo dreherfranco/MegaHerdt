@@ -13,6 +13,7 @@ namespace MegaHerdt.Models.Models.Identity
         public string Name { get; set; }
         [Required]
         public string Surname { get; set; }
+        public bool Enabled { get; set; } = true;
         public List<Phone> Phones { get; set; }
         public List<Address> Addresses { get; set; }
         public List<Reparation> ClientReparations { get; set; }

@@ -15,7 +15,8 @@ namespace MegaHerdt.Services.Services
 
         public  IEnumerable<User> Get()
         {
-            return AuthHelper.Get();
+            return AuthHelper.Get()
+                .Where(x => x.Enabled);
         }
         public User GetByEmail(string email)
         {

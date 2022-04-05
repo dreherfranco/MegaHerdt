@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220405012938_usuario-baja-logica")]
+    partial class usuariobajalogica
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -57,7 +59,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Article", b =>
@@ -99,7 +101,7 @@ namespace MegaHerdt.API.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("Articles", (string)null);
+                    b.ToTable("Articles");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleBrand", b =>
@@ -114,7 +116,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ArticlesBrands", (string)null);
+                    b.ToTable("ArticlesBrands");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleCategory", b =>
@@ -129,7 +131,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ArticlesCategories", (string)null);
+                    b.ToTable("ArticlesCategories");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleOffer", b =>
@@ -154,7 +156,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ArticleId");
 
-                    b.ToTable("ArticlesOffers", (string)null);
+                    b.ToTable("ArticlesOffers");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
@@ -185,7 +187,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ProviderId");
 
-                    b.ToTable("ArticlesProviders", (string)null);
+                    b.ToTable("ArticlesProviders");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Bill", b =>
@@ -215,7 +217,7 @@ namespace MegaHerdt.API.Migrations
                     b.HasIndex("ReparationId")
                         .IsUnique();
 
-                    b.ToTable("Bills", (string)null);
+                    b.ToTable("Bills");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Identity.User", b =>
@@ -331,7 +333,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("PaymentMethodId");
 
-                    b.ToTable("Payments", (string)null);
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.PaymentMethod", b =>
@@ -369,7 +371,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Phone", b =>
@@ -390,7 +392,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Phones", (string)null);
+                    b.ToTable("Phones");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Provider", b =>
@@ -413,7 +415,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Providers", (string)null);
+                    b.ToTable("Providers");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Purchase", b =>
@@ -436,7 +438,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ClientId");
 
-                    b.ToTable("Purchases", (string)null);
+                    b.ToTable("Purchases");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseArticle", b =>
@@ -457,7 +459,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchasesArticles", (string)null);
+                    b.ToTable("PurchasesArticles");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseClaim", b =>
@@ -489,7 +491,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("PurchaseId");
 
-                    b.ToTable("PurchasesClaims", (string)null);
+                    b.ToTable("PurchasesClaims");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Reparation", b =>
@@ -526,7 +528,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ReparationStateId");
 
-                    b.ToTable("Reparations", (string)null);
+                    b.ToTable("Reparations");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ReparationArticle", b =>
@@ -547,7 +549,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ReparationId");
 
-                    b.ToTable("ReparationsArticles", (string)null);
+                    b.ToTable("ReparationsArticles");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ReparationClaim", b =>
@@ -579,7 +581,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ReparationId");
 
-                    b.ToTable("ReparationsClaims", (string)null);
+                    b.ToTable("ReparationsClaims");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ReparationState", b =>
@@ -594,7 +596,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ReparationsStates", (string)null);
+                    b.ToTable("ReparationsStates");
 
                     b.HasData(
                         new
@@ -652,7 +654,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("TransportCompanyId");
 
-                    b.ToTable("Shipments", (string)null);
+                    b.ToTable("Shipments");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.TransportCompany", b =>
@@ -671,7 +673,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TransportCompanies", (string)null);
+                    b.ToTable("TransportCompanies");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -1,9 +1,6 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Address;
-using MegaHerdt.API.DTOs.Pagination;
-using MegaHerdt.API.DTOs.Role;
 using MegaHerdt.API.DTOs.User;
-using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
@@ -12,8 +9,6 @@ using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 
 namespace MegaHerdt.API.Controllers
 {
@@ -42,9 +37,8 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var users = this.UserService.Get().ToList();
-               // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
-
-           //     var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
+                // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
+                // var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
                 return Mapper.Map<List<UserDetailDTO>>(users);
             }
             catch (Exception ex)

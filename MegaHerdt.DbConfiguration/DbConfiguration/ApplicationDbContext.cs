@@ -32,6 +32,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
 
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
+            
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
