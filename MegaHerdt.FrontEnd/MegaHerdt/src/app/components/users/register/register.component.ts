@@ -26,7 +26,6 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
   }
 
   isValidAddress(): boolean {
