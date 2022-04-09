@@ -2,7 +2,6 @@ import { UserToken } from 'src/app/models/UserToken/UserToken';
 import { Injectable } from '@angular/core';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { cloneDeep } from 'lodash';
-import { CartService } from '../cart/cart.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

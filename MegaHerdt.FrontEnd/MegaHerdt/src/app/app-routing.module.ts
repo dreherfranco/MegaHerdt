@@ -35,10 +35,12 @@ import { AssignPurchaseShipmentComponent } from './components/shipments/assign-p
 import { UserChangePasswordComponent } from './components/users/user-change-password/user-change-password.component';
 import { CreateArticleComponent } from './components/articles/create-article/create-article.component';
 import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
+import { ForgetPasswordComponent } from './components/users/forget-password/forget-password.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },

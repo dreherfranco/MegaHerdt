@@ -6,6 +6,7 @@ import { UserCreate } from 'src/app/models/User/UserCreate';
 import { UserLogin } from 'src/app/models/User/UserLogin';
 import { UserUpdate } from 'src/app/models/User/UserUpdate';
 import { UserChangePassword } from 'src/app/models/User/UserChangePassword';
+import { UserForgetPassword } from 'src/app/models/User/UserForgetPassword';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +54,11 @@ export class UserService {
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(user);
     return this._http.post(this.url + "/change-password", params, { headers: this.headers });
+  }
+
+  forgetPassword(user: UserForgetPassword): Observable<any>{
+    let params = JSON.stringify(user);
+    return this._http.post(this.url + "/forget-password", params, { headers: this.headers });
   }
 }
 

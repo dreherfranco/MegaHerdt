@@ -90,6 +90,7 @@ import { AdministratePurchasesShipmentsComponent } from './components/shipments/
 import { AssignPurchaseShipmentComponent } from './components/shipments/assign-purchase-shipment/assign-purchase-shipment.component';
 import { UserChangePasswordComponent } from './components/users/user-change-password/user-change-password.component';
 import { DialogConfirmDeleteComponent } from './components/general/dialog-confirm-delete/dialog-confirm-delete.component';
+import { ForgetPasswordComponent } from './components/users/forget-password/forget-password.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +173,7 @@ import { DialogConfirmDeleteComponent } from './components/general/dialog-confir
     AssignPurchaseShipmentComponent,
     UserChangePasswordComponent,
     DialogConfirmDeleteComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     BrowserModule,

@@ -18,6 +18,7 @@
 
     <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al loguearse</p>
 
-    <input type="submit" class="btn btn-primary mt-3" [disabled]="loginForm.invalid" value="Entrar"/>
+    <a class="color-blue" [routerLink]="['/forget-password']" >Olvidé mi contraseña</a> <br>
+    <input type="submit" class="btn btn-primary mt-1" [disabled]="loginForm.invalid" value="Entrar"/>
 </form>
   <div *ngIf="authenticated()" class="alert alert-warning">Usted se encuentra logueado</div>

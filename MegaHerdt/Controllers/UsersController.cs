@@ -6,6 +6,7 @@ using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
 using MegaHerdt.Services.Services;
+using MegaHerdt.Services.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,16 @@ namespace MegaHerdt.API.Controllers
         private readonly IConfiguration Configuration;
         private readonly IMapper Mapper;
         private readonly HashService hashService;
+        private readonly IMailerService mailService;
+
         public UsersController(UserService userService, IConfiguration configuration,
-            IMapper mapper, HashService hashService)
+            IMapper mapper, HashService hashService, IMailerService mailService)
         {
             this.Configuration = configuration;
             this.Mapper = mapper;
             this.UserService = userService;
             this.hashService = hashService;
+            this.mailService = mailService;
         }
 
         [HttpGet("get-users")]
@@ -195,6 +199,32 @@ namespace MegaHerdt.API.Controllers
                     return Mapper.Map<UserTokenDTO>(userToken);
                 }
                 throw new Exception("User email is incorrect");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpPost("forget-password")]
+        public async Task<ActionResult<UserTokenDTO>> ForgetPassword([FromBody] UserForgetPasswordDTO userForgetPasswordDTO)
+        {
+            try
+            {
+               var user = this.UserService.GetByEmail(userForgetPasswordDTO.Email);
+                if (user != null)
+                {
+                    var newPassword = PasswordGenerator.GenerateRandomPassword();
+                    var newPasswordHashed = hashService.Hash(newPassword);
+
+                    var userToken = await this.UserService.ChangeForgotPassword(userForgetPasswordDTO.Email, newPasswordHashed, Configuration["jwt:key"]);
+                    
+                    var mailRequest = this.UserService.SendPasswordToMail(userForgetPasswordDTO.Email, newPassword);
+                    await this.mailService.SendEmailAsync(mailRequest);
+                    return Mapper.Map<UserTokenDTO>(userToken);
+                }
+
+                return BadRequest("user doesn't exists");
             }
             catch (Exception ex)
             {

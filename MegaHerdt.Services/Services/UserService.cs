@@ -1,4 +1,5 @@
 ﻿using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Linq.Expressions;
@@ -44,6 +45,22 @@ namespace MegaHerdt.Services.Services
         {
             return await this.AuthHelper.ChangePassword(userEmail, currentPassword, newPassword, jwtKey);
         }
+
+        public async Task<UserToken> ChangeForgotPassword(string userEmail, string newPassword, string jwtKey)
+        {
+            return await this.AuthHelper.ChangeForgotPassword(userEmail, newPassword, jwtKey);
+        }
+
+        public MailRequest SendPasswordToMail(string email, string newPassword)
+        {
+            return new MailRequest()
+            {
+                ToEmail = email,
+                Subject = "Cambio de contraseña",
+                Body = "Su nueva contraseña es: " + newPassword
+            };
+        }
+
 
         public async Task UserDelete(string userEmail)
         {
