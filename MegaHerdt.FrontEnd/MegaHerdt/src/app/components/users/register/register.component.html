@@ -5,21 +5,21 @@
     <div class="row">
       <div class="col-md-6">
         <div class="form-group mb-3">
-          <label for="email"><b>Email:</b></label>
+          <label for="email"><b>*Email:</b></label>
           <input class="form-control" placeholder="Ingrese su email" type="email" name="email" [email]="true"
             #email="ngModel" [(ngModel)]="user.email" required />
           <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
         </div>
 
         <div class="form-group mb-3">
-          <label for="password"><b>Password:</b></label>
+          <label for="password"><b>*Password:</b></label>
           <input class="form-control" placeholder="Ingrese su contraseña" type="password" name="password"
             #password="ngModel" [(ngModel)]="user.password" required minlength="5" />
           <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
         </div>
 
         <div class="form-group mb-3">
-          <label for="dni"><b>DNI:</b></label>
+          <label for="dni"><b>*DNI:</b></label>
           <input class="form-control" placeholder="Ingrese su DNI" type="text" name="dni" #dni="ngModel"
             [(ngModel)]="user.dni" required />
           <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido</span>
@@ -27,14 +27,14 @@
 
         <div class="row">
           <div class="form-group col-sm-6 mb-3">
-            <label for="name"><b>Nombre:</b></label>
+            <label for="name"><b>*Nombre:</b></label>
             <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Nombre"
               name="name" #name="ngModel" [(ngModel)]="user.name" required />
             <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
           </div>
 
           <div class="form-group col-sm-6 mb-3">
-            <label for="surname"><b>Apellido:</b></label>
+            <label for="surname"><b>*Apellido:</b></label>
             <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Apellido"
               name="surname" #surname="ngModel" [(ngModel)]="user.surname" required />
             <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
@@ -43,7 +43,7 @@
 
         <div class="row">
           <div class="form-group mb-3 col-md-6">
-            <label for="phoneNumber"><b>Telefono:</b></label>
+            <label for="phoneNumber"><b>*Telefono:</b></label>
             <input class="form-control" placeholder="Ingrese un numero de telefono" type="text" name="phoneNumber"
               #number="ngModel" [(ngModel)]="user.phones[0].number" pattern="(^[0-9]+)" minlength="5" />
             <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono

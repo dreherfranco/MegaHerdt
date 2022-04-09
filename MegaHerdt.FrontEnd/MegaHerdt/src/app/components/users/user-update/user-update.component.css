@@ -4,3 +4,11 @@
 .mt-4{
     margin-top: 2rem!important;
 }
+
+.btn-submit{
+    height: 55%;
+}
+
+.h-40{
+    height: 40% !important;
+}

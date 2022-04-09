@@ -82,3 +82,7 @@ thead{
     font-size: 1.35rem !important;
     font-weight: bold !important;
 }
+
+.btn:disabled{
+    opacity: .25 !important;
+}
