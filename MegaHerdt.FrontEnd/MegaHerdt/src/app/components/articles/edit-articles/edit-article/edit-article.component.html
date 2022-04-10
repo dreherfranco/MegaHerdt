@@ -1,24 +1,35 @@
-<div class="card text-center mb-2 article-card">
-    <img [src]="article.image" class="card-img-top">
-    <input id="image" name="image" class="form-control" (change)="onChange($event)" type="file">
-
+<div class="card text-center m-1 mb-2 article-card">
+    <div class="d-flex flex-row align-items-end align-items-center">
+        <img [src]="article.image" class="border border-secondary card-img-top col-sm-3 m-1 rounded">
+        <div class="col-sm-8 m-1">
+            <input id="image" name="image" class="form-control" (change)="onChange($event)" type="file">
+        </div>
+    </div>
     <div class="card-body">
-        <h5 class="card-title data-article">Nombre:<input class="form-control data-user" [(ngModel)]="article.name"></h5>
-        <p class="card-text data-article">Valor unitario: <input class="form-control data-user" [(ngModel)]="article.unitValue"></p>
-        <p class="card-text data-article">Codigo: <input class="form-control data-user" [(ngModel)]="article.code"></p>
-        <p class="card-text data-article">Stock: <input class="form-control data-user" [(ngModel)]="article.stock"></p>
-        <p class="card-text data-article">Marca:
-            <select class="form-select data-user" name="selectBrand" [(ngModel)]="article.brand.id">
-                <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">{{brand.name}}
+        <h5 class="card-title data-article">Nombre:<input class="form-control data-article" [(ngModel)]="article.name">
+        </h5>
+        <p class="card-text data-article">Valor unitario: <input class="form-control data-article"
+                [(ngModel)]="article.unitValue"></p>
+
+        <!--
+         <p class="card-text data-article">Codigo: <input class="form-control data-article" [(ngModel)]="article.code">
+        </p>
+        <p class="card-text data-article">Stock: <input class="form-control data-article" [(ngModel)]="article.stock">
+        </p>
+        -->
+        <div class="card-text data-article mb-1">Marca:
+            <select class="form-select data-article" name="selectBrand" [(ngModel)]="article.brand.id">
+                <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">
+                    {{brand.name}}
                 </option>
             </select>
-        </p>
-        <p class="card-text data-article">Categoria:
-            <select class="form-select data-user" name="selectCategory" [(ngModel)]="article.category.id" required>
+        </div>
+        <div class="card-text data-article">Categoria:
+            <select class="form-select data-article" name="selectCategory" [(ngModel)]="article.category.id" required>
                 <option class="data-user" name="category" *ngFor="let category of categories" [ngValue]="category.id">
                     {{category.name}}</option>
             </select>
-        </p>
+        </div>
         <button class="btn btn-success m-2" (click)="openDialogUpdate()"><i class="bi bi-pencil-square"></i></button>
         <button class="btn btn-danger" (click)="openDialogDelete()"><i class="bi bi-trash-fill"></i></button>
         <p class="alert alert-success" *ngIf="updateSuccess">Se actualizo correctamente</p>

@@ -15,7 +15,7 @@ export class EditArticlesComponent implements OnInit {
   
   constructor(private _articleService: ArticleService) 
   { 
-    this.paginate = new Paginate(1,8);
+    this.paginate = new Paginate(1,6);
     this.searchText = "";
   }
 

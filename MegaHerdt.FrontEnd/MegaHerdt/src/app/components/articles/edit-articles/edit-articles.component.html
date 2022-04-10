@@ -1,4 +1,4 @@
-<h1 class="text-center"><b>Editar articulos</b></h1>
+<h2 class="text-center m"><b>Editar articulos</b></h2>
 
 <div class="input-group mb-3 w-50 searcher mx-auto">
   <div class="input-group-prepend">
@@ -11,7 +11,7 @@
 </div>
 
 <div class="row">
-  <div class="col-md-3" *ngFor="let article of articles 
+  <div class="col-md-2 d-flex align-items-center" *ngFor="let article of articles 
     | filter: searchText
     | paginate: 
     {

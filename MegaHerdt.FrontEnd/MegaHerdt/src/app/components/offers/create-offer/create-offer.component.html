@@ -2,28 +2,28 @@
 <form #offerForm="ngForm" (ngSubmit)="onSubmit(offerForm)" class="w-50 mx-auto">
 
     <div class="form-group mb-3">
-        <label for="discount"><b>Porcentaje del descuento: </b></label>
+        <label for="discount"><b>*Porcentaje del descuento: </b></label>
         <input id="discount" name="discount" class="form-control" type="number" min="0" max="100" #discount="ngModel"
             [(ngModel)]="offer.discountPercentage" required>
         <span *ngIf="discount.touched && !discount.valid" class="text-danger">Ingrese un numero del 0 al 100</span>
     </div>
 
     <div class="form-group mb-3">
-        <label for="startDate"><b>Fecha de inicio: </b></label>
+        <label for="startDate"><b>*Fecha de inicio: </b></label>
         <input id="startDate" name="startDate" class="form-control" type="date" #startDate="ngModel"
             [(ngModel)]="offer.startDate" required>
         <span *ngIf="startDate.touched && !startDate.valid" class="text-danger">Ingrese una fecha valida</span>
     </div>
 
     <div class="form-group mb-3">
-        <label for="endDate"><b>Fecha de fin: </b></label>
+        <label for="endDate"><b>*Fecha de fin: </b></label>
         <input id="endDate" name="endDate" class="form-control" type="date" #endDate="ngModel"
             [(ngModel)]="offer.endDate" required>
         <span *ngIf="endDate.touched && !endDate.valid" class="text-danger">Ingrese una fecha valida</span>
     </div>
 
     <div class="form-group mb-3">
-        <label for="article"><b>Articulo: </b></label>
+        <label for="article"><b>*Articulo: </b></label>
         <select class="form-select data-user" name="selectArticle" [(ngModel)]="offer.articleId" required>
             <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">{{article.name}}
             </option>
