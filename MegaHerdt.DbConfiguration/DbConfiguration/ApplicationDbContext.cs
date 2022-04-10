@@ -41,6 +41,10 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
            .HasIndex(u => u.Email)
            .IsUnique();
 
+            modelBuilder.Entity<User>()
+                       .HasIndex(u => u.Dni)
+                       .IsUnique();
+
             modelBuilder.Entity<Article>()
            .HasIndex(u => u.Code)
            .IsUnique();
