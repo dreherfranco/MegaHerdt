@@ -60,33 +60,15 @@ export class CreateArticleComponent implements OnInit {
   }
 
   loadCategories() {
-    this._categoryService.getAll().subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("no se pudieron cargar las categorias");
-        } else {
-          this.categories = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    });
+    this._categoryService.categories.subscribe({
+      next: res => this.categories = res
+    })
   }
 
   loadBrands(){
-    this._brandService.getAll().subscribe({
-        next: (response) => {
-          if (response.error) {
-              console.log("no se pudieron cargar las marcas");
-          } else {
-            this.brands = response;
-          }
-        },
-        error: (err) => {
-          console.log(err)
-        }
-    });
+    this._brandService.brands.subscribe({
+      next: res => this.brands = res
+    })
   }
 
   onChange(fileInput: any){
