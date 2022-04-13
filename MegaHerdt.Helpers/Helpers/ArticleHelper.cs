@@ -44,5 +44,13 @@ namespace MegaHerdt.Helpers.Helpers
                 .ThenInclude(x => x.Provider);
         }
 
+        private string GenerateCode(Article article)
+        {
+            var brandSubstrack = article.Brand.Name.Substring(0, 3);
+            var categorySubstrack = article.Category.Name.Substring(0, 3);
+            string code = brandSubstrack + "-" + categorySubstrack + "-" + article.Name;
+            return code;
+        }
+
     }
 }

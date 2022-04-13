@@ -4,12 +4,14 @@ export class ArticleProviderCreation{
     voucher: File;
     provisionDate: Date;
     articleQuantity: number;
-    constructor(providerId: number, articleId: number, voucher: File,provisionDate: Date,articleQuantity: number)
+    add: boolean;
+    constructor(providerId: number, articleId: number, voucher: File,provisionDate: Date,articleQuantity: number, add: boolean)
     {
         this.providerId = providerId;
         this.articleId = articleId;
         this.voucher = voucher;
         this.provisionDate = provisionDate;
         this.articleQuantity = articleQuantity;
+        this.add = add;
     }
 }

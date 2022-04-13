@@ -16,3 +16,6 @@
     font-size:small !important;
 }
 
+.card-body-p-custom{
+    padding: 0.5rem 0.5rem !important;
+}

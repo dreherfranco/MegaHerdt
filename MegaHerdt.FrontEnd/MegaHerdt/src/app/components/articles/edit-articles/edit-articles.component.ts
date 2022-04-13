@@ -12,10 +12,11 @@ export class EditArticlesComponent implements OnInit {
   articles: Article[] = [];
   paginate: Paginate;
   searchText: string;
-  
+  filterByStock: boolean = false;
+
   constructor(private _articleService: ArticleService) 
   { 
-    this.paginate = new Paginate(1,6);
+    this.paginate = new Paginate(1,5);
     this.searchText = "";
   }
 
@@ -30,6 +31,14 @@ export class EditArticlesComponent implements OnInit {
         error: (err) => console.log(err)
       }
     );
+  }
+
+  filter(){
+    if(!this.filterByStock){
+      this.articles = this.articles.filter(x => x.stock > 0);
+    }else{
+      this.loadProducts();
+    }
   }
 
 }

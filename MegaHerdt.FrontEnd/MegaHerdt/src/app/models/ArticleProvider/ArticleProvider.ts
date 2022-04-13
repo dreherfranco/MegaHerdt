@@ -8,6 +8,7 @@ export class ArticleProvider{
     voucher: string;
     provisionDate: Date;
     articleQuantity: number;
+    add: boolean;
     constructor(id: number, provider: Provider, article: ArticleName, voucher: string,provisionDate: Date,articleQuantity: number)
     {
         this.id = id;
@@ -16,5 +17,6 @@ export class ArticleProvider{
         this.voucher = voucher;
         this.provisionDate = provisionDate;
         this.articleQuantity = articleQuantity;
+        this.add = true;
     }
 }

@@ -5,30 +5,36 @@
             <input id="image" name="image" class="form-control" (change)="onChange($event)" type="file">
         </div>
     </div>
-    <div class="card-body">
+    <div class="card-body card-body-p-custom">
         <h5 class="card-title data-article">Nombre:<input class="form-control data-article" [(ngModel)]="article.name">
         </h5>
         <p class="card-text data-article">Valor unitario: <input class="form-control data-article"
                 [(ngModel)]="article.unitValue"></p>
 
-        <!--
-         <p class="card-text data-article">Codigo: <input class="form-control data-article" [(ngModel)]="article.code">
+
+        <p class="card-text data-article">Codigo: <input class="form-control data-article" [(ngModel)]="article.code"
+                disabled>
         </p>
-        <p class="card-text data-article">Stock: <input class="form-control data-article" [(ngModel)]="article.stock">
+        <p class="card-text data-article">Stock: <input class="form-control data-article" [(ngModel)]="article.stock"
+                disabled>
         </p>
-        -->
-        <div class="card-text data-article mb-1">Marca:
-            <select class="form-select data-article" name="selectBrand" [(ngModel)]="article.brand.id">
-                <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">
-                    {{brand.name}}
-                </option>
-            </select>
-        </div>
-        <div class="card-text data-article">Categoria:
-            <select class="form-select data-article" name="selectCategory" [(ngModel)]="article.category.id" required>
-                <option class="data-user" name="category" *ngFor="let category of categories" [ngValue]="category.id">
-                    {{category.name}}</option>
-            </select>
+
+        <div class="row">
+            <div class="card-text data-article mb-1 col-sm-6">Marca:
+                <select class="form-select data-article" name="selectBrand" [(ngModel)]="article.brand.id">
+                    <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">
+                        {{brand.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="card-text data-article col-sm-6">Categoria:
+                <select class="form-select data-article" name="selectCategory" [(ngModel)]="article.category.id"
+                    required>
+                    <option class="data-user" name="category" *ngFor="let category of categories"
+                        [ngValue]="category.id">
+                        {{category.name}}</option>
+                </select>
+            </div>
         </div>
         <button class="btn btn-success m-2" (click)="openDialogUpdate()"><i class="bi bi-pencil-square"></i></button>
         <button class="btn btn-danger" (click)="openDialogDelete()"><i class="bi bi-trash-fill"></i></button>

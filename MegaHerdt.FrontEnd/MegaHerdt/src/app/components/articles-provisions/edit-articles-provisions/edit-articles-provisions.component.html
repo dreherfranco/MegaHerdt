@@ -2,13 +2,14 @@
     <table class="table">
         <thead>
             <tr>
-                <th>LISTADO DE PROVISIONES</th> <th></th><th></th><th></th><th></th><th></th><th></th>
+                <th>LISTADO DE PROVISIONES</th> <th></th><th></th><th></th><th></th><th></th><th></th><th></th>
             </tr>
             <tr>
                 <th scope="col">Articulo</th>
                 <th scope="col">Cantidad proveída</th>
                 <th scope="col">Proveedor</th>
                 <th scope="col">Fecha provision</th>
+                <th scope="col">Operacion</th>
                 <th scope="col">Comprobante</th>
                 <th scope="col">#</th>
                 <th scope="col">#</th>
@@ -17,29 +18,43 @@
         <tbody>
             <tr *ngFor="let articleProvider of articlesProviders; let i = index">
                 <th>
-                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.article.id">
+                    <!--
+                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.article.id" disabled>
                         <option class="data-user" name="article" *ngFor="let article of articles"
                             [ngValue]="article.id">{{article.name}}
                         </option>
                     </select>
+                    -->
+                    <input id="article" name="article" class="form-control data-user"
+                    #article="ngModel" [(ngModel)]="articleProvider.article.name" disabled required>
                 </th>
                 <td>
                     <input id="articleQuantity" name="articleQuantity" class="form-control data-user" type="number" min="0"
-                        #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" required>
+                        #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" disabled required>
                 </td>
                 <td>
+                    <!--
                     <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.provider.id">
                         <option class="data-user" name="provider" *ngFor="let provider of providers"
                             [ngValue]="provider.id">{{provider.email}}
                         </option>
                     </select>
+                    -->
+                    <input id="provider" name="article" class="form-control data-user"
+                    #provider="ngModel" [(ngModel)]="articleProvider.provider.email" disabled required>
                 </td>
                 <td>
-                    <span class="form-control data-user">
+                    <span class="form-control data-user disabled">
                         {{articleProvider.provisionDate | date: 'dd/MM/yyyy' }}
                     </span>
-                    <input id="provisionDate" name="provisionDate" class="form-control data-user" type="date"
-                        #provisionDate="ngModel" [(ngModel)]="articleProvider.provisionDate" required>
+                </td>
+                <td>
+                    <span *ngIf="articleProvider.add" class="form-control data-user alert-success">
+                        Stock agregado
+                    </span>
+                    <span *ngIf="!articleProvider.add" class="form-control data-user alert-warning">
+                        Stock descontado
+                    </span>
                 </td>
                 <td>
                    

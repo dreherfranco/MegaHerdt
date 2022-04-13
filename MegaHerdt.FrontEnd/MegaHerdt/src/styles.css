@@ -86,3 +86,8 @@ thead{
 .btn:disabled{
     opacity: .25 !important;
 }
+
+.disabled{
+    color: #212529 !important;
+    background-color: #e9ecef !important;
+}

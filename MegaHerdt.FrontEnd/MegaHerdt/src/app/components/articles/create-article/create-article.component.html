@@ -9,14 +9,7 @@
                     class="form-control" type="text" #name="ngModel" [(ngModel)]="article.name" required minlength="3">
                 <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
             </div>
-            <!--
-        <div class="form-group mb-3 col-sm-6">
-            <label for="code"><b>*Codigo: </b></label>
-            <input id="code" required placeholder="Codigo del articulo" name="code" class="form-control" type="text"
-                #code="ngModel" [(ngModel)]="article.code">
-            <span *ngIf="code.touched && !code.valid" class="text-danger">Ingrese un codigo valido</span>
-        </div>
-        -->
+
             <div class="form-group mb-3 col-sm-6">
                 <label for="unitValue"><b>*Valor unitario: </b></label>
                 <input id="unitValue" required placeholder="Valor unitario" name="unitValue" class="form-control"
@@ -24,14 +17,6 @@
                 <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor unitario
                     valido</span>
             </div>
-        </div>
-
-        <div class="form-group mb-3">
-            <label for="stock"><b>Stock: </b></label>
-            <input id="stock" placeholder="Stock" name="stock" class="form-control" type="number" #stock="ngModel"
-                [(ngModel)]="article.stock">
-            <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor unitario
-                valido</span>
         </div>
 
         <div class="form-group mb-3">

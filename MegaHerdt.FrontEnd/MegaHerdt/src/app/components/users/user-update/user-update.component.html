@@ -14,8 +14,9 @@
 
         <div class="form-group mb-3">
           <label for="dni"><b>*DNI:</b></label>
-          <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required />
-          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido</span>
+          <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" 
+          required minlength="8" maxlength="8" pattern="[0-9]{8}"/>
+          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido, debe contener 8 numeros</span>
         </div>
 
         <div class="row">

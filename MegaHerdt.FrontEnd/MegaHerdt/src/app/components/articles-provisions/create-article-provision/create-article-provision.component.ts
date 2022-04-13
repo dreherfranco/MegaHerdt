@@ -21,7 +21,7 @@ export class CreateArticleProvisionComponent implements OnInit {
     private _articleService: ArticleService) {
     this.providers = new Array<Provider>();
     this.articles = new Array<ArticleName>();
-    this.articleProvider = new ArticleProviderCreation(0, 0, new File(new Array, ''), new Date(), 0);
+    this.articleProvider = new ArticleProviderCreation(0, 0, new File(new Array, ''), new Date(), 0, true);
   }
 
   ngOnInit(): void {
@@ -51,7 +51,9 @@ export class CreateArticleProvisionComponent implements OnInit {
       }
     });
   }
-
+ mostrar(){
+   console.log(this.articleProvider)
+ }
   loadArticles() {
     this._articleService.getArticleNames().subscribe({
       next: (response) => {

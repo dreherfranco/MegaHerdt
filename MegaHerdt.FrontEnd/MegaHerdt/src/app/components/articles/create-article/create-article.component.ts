@@ -23,7 +23,7 @@ export class CreateArticleComponent implements OnInit {
 
   constructor(private _storageService: StorageService, private _articleService: ArticleService,
     private _categoryService: CategoryService, private _brandService: BrandService) {
-    this.article = new ArticleCreation("", "", new File(new Array, ''), 0, 0, 0, 0);
+    this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0);
     this.statusSubmit = "";
     this.categories = new Array<Category>();
     this.categoryId = 0;

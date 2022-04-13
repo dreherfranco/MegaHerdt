@@ -12,7 +12,7 @@ namespace MegaHerdt.Helpers.Helpers.Base
         }
 
         public virtual async Task<T> Create(T entity)
-        {
+        {           
             return await this.repository.Add(entity);
         }
 

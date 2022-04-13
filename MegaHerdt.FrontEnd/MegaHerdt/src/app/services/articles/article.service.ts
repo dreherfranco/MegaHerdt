@@ -30,12 +30,13 @@ export class ArticleService {
       
       //  xhr.setRequestHeader('Authorization',token);
         xhr.open('POST', Global.url + "Articles/"+ urlAction, true );  
-        xhr.send(formData)
-        return this.getByCode(article.code)
+        xhr.send(formData);
+        
+        return this.getByName(article.name);
   }
 
-  getByCode(code: string): Observable<any>{
-    return this._http.get(this.url+"/get-by-code/"+code,{headers: this.headers});
+  getByName(name: string): Observable<any>{
+    return this._http.get(this.url+"/get-by-name/"+name,{headers: this.headers});
   }
 
   /**

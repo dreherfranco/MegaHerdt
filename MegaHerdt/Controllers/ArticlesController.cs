@@ -73,12 +73,12 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpGet("get-by-code/{code}")]
-        public ActionResult<ArticleDTO> GetByCode(string code)
+        [HttpGet("get-by-name/{name}")]
+        public ActionResult<ArticleDTO> GetByName(string name)
         {
             try
             {
-                Expression<Func<Article, bool>> filter = x => x.Code == code;
+                Expression<Func<Article, bool>> filter = x => x.Name == name;
                 var article = articleService.GetBy(filter).FirstOrDefault();
                 return this.Mapper.Map<ArticleDTO>(article);
             }
