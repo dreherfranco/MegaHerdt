@@ -60,6 +60,8 @@
       <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger m-3">Error al crear el usuario</p>
       <p *ngIf="!addressOk" class="alert alert-danger m-3">Ingrese una direccion valida</p>
       <p *ngIf="!phoneOk" class="alert alert-danger m-3">Ingrese un numero telefono</p>
+
+      <b class="required">(*)Obligatorio</b>
       <input class="btn btn-primary w-25 m-2 mt-0 align-center" type="submit" value="Enviar"
         [disabled]="!registerForm.form.valid" />
     </div>

@@ -91,3 +91,7 @@ thead{
     color: #212529 !important;
     background-color: #e9ecef !important;
 }
+
+.required{
+    color: #007BC1;
+}

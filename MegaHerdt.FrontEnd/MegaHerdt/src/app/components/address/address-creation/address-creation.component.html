@@ -55,8 +55,7 @@
                 <input class="form-control" placeholder="Piso" type="text" name="floor" #floor="ngModel" [(ngModel)]="address.floor" pattern="(^[0-9]+)" />
                 <span *ngIf="floor.touched && !floor.valid" class="text-danger">Ingrese un piso valido</span>
             </div>
-        </div>
-        <b class="a1">(*)Obligatorio</b>
+        </div>  
     </div>
 </form>
 </div>
