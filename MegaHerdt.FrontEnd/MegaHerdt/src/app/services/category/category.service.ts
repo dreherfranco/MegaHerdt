@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Category } from 'src/app/models/ArticleCategory/Category';
 import { CategoryCreation } from 'src/app/models/ArticleCategory/CategoryCreation';
 import { Global } from 'src/app/utils/Global';
@@ -11,10 +11,18 @@ import { Global } from 'src/app/utils/Global';
 export class CategoryService {
   public url: string;
   public headers =  new HttpHeaders().set('Content-Type', 'application/json');
+  public categories = new BehaviorSubject<Array<Category>>([]);
 
   constructor(private _http: HttpClient) 
   {
     this.url = Global.url + "ArticlesCategories";
+    this.updateCategories();
+  }
+
+  updateCategories(){
+    this.getAll().subscribe({
+      next: res => this.categories.next(res)
+    })
   }
 
   create(category: CategoryCreation, token: string): Observable<any>{

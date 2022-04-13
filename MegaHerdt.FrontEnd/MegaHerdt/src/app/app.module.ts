@@ -91,6 +91,8 @@ import { AssignPurchaseShipmentComponent } from './components/shipments/assign-p
 import { UserChangePasswordComponent } from './components/users/user-change-password/user-change-password.component';
 import { DialogConfirmDeleteComponent } from './components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { ForgetPasswordComponent } from './components/users/forget-password/forget-password.component';
+import { DialogCreateBrandComponent } from './components/brands/create-brand/dialog-create-brand/dialog-create-brand.component';
+import { DialogCreateCategoryComponent } from './components/categories/create-category/dialog-create-category/dialog-create-category.component';
 
 @NgModule({
   declarations: [
@@ -174,6 +176,8 @@ import { ForgetPasswordComponent } from './components/users/forget-password/forg
     UserChangePasswordComponent,
     DialogConfirmDeleteComponent,
     ForgetPasswordComponent,
+    DialogCreateBrandComponent,
+    DialogCreateCategoryComponent,
   ],
   imports: [
     BrowserModule,

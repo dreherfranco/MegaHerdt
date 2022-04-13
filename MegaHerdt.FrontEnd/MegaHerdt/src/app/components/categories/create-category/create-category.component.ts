@@ -29,7 +29,8 @@ export class CreateCategoryComponent implements OnInit {
             this.statusSubmit = "failed";
           } else {
             this.statusSubmit = "success";
-            window.location.reload();
+            this._categoryService.updateCategories();
+            form.reset();
           }
         },
         error: (err) => {

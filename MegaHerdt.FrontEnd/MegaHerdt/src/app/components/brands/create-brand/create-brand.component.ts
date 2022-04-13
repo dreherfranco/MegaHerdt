@@ -11,6 +11,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class CreateBrandComponent implements OnInit {
   brand: BrandCreation;
   statusSubmit: string;
+
   constructor(private _storageService: StorageService, private _brandService: BrandService) {
     this.brand = new BrandCreation("");
     this.statusSubmit = "";
@@ -27,7 +28,8 @@ export class CreateBrandComponent implements OnInit {
               this.statusSubmit = "failed";
             } else {
               this.statusSubmit = "success";
-              window.location.reload();
+             this._brandService.updateBrands();
+             form.reset();
             }
           },
           error: (err) => {

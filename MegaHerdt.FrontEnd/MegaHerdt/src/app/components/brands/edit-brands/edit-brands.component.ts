@@ -40,19 +40,7 @@ export class EditBrandsComponent implements OnInit {
   }
   
   loadBrands(){
-    this._brandService.getAll().subscribe({
-        next: (response) => {
-          if (response.error) {
-              console.log("no se pudieron cargar las categorias");
-          } else {
-            this.brands = response;
-          }
-        },
-        error: (err) => {
-          this.statusSubmit = "failed";
-          console.log(err)
-        }
-    });
+    this._brandService.brands.subscribe({next: response => this.brands = response});
   }
 
   openDialogDelete(brandId: number) {
@@ -75,7 +63,7 @@ export class EditBrandsComponent implements OnInit {
           if (response.error) {
               console.log("no se pudieron cargar las categorias");
           } else {
-            this.loadBrands();
+            this._brandService.updateBrands();
           }
         },
         error: (err) => {

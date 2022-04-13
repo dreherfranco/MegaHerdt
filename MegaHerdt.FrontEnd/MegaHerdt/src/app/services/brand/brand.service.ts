@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Brand } from 'src/app/models/ArticleBrand/Brand';
 import { BrandCreation } from 'src/app/models/ArticleBrand/BrandCreation';
 import { Global } from 'src/app/utils/Global';
@@ -11,10 +11,12 @@ import { Global } from 'src/app/utils/Global';
 export class BrandService {
   public url: string;
   public headers =  new HttpHeaders().set('Content-Type', 'application/json');
+  public brands = new BehaviorSubject<Array<Brand>>([]);
 
   constructor(private _http: HttpClient) 
   {
     this.url = Global.url + "ArticlesBrands";
+    this.updateBrands();
   }
 
   create(category: BrandCreation, token: string): Observable<any>{
@@ -23,6 +25,11 @@ export class BrandService {
     return this._http.post(this.url + "/create", params, { headers: this.headers });
   }
 
+  updateBrands(){
+    this.getAll().subscribe({
+      next: res => this.brands.next(res)
+    })
+  }
   /**
    * 
    * @returns Array: Category 

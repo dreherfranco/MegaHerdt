@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ArticleCreation } from 'src/app/models/Article/ArticleCreation';
 import { Brand } from 'src/app/models/ArticleBrand/Brand';
 import { Category } from 'src/app/models/ArticleCategory/Category';
@@ -6,6 +7,8 @@ import { ArticleService } from 'src/app/services/articles/article.service';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogCreateBrandComponent } from '../../brands/create-brand/dialog-create-brand/dialog-create-brand.component';
+import { DialogCreateCategoryComponent } from '../../categories/create-category/dialog-create-category/dialog-create-category.component';
 
 @Component({
   selector: 'app-create-article',
@@ -22,7 +25,7 @@ export class CreateArticleComponent implements OnInit {
   imageOk: boolean = false;
 
   constructor(private _storageService: StorageService, private _articleService: ArticleService,
-    private _categoryService: CategoryService, private _brandService: BrandService) {
+    private _categoryService: CategoryService, private _brandService: BrandService,public dialog: MatDialog) {
     this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0);
     this.statusSubmit = "";
     this.categories = new Array<Category>();
@@ -93,5 +96,31 @@ export class CreateArticleComponent implements OnInit {
 
   disabledForm(articleForm:any): boolean{
     return articleForm.invalid || !this.imageOk || this.categoryId == 0 || this.brandId == 0;
+  }
+
+  openDialogCreateBrand(){
+    const dialogRef = this.dialog.open(DialogCreateBrandComponent,
+      {
+        data: this.article
+      });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result != undefined){
+        this.loadBrands();
+      }
+    });
+  }
+
+  openDialogCreateCategory(){
+    const dialogRef = this.dialog.open(DialogCreateCategoryComponent,
+      {
+        data: this.article
+      });
+
+    dialogRef.afterClosed().subscribe((result:any) => {
+      if(result != undefined){
+        this.loadCategories();
+      }
+    });
   }
 }

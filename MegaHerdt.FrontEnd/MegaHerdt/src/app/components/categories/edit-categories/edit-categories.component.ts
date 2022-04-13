@@ -40,18 +40,8 @@ export class EditCategoriesComponent implements OnInit {
   }
   
   loadCategories(){
-    this._categoryService.getAll().subscribe({
-        next: (response) => {
-          if (response.error) {
-              console.log("no se pudieron cargar las categorias");
-          } else {
-            this.categories = response;
-          }
-        },
-        error: (err) => {
-          this.statusSubmit = "failed";
-          console.log(err)
-        }
+    this._categoryService.categories.subscribe({
+      next: res => this.categories = res 
     });
   }
 
@@ -75,7 +65,7 @@ export class EditCategoriesComponent implements OnInit {
           if (response.error) {
               console.log("no se pudieron cargar las categorias");
           } else {
-            this.loadCategories();
+            this._categoryService.updateCategories();
           }
         },
         error: (err) => {

@@ -25,20 +25,28 @@
         </div>
 
         <div class="row">
-            <div class="form-group mb-3 col-sm-6">
+            <div class="form-group mb-3 col-sm-8">
                 <label for="category"><b>*Categoria: </b></label>
                 <select class="form-select data-user" name="selectCategory" [(ngModel)]="categoryId">
                     <option class="data-user" name="category" *ngFor="let category of categories"
                         [ngValue]="category.id">{{category.name}}</option>
                 </select>
             </div>
+            <div class="col-sm-4 mt-3 p-1">
+                <button class="btn btn-primary" (click)="openDialogCreateCategory()"><i class="bi bi-plus-circle-fill"></i></button>
+            </div>
+        </div>
 
-            <div class="form-group mb-3 col-sm-6">
+        <div class="row">
+            <div class="form-group mb-3 col-sm-8">
                 <label for="brand"><b>*Marca: </b></label>
                 <select class="form-select data-user" name="selectBrand" [(ngModel)]="brandId">
                     <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">
                         {{brand.name}}</option>
                 </select>
+            </div>
+            <div class="col-sm-4 mt-3 p-1">
+                <button class="btn btn-primary" (click)="openDialogCreateBrand()"><i class="bi bi-plus-circle-fill"></i></button>
             </div>
         </div>
         <p>
