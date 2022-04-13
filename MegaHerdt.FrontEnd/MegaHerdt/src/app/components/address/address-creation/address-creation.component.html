@@ -3,14 +3,14 @@
     <form #addressForm="ngForm" action="#">
     <div class="row">
         <div class="form-group col-sm-3 mb-3">
-            <label for="province"><b>*Provincia:</b></label>
+            <label for="province"><b>(*)Provincia:</b></label>
             <select class="form-select data-user" name="selectProvince" [(ngModel)]="provinceId" (change)="onChangeProvinces()">
                 <option class="data-user" name="province" *ngFor="let province of provinces.provincias" [ngValue]="province.id">{{province.nombre}}</option>
             </select>
         </div>
 
         <div class="form-group col-sm-6 mb-3">
-            <label for="department"><b>*Departamento:</b></label>
+            <label for="department"><b>(*)Departamento:</b></label>
             <select *ngIf="provinceChoosed" class="form-select data-user" name="selectDepartment" [(ngModel)]="departmentId" (change)="onChangeDepartments()">
                 <option class="data-user" name="department" *ngFor="let department of this.departments" [ngValue]="department.id">{{department.nombre}}</option>
             </select>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group col-sm-3 mb-3">
-            <label for="townName"><b>*Localidad:</b></label>
+            <label for="townName"><b>(*)Localidad:</b></label>
             <select *ngIf="departmentChoosed" class="form-select data-user" name="selectLocality" [(ngModel)]="localityId" (change)="onChangeLocalities()">
                 <option class="data-user" name="locality" *ngFor="let locality of this.localities" [ngValue]="locality.id">{{locality.nombre}}</option>
             </select>
@@ -27,14 +27,14 @@
 
         <div class="row">
             <div class="form-group col-sm-6 mb-3">
-                <label for="streetName"><b>*Nombre de calle:</b></label>
+                <label for="streetName"><b>(*)Nombre de calle:</b></label>
                 <input placeholder="Ingrese nombre de calle" class="form-control" type="text" name="streetName" #streetName="ngModel" [(ngModel)]="address.streetName" required />
                 <span *ngIf="streetName.touched && !streetName.valid" class="text-danger">Ingrese un nombre de calle
                     valido</span>
             </div>
     
             <div class="form-group col-sm-6 mb-3">
-                <label for="streetNumber"><b>*Numero de calle:</b></label>
+                <label for="streetNumber"><b>(*)Numero de calle:</b></label>
                 <input class="form-control" placeholder="Ingrese numero de calle" type="text" name="streetNumber" #streetNumber="ngModel" [(ngModel)]="address.streetNumber"
                     required />
                 <span *ngIf="streetNumber.touched && !streetNumber.valid" class="text-danger">Ingrese un numero de calle
@@ -44,7 +44,7 @@
 
         <div class="row">
             <div class="form-group col-sm-3 mb-3">
-                <label for="postalCode"><b>*Codigo Postal:</b></label>
+                <label for="postalCode"><b>(*)Codigo Postal:</b></label>
                 <input class="form-control" type="text" placeholder="Ingrese codigo postal" name="postalCode" #postalCode="ngModel" [(ngModel)]="address.postalCode" required />
                 <span *ngIf="postalCode.touched && !postalCode.valid" class="text-danger">Ingrese un numero postal
                     valido</span>
@@ -56,6 +56,7 @@
                 <span *ngIf="floor.touched && !floor.valid" class="text-danger">Ingrese un piso valido</span>
             </div>
         </div>
+        <b class="a1">(*)Obligatorio</b>
     </div>
 </form>
 </div>
