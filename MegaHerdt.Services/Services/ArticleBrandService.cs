@@ -1,6 +1,8 @@
 ﻿using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Services.Services.Base;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace MegaHerdt.Services.Services
 {
@@ -10,6 +12,12 @@ namespace MegaHerdt.Services.Services
         public ArticleBrandService(ArticleBrandHelper articleBrandHelper):
             base(articleBrandHelper)
         {     
+        }
+
+        public IQueryable<ArticleBrand> GetStatisticsData(Expression<Func<ArticleBrand, bool>> filter = null)
+        {
+            return helper.Get(filter)
+                .Include(x => x.Articles);
         }
 
         public bool Exist(string brandName)

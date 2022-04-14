@@ -1,21 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { BrandStatistics } from 'src/app/models/ArticleBrand/BrandStatistics';
+import { BrandService } from 'src/app/services/brand/brand.service';
 import { ChartConfiguration, ChartData, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { CategoryService } from 'src/app/services/category/category.service';
-import { CategoryStatistics } from 'src/app/models/ArticleCategory/CategoryStatistics';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
-  selector: 'app-category-graphic',
-  templateUrl: './category-graphic.component.html',
-  styleUrls: ['./category-graphic.component.css']
+  selector: 'app-brand-graphic',
+  templateUrl: './brand-graphic.component.html',
+  styleUrls: ['./brand-graphic.component.css']
 })
+export class BrandGraphicComponent implements OnInit {
+  brandsStatistics: BrandStatistics[] = [];
 
-export class CategoryGraphicComponent implements OnInit {
-  categoryStatistics: CategoryStatistics[] = [];
-
-  constructor(private _categoryService: CategoryService, private _storageService: StorageService) {
+  constructor(private _brandService: BrandService, private _storageService: StorageService) {
 
   }
 
@@ -64,16 +63,17 @@ export class CategoryGraphicComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._categoryService.getStatistics(this._storageService.getTokenValue()).subscribe({
+    this._brandService.getStatistics(this._storageService.getTokenValue()).subscribe({
       next: res => {
-        this.categoryStatistics = res;
+        this.brandsStatistics = res;
         this.barChartData.datasets[0].label = "Cantidad articulos";
-        for (var i = 0; i < this.categoryStatistics.length; i++) {
-          this.barChartData.labels?.push(this.categoryStatistics[i].name);
-          this.barChartData.datasets[0].data.push(this.categoryStatistics[i].articlesQuantity);
+        for (var i = 0; i < this.brandsStatistics.length; i++) {
+          this.barChartData.labels?.push(this.brandsStatistics[i].name);
+          this.barChartData.datasets[0].data.push(this.brandsStatistics[i].articlesQuantity);
         }
         this.chart?.update();
       }
     })
   }
+
 }

@@ -96,6 +96,7 @@ import { ForgetPasswordComponent } from './components/users/forget-password/forg
 import { DialogCreateBrandComponent } from './components/brands/create-brand/dialog-create-brand/dialog-create-brand.component';
 import { DialogCreateCategoryComponent } from './components/categories/create-category/dialog-create-category/dialog-create-category.component';
 import { CategoryGraphicComponent } from './components/categories/category-graphic/category-graphic.component';
+import { BrandGraphicComponent } from './components/brands/brand-graphic/brand-graphic.component';
 
 @NgModule({
   declarations: [
@@ -182,6 +183,7 @@ import { CategoryGraphicComponent } from './components/categories/category-graph
     DialogCreateBrandComponent,
     DialogCreateCategoryComponent,
     CategoryGraphicComponent,
+    BrandGraphicComponent,
   ],
   imports: [
     BrowserModule,

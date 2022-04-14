@@ -38,6 +38,11 @@ export class BrandService {
     return this._http.get(this.url, { headers: this.headers });
   }
 
+  getStatistics(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + '/statistics', { headers: this.headers });
+  }
+  
   update(category: Brand, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(category);

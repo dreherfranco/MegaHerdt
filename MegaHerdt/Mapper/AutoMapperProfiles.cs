@@ -91,6 +91,10 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ArticleBrand, ArticleBrandDTO>()
                 .ReverseMap();
             CreateMap<ArticleBrandCreationDTO, ArticleBrand>();
+            CreateMap<ArticleBrand, ArticleBrandStatisticsDTO>()
+                .ForMember(x => x.Id, x => x.MapFrom(y => y.Id))
+                .ForMember(x => x.Name, x => x.MapFrom(y => y.Name))
+                .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count));
             #endregion ArticleBrand
 
             #region ArticleCategory

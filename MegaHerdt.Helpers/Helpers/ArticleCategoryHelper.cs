@@ -14,11 +14,6 @@ namespace MegaHerdt.Helpers.Helpers
         {
         }
 
-        public override IQueryable<ArticleCategory> Get(Expression<Func<ArticleCategory, bool>> filter = null)
-        {
-            return repository.Get(filter)
-                .Include(x => x.Articles);
-        }
 
     }
 }

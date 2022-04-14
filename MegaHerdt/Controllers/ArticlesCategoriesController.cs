@@ -60,7 +60,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var articlesCategories = articleCategoryService.GetAll();          
+                var articlesCategories = articleCategoryService.GetStatisticsData().ToList();          
                 return this.Mapper.Map<List<ArticleCategoryStatisticsDTO>>(articlesCategories);
             }
             catch (Exception ex)
