@@ -22,7 +22,8 @@ namespace MegaHerdt.Services.Services
         public IQueryable<ArticleCategory> GetStatisticsData(Expression<Func<ArticleCategory, bool>> filter = null)
         {
             return this.helper.Get(filter)
-                .Include(x => x.Articles);
+                .Include(x => x.Articles)
+                .ThenInclude(x => x.PurchaseArticles);
         }
 
         public bool Exist(string categoryName)

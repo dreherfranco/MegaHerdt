@@ -94,7 +94,8 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ArticleBrand, ArticleBrandStatisticsDTO>()
                 .ForMember(x => x.Id, x => x.MapFrom(y => y.Id))
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.Name))
-                .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count));
+                .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count))
+                .ForMember(x => x.PurchasesQuantity, x => x.MapFrom(this.BrandPurchasesQuantityMap));
             #endregion ArticleBrand
 
             #region ArticleCategory
@@ -104,7 +105,8 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ArticleCategory, ArticleCategoryStatisticsDTO>()
                 .ForMember(x => x.Id, x=>x.MapFrom(y => y.Id))
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.Name))
-                .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count));
+                .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count))
+                .ForMember(x => x.PurchasesQuantity, x => x.MapFrom(this.CategoryPurchasesQuantityMap));
             #endregion ArticleCategory
 
             #region Article
@@ -402,6 +404,35 @@ namespace MegaHerdt.API.Mapper
             return result;
         }
         #endregion ArticleUtilsMethods
+
+        #region PurchasesQuantity
+        public int BrandPurchasesQuantityMap(ArticleBrand articleBrand, ArticleBrandStatisticsDTO articleBrandStatisticsDTO)
+        {
+            var sum = 0;
+            foreach(var article in articleBrand.Articles)
+            {
+                foreach (var purchaseArticle in article.PurchaseArticles)
+                {
+                    sum += purchaseArticle.ArticleQuantity;
+                }
+            }
+            return sum;
+        }
+
+        public int CategoryPurchasesQuantityMap(ArticleCategory articleCategory, ArticleCategoryStatisticsDTO articleCategoryStatisticsDTO)
+        {
+            var sum = 0;
+            foreach (var article in articleCategory.Articles)
+            {
+                foreach (var purchaseArticle in article.PurchaseArticles)
+                {
+                    sum += purchaseArticle.ArticleQuantity;
+                }
+            }
+            return sum;
+        }
+
+        #endregion
     }
 }
 
