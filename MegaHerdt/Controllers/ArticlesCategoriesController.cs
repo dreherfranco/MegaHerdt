@@ -53,6 +53,23 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("statistics")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public ActionResult<List<ArticleCategoryStatisticsDTO>> GetStatistics()
+        {
+            try
+            {
+                var articlesCategories = articleCategoryService.GetAll();          
+                return this.Mapper.Map<List<ArticleCategoryStatisticsDTO>>(articlesCategories);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
         [HttpPost("create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]

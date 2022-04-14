@@ -6,6 +6,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgxStripeModule } from 'ngx-stripe';
 import { AlertModule, AlertConfig } from 'ngx-bootstrap/alert';
+import { NgChartsModule } from 'ng2-charts';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -93,6 +95,7 @@ import { DialogConfirmDeleteComponent } from './components/general/dialog-confir
 import { ForgetPasswordComponent } from './components/users/forget-password/forget-password.component';
 import { DialogCreateBrandComponent } from './components/brands/create-brand/dialog-create-brand/dialog-create-brand.component';
 import { DialogCreateCategoryComponent } from './components/categories/create-category/dialog-create-category/dialog-create-category.component';
+import { CategoryGraphicComponent } from './components/categories/category-graphic/category-graphic.component';
 
 @NgModule({
   declarations: [
@@ -178,6 +181,7 @@ import { DialogCreateCategoryComponent } from './components/categories/create-ca
     ForgetPasswordComponent,
     DialogCreateBrandComponent,
     DialogCreateCategoryComponent,
+    CategoryGraphicComponent,
   ],
   imports: [
     BrowserModule,
@@ -191,6 +195,8 @@ import { DialogCreateCategoryComponent } from './components/categories/create-ca
     MatDialogModule,
     BsDropdownModule,
     AlertModule,
+    ColorPickerModule,
+    NgChartsModule,
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
   ],
   providers: [],

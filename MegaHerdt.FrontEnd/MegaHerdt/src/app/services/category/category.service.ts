@@ -39,6 +39,11 @@ export class CategoryService {
     return this._http.get(this.url, { headers: this.headers });
   }
 
+  getStatistics(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + '/statistics', { headers: this.headers });
+  }
+
   update(category: Category, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(category);
