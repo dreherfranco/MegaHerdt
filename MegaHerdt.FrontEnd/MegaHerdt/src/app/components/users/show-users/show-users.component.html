@@ -1,15 +1,26 @@
 <div clas="container-fluid">
-    <div class="input-group mb-3 w-50 mx-auto searcher">
-        <div class="input-group-prepend">
-          <div class="input-group-text">
-            <i class="bi bi-search"></i>
-          </div>
-        </div>
-        <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
+  <div class="input-group mb-3 w-50 mx-auto searcher">
+    <div class="input-group-prepend">
+      <div class="input-group-text">
+        <i class="bi bi-search"></i>
       </div>
+    </div>
+    <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
+  </div>
+  <div class="table-responsive m-1 mb-0">
+    <table matSort (matSortChange)="sortData($event)" class="table">
+      <tr>
+        <th class="data-user font-weight-bold">ORDENAR POR: </th>
+        <th mat-sort-header="name" class="font-weight-normal">NOMBRE</th>
+        <th mat-sort-header="surname" class="font-weight-normal">APELLIDO</th>
+        <th mat-sort-header="dni" class="font-weight-normal">DNI</th>
+        <th mat-sort-header="email" class="font-weight-normal">EMAIL</th>
+      </tr>
+    </table>
+  </div>
 
-    <div class="row">                  
-        <div class="col-md-4" *ngFor="let user of users 
+  <div class="row mt-0">
+    <div class="col-md-4" *ngFor="let user of sortedData 
         | filter: searchText
         | paginate: 
         {
@@ -17,14 +28,13 @@
             currentPage:this.paginate.page
         }
         ">
-            <app-user-detail-administrate [user]="user"></app-user-detail-administrate>
-        </div>
-    
-        <pagination-controls class="text-center"
-        (pageChange)="this.paginate.page = $event" 
-        previousLabel="Anterior" 
-        nextLabel="Siguiente">
-        </pagination-controls>
-        
+      <app-user-detail-administrate [user]="user"></app-user-detail-administrate>
     </div>
+
+    <pagination-controls class="text-center" (pageChange)="this.paginate.page = $event" previousLabel="Anterior"
+      nextLabel="Siguiente">
+    </pagination-controls>
+
+  </div>
+
 </div>

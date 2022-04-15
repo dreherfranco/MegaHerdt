@@ -3,6 +3,7 @@ import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
+import {Sort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-show-users',
@@ -13,6 +14,7 @@ export class ShowUsersComponent implements OnInit {
   users: Array<UserDetail>;
   paginate: Paginate;
   searchText: string;
+  sortedData: UserDetail[] = [];
 
   constructor(private _storageService: StorageService, private _userService: UserService) {
     this.users = new Array<UserDetail>();
@@ -24,13 +26,15 @@ export class ShowUsersComponent implements OnInit {
     this.loadUsers();
   }
 
+  
   loadUsers(){
     this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se pudieron obtener los usuarios correctamente");
         } else {
-            this.users = response;    
+            this.users = response;  
+            this.sortedData = this.users.slice();  
         }
         
       },
@@ -39,4 +43,33 @@ export class ShowUsersComponent implements OnInit {
       }
     });
   }
+
+  sortData(sort: Sort) {
+    const data = this.users.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'name':
+          return compare(a.name, b.name, isAsc);
+        case 'dni':
+          return compare(a.dni, b.dni, isAsc);
+        case 'surname':
+          return compare(a.surname, b.surname, isAsc);
+        case 'email':
+          return compare(a.email, b.email, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+  
 }
+
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+  }
