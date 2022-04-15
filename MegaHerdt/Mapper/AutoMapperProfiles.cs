@@ -95,7 +95,8 @@ namespace MegaHerdt.API.Mapper
                 .ForMember(x => x.Id, x => x.MapFrom(y => y.Id))
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.Name))
                 .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count))
-                .ForMember(x => x.PurchasesQuantity, x => x.MapFrom(this.BrandPurchasesQuantityMap));
+                .ForMember(x => x.PurchasesQuantity, x => x.MapFrom(this.BrandPurchasesQuantityMap))
+                .ForMember(x => x.ReparationsQuantity, x => x.MapFrom(this.BrandReparationsQuantityMap));
             #endregion ArticleBrand
 
             #region ArticleCategory
@@ -106,7 +107,8 @@ namespace MegaHerdt.API.Mapper
                 .ForMember(x => x.Id, x=>x.MapFrom(y => y.Id))
                 .ForMember(x => x.Name, x => x.MapFrom(y => y.Name))
                 .ForMember(x => x.ArticlesQuantity, x => x.MapFrom(y => y.Articles.Count))
-                .ForMember(x => x.PurchasesQuantity, x => x.MapFrom(this.CategoryPurchasesQuantityMap));
+                .ForMember(x => x.PurchasesQuantity, x => x.MapFrom(this.CategoryPurchasesQuantityMap))
+                .ForMember(x => x.ReparationsQuantity, x => x.MapFrom(this.CategoryReparationsQuantityMap));
             #endregion ArticleCategory
 
             #region Article
@@ -427,6 +429,32 @@ namespace MegaHerdt.API.Mapper
                 foreach (var purchaseArticle in article.PurchaseArticles)
                 {
                     sum += purchaseArticle.ArticleQuantity;
+                }
+            }
+            return sum;
+        }
+
+        public int CategoryReparationsQuantityMap(ArticleCategory articleCategory, ArticleCategoryStatisticsDTO articleCategoryStatisticsDTO)
+        {
+            var sum = 0;
+            foreach (var article in articleCategory.Articles)
+            {
+                foreach (var reparationArticle in article.ReparationArticles)
+                {
+                    sum += reparationArticle.ArticleQuantity;
+                }
+            }
+            return sum;
+        }
+
+        public int BrandReparationsQuantityMap(ArticleBrand articleBrand, ArticleBrandStatisticsDTO articleBrandStatisticsDTO)
+        {
+            var sum = 0;
+            foreach (var article in articleBrand.Articles)
+            {
+                foreach (var reparationArticle in article.ReparationArticles)
+                {
+                    sum += reparationArticle.ArticleQuantity;
                 }
             }
             return sum;

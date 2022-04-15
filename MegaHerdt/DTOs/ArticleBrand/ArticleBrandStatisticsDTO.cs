@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public int ArticlesQuantity { get; set; }
         public int PurchasesQuantity { get; set; }
+        public int ReparationsQuantity { get; set; }
     }
 }

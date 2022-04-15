@@ -52,6 +52,9 @@ export class BrandGraphicComponent implements OnInit {
       },
       {
         data: []
+      },
+      {
+        data: []
       }
     ]
   };
@@ -70,11 +73,14 @@ export class BrandGraphicComponent implements OnInit {
       next: res => {
         this.brandsStatistics = res;
         this.barChartData.datasets[0].label = "Cantidad articulos";
-        this.barChartData.datasets[1].label = "Cantidad compras";
+        this.barChartData.datasets[1].label = "Unidades compradas";
+        this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
+        
         for (var i = 0; i < this.brandsStatistics.length; i++) {
           this.barChartData.labels?.push(this.brandsStatistics[i].name);
           this.barChartData.datasets[0].data.push(this.brandsStatistics[i].articlesQuantity);
           this.barChartData.datasets[1].data.push(this.brandsStatistics[i].purchasesQuantity);
+          this.barChartData.datasets[2].data.push(this.brandsStatistics[i].reparationsQuantity);
         }
         this.chart?.update();
       }

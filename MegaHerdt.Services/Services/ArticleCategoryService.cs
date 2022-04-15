@@ -23,7 +23,9 @@ namespace MegaHerdt.Services.Services
         {
             return this.helper.Get(filter)
                 .Include(x => x.Articles)
-                .ThenInclude(x => x.PurchaseArticles);
+                .ThenInclude(x => x.PurchaseArticles)
+                .Include(x => x.Articles)
+                .ThenInclude(x => x.ReparationArticles);
         }
 
         public bool Exist(string categoryName)

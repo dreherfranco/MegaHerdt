@@ -53,6 +53,9 @@ export class CategoryGraphicComponent implements OnInit {
       },
       {
         data: []
+      },
+      {
+        data: []
       }
     ]
   };
@@ -71,11 +74,13 @@ export class CategoryGraphicComponent implements OnInit {
       next: res => {
         this.categoryStatistics = res;
         this.barChartData.datasets[0].label = "Cantidad articulos";
-        this.barChartData.datasets[1].label = "Cantidad compras";
+        this.barChartData.datasets[1].label = "Unidades compradas";
+        this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
         for (var i = 0; i < this.categoryStatistics.length; i++) {
           this.barChartData.labels?.push(this.categoryStatistics[i].name);
           this.barChartData.datasets[0].data.push(this.categoryStatistics[i].articlesQuantity);
           this.barChartData.datasets[1].data.push(this.categoryStatistics[i].purchasesQuantity);
+          this.barChartData.datasets[2].data.push(this.categoryStatistics[i].reparationsQuantity);
         }
         this.chart?.update();
       }
