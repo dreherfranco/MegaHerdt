@@ -7,14 +7,14 @@
     </div>
     <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
   </div>
-  <div class="table-responsive m-1 mb-0">
+  <div class="table-responsive m-1 mb-0 w-75 mx-auto">
     <table matSort (matSortChange)="sortData($event)" class="table">
       <tr>
-        <th class="data-user font-weight-bold">ORDENAR POR: </th>
-        <th mat-sort-header="name" class="font-weight-normal">NOMBRE</th>
-        <th mat-sort-header="surname" class="font-weight-normal">APELLIDO</th>
-        <th mat-sort-header="dni" class="font-weight-normal">DNI</th>
-        <th mat-sort-header="email" class="font-weight-normal">EMAIL</th>
+        <th class="data-user font-weight-bold text-center">ORDENAR POR: </th>
+        <th mat-sort-header="name" class="font-weight-normal text-center">NOMBRE</th>
+        <th mat-sort-header="surname" class="font-weight-normal text-center">APELLIDO</th>
+        <th mat-sort-header="dni" class="font-weight-normal text-center">DNI</th>
+        <th mat-sort-header="email" class="font-weight-normal text-center">EMAIL</th>
       </tr>
     </table>
   </div>

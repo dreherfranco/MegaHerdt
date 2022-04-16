@@ -95,3 +95,7 @@ thead{
 .required{
     color: #007BC1;
 }
+
+.mat-sort-header-arrow {
+    color: #000000;
+}

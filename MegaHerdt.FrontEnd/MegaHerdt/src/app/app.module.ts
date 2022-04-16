@@ -9,6 +9,7 @@ import { AlertModule, AlertConfig } from 'ngx-bootstrap/alert';
 import { NgChartsModule } from 'ng2-charts';
 import { ColorPickerModule } from 'ngx-color-picker';
 import {MatSortModule} from '@angular/material/sort';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -201,6 +202,7 @@ import { BrandGraphicComponent } from './components/brands/brand-graphic/brand-g
     ColorPickerModule,
     NgChartsModule,
     MatSortModule,
+    MatAutocompleteModule,
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
   ],
   providers: [],
