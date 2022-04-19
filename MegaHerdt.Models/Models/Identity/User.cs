@@ -14,6 +14,9 @@ namespace MegaHerdt.Models.Models.Identity
         [Required]
         public string Surname { get; set; }
         public bool Enabled { get; set; } = true;
+        public bool IsActive { get; set; } = true;
+        public DateTime LastLogin { get; set; }
+        public DateTime CreatedDate { get; set; }
         public List<Phone> Phones { get; set; }
         public List<Address> Addresses { get; set; }
         public List<Reparation> ClientReparations { get; set; }

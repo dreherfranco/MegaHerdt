@@ -14,11 +14,38 @@ namespace MegaHerdt.Services.Services
             this.AuthHelper = authHelper;
         }
 
-        public  IEnumerable<User> Get()
+        public  async Task<IEnumerable<User>> GetEnabledsUsers(string jwtKey)
         {
-            return AuthHelper.Get()
+            
+            var users = AuthHelper.Get()
                 .Where(x => x.Enabled);
+            users = await this.UpdateActivesUsers(users, jwtKey);
+            return users;
         }
+
+        private async Task<IQueryable<User>> UpdateActivesUsers(IQueryable<User> users, string jwtKey)
+        {
+            foreach (var user in users)
+            {
+                if (IsActive(user))
+                {
+                    user.IsActive = true;
+                    await this.AuthHelper.UserUpdate(user, jwtKey);
+                }
+                else
+                {
+                    user.IsActive = false;
+                    await this.AuthHelper.UserUpdate(user, jwtKey);
+                }
+            }
+            return users;
+        }
+
+        public IEnumerable<User> GetAll()
+        {
+            return AuthHelper.Get();
+        }
+
         public User GetByEmail(string email)
         {
             Expression<Func<User, bool>> filter = x => x.Email == email;
@@ -72,5 +99,11 @@ namespace MegaHerdt.Services.Services
             return await this.AuthHelper.GetUserRoles(userEmail);
         }
        
+        private bool IsActive(User user)
+        {
+            var differenceDate = DateTime.UtcNow.Subtract(user.LastLogin.Date);
+            var twoMonthsInDays = 60;
+            return differenceDate.Days < twoMonthsInDays;
+        }
     }
 }

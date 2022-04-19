@@ -2,6 +2,10 @@
 .card{
     box-shadow: 2px 2px 2px #007BC1 !important;
 }
+.card-img-top{
+    width: 55% !important;
+    height: 40% !important;
+}
 
 .link-custom{
     font-weight: bold !important;
@@ -12,4 +16,22 @@
 .link-custom:hover{
     color: white !important;
     background-color: black !important;
+}
+
+.badge-success{
+    background-color: #1b9d2b !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.badge-danger{
+    background-color: #ff3b00 !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+.border-right{
+    border: black !important;
+    border-right: 2px outset !important;
+    
 }

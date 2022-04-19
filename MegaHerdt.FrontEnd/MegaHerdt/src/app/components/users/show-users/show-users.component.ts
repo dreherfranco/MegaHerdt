@@ -3,7 +3,7 @@ import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
-import {Sort} from '@angular/material/sort';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-show-users',
@@ -18,27 +18,27 @@ export class ShowUsersComponent implements OnInit {
 
   constructor(private _storageService: StorageService, private _userService: UserService) {
     this.users = new Array<UserDetail>();
-    this.paginate = new Paginate(1,6);
+    this.paginate = new Paginate(1, 6);
     this.searchText = "";
-   }
+  }
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
-  
-  loadUsers(){
-    this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
+
+  loadUsers() {
+    this._userService.getEnabledUsers(this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se pudieron obtener los usuarios correctamente");
         } else {
-            this.users = response;  
-            this.sortedData = this.users.slice();  
+          this.users = response;
+          this.sortedData = this.users.slice();
         }
-        
+
       },
-      error: (err) => {          
+      error: (err) => {
         console.log(err);
       }
     });
@@ -62,14 +62,18 @@ export class ShowUsersComponent implements OnInit {
           return compare(a.surname, b.surname, isAsc);
         case 'email':
           return compare(a.email, b.email, isAsc);
+        case 'createdDate':
+          return compare(a.createdDate, b.createdDate, isAsc);
+        case 'lastLogin':
+          return compare(a.lastLogin, b.lastLogin, isAsc);
         default:
           return 0;
       }
     });
   }
-  
+
 }
 
-function compare(a: number | string, b: number | string, isAsc: boolean) {
+function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
-  }
+}

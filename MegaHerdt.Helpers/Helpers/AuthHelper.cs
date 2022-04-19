@@ -28,6 +28,8 @@ namespace MegaHerdt.Helpers.Helpers
 
         public async Task<UserToken> CreateUser(User user, string jwtKey)
         {
+            user.CreatedDate = DateTime.UtcNow;
+            user.LastLogin = DateTime.UtcNow;
             var result = await this.userManager.CreateAsync(user, user.Password);
 
             if (result.Succeeded)
@@ -46,6 +48,11 @@ namespace MegaHerdt.Helpers.Helpers
             
             if (findUser != null && findUser.Enabled && result.Succeeded)
             {    
+                findUser.LastLogin = DateTime.UtcNow;
+                findUser.IsActive = true;
+
+                await this.userRepository.Update(findUser);
+
                 return await BuildToken(findUser, jwtKey);
             }
             throw new Exception("Invalid login attempt.");
@@ -73,6 +80,7 @@ namespace MegaHerdt.Helpers.Helpers
             }
             throw new Exception("User doesn't exists");
         }
+
 
         public async Task<UserToken> ChangeForgotPassword(string userEmail, string newPassword, string jwtKey)
         {

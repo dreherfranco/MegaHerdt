@@ -33,6 +33,25 @@ namespace MegaHerdt.API.Controllers
             this.mailService = mailService;
         }
 
+        [HttpGet("get-enabled-users")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<List<UserDetailDTO>>> GetEnabledUsers(/*[FromQuery] PaginationDTO paginationDTO*/)
+        {
+            try
+            {
+                var users = await this.UserService.GetEnabledsUsers(Configuration["jwt:key"]);
+                 //await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
+           //      var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
+                return Mapper.Map<List<UserDetailDTO>>(users);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
+
         [HttpGet("get-users")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
@@ -40,7 +59,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var users = this.UserService.Get().ToList();
+                var users = this.UserService.GetAll().ToList();
                 // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
                 // var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
                 return Mapper.Map<List<UserDetailDTO>>(users);
