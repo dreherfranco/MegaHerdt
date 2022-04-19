@@ -1,14 +1,15 @@
-<div class="card text-center mb-3 m-2 border border-dark">
+<div class="card text-center m-1 border border-dark">
     
     <div class="card-body row">
-        <div class="col-sm-5 border-right">
+        <div class="col-sm-6 border-right">
             <img src="../../../../assets/images/user-image.png" class="card-img-top d-flex align-items-start">
-            <p class="card-text d-flex align-items-start flex-column flex-md-row data-user badge badge-success text-center mt-1 col-sm-9" *ngIf="user.isActive">
+            <p class="card-text d-flex align-items-start flex-column flex-md-row data-user badge badge-success text-center mt-1 col-sm-8" *ngIf="user.isActive">
                 Usuario activo
             </p>
-            <p class="card-text d-flex align-items-start flex-column flex-md-row data-user badge badge-danger text-center mt-1 col-sm-10" *ngIf="!user.isActive">
+            <p class="card-text d-flex align-items-start flex-column flex-md-row data-user badge badge-danger text-center mt-1 col-sm-9" *ngIf="!user.isActive">
                 Usuario inactivo
             </p>
+            <p class="card-text d-flex flex-column flex-md-row data-user">Ultimo acceso: {{ user.lastLogin | date: 'dd/MM/yyyy'  }}</p>
             <p class="card-text d-flex align-items-start flex-column flex-md-row data-user">
                 Creacion: {{ user.createdDate | date: 'dd/MM/yyyy'  }}
             </p>
@@ -17,11 +18,12 @@
             <p class="card-title d-flex flex-column flex-md-row data-user">Nombre: {{user.name | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">Apellido: {{user.surname | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">DNI: {{ user.dni }}</p>
-            <p class="card-text d-flex flex-column flex-md-row data-user">Email: {{ user.email }}</p>
-            <p class="card-text d-flex flex-column flex-md-row data-user">Ultimo acceso: {{ user.lastLogin | date: 'dd/MM/yyyy'  }}</p>
-        </div>
-        <div class="d-flex flex-column flex-md-row justify-content-end align-items-end mt-2">
+            <p class="card-text d-flex flex-column flex-md-row data-user text-start">Email: {{ user.email }}</p>
+            
+            <div class="d-flex flex-column flex-md-row justify-content-end align-items-end mt-5">
                 <a class="btn link-custom" [routerLink]="['edit-role-user', user.email]">MODIFICAR ROLES</a>
+            </div>
         </div>
+       
     </div>
   </div>
