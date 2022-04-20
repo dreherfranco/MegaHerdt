@@ -53,10 +53,24 @@
         Estados de reparaciones
     </a>
 </li>
-<li role="menuitem">
-    <a [routerLink]="['administrate/administrate-reparations']" class="dropdown-item btn text-dark link-custom border border-color-custom">
-        Reparaciones
-    </a>
+<li role="menuitem" dropdown triggers="mouseover" placement="bottom right" container="body">
+    <button id="button-nested" type="button" dropdownToggle
+        class="dropdown-item dropdown-toggle btn text-dark link-custom border border-color-custom"
+        aria-controls="dropdown-basic">
+        Reparaciones <span class="caret"></span>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu dropdown-menu-right m-0 p-0" role="menu" aria-labelledby="button-basic">
+        <li role="menuitem" >
+            <a [routerLink]="['administrate/administrate-reparations/create']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+                Crear
+            </a>
+        </li>
+        <li role="menuitem">
+            <a [routerLink]="['administrate/administrate-reparations/edit']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+                Editar
+            </a>
+        </li>
+    </ul>
 </li>
 <li role="menuitem">
     <a [routerLink]="['administrate/administrate-transport-companies']" class="dropdown-item btn text-dark link-custom border border-color-custom">

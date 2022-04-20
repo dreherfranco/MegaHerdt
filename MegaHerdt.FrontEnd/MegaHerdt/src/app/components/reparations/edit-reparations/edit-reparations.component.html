@@ -1,4 +1,4 @@
-<div class="table-responsive">
+<div class="table-responsive p-1">
     <table class="table">
         <thead>
             <tr>
@@ -38,7 +38,7 @@
                         </option>
                     </select>
 
-                    <form class="mt-5" #articleReparationForm="ngForm">
+                    <form class="mt-2" #articleReparationForm="ngForm">
                         <div class="form-group mb-1 text-primary d-flex row">
                             <label for="article"><b>Agregar nuevo articulo:</b></label>
                         </div>
@@ -63,7 +63,7 @@
                             </div>
                             <div class="form-group mb-3 col">
                                 <p>
-                                    <button class="btn btn-success mt-3" (click)="addArticleReparation(reparation)"
+                                    <button class="btn btn-primary mt-3" (click)="addArticleReparation(reparation)"
                                         [disabled]="articleReparationForm.invalid"><i class="bi bi-plus-circle-fill"></i></button>
                                 </p>
                             </div>

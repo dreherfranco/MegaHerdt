@@ -16,7 +16,6 @@ import { AdministrateProvidersComponent } from './components/providers/administr
 import { AdministrateOffersComponent } from './components/offers/administrate-offers/administrate-offers.component';
 import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
 import { AdministrateReparationStatesComponent } from './components/reparation-states/administrate-reparation-states/administrate-reparation-states.component';
-import { AdministrateReparationsComponent } from './components/reparations/administrate-reparations/administrate-reparations.component';
 import { ReparationRecordComponent } from './components/reparations/reparation-record/reparation-record.component';
 import { CreateReparationClaimComponent } from './components/reparation-claims/create-reparation-claim/create-reparation-claim.component';
 import { ShowReparationClaimsComponent } from './components/reparation-claims/show-reparation-claims/show-reparation-claims.component';
@@ -36,6 +35,8 @@ import { UserChangePasswordComponent } from './components/users/user-change-pass
 import { CreateArticleComponent } from './components/articles/create-article/create-article.component';
 import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
 import { ForgetPasswordComponent } from './components/users/forget-password/forget-password.component';
+import { CreateReparationComponent } from './components/reparations/create-reparation/create-reparation.component';
+import { EditReparationsComponent } from './components/reparations/edit-reparations/edit-reparations.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -88,7 +89,11 @@ const routes: Routes = [
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 
-    path: 'administrate/administrate-reparations', component: AdministrateReparationsComponent, canActivate: [AuthGuard, RoleGuard], 
+    path: 'administrate/administrate-reparations/create', component: CreateReparationComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/administrate-reparations/edit', component: EditReparationsComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 

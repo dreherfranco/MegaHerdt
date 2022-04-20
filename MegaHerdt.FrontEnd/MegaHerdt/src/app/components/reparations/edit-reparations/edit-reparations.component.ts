@@ -39,7 +39,7 @@ export class EditReparationsComponent implements OnInit {
     this.clients = new Array<UserDetail>();
     this.reparationsStates = new Array<ReparationState>();
     this.reparationArticle = new ReparationArticle(0,0,0,"");
-    this.paginate = new Paginate(1,6);
+    this.paginate = new Paginate(1,2);
   }
 
   ngOnInit(): void {
