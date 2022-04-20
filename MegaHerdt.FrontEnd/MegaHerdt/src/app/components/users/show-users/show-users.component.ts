@@ -66,6 +66,8 @@ export class ShowUsersComponent implements OnInit {
           return compare(a.createdDate, b.createdDate, isAsc);
         case 'lastLogin':
           return compare(a.lastLogin, b.lastLogin, isAsc);
+        case 'roles':
+          return compare(a.roles, b.roles, isAsc);
         default:
           return 0;
       }
@@ -74,6 +76,6 @@ export class ShowUsersComponent implements OnInit {
 
 }
 
-function compare(a: number | string | Date, b: number | string | Date, isAsc: boolean) {
+function compare(a: number | string | Date | string[], b: number | string | Date | string[], isAsc: boolean) {
   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

@@ -11,7 +11,7 @@ export class UserDetailAdministrateComponent implements OnInit {
   @Input() user: UserDetail;
 
   constructor() { 
-    this.user = new UserDetail('','','','','',new Array<string>()) ;
+    this.user = new UserDetail('','','','','',[]) ;
   }
 
   ngOnInit(): void {

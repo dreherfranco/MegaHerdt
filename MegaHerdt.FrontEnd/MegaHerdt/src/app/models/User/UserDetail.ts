@@ -8,6 +8,7 @@ export class UserDetail{
     lastLogin: Date;
     isActive: boolean;
     roles: Array<string>;
+    
     constructor(id:string,email:string, dni:string, name:string,surname:string,roles: Array<string>)
     {
         this.id = id;

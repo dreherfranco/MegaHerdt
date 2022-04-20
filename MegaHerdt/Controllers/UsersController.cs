@@ -41,9 +41,16 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var users = await this.UserService.GetEnabledsUsers(Configuration["jwt:key"]);
-                 //await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
-           //      var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
-                return Mapper.Map<List<UserDetailDTO>>(users);
+                //await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
+                //      var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
+                
+                var usersDTO = Mapper.Map<List<UserDetailDTO>>(users);
+                for(var i=0; i< usersDTO.Count; i++)
+                {
+                   usersDTO[i].Roles = await this.UserService.GetUserRoles(usersDTO[i].Email);
+                }
+
+                return usersDTO;
             }
             catch (Exception ex)
             {
