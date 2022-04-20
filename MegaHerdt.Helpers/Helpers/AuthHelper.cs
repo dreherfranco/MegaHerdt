@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using MegaHerdt.Models.Models.Identity;
 using System.Linq.Expressions;
 using MegaHerdt.Repository.Base;
+using MegaHerdt.Helpers.Handlers;
 
 namespace MegaHerdt.Helpers.Helpers
 {
@@ -28,6 +29,11 @@ namespace MegaHerdt.Helpers.Helpers
 
         public async Task<UserToken> CreateUser(User user, string jwtKey)
         {
+            var errors = UserHandlerError.SetRegisterError(user, this.userRepository.Get().ToList());
+            if(errors.Count > 0) {
+                throw new Exception(errors[0]);
+            }
+
             user.CreatedDate = DateTime.UtcNow;
             user.LastLogin = DateTime.UtcNow;
             var result = await this.userManager.CreateAsync(user, user.Password);
@@ -36,9 +42,8 @@ namespace MegaHerdt.Helpers.Helpers
             {
                 return await BuildToken(user, jwtKey);
             }
-
-            throw new Exception("Create User error");
-
+       
+            throw new Exception("Register error");
         }
 
         public async Task<UserToken> Login(User user, string jwtKey)
@@ -60,6 +65,12 @@ namespace MegaHerdt.Helpers.Helpers
 
         public async Task<UserToken> UserUpdate(User user, string jwtKey)
         {
+            var errors = UserHandlerError.SetUpdateError(user, this.userRepository.Get().ToList());
+            if (errors.Count > 0)
+            {
+                throw new Exception(errors[0]);
+            }
+
             var userDb = await userManager.FindByEmailAsync(user.Email);
             if (userDb != null)
             {

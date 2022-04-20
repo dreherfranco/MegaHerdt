@@ -5,6 +5,8 @@ import { AddressCreation } from 'src/app/models/Address/AddressCreation';
 import { UserService } from 'src/app/services/users/user.service';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogRegisterSuccessComponent } from './dialog-register-success/dialog-register-success.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -16,9 +18,10 @@ export class RegisterComponent implements OnInit {
   statusSubmit: String;
   addressOk: boolean = true;
   phoneOk: boolean = true;
+  error: string = '';
 
   constructor(private _userService: UserService, private _router: Router,
-    private _storageService: StorageService) {
+    private _storageService: StorageService, public dialog: MatDialog) {
     this.user = new UserCreate('', '', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
     this.user.addresses.push(new AddressCreation('', 0, '', 0, '', '', ''));
     this.user.phones.push(new PhoneCreation(''));
@@ -49,16 +52,25 @@ export class RegisterComponent implements OnInit {
               this.statusSubmit = "failed";
             } else {
               this.statusSubmit = "success";
-              this._router.navigate(['login']);
+              this.openDialogRegisterSuccess();
+              form.reset();
             }
           },
           error: (err) => {
             this.statusSubmit = "failed";
+            this.error = err.error.message;
             console.log(err)
           }
         }
       );
     }
+  }
+
+  openDialogRegisterSuccess(){
+    const dialogRef = this.dialog.open(DialogRegisterSuccessComponent,
+      {
+        disableClose:true,
+      });
   }
 
   authenticated(): boolean {

@@ -22,6 +22,7 @@ export class UserUpdateComponent implements OnInit {
   newAddress = new AddressCreation('', 0, '', 0, '', '', '');
   newPhoneAdded: boolean = false;
   newAddressAdded: boolean = false;
+  error: string = '';
 
   constructor(private _userService: UserService,
     private _storageService: StorageService) {
@@ -96,6 +97,7 @@ export class UserUpdateComponent implements OnInit {
         },
         error: (err) => {
           console.log(err);
+          this.error = err.error.message;
           this.statusSubmit = "failed";
         }
       });
