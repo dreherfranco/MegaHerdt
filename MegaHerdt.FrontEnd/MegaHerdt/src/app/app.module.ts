@@ -99,6 +99,7 @@ import { DialogCreateCategoryComponent } from './components/categories/create-ca
 import { CategoryGraphicComponent } from './components/categories/category-graphic/category-graphic.component';
 import { BrandGraphicComponent } from './components/brands/brand-graphic/brand-graphic.component';
 import { DialogRegisterSuccessComponent } from './components/users/register/dialog-register-success/dialog-register-success.component';
+import { DialogUpdatePriceArticleByCategoryComponent } from './components/articles/edit-articles/dialog-update-price-article-by-category/dialog-update-price-article-by-category.component';
 
 @NgModule({
   declarations: [
@@ -186,6 +187,7 @@ import { DialogRegisterSuccessComponent } from './components/users/register/dial
     CategoryGraphicComponent,
     BrandGraphicComponent,
     DialogRegisterSuccessComponent,
+    DialogUpdatePriceArticleByCategoryComponent,
   ],
   imports: [
     BrowserModule,

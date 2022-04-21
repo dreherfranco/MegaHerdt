@@ -198,6 +198,23 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpPost("update-price-by-category")]
+        //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<List<ArticleDTO>>> UpdatePriceByCategory([FromForm] ArticlePriceUpdateByCategoryDTO articleDTO)
+        {
+            try
+            {
+                var articles = await this.articleService.UpdatePriceByCategory(articleDTO.CategoryId, articleDTO.PricePercentage);
+
+                return this.Mapper.Map<List<ArticleDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpDelete("{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]

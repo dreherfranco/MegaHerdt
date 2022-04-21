@@ -1,16 +1,20 @@
 <h2 class="text-center m-1"><b>Editar articulos</b></h2>
-
-<div class="m-2 h-searcher row p-searcher d-flex ">
-  <div class="input-group mb-3 w-50 searcher mx-auto col-sm-5">
-    <div class="input-group-prepend">
-      <div class="input-group-text">
-        <i class="bi bi-search"></i>
+<div class="d-flex flex-row justify-content-between">
+  <button class="btn btn-primary h-searcher searcher m-1" (click)="openDialogUpdatePriceByCategory()">
+    Actualizar articulos por categoria
+  </button>
+  <div class="ml-2 h-searcher p-searcher d-flex col-sm-5">
+    <div class="input-group m-1 w-75 searcher mx-auto">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <i class="bi bi-search"></i>
+        </div>
       </div>
+      <input class="form-control w-75 mx-auto input-search" type="text" [(ngModel)]="searchText"
+        placeholder="Buscar articulos">
     </div>
-    <input class="form-control w-75 mx-auto input-search" type="text" [(ngModel)]="searchText"
-      placeholder="Buscar articulos">
   </div>
-  <div class="col-sm-4 m-1">
+  <div class="col-sm-4 m-1 ml-2">
     <div class="form-check data-user">
       <input class="form-check-input" type="checkbox" [(ngModel)]="filterByStock" id="filterCheck" (click)="filter()">
       <label class="form-check-label" for="filterCheck">
@@ -19,7 +23,6 @@
     </div>
   </div>
 </div>
-
 <div class="d-flex flex-row">
   <div class="col-md-3 col-custom align-items-center" *ngFor="let article of articles 
     | filter: searchText
