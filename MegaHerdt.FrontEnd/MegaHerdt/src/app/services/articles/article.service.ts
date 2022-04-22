@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Global } from '../../utils/Global';
-import { XhrFactory } from '@angular/common';
+import { ArticlePriceUpdateByCategory } from 'src/app/models/Article/ArticlePriceUpdateByCategory';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +45,11 @@ export class ArticleService {
    */
   getArticleNames(): Observable<any>{
     return this._http.get(this.url+"/get-article-names",{headers: this.headers});
+  }
+
+  updatePriceByCategory(articlePriceUpdate: ArticlePriceUpdateByCategory): Observable<any>{
+    let params = JSON.stringify(articlePriceUpdate);
+    return this._http.post(this.url + "/update-price-by-category",params, {headers: this.headers})
   }
 
   delete(id: number, token:string): Observable<any>{

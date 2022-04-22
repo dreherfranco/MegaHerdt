@@ -1,7 +1,34 @@
 <div class="container-fluid">
     <h3 class="d-flex align-content-center">Actualizar precios por categoria</h3>
-    <div class=" d-flex justify-content-end flex-md-row flex-wrap">
-        <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
-        <button class="btn btn-success d-flex p-2 m-2 " (click)="confirm()">Aceptar</button>
-    </div>
+    <form enctype="multipart/form-data" #articleForm="ngForm" (ngSubmit)="confirm()"
+        class="p-2 w-75 mx-auto">
+        <div class="row">
+            <div class="form-group mb-3 col-sm-8">
+                <label for="category"><b>(*)Categoria: </b></label>
+                <select class="form-select data-user" name="selectCategory" [(ngModel)]="articlePriceUpdate.categoryId">
+                    <option class="data-user" name="category" *ngFor="let category of categories"
+                        [ngValue]="category.id">{{category.name}}</option>
+                </select>
+            </div>
+            
+        </div>
+        <div class="form-group mb-3">
+            <label for="percentage"><b>(*)Porcentaje del aumento: </b></label>
+            <input id="percentage" name="percentage" class="form-control" type="number" min="0" max="100" #discount="ngModel"
+                [(ngModel)]="articlePriceUpdate.percentage" required>
+            <span *ngIf="discount.touched && !discount.valid" class="text-danger">Ingrese un numero del 0 al 100</span>
+        </div>
+        
+        <div>
+            <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
+            <input type="submit" class="btn btn-primary mt-3" [disabled]="articleForm.invalid" value="Actualizar" />
+        </div>
+        <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
+            El articulo se creo correctamente
+        </p>
+        <p class=" alert alert-danger mt-3" *ngIf="statusSubmit == 'failed'">
+            Error al intentar crear el articulo
+        </p>
+    </form>
+    
 </div>
