@@ -53,15 +53,15 @@ namespace MegaHerdt.Services.Services
             return await this._helper.Create(article);
         }
 
-        public async Task<IQueryable<Article>> UpdatePriceByCategory(int categoryId, int percentage)
+        public async Task<List<Article>> UpdatePriceByCategory(int categoryId, int percentage)
         {
             Expression<Func<Article, bool>> filter = x => x.CategoryId == categoryId;
-            var articles = this.helper.Get(filter);
-            
-            foreach(var article in articles)
+            var articles = this.helper.Get(filter).ToList();
+
+            foreach (var article in articles)
             {
-                var unitValueToAdd = article.UnitValue * (percentage / 100);
-                article.UnitValue += unitValueToAdd;
+                var unitValueToAdd = article.UnitValue * (percentage / 100.0);
+                article.UnitValue += (float)unitValueToAdd;
                 await this.helper.Update(article);
             }
             return articles;

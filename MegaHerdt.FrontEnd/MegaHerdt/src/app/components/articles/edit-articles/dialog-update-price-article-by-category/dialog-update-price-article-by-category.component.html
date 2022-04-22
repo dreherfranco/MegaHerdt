@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <h3 class="d-flex align-content-center">Actualizar precios por categoria</h3>
-    <form enctype="multipart/form-data" #articleForm="ngForm" (ngSubmit)="confirm()"
+    <form enctype="multipart/form-data" #articlePriceCategoryForm="ngForm" (ngSubmit)="onClick()"
         class="p-2 w-75 mx-auto">
         <div class="row">
             <div class="form-group mb-3 col-sm-8">
@@ -14,20 +14,20 @@
         </div>
         <div class="form-group mb-3">
             <label for="percentage"><b>(*)Porcentaje del aumento: </b></label>
-            <input id="percentage" name="percentage" class="form-control" type="number" min="0" max="100" #discount="ngModel"
-                [(ngModel)]="articlePriceUpdate.percentage" required>
-            <span *ngIf="discount.touched && !discount.valid" class="text-danger">Ingrese un numero del 0 al 100</span>
+            <input id="percentage" name="percentage" class="form-control" type="number" min="1" max="100" #percentage="ngModel"
+                [(ngModel)]="articlePriceUpdate.pricePercentage" required>
+            <span *ngIf="percentage.touched && !percentage.valid" class="text-danger">Ingrese un numero del 1 al 100</span>
         </div>
         
-        <div>
-            <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
-            <input type="submit" class="btn btn-primary mt-3" [disabled]="articleForm.invalid" value="Actualizar" />
+        <div class="d-flex flex-row">
+            <button class="btn btn-danger d-flex p-2 m-1" (click)="closeModal()">Cerrar</button>
+            <input type="submit" class="btn btn-primary m-1" [disabled]="articlePriceCategoryForm.invalid" value="Actualizar" />
         </div>
         <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
-            El articulo se creo correctamente
+            El precio del articulo se actualizó correctamente
         </p>
         <p class=" alert alert-danger mt-3" *ngIf="statusSubmit == 'failed'">
-            Error al intentar crear el articulo
+            Error al intentar actualizar el precio del articulo
         </p>
     </form>
     

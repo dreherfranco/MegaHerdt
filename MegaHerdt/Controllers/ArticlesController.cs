@@ -201,7 +201,7 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("update-price-by-category")]
         //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult<List<ArticleDTO>>> UpdatePriceByCategory([FromForm] ArticlePriceUpdateByCategoryDTO articleDTO)
+        public async Task<ActionResult<List<ArticleDTO>>> UpdatePriceByCategory([FromBody] ArticlePriceUpdateByCategoryDTO articleDTO)
         {
             try
             {

@@ -48,7 +48,9 @@ export class EditArticlesComponent implements OnInit {
       {
         disableClose:true,
       });
-
+      dialogRef.afterClosed().subscribe(() => {
+        this.loadProducts();
+      });
   }
 
 }

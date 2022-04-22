@@ -1,9 +1,9 @@
 export class ArticlePriceUpdateByCategory{
     categoryId: number;
-    percentage: number;
+    pricePercentage: number;
     
     constructor(){
         this.categoryId = 0;
-        this.percentage = 0;
+        this.pricePercentage = 1;
     }
 }
