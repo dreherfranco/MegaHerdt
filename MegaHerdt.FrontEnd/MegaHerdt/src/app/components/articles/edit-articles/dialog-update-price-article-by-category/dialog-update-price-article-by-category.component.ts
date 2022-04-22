@@ -28,7 +28,6 @@ export class DialogUpdatePriceArticleByCategoryComponent implements OnInit {
 
   onClick(){
     //this.dialogRef.close(this.data);
-    console.log(this.articlePriceUpdate)
     this._articleService.updatePriceByCategory(this.articlePriceUpdate).subscribe({
       next: (res)=>{
         if(res.error){
@@ -53,7 +52,6 @@ export class DialogUpdatePriceArticleByCategoryComponent implements OnInit {
     this._categoryService.categories.subscribe({
       next: res => {
         this.categories = res;
-        console.log(this.categories)
       }
     })
   }
