@@ -16,7 +16,12 @@ namespace MegaHerdt.Helpers.Handlers
             foreach(var user in users)
             {
                 
-                if (user.Email.Equals(userToRegister.Email))
+                if (user.UserName.Equals(userToRegister.UserName))
+                {
+                    errorTranslateds.Add("Ya existe el Username que está intentando utilizar");
+                    return errorTranslateds;
+                }
+                if (!userToRegister.Email.Equals("") && user.Email.Equals(userToRegister.Email))
                 {
                     errorTranslateds.Add("Ya existe el Email que está intentando utilizar");
                     return errorTranslateds;

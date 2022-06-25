@@ -54,6 +54,14 @@ namespace MegaHerdt.Services.Services
             throw new Exception("User doesn't exists");
         }
 
+        public User GetByUsername(string username)
+        {
+            Expression<Func<User, bool>> filter = x => x.UserName == username;
+            var user = AuthHelper.Get(filter).FirstOrDefault();
+            if (user != null) { return user; }
+            throw new Exception("User doesn't exists");
+        }
+
         public async Task<UserToken> CreateUser(User user, string jwtKey)
         {
             return await AuthHelper.CreateUser(user, jwtKey);
@@ -98,7 +106,11 @@ namespace MegaHerdt.Services.Services
         {
             return await this.AuthHelper.GetUserRoles(userEmail);
         }
-       
+        public async Task<List<string>> GetUserRolesByUsername(string username)
+        {
+            return await this.AuthHelper.GetUserRolesByUsername(username);
+        }
+
         private bool IsActive(User user)
         {
             var differenceDate = DateTime.UtcNow.Subtract(user.LastLogin.Date);

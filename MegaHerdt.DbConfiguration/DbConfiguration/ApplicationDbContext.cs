@@ -37,13 +37,14 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>()
-           .HasIndex(u => u.Email)
-           .IsUnique();
 
             modelBuilder.Entity<User>()
                        .HasIndex(u => u.Dni)
                        .IsUnique();
+           
+            modelBuilder.Entity<User>()
+                       .Property(u => u.Dni)
+                       .IsRequired(false);
 
             modelBuilder.Entity<Article>()
            .HasIndex(u => u.Code)

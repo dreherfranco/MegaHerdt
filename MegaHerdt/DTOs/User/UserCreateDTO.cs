@@ -6,7 +6,7 @@ namespace MegaHerdt.API.DTOs.User
 {
     public class UserCreateDTO
     {
-        [EmailAddress]
+        public string UserName { get; set; }
         public string Email { get; set; }
         public string Dni { get; set; }
         [Required]

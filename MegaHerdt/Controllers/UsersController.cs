@@ -101,7 +101,6 @@ namespace MegaHerdt.API.Controllers
                 userDTO.Password = hashService.Hash(userDTO.Password);
                 
                 var user = Mapper.Map<User>(userDTO);
-                user.UserName = userDTO.Email;
                 var userToken = await this.UserService.CreateUser(user, Configuration["jwt:key"]);
                 return Mapper.Map<UserTokenDTO>(userToken);
             }
@@ -120,8 +119,8 @@ namespace MegaHerdt.API.Controllers
                 user.Password = hashService.Hash(userLoginDTO.Password);
                 var userToken = await this.UserService.Login(user, Configuration["jwt:key"]);
                 var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
-                var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByEmail(user.Email));
-                var roles = await this.UserService.GetUserRoles(user.Email);
+                var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByUsername(user.UserName));
+                var roles = await this.UserService.GetUserRolesByUsername(user.UserName);
 
                 return new UserCredentialsDTO()
                 {

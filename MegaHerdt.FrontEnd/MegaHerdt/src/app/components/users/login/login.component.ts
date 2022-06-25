@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
       email: new FormControl('',
         [
           Validators.required,
-          Validators.email
+     //     Validators.email
         ]),
       password: new FormControl('',
         [
@@ -43,6 +43,7 @@ export class LoginComponent implements OnInit {
   onSubmit(form: any) {
     var data = this.loginForm.getRawValue();
     var userLogin = new UserLogin(data.email, data.password);
+    userLogin.userName = data.email;
     this._userService.login(userLogin).subscribe(
       {
         next: (response) => {

@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220625164532_dni-required-false")]
+    partial class dnirequiredfalse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -303,6 +305,9 @@ namespace MegaHerdt.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("Dni")
+                        .IsUnique();
+
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
@@ -714,14 +719,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "276afeda-c7c3-4d74-966d-3ead3bdbeb25",
+                            ConcurrencyStamp = "56761d8d-c3f9-4249-a21c-84b13a534fc9",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "73507b5b-ed5a-4ea3-ba20-8c7c9993cef7",
+                            ConcurrencyStamp = "3e51da33-9e98-40ea-bcff-e196346dd14f",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

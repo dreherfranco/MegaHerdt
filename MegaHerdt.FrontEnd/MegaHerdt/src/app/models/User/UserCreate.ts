@@ -2,6 +2,7 @@ import { PhoneCreation } from '../Phone/PhoneCreation';
 import { AddressCreation } from '../Address/AddressCreation';
 
 export class UserCreate{
+    userName: string;
     email: string;
     password: string;
     dni: string;
@@ -13,6 +14,7 @@ export class UserCreate{
     constructor(email:string, password: string, dni:string, name:string,surname:string,phones: Array<PhoneCreation>,
          addresses: Array<AddressCreation>) 
     {
+        this.userName = '';
         this.email= email;
         this.password = password;
         this.dni = dni;

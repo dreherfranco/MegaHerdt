@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit {
     this.addressOk = this.isValidAddress();
     this.phoneOk = this.isValidPhone();
     if (this.addressOk && this.phoneOk) {
+      this.user.userName = this.user.email;
       this._userService.register(this.user).subscribe(
         {
           next: (response) => {

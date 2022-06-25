@@ -48,8 +48,8 @@ namespace MegaHerdt.Helpers.Helpers
 
         public async Task<UserToken> Login(User user, string jwtKey)
         {
-            var findUser = await this.userManager.FindByEmailAsync(user.Email);
-            var result = await this.signInManager.PasswordSignInAsync(user.Email, user.Password, isPersistent: false, lockoutOnFailure: false);
+            var findUser = await this.userManager.FindByNameAsync(user.UserName);
+            var result = await this.signInManager.PasswordSignInAsync(user.UserName, user.Password, isPersistent: false, lockoutOnFailure: false);
             
             if (findUser != null && findUser.Enabled && result.Succeeded)
             {    
@@ -180,6 +180,13 @@ namespace MegaHerdt.Helpers.Helpers
         public async Task<List<string>> GetUserRoles(string userEmail)
         {
             var user = await this.userManager.FindByEmailAsync(userEmail);
+            var roles = await userManager.GetRolesAsync(user);
+            return roles.ToList();
+        }
+
+        public async Task<List<string>> GetUserRolesByUsername(string username)
+        {
+            var user = await this.userManager.FindByNameAsync(username);
             var roles = await userManager.GetRolesAsync(user);
             return roles.ToList();
         }

@@ -1,10 +1,10 @@
 <h1 class="text-center">Iniciar Sesion</h1>
 <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm)" class="w-50 mx-auto" *ngIf="!authenticated()">
   <div class="form-group mb-3">
-    <label for="email"><b>Email: </b></label>
-    <input id="email" placeholder="Ingrese su email" class="form-control" type="text" formControlName="email">
+    <label for="email"><b>Email o username: </b></label>
+    <input id="email" placeholder="Ingrese su email o username" class="form-control" type="text" formControlName="email">
     <span *ngIf="loginForm.touched && loginForm.controls['email'].invalid" class="text-danger">
-      Ingrese un email valido
+      Ingrese un campo valido
     </span>
   </div>
 
