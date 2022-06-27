@@ -136,7 +136,7 @@ const routes: Routes = [
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
   { 
-    path: 'administrate/show-users/edit-role-user/:email', component: EditRoleUserComponent, canActivate: [AuthGuard, RoleGuard], 
+    path: 'administrate/show-users/edit-role-user/:userName', component: EditRoleUserComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
   

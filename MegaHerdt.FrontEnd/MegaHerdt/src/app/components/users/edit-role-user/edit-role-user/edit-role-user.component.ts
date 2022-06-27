@@ -22,24 +22,24 @@ export class EditRoleUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     let email = this.getEmail();
-     this.getUser(email);
+     let userName = this.getUserName();
+     this.getUser(userName);
   }
 
-  getEmail(): any{
-    let email;
+  getUserName(): any{
+    let userName;
     this._route.params.subscribe(
       params => {
-        email = params['email'];
+        userName = params['userName'];
       }
     );
 
-    if(email) return email; 
+    if(userName) return userName; 
     else console.log("no existe el id");
   }
 
-  getUser(email: string){
-    this._userService.getByEmail(email).subscribe({
+  getUser(userName: string){
+    this._userService.getByUserName(userName).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se encontro el usuario");

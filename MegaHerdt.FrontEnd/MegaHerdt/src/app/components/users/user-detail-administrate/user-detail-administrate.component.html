@@ -15,15 +15,16 @@
             </p>
         </div>
         <div class="col">
+            <p class="card-title d-flex flex-column flex-md-row data-user" *ngIf="user.email !== user.userName">Username: {{user.userName }}</p>
             <p class="card-title d-flex flex-column flex-md-row data-user">Nombre: {{user.name | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">Apellido: {{user.surname | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">DNI: {{ user.dni }}</p>
-            <p class="card-text d-flex flex-column flex-md-row data-user text-start">Email: {{ user.email }}</p>
+            <p class="card-text d-flex flex-column flex-md-row data-user text-start" *ngIf="user.email !== ''">Email: {{ user.email }}</p>
             <p class="card-text d-flex flex-column data-user text-start" *ngIf="user.roles.length > 0">
                 Roles: {{user.roles.join(', ')}}
             </p>
             <div class="d-flex flex-column flex-md-row justify-content-end align-items-end mt-5">
-                <a class="btn link-custom" [routerLink]="['edit-role-user', user.email]">MODIFICAR ROLES</a>
+                <a class="btn link-custom" [routerLink]="['edit-role-user', user.userName]">MODIFICAR ROLES</a>
             </div>
         </div>
        

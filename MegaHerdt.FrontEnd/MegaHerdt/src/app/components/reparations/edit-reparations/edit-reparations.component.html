@@ -77,7 +77,7 @@
                 <th>
                     <select class="form-select data-user" name="selectArticle" [(ngModel)]="reparation.client.id">
                         <option class="data-user" name="client" *ngFor="let client of clients" [ngValue]="client.id">
-                            {{client.email}}
+                            {{client.userName}}
                         </option>
                     </select>
                 </th>

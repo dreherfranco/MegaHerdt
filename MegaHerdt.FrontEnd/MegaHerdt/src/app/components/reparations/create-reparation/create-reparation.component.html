@@ -5,7 +5,7 @@
             <label for="client"><b>Cliente: </b></label>
             <select class="form-select data-user" name="selectArticle" [(ngModel)]="reparation.clientId">
                 <option class="data-user" name="client" *ngFor="let client of clients" [ngValue]="client.id">
-                    {{client.email}}
+                    {{client.userName}}
                 </option>
             </select>
         </div>
