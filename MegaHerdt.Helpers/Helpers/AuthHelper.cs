@@ -71,7 +71,7 @@ namespace MegaHerdt.Helpers.Helpers
                 throw new Exception(errors[0]);
             }
 
-            var userDb = await userManager.FindByEmailAsync(user.Email);
+            var userDb = await userManager.FindByNameAsync(user.UserName);
             if (userDb != null)
             {
                 user.Id = userDb.Id;
@@ -106,9 +106,9 @@ namespace MegaHerdt.Helpers.Helpers
             throw new Exception("User doesn't exists");
         }
 
-        public async Task UserDelete(string userEmail)
+        public async Task UserDelete(string userName)
         {
-            var userDb = await userManager.FindByEmailAsync(userEmail);
+            var userDb = await userManager.FindByNameAsync(userName);
             if (userDb != null)
             {
                 userDb.Enabled = false;
@@ -124,21 +124,22 @@ namespace MegaHerdt.Helpers.Helpers
         private async Task<UserToken> BuildToken(User user, string jwtKey)
         {
             var claims = new List<Claim>
-            {
-                new Claim("name", user.Name),
-                new Claim("email", user.Email),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim("surname", user.Surname),
-                new Claim(ClaimTypes.Sid, user.Id),
-                new Claim("id", user.Id),
-            };
-            
+                {
+                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim("name", user.UserName),
+                    new Claim("surname", user.Surname),
+                    new Claim(ClaimTypes.Sid, user.Id),
+                    new Claim("id", user.Id),
+                    new Claim("email", user.Email),
+                    new Claim(ClaimTypes.Email, user.Email),
+                };
+               
            var roles = await userManager.GetRolesAsync(user);
             foreach (var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
             }
-            var identityUser = await this.userManager.FindByEmailAsync(user.Email);
+            var identityUser = await this.userManager.FindByNameAsync(user.UserName);
 
             var claimsDb = await this.userManager.GetClaimsAsync(identityUser);
 
@@ -177,9 +178,9 @@ namespace MegaHerdt.Helpers.Helpers
             return await roleRepository.Get().Select(x => x.Name).ToListAsync();
         }
 
-        public async Task<List<string>> GetUserRoles(string userEmail)
+        public async Task<List<string>> GetUserRoles(string username)
         {
-            var user = await this.userManager.FindByEmailAsync(userEmail);
+            var user = await this.userManager.FindByNameAsync(username);
             var roles = await userManager.GetRolesAsync(user);
             return roles.ToList();
         }

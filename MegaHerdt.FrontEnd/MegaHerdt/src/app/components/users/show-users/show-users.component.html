@@ -1,11 +1,16 @@
 <div clas="container-fluid">
-  <div class="input-group mb-3 w-50 mx-auto searcher">
-    <div class="input-group-prepend">
-      <div class="input-group-text">
-        <i class="bi bi-search"></i>
+  <div class="d-flex flex-row align-items-start w-75">
+    <div class="input-group mb-3 w-50 mx-auto searcher col-md-8">
+      <div class="input-group-prepend">
+        <div class="input-group-text">
+          <i class="bi bi-search"></i>
+        </div>
       </div>
+      <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
     </div>
-    <input class="form-control w-50 mx-auto" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
+    <a [routerLink]="['create-user']" class="btn btn-primary col-sm-2 mr-auto">
+      Crear usuario
+    </a>
   </div>
   <div class="table-responsive m-1 mb-0 w-75 mx-auto">
     <table matSort (matSortChange)="sortData($event)" class="table">

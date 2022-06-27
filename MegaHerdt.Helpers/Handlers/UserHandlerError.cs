@@ -40,8 +40,12 @@ namespace MegaHerdt.Helpers.Handlers
             var errorTranslateds = new List<string>();
             foreach (var user in users)
             {
-
-                if (user.Email.Equals(userToUpdate.Email) && userToUpdate.Id != user.Id)
+                if (user.UserName.Equals(userToUpdate.UserName) && userToUpdate.Id != user.Id)
+                {
+                    errorTranslateds.Add("Ya existe el Username que está intentando utilizar");
+                    return errorTranslateds;
+                }
+                if (!userToUpdate.Email.Equals("") && user.Email.Equals(userToUpdate.Email) && userToUpdate.Id != user.Id)
                 {
                     errorTranslateds.Add("Ya existe el Email que está intentando utilizar");
                     return errorTranslateds;

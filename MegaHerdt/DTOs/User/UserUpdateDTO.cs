@@ -6,6 +6,7 @@ namespace MegaHerdt.API.DTOs.User
 {
     public class UserUpdateDTO
     {
+        public string UserName { get; set; }
         [EmailAddress]
         public string Email { get; set; }
         public string Dni { get; set; }

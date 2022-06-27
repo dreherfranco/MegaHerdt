@@ -1,0 +1,70 @@
+<div class="container-fluid">
+    <h2>Crear usuario</h2>
+    <hr><br>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group mb-3">
+            <label for="userName"><b>(*)Username:</b></label>
+            <input class="form-control" placeholder="Ingrese su username" type="text" name="username"
+              #userName="ngModel" [(ngModel)]="user.userName" required />
+            <span *ngIf="userName.touched && !userName.valid" class="text-danger">Ingrese un username valido</span>
+          </div>
+          
+          <div class="form-group mb-3">
+            <label for="email"><b>Email:</b></label>
+            <input class="form-control" placeholder="Ingrese su email" type="email" name="email" [email]="true"
+              #email="ngModel" [(ngModel)]="user.email" />
+            <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
+          </div>
+          <div class="form-group mb-3">
+            <label for="password"><b>(*)Password:</b></label>
+            <input class="form-control" placeholder="Ingrese su contraseña" type="password" name="password"
+              #password="ngModel" [(ngModel)]="user.password" required minlength="5" />
+            <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
+          </div>
+  
+          <div class="form-group mb-3">
+            <label for="dni"><b>(*)DNI:</b></label>
+            <input class="form-control" placeholder="Ingrese su DNI" type="text" name="dni" #dni="ngModel"
+              [(ngModel)]="user.dni" required minlength="8" maxlength="8" pattern="[0-9]{8}"/>
+            <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido, debe contener 8 numeros</span>
+          </div>
+  
+          <div class="row">
+            <div class="form-group col-sm-6 mb-3">
+              <label for="name"><b>(*)Nombre:</b></label>
+              <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Nombre"
+                name="name" #name="ngModel" [(ngModel)]="user.name" required />
+              <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
+            </div>
+  
+            <div class="form-group col-sm-6 mb-3">
+              <label for="surname"><b>(*)Apellido:</b></label>
+              <input pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" class="form-control" type="text" placeholder="Apellido"
+                name="surname" #surname="ngModel" [(ngModel)]="user.surname" required />
+              <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
+            </div>
+          </div>
+  
+          <div class="row">
+            <div class="form-group mb-3 col-md-6">
+              <label for="phoneNumber"><b>(*)Telefono:</b></label>
+              <input class="form-control" placeholder="Ingrese un numero de telefono" type="text" name="phoneNumber"
+                #number="ngModel" [(ngModel)]="user.phones[0].number" pattern="(^[0-9]+)" minlength="5" />
+              <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono
+                valido</span>
+            </div>
+          </div>
+        </div>
+  
+        <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al crear el usuario: <span class="data-user">{{ error }}</span></p>
+        <p *ngIf="!phoneOk" class="alert alert-danger m-1">Ingrese un numero telefono</p>
+        
+        <b class="required">(*)Obligatorio</b>
+        <input class="btn btn-primary w-25 m-2 mt-0 align-center" type="submit" value="Enviar"
+          [disabled]="!registerForm.form.valid" />
+      </div>
+    </form>
+  
+  </div>

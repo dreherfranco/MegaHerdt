@@ -40,14 +40,14 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
+                
                 var users = await this.UserService.GetEnabledsUsers(Configuration["jwt:key"]);
                 //await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
                 //      var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
-                
                 var usersDTO = Mapper.Map<List<UserDetailDTO>>(users);
                 for(var i=0; i< usersDTO.Count; i++)
                 {
-                   usersDTO[i].Roles = await this.UserService.GetUserRoles(usersDTO[i].Email);
+                   usersDTO[i].Roles = await this.UserService.GetUserRoles(usersDTO[i].UserName);
                 }
 
                 return usersDTO;
@@ -67,6 +67,14 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var users = this.UserService.GetAll().ToList();
+                foreach(var user in users)
+                {
+                    if(user.UserName.Equals("username1211"))
+                    {
+                        
+                        await this.UserService.UserDelete(user.UserName);
+                    }
+                }
                 // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
                 // var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
                 return Mapper.Map<List<UserDetailDTO>>(users);
@@ -84,6 +92,21 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var usersDTO = Mapper.Map<UserDTO>(this.UserService.GetByEmail(email));
+                return usersDTO;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
+
+        [HttpGet("get-user/{username}")]
+        public ActionResult<UserDTO> GetByUserName(string userName)
+        {
+            try
+            {
+                var usersDTO = Mapper.Map<UserDTO>(this.UserService.GetByUsername(userName));
                 return usersDTO;
             }
             catch (Exception ex)
@@ -147,7 +170,7 @@ namespace MegaHerdt.API.Controllers
                 if (userUpdateDTO.Password == userDb.Password && UserValidations.UserEmailIsOk(userUpdateDTO.Email, HttpContext))
                 {
                     var user = Mapper.Map(userUpdateDTO, userDb);
-                    user.UserName = userUpdateDTO.Email;
+                   // user.UserName = userUpdateDTO.Email;
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
                     var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
                     var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByEmail(user.Email));
@@ -168,18 +191,18 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpDelete("delete/{userEmail}")]
+        [HttpDelete("delete/{userName}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<bool>> UserDelete(string userEmail)
+        public async Task<ActionResult<bool>> UserDelete(string userName)
         {
             try
             {    
-                if (UserValidations.UserEmailIsOk(userEmail, HttpContext))
+                if (UserValidations.UserNameIsOk(userName, HttpContext))
                 {
-                    await UserService.UserDelete(userEmail);
+                    await UserService.UserDelete(userName);
                     return true;
                 }
-                throw new Exception("User email is incorrect");
+                throw new Exception("Username is incorrect");
             }
             catch (Exception ex)
             {

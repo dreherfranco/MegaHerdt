@@ -100,6 +100,7 @@ import { CategoryGraphicComponent } from './components/categories/category-graph
 import { BrandGraphicComponent } from './components/brands/brand-graphic/brand-graphic.component';
 import { DialogRegisterSuccessComponent } from './components/users/register/dialog-register-success/dialog-register-success.component';
 import { DialogUpdatePriceArticleByCategoryComponent } from './components/articles/edit-articles/dialog-update-price-article-by-category/dialog-update-price-article-by-category.component';
+import { AdminCreateUserComponent } from './components/users/admin-create-user/admin-create-user.component';
 
 @NgModule({
   declarations: [
@@ -188,6 +189,7 @@ import { DialogUpdatePriceArticleByCategoryComponent } from './components/articl
     BrandGraphicComponent,
     DialogRegisterSuccessComponent,
     DialogUpdatePriceArticleByCategoryComponent,
+    AdminCreateUserComponent,
   ],
   imports: [
     BrowserModule,

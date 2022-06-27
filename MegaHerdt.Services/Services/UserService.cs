@@ -97,14 +97,14 @@ namespace MegaHerdt.Services.Services
         }
 
 
-        public async Task UserDelete(string userEmail)
+        public async Task UserDelete(string userName)
         {
-            await AuthHelper.UserDelete(userEmail);
+            await AuthHelper.UserDelete(userName);
         }
 
-        public async Task<List<string>> GetUserRoles(string userEmail)
+        public async Task<List<string>> GetUserRoles(string username)
         {
-            return await this.AuthHelper.GetUserRoles(userEmail);
+            return await this.AuthHelper.GetUserRoles(username);
         }
         public async Task<List<string>> GetUserRolesByUsername(string username)
         {

@@ -24,7 +24,7 @@ export class UserSettingsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogDeleteProfileComponent,
       {
         disableClose:true,
-        data: identity.email
+        data: identity.userName
       });
 
     dialogRef.afterClosed().subscribe((result: string) => {
@@ -34,11 +34,11 @@ export class UserSettingsComponent implements OnInit {
     });
   }
 
-  deleteProfile(email: string){
-    this._userService.delete(email, this._storageService.getTokenValue()).subscribe({
+  deleteProfile(userName: string){
+    this._userService.delete(userName, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-            console.log("no se pudieron cargar los estados de las reparaciones");
+            console.log("no se pudo eliminar el perfil");
         } else {
           this._storageService.logout();
           this._router.navigate(['']);

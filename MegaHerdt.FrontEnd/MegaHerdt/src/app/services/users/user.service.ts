@@ -40,9 +40,9 @@ export class UserService {
     return this._http.post(this.url+"/update", params, { headers: this.headers } );
   }
 
-  delete(userEmail: string, token: string): Observable<any>{
+  delete(userName: string, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
-    return this._http.delete(this.url+"/delete/"+ userEmail, { headers: this.headers } );
+    return this._http.delete(this.url+"/delete/"+ userName, { headers: this.headers } );
   }
 
   getEnabledUsers(token: string): Observable<any>{

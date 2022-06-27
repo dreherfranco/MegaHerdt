@@ -8,7 +8,8 @@ export class UserDetail{
     lastLogin: Date;
     isActive: boolean;
     roles: Array<string>;
-    
+    userName: string;
+
     constructor(id:string,email:string, dni:string, name:string,surname:string,roles: Array<string>)
     {
         this.id = id;
@@ -20,5 +21,6 @@ export class UserDetail{
         this.createdDate = new Date();
         this.lastLogin = new Date();
         this.isActive = false;
+        this.userName = '';
     }
 }

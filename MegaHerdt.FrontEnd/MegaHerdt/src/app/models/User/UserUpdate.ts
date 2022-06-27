@@ -9,6 +9,7 @@ export class UserUpdate{
     surname: string;
     phones: Array<PhoneUpdate>;
     addresses: Array<AddressUpdate>;
+    userName: string;
 
     constructor(email:string, password: string, dni:string, name:string,surname:string,phones: Array<PhoneUpdate>,
          addresses: Array<AddressUpdate>) 
@@ -20,5 +21,6 @@ export class UserUpdate{
         this.surname = surname;
         this.phones = phones;
         this.addresses = addresses;
+        this.userName = "";
     }
 }

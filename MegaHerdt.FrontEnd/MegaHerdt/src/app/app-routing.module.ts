@@ -37,6 +37,7 @@ import { EditArticlesComponent } from './components/articles/edit-articles/edit-
 import { ForgetPasswordComponent } from './components/users/forget-password/forget-password.component';
 import { CreateReparationComponent } from './components/reparations/create-reparation/create-reparation.component';
 import { EditReparationsComponent } from './components/reparations/edit-reparations/edit-reparations.component';
+import { AdminCreateUserComponent } from './components/users/admin-create-user/admin-create-user.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -128,6 +129,10 @@ const routes: Routes = [
   //ADMIN ROUTES
   { 
     path: 'administrate/show-users', component: ShowUsersComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN ] }  
+  },
+  { 
+    path: 'administrate/show-users/create-user', component: AdminCreateUserComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
   { 
