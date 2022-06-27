@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ReparationArticleAdded } from 'src/app/models/Article/ReparationArticleAdded';
 import { ReparationArticleCreation } from 'src/app/models/Article/ReparationArticleCreation';
@@ -12,6 +13,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
+import { DialogAdminCreateUserComponent } from '../../users/admin-create-user/dialog-admin-create-user/dialog-admin-create-user.component';
 
 @Component({
   selector: 'app-create-reparation',
@@ -30,7 +32,8 @@ export class CreateReparationComponent implements OnInit {
 
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
-    private _reparationStateService: ReparationStateService, private _reparationService: ReparationService) {
+    private _reparationStateService: ReparationStateService, private _reparationService: ReparationService,
+    public dialog: MatDialog) {
     this.articles = new Array<ArticleName>();
     this.clients = new Array<UserDetail>();
     this.reparation = new ReparationCreation(0, '', '', 0, new Date(),
@@ -123,5 +126,16 @@ export class CreateReparationComponent implements OnInit {
     var article = new ReparationArticleAdded(articleName, this.reparationArticle.articleQuantity)
     this.articlesAdded.push(article);
     form.reset();
+  }
+
+  openDialogAdminCreateUser(){
+    const dialogRef = this.dialog.open(DialogAdminCreateUserComponent,
+      {
+        disableClose:true,
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+        this.loadClients();
+    });
   }
 }

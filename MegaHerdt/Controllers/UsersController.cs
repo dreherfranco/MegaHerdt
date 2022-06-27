@@ -225,21 +225,21 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpPut("address/add/{userEmail}")]
+        [HttpPut("address/add/{userName}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<UserTokenDTO>> AddAddress([FromBody] AddressCreationDTO addressCreationDTO,string userEmail)
+        public async Task<ActionResult<UserTokenDTO>> AddAddress([FromBody] AddressCreationDTO addressCreationDTO,string userName)
         {
             try
             {
-                if (UserValidations.UserEmailIsOk(userEmail, HttpContext))
+                if (UserValidations.UserNameIsOk(userName, HttpContext))
                 {
-                    var userDb = UserService.GetByEmail(userEmail);
+                    var userDb = UserService.GetByUsername(userName);
                     var address = Mapper.Map<Address>(addressCreationDTO);
                     userDb.Addresses.Add(address);
                     var userToken = await this.UserService.UserUpdate(userDb, Configuration["jwt:key"]);
                     return Mapper.Map<UserTokenDTO>(userToken);
                 }
-                throw new Exception("User email is incorrect");
+                throw new Exception("Username is incorrect");
             }
             catch (Exception ex)
             {

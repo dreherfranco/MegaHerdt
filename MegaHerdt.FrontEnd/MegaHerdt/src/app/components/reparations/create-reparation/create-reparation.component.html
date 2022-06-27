@@ -2,17 +2,22 @@
 <form #reparationForm="ngForm" (ngSubmit)="onSubmit(reparationForm)" class="w-50 mx-auto">
     <div class="row">
         <div class="form-group mb-3 col-sm-5">
-            <label for="client"><b>Cliente: </b></label>
-            <select class="form-select data-user" name="selectArticle" [(ngModel)]="reparation.clientId">
-                <option class="data-user" name="client" *ngFor="let client of clients" [ngValue]="client.id">
-                    {{client.userName}}
-                </option>
-            </select>
+            <label for="client" class="m-1"><b>Cliente: </b></label>
+            <div class="row m-1">
+                <a (click)="openDialogAdminCreateUser()" class="col-sm-2 btn text-white bg-primary">
+                    <i class="bi bi-person-plus-fill"></i>
+                </a>
+                <select class="form-select data-user w-75" name="selectArticle" [(ngModel)]="reparation.clientId">
+                    <option class="data-user" name="client" *ngFor="let client of clients" [ngValue]="client.id">
+                        {{client.userName}}
+                    </option>
+                </select>
+            </div>
         </div>
 
         <div class="form-group mb-3 col-sm-7">
-            <label for="reparationState"><b>Estado de la reparacion: </b></label>
-            <select class="form-select data-user" name="selectReparationState"
+            <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
+            <select class="form-select data-user m-1" name="selectReparationState"
                 [(ngModel)]="reparation.reparationStateId">
                 <option class="data-user" name="reparationState" *ngFor="let reparationState of reparationsStates"
                     [ngValue]="reparationState.id">{{reparationState.name}}
