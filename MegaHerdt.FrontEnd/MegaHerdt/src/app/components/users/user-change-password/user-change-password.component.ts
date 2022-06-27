@@ -42,7 +42,7 @@ export class UserChangePasswordComponent implements OnInit {
   onSubmit(form: any){
     var data = this.changePasswordForm.getRawValue();
     var identity: UserDetail = this._storageService.getIdentity();
-    var user = new UserChangePassword(identity.email, data.currentPassword,data.newPassword);
+    var user = new UserChangePassword(identity.userName, data.currentPassword,data.newPassword);
     this._userService.changePassword(user, this._storageService.getTokenValue()).subscribe({
       next: (result) => {
         if(result.error){

@@ -67,14 +67,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var users = this.UserService.GetAll().ToList();
-                foreach(var user in users)
-                {
-                    if(user.UserName.Equals("username1211"))
-                    {
-                        
-                        await this.UserService.UserDelete(user.UserName);
-                    }
-                }
+
                 // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
                 // var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
                 return Mapper.Map<List<UserDetailDTO>>(users);
@@ -101,7 +94,7 @@ namespace MegaHerdt.API.Controllers
 
         }
 
-        [HttpGet("get-user/{username}")]
+        [HttpGet("get-user-by-username/{username}")]
         public ActionResult<UserDTO> GetByUserName(string userName)
         {
             try
@@ -165,16 +158,16 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var userDb = this.UserService.GetByEmail(userUpdateDTO.Email);
+                var userDb = this.UserService.GetByUsername(userUpdateDTO.UserName);
                 userUpdateDTO.Password = hashService.Hash(userUpdateDTO.Password);
-                if (userUpdateDTO.Password == userDb.Password && UserValidations.UserEmailIsOk(userUpdateDTO.Email, HttpContext))
+                if (userUpdateDTO.Password == userDb.Password && UserValidations.UserNameIsOk(userUpdateDTO.UserName, HttpContext))
                 {
                     var user = Mapper.Map(userUpdateDTO, userDb);
                    // user.UserName = userUpdateDTO.Email;
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
                     var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
-                    var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByEmail(user.Email));
-                    var roles = await this.UserService.GetUserRoles(user.Email);
+                    var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByUsername(user.UserName));
+                    var roles = await this.UserService.GetUserRoles(user.UserName);
 
                     return new UserCredentialsDTO()
                     {
@@ -216,12 +209,12 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                if (UserValidations.UserEmailIsOk(userChangePasswordDTO.Email, HttpContext))
+                if (UserValidations.UserNameIsOk(userChangePasswordDTO.UserName, HttpContext))
                 {
                     var currentPassword = hashService.Hash(userChangePasswordDTO.CurrentPassword);
                     var newPassword = hashService.Hash(userChangePasswordDTO.NewPassword);
 
-                    var userToken = await this.UserService.ChangePassword(userChangePasswordDTO.Email, currentPassword, newPassword, Configuration["jwt:key"]);
+                    var userToken = await this.UserService.ChangePassword(userChangePasswordDTO.UserName, currentPassword, newPassword, Configuration["jwt:key"]);
                     return Mapper.Map<UserTokenDTO>(userToken);                    
                 }
                 return BadRequest();

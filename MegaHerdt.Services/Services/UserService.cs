@@ -76,9 +76,9 @@ namespace MegaHerdt.Services.Services
         {
             return await AuthHelper.UserUpdate(user, jwtKey);
         }
-        public async Task<UserToken> ChangePassword(string userEmail, string currentPassword, string newPassword, string jwtKey)
+        public async Task<UserToken> ChangePassword(string username, string currentPassword, string newPassword, string jwtKey)
         {
-            return await this.AuthHelper.ChangePassword(userEmail, currentPassword, newPassword, jwtKey);
+            return await this.AuthHelper.ChangePassword(username, currentPassword, newPassword, jwtKey);
         }
 
         public async Task<UserToken> ChangeForgotPassword(string userEmail, string newPassword, string jwtKey)

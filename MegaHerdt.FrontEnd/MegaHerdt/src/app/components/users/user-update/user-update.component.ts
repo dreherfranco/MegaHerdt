@@ -105,11 +105,11 @@ export class UserUpdateComponent implements OnInit {
   }
 
   getUser() {
-    this._userService.getByEmail(this.getUserEmail()).subscribe(
+    this._userService.getByUserName(this.getUserName()).subscribe(
       {
         next: (response) => {
           if (response.error) {
-            console.log("usuario no encotrado");
+            console.log("usuario no encontrado");
           } else {
             this.user = response;
             console.log(response)
@@ -121,9 +121,9 @@ export class UserUpdateComponent implements OnInit {
       });
   }
 
-  getUserEmail(): string {
+  getUserName(): string {
     var identity = this._storageService.getIdentity();
-    return identity.email;
+    return identity.userName;
   }
 
   authenticated(): boolean {

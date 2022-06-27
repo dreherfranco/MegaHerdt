@@ -6,9 +6,9 @@
       <div class="col-md-6">
 
         <div class="form-group mb-3">
-          <label for="email"><b>(*)Email:</b></label>
+          <label for="email"><b>Email:</b></label>
           <input class="form-control" type="email" name="email" [email]="true" #email="ngModel" [(ngModel)]="user.email"
-            required />
+             />
           <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
         </div>
 

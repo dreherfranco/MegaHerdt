@@ -65,6 +65,7 @@
         <input class="btn btn-primary w-25 m-2 mt-0 align-center" type="submit" value="Enviar"
           [disabled]="!registerForm.form.valid" />
       </div>
+      <p *ngIf="statusSubmit === 'success'" class="alert alert-success m-1">Usuario creado correctamente</p>
     </form>
   
   </div>
