@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220629170928_serial-numbers-article-providers")]
+    partial class serialnumbersarticleproviders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -212,7 +214,7 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasIndex("ArticleProviderId");
 
-                    b.ToTable("ArticlesProviderSerialNumbers");
+                    b.ToTable("ArticleProviderSerialNumber");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Bill", b =>
@@ -738,14 +740,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "3baa93f8-fb29-440e-a485-f1d1ea0fe757",
+                            ConcurrencyStamp = "b6dda68e-e5cc-4440-9330-011abf74ad1f",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "8caae9d2-ff24-4841-b2c1-8398a46989a4",
+                            ConcurrencyStamp = "96e2f54b-7293-4378-a33c-c690b8763041",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

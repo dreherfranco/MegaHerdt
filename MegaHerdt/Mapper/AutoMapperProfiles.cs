@@ -5,6 +5,7 @@ using MegaHerdt.API.DTOs.ArticleBrand;
 using MegaHerdt.API.DTOs.ArticleCategory;
 using MegaHerdt.API.DTOs.ArticleOffer;
 using MegaHerdt.API.DTOs.ArticleProvider;
+using MegaHerdt.API.DTOs.ArticleProviderSerialNumber;
 using MegaHerdt.API.DTOs.Bill;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
@@ -125,11 +126,17 @@ namespace MegaHerdt.API.Mapper
             #endregion Article
 
             #region ArticleProvider
-            CreateMap<ArticleProviderCreationDTO, ArticleProvider>();
+            CreateMap<ArticleProviderCreationDTO, ArticleProvider>()
+                .ForMember(x=>x.SerialNumbers, x=>x.MapFrom(this.MapArticleProviderSerialNumber));
             CreateMap<ArticleProviderUpdateDTO, ArticleProvider>();
             CreateMap<ArticleProvider, ArticleProviderDetailDTO>();
             CreateMap<ArticleProvider, ArticleProviderDTO>();
             #endregion ArticleProvider
+
+            #region ArticleProviderSerialNumber
+            CreateMap<ArticleProviderSerialNumber, ArticleProviderSerialNumberDTO>()
+                .ReverseMap();
+            #endregion ArticleProviderSerialNumber
 
             #region ArticleOffer
             CreateMap<ArticleOffer, ArticleOfferDTO>()
@@ -184,6 +191,25 @@ namespace MegaHerdt.API.Mapper
 
         }
 
+
+        #region ArticleProvider
+        public List<ArticleProviderSerialNumber> MapArticleProviderSerialNumber(ArticleProviderCreationDTO ArticleProviderCreationDTO, ArticleProvider ArticleProvider)
+        {
+            var result = new List<ArticleProviderSerialNumber>();
+            if (ArticleProviderCreationDTO.SerialNumbers == null) { return result; }
+
+            foreach (var serialNumber in ArticleProviderCreationDTO.SerialNumbers)
+            {
+                result.Add(
+                    new ArticleProviderSerialNumber()
+                    {
+                        SerialNumber = serialNumber,
+                        ArticleProviderId = ArticleProvider.Id
+                    });
+            }
+            return result;
+        }
+        #endregion ArticleProvider
 
         #region UserUtilsMethods
         public List<PhoneDTO> MapUserPhonesDTO(User user, UserDTO userDTO)

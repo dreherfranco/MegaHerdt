@@ -24,6 +24,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         public DbSet<ArticleOffer> ArticlesOffers { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ArticleProvider> ArticlesProviders { get; set; }
+        public DbSet<ArticleProviderSerialNumber> ArticlesProviderSerialNumbers { get; set; }
         public DbSet<Purchase> Purchases { get; set;}
         public DbSet<PurchaseClaim> PurchasesClaims { get; set; }
         public DbSet<PurchaseArticle> PurchasesArticles { get; set; }
@@ -78,6 +79,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             
             modelBuilder.Entity<PurchaseArticle>()
                 .HasKey(x => new { x.ArticleId, x.PurchaseId });
+
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);

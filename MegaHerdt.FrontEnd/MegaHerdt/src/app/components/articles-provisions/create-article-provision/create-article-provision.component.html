@@ -28,17 +28,44 @@
                 </label>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="radio" value="false"  name="exampleRadios"
-                    id="exampleRadios2" (click)="discountStock()" >
+                <input class="form-check-input" type="radio" value="false" name="exampleRadios" id="exampleRadios2"
+                    (click)="discountStock()">
                 <label class="form-check-label" for="exampleRadios2">
                     Descontar stock
                 </label>
             </div>
-            <input [disabled]="articleProvider.add" [(ngModel)]="articleProvider.discountReason" id="discountReason" name="discountReason"
-            #discountReason="ngModel" class="form-control" placeholder="Motivo descuento" type="text"/>
+            <input [disabled]="articleProvider.add" [(ngModel)]="articleProvider.discountReason" id="discountReason"
+                name="discountReason" #discountReason="ngModel" class="form-control" placeholder="Motivo descuento"
+                type="text" />
         </div>
     </div>
 
+    <div class="form-group mb-3 row">
+        <label for="serialNumber"><b>Agregar numero de serie: </b></label>
+        <div class="col">
+            <input [(ngModel)]="serialNumberToAdd" id="serialNumber" name="serialNumber" #serialNumber="ngModel"
+                class="form-control" placeholder="Ingrese un numero de serie" type="text" />
+        </div>
+        <a class="btn btn-primary col-sm-2" (click)="addSerialNumber()"><i class="bi bi-plus-circle-fill"></i></a>
+    </div>
+   
+    <div class="form-group mb-3">
+        <div class="btn-group" dropdown *ngIf="articleProvider.serialNumbers.length !== 0">
+            <button id="button-basic" dropdownToggle type="button"
+                class="btn p-2 border alert alert-primary text-center dropdown-toggle"
+                aria-controls="dropdown-basic">
+                Ver numeros de serie agregados <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu m-0 p-0" role="menu"
+                aria-labelledby="button-basic">
+                <li *ngFor="let serialNumber of articleProvider.serialNumbers" class="dropdown-item border border-dark alert alert-primary m-0"
+                    role="menuitem">
+                    <b>S/N: {{ serialNumber }}</b>
+                </li>
+            </ul>
+        </div>
+    </div>
+    
     <div class="form-group mb-3">
         <label for="provider"><b>(*)Proveedor: </b></label>
         <select class="form-select data-user" name="selectProvider" [(ngModel)]="articleProvider.providerId">

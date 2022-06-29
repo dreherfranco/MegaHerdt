@@ -38,7 +38,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var articlesProviders = articleProviderService.GetAll();
+                var articlesProviders = articleProviderService.GetAll().ToList();
                 return this.Mapper.Map<List<ArticleProviderDTO>>(articlesProviders);
             }
             catch (Exception ex)
@@ -88,6 +88,7 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(ex);
             }
         }
+
 
         [HttpPost("update")]
         public async Task<ActionResult<bool>> Put([FromBody] ArticleProviderUpdateDTO articleProviderDTO)

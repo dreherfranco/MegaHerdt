@@ -1,4 +1,5 @@
 ﻿using MegaHerdt.API.DTOs.Article;
+using MegaHerdt.API.DTOs.ArticleProviderSerialNumber;
 using MegaHerdt.API.DTOs.Provider;
 
 namespace MegaHerdt.API.DTOs.ArticleProvider
@@ -12,6 +13,7 @@ namespace MegaHerdt.API.DTOs.ArticleProvider
         public int ArticleQuantity { get; set; }
         public bool Add { get; set; }
         public string DiscountReason { get; set; }
+        public List<ArticleProviderSerialNumberDTO> SerialNumbers { get; set; }
         public ProviderDTO Provider { get; set; }
     }
 }

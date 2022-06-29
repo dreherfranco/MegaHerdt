@@ -6,7 +6,7 @@
             <img src="../../../../assets/images/user-image.png" class="card-img-top w-75">
         </div>
         <div class="col-md-8">
-            <p class="card-title d-flex flex-column flex-md-row data-user" *ngIf="this.userName !== user.email">Username: {{ this.userName | uppercase }}</p>
+            <p class="card-title d-flex flex-column flex-md-row data-user" *ngIf="this.userName !== user.email">Username: {{ this.userName }}</p>
             <p class="card-title d-flex flex-column flex-md-row data-user">NOMBRE: {{user.name | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">APELLIDO: {{user.surname | uppercase}}</p>
             <p class="card-text d-flex flex-column flex-md-row data-user">DNI: {{ user.dni }}</p>

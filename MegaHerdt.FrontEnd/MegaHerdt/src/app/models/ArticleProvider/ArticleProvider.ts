@@ -1,4 +1,5 @@
 import { ArticleName } from "../Article/ArticleName";
+import { ArticleProviderSerialNumber } from "../ArticleProviderSerialNumber/ArticleProviderSerialNumber";
 import { Provider } from "../Provider/Provider";
 
 export class ArticleProvider{
@@ -10,6 +11,7 @@ export class ArticleProvider{
     articleQuantity: number;
     add: boolean;
     discountReason: string;
+    serialNumbers: Array<ArticleProviderSerialNumber>;
     constructor(id: number, provider: Provider, article: ArticleName, voucher: string,provisionDate: Date,articleQuantity: number)
     {
         this.id = id;
@@ -20,5 +22,6 @@ export class ArticleProvider{
         this.articleQuantity = articleQuantity;
         this.add = true;
         this.discountReason='';
+        this.serialNumbers = [];
     }
 }

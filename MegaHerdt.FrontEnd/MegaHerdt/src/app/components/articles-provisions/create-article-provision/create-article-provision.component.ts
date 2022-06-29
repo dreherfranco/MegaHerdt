@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ArticleProviderCreation } from 'src/app/models/ArticleProvider/ArticleProviderCreation';
+import { ArticleProviderSerialNumberCreation } from 'src/app/models/ArticleProviderSerialNumber/ArticleProviderSerialNumberCreation';
 import { Provider } from 'src/app/models/Provider/Provider';
 import { ArticleProvisionService } from 'src/app/services/articles-provisions/article-provision.service';
 import { ArticleService } from 'src/app/services/articles/article.service';
@@ -16,6 +17,7 @@ export class CreateArticleProvisionComponent implements OnInit {
   providers: Array<Provider>;
   articles: Array<ArticleName>;
   articleProvider: ArticleProviderCreation;
+  serialNumberToAdd: string = '';
 
   constructor(private _articleProvisionService: ArticleProvisionService, private _providerService: ProviderService, private _storageService: StorageService,
     private _articleService: ArticleService) {
@@ -30,11 +32,12 @@ export class CreateArticleProvisionComponent implements OnInit {
   }
 
   onSubmit(form: any) {
+    if(this.articleProvider.add){ this.articleProvider.discountReason = '#'; }
     this._articleProvisionService.sendFormData(this.articleProvider, "create");
     setTimeout(
       () => {
-        window.location.reload();
-      }, 500)
+        //window.location.reload();
+      }, 600)
   }
 
   loadProviders() {
@@ -51,9 +54,7 @@ export class CreateArticleProvisionComponent implements OnInit {
       }
     });
   }
- mostrar(){
-   console.log(this.articleProvider)
- }
+
   loadArticles() {
     this._articleService.getArticleNames().subscribe({
       next: (response) => {
@@ -78,5 +79,11 @@ export class CreateArticleProvisionComponent implements OnInit {
   }
   addStock(){
     this.articleProvider.add = true;
+  }
+
+  addSerialNumber(){
+    let newSerialNumber = this.serialNumberToAdd;
+    this.articleProvider.serialNumbers.push(newSerialNumber);
+    this.serialNumberToAdd = '';
   }
 }

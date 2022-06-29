@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MegaHerdt.API.DTOs.ArticleProviderSerialNumber;
+using System.ComponentModel.DataAnnotations;
 
 namespace MegaHerdt.API.DTOs.ArticleProvider
 {
@@ -13,5 +14,6 @@ namespace MegaHerdt.API.DTOs.ArticleProvider
         public int ArticleQuantity { get; set; }
         public bool Add { get; set; }
         public string DiscountReason { get; set; }
+        public List<string> SerialNumbers { get; set; }
     }
 }
