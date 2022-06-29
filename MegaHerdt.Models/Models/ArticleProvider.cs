@@ -16,6 +16,7 @@ namespace MegaHerdt.Models.Models
         public DateTime ProvisionDate { get; set; }
         public int ArticleQuantity { get; set; }
         public bool Add { get; set; } = true;
+        public string DiscountReason { get; set; }
         public Provider Provider { get; set; }
         public Article Article { get; set; }
     }

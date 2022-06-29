@@ -73,4 +73,10 @@ export class CreateArticleProvisionComponent implements OnInit {
     this.articleProvider.voucher = <File>fileInput.target.files[0]
   }
 
+  discountStock(){
+    this.articleProvider.add = false;
+  }
+  addStock(){
+    this.articleProvider.add = true;
+  }
 }

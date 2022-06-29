@@ -11,6 +11,7 @@ namespace MegaHerdt.API.DTOs.ArticleProvider
         public DateTime ProvisionDate { get; set; }
         public int ArticleQuantity { get; set; }
         public bool Add { get; set; }
+        public string DiscountReason { get; set; }
         public ProviderDTO Provider { get; set; }
     }
 }

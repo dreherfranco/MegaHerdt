@@ -53,8 +53,10 @@
                         Stock agregado
                     </span>
                     <span *ngIf="!articleProvider.add" class="form-control data-user alert-warning">
-                        Stock descontado
+                        Stock descontado<br>
+                        Motivo : {{ articleProvider.discountReason }}
                     </span>
+
                 </td>
                 <td>
                    

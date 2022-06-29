@@ -42,8 +42,8 @@ namespace MegaHerdt.API.Controllers
             {
                 
                 var users = await this.UserService.GetEnabledsUsers(Configuration["jwt:key"]);
-                //await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
-                //      var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
+              // await HttpContext.InsertParametersPagination(usersQueryable, paginationDTO.RecordsPerPage);
+                   //   var entity = await usersQueryable.Paginate(paginationDTO).ToListAsync();
                 var usersDTO = Mapper.Map<List<UserDetailDTO>>(users);
                 for(var i=0; i< usersDTO.Count; i++)
                 {
@@ -163,7 +163,6 @@ namespace MegaHerdt.API.Controllers
                 if (userUpdateDTO.Password == userDb.Password && UserValidations.UserNameIsOk(userUpdateDTO.UserName, HttpContext))
                 {
                     var user = Mapper.Map(userUpdateDTO, userDb);
-                   // user.UserName = userUpdateDTO.Email;
                     var userToken = await this.UserService.UserUpdate(user, Configuration["jwt:key"]);
                     var userTokenDTO = Mapper.Map<UserTokenDTO>(userToken);
                     var userDTO = this.Mapper.Map<UserDetailDTO>(this.UserService.GetByUsername(user.UserName));
