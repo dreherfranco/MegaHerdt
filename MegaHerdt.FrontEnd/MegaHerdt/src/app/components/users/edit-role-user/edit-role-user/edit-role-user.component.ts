@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/users/user.service';
 export class EditRoleUserComponent implements OnInit {
   user: UserDetail;
   roles: Array<string>;
+  userName: string = '';
 
   constructor(
     private _route: ActivatedRoute, 
@@ -22,20 +23,17 @@ export class EditRoleUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     let userName = this.getUserName();
-     this.getUser(userName);
+     this.getUserName();
+     this.getUser(this.userName);
   }
 
   getUserName(): any{
-    let userName;
     this._route.params.subscribe(
       params => {
-        userName = params['userName'];
+        this.userName = params['userName'];
       }
     );
 
-    if(userName) return userName; 
-    else console.log("no existe el id");
   }
 
   getUser(userName: string){

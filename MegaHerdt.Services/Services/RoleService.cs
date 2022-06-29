@@ -22,23 +22,23 @@ namespace MegaHerdt.Services.Services
         {
             return await this.AuthHelper.CreateRole(roleName);
         }
-        public async Task<bool> AssignRole(string roleName, string email)
+        public async Task<bool> AssignRole(string roleName, string username)
         {
-            return await this.AuthHelper.AssignRole(roleName, email);
+            return await this.AuthHelper.AssignRole(roleName, username);
         }
 
-        public async Task<bool> RemoveRoleToUser(string roleName, string email)
+        public async Task<bool> RemoveRoleToUser(string roleName, string username)
         {
-            return await this.AuthHelper.RemoveRoleToUser(roleName, email);
+            return await this.AuthHelper.RemoveRoleToUser(roleName, username);
         }
 
         public async Task DeleteRole(string roleName)
         {
             await this.AuthHelper.DeleteRole(roleName);
         }
-        public async Task<List<string>> GetUserRoles(string userEmail)
+        public async Task<List<string>> GetUserRoles(string username)
         {
-            return await this.AuthHelper.GetUserRoles(userEmail);
+            return await this.AuthHelper.GetUserRoles(username);
         }
     }
 }

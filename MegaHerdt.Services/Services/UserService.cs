@@ -108,7 +108,7 @@ namespace MegaHerdt.Services.Services
         }
         public async Task<List<string>> GetUserRolesByUsername(string username)
         {
-            return await this.AuthHelper.GetUserRolesByUsername(username);
+            return await this.AuthHelper.GetUserRoles(username);
         }
 
         private bool IsActive(User user)

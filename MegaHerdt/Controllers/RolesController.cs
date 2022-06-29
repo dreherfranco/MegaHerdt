@@ -103,12 +103,12 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        [HttpGet("get-user-roles/{email}")]
-        public async Task<ActionResult<List<string>>> GetUserRoles(string email)
+        [HttpGet("get-user-roles/{username}")]
+        public async Task<ActionResult<List<string>>> GetUserRoles(string username)
         {
             try
             {
-                return await this.RoleService.GetUserRoles(email);
+                return await this.RoleService.GetUserRoles(username);
             }
             catch (Exception ex)
             {

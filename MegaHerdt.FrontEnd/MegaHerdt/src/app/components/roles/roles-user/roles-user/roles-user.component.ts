@@ -12,7 +12,7 @@ export class RolesUserComponent implements OnInit {
   userRoles: Array<string>;
   roles: Array<string>;
   roleSelected: string;
-  @Input() email: string;
+  @Input() username: string;
   statusAssignRole: string = '';
   statusRemoveRole: string = '';
 
@@ -21,7 +21,7 @@ export class RolesUserComponent implements OnInit {
     private _roleService: RoleService
   ) {
     this.userRoles = new Array<string>();
-    this.email = "";
+    this.username = "";
     this.roles = new Array<string>();
     this.roleSelected = "";
   }
@@ -31,7 +31,7 @@ export class RolesUserComponent implements OnInit {
   }
 
   getUserRoles() {
-    this._roleService.getUserRoles(this.email, this._storageService.getTokenValue()).subscribe({
+    this._roleService.getUserRoles(this.username, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se encontro el usuario");
@@ -46,7 +46,7 @@ export class RolesUserComponent implements OnInit {
   }
 
   removeUserRole(roleName: string) {
-    let roleUser = new RoleUser(roleName, this.email);
+    let roleUser = new RoleUser(roleName, this.username);
     this._roleService.removeUserRole(roleUser, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
@@ -103,7 +103,7 @@ export class RolesUserComponent implements OnInit {
   }
 
   assignRole() {
-    let roleUser = new RoleUser(this.roleSelected, this.email);
+    let roleUser = new RoleUser(this.roleSelected, this.username);
 
     this._roleService.assignRole(roleUser, this._storageService.getTokenValue()).subscribe({
       next: (response) => {

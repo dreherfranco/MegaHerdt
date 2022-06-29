@@ -33,7 +33,7 @@ namespace MegaHerdt.Helpers.Helpers
             if(errors.Count > 0) {
                 throw new Exception(errors[0]);
             }
-
+            
             user.CreatedDate = DateTime.UtcNow;
             user.LastLogin = DateTime.UtcNow;
             var result = await this.userManager.CreateAsync(user, user.Password);
@@ -170,7 +170,7 @@ namespace MegaHerdt.Helpers.Helpers
             return this.userRepository.Get(filter)
                 .Include(x => x.Phones)
                 .Include(x => x.Addresses)
-                .OrderBy(x => x.Email);
+                .OrderBy(x => x.UserName);
         }
 
         public async Task<List<string>> GetRoles()
@@ -184,13 +184,7 @@ namespace MegaHerdt.Helpers.Helpers
             var roles = await userManager.GetRolesAsync(user);
             return roles.ToList();
         }
-
-        public async Task<List<string>> GetUserRolesByUsername(string username)
-        {
-            var user = await this.userManager.FindByNameAsync(username);
-            var roles = await userManager.GetRolesAsync(user);
-            return roles.ToList();
-        }
+      
 
         public async Task<string> CreateRole(string roleName)
         {
@@ -199,9 +193,9 @@ namespace MegaHerdt.Helpers.Helpers
             return roleCreated.Name;
         }
 
-        public async Task<bool> AssignRole(string roleName, string email)
+        public async Task<bool> AssignRole(string roleName, string username)
         {
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByNameAsync(username);
             var role = roleRepository.Get(x => x.Name == roleName).FirstOrDefault();
             if (user == null || role == null)
             {
@@ -215,9 +209,9 @@ namespace MegaHerdt.Helpers.Helpers
             return false;
         }
 
-        public async Task<bool> RemoveRoleToUser(string roleName, string email)
+        public async Task<bool> RemoveRoleToUser(string roleName, string username)
         {
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByNameAsync(username);
             var role = roleRepository.Get(x => x.Name == roleName).FirstOrDefault();
             if (user == null || role==null)
             {

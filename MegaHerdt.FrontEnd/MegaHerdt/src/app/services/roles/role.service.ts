@@ -21,9 +21,9 @@ export class RoleService {
    * @param email 
    * @returns Role(Array)
    */
-  getUserRoles(email: string, token: string): Observable<any>{
+  getUserRoles(username: string, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
-    return this._http.get(this.url + "/get-user-roles/"+ email, { headers: this.headers});
+    return this._http.get(this.url + "/get-user-roles/"+ username, { headers: this.headers});
   }
 
   removeUserRole(roleUser: RoleUser, token: string): Observable<any>{
