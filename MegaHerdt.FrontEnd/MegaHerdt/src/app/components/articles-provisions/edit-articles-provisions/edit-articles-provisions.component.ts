@@ -94,7 +94,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
             console.log("no se pudo eliminar la provision");
         } else {
           console.log("provision eliminada correctamente")
-          this.loadArticlesProviders();
+          this._articleProvisionService.updateArticleProviders();
         }
       },
       error: (err) => {
@@ -104,16 +104,9 @@ export class EditArticlesProvisionsComponent implements OnInit {
   }
 
   loadArticlesProviders(){
-    this._articleProvisionService.getAll(this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-            console.log("no se pudieron cargar las provisiones");
-        } else {
-          this.articlesProviders = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
+    this._articleProvisionService.articlesProviders.subscribe({
+      next: (res) =>{ 
+        this.articlesProviders = res;
       }
     });
   }

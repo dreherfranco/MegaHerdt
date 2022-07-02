@@ -24,6 +24,7 @@ export class CreateArticleProvisionComponent implements OnInit {
     this.providers = new Array<Provider>();
     this.articles = new Array<ArticleName>();
     this.articleProvider = new ArticleProviderCreation(0, 0, new File(new Array, ''), new Date(), 0, true);
+    this.updateArticleProvidersInterval();
   }
 
   ngOnInit(): void {
@@ -31,12 +32,20 @@ export class CreateArticleProvisionComponent implements OnInit {
     this.loadArticles();
   }
 
+  updateArticleProvidersInterval(){
+    setInterval(
+      ()=>{
+        this._articleProvisionService.updateArticleProviders();
+      },1000
+    );
+  }
   onSubmit(form: any) {
     if(this.articleProvider.add){ this.articleProvider.discountReason = '#'; }
     this._articleProvisionService.sendFormData(this.articleProvider, "create");
     setTimeout(
       () => {
-        //window.location.reload();
+        this._articleProvisionService.updateArticleProviders();
+        form.reset();
       }, 600)
   }
 

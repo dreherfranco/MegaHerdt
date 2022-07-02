@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { ArticleProvider } from 'src/app/models/ArticleProvider/ArticleProvider';
 import { Global } from 'src/app/utils/Global';
 
 @Injectable({
@@ -9,11 +10,20 @@ import { Global } from 'src/app/utils/Global';
 export class ArticleProvisionService {
   public url: string;
   public headers =  new HttpHeaders().set('Content-Type', 'application/json');
+  public articlesProviders = new BehaviorSubject<Array<ArticleProvider>>([]);
 
   constructor(private _http: HttpClient) 
   {
     this.url = Global.url + "ArticlesProviders";
+    this.updateArticleProviders();
   }
+
+  updateArticleProviders(){
+    this.getAll().subscribe({
+      next: res => this.articlesProviders.next(res)
+    })
+  }
+
 
   sendFormData(articleProvider: any, urlAction:string){
     const formData: FormData = new FormData();
@@ -25,7 +35,7 @@ export class ArticleProvisionService {
       
       //  xhr.setRequestHeader('Authorization',token);
         xhr.open('POST', Global.url + "ArticlesProviders/"+ urlAction, true );  
-        xhr.send(formData)
+        xhr.send(formData);
   }
 
   update(article: any, token: string): Observable<any>{
@@ -34,8 +44,7 @@ export class ArticleProvisionService {
     return this._http.post(this.url+"/update", params, { headers: this.headers });
   }
 
-  getAll(token:string): Observable<any>{
-    this.headers = this.headers.set('Authorization', token);
+  getAll(): Observable<any>{
     return this._http.get(this.url, { headers: this.headers });
   }
 
