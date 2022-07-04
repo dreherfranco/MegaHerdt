@@ -36,15 +36,11 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparation = Mapper.Map<Reparation>(reparationDTO);
+                reparation.ReparationStateId = 1;
+                reparation.Date = DateTime.UtcNow;
                 await this.ReparationService.Create(reparation);
 
-                var reparationCreated = this.ReparationService.GetReparationById(reparation.Id);
-                if (this.ReparationService.isInBudget(reparationCreated.ReparationState.Name))
-                {
-                    var mailRequest = this.ReparationService.mailRequest(reparationCreated);
-                    await this.MailService.SendEmailAsync(mailRequest);
-                }
-
+                var reparationCreated = this.ReparationService.GetReparationById(reparation.Id);        
                 return this.Mapper.Map<ReparationDTO>(reparationCreated);
             }
             catch (Exception ex)

@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220704203721_nullable-serial-numbers2")]
+    partial class nullableserialnumbers2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -535,15 +537,8 @@ namespace MegaHerdt.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("ApproximateTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("BillId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("ClientDescription")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClientId")
                         .IsRequired()
@@ -553,10 +548,6 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("EmployeeObservation")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -768,14 +759,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "3670df9f-9f1f-4e06-ad98-81540f9b0b45",
+                            ConcurrencyStamp = "2cf75100-eb8d-49a4-9b6a-eb9827d73925",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "34997291-b706-4c45-b571-d0857257852b",
+                            ConcurrencyStamp = "6bb01522-e300-4818-8582-4b7723e14498",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

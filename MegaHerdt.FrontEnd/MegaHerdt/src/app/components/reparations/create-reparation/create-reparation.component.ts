@@ -21,31 +21,31 @@ import { DialogAdminCreateUserComponent } from '../../users/admin-create-user/di
   styleUrls: ['./create-reparation.component.css']
 })
 export class CreateReparationComponent implements OnInit {
-  articles: Array<ArticleName>;
+  //articles: Array<ArticleName>;
   clients: Array<UserDetail>;
   billTypes = BillTypeEnum;
   reparation: ReparationCreation;
   reparationsStates: Array<ReparationState>;
-  reparationArticle: ReparationArticleCreation;
-  articlesAdded: Array<ReparationArticleAdded>;
+  //reparationArticle: ReparationArticleCreation;
+  //articlesAdded: Array<ReparationArticleAdded>;
   statusSubmit: string;
 
-  constructor(private _articleService: ArticleService,
+  constructor(/*private _articleService: ArticleService,*/
     private _storageService: StorageService, private _userService: UserService,
     private _reparationStateService: ReparationStateService, private _reparationService: ReparationService,
     public dialog: MatDialog) {
-    this.articles = new Array<ArticleName>();
+   // this.articles = new Array<ArticleName>();
     this.clients = new Array<UserDetail>();
-    this.reparation = new ReparationCreation(0, '', '', 0, new Date(),
+    this.reparation = new ReparationCreation(1, '', '', 0, new Date(),
       new Array<ReparationArticleCreation>(), new BillCreation(0, ''));
     this.reparationsStates = new Array<ReparationState>();
-    this.reparationArticle = new ReparationArticleCreation(0, 0);
-    this.articlesAdded = new Array<ReparationArticleAdded>();
+   // this.reparationArticle = new ReparationArticleCreation(0, 0);
+  //  this.articlesAdded = new Array<ReparationArticleAdded>();
     this.statusSubmit = "";
   }
 
   ngOnInit(): void {
-    this.loadArticles();
+  //  this.loadArticles();
     this.loadClients();
     this.loadReparationsStates();
   }
@@ -68,7 +68,7 @@ export class CreateReparationComponent implements OnInit {
     });
   }
 
-  loadArticles() {
+ /* loadArticles() {
     this._articleService.getArticleNames().subscribe({
       next: (response) => {
         if (response.error) {
@@ -81,7 +81,7 @@ export class CreateReparationComponent implements OnInit {
         console.log(err)
       }
     })
-  }
+  }*/
 
   loadReparationsStates() {
     this._reparationStateService.getAll().subscribe({
@@ -113,6 +113,7 @@ export class CreateReparationComponent implements OnInit {
     })
   }
 
+  /*
   addArticleReparation(form: any) {
     var reparationArticle = new ReparationArticleCreation(this.reparationArticle.articleId, this.reparationArticle.articleQuantity);
     this.reparation.reparationsArticles.push(reparationArticle);
@@ -127,7 +128,7 @@ export class CreateReparationComponent implements OnInit {
     this.articlesAdded.push(article);
     form.reset();
   }
-
+*/
   openDialogAdminCreateUser(){
     const dialogRef = this.dialog.open(DialogAdminCreateUserComponent,
       {

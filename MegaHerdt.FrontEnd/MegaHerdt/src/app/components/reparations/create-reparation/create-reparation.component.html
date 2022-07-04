@@ -1,7 +1,7 @@
 <h1 class="text-center">Crear reparacion</h1>
 <form #reparationForm="ngForm" (ngSubmit)="onSubmit(reparationForm)" class="w-50 mx-auto">
     <div class="row">
-        <div class="form-group mb-3 col-sm-5">
+        <div class="form-group mb-3 col-sm-6">
             <label for="client" class="m-1"><b>Cliente: </b></label>
             <div class="row m-1">
                 <a (click)="openDialogAdminCreateUser()" class="col-sm-2 btn text-white bg-primary">
@@ -15,22 +15,30 @@
             </div>
         </div>
 
-        <div class="form-group mb-3 col-sm-7">
+        <div class="form-group mb-3 col-sm-4">
             <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
+            <!--
             <select class="form-select data-user m-1" name="selectReparationState"
                 [(ngModel)]="reparation.reparationStateId">
                 <option class="data-user" name="reparationState" *ngFor="let reparationState of reparationsStates"
                     [ngValue]="reparationState.id">{{reparationState.name}}
                 </option>
             </select>
+            -->
+            <span class="form-control data-user" *ngIf="reparationsStates && reparationsStates[0] != null">{{ reparationsStates[0].name }}</span>
+        </div>
+        <div class="form-group mb-3 col-sm-2">
+            <label for="date" class="m-1"><b>Fecha: </b></label>
+           <!-- 
+            <input id="date" name="date" class="form-control" type="date" #date="ngModel" [(ngModel)]="reparation.date"
+                required>
+            <span *ngIf="date.touched && !date.valid" class="text-danger">Ingrese una fecha valida</span>
+            -->
+            <span class="form-control data-user">{{ reparation.date | date: 'shortDate'  }}</span>
         </div>
     </div>
-    <div class="form-group mb-3">
-        <label for="date"><b>Fecha: </b></label>
-        <input id="date" name="date" class="form-control" type="date" #date="ngModel" [(ngModel)]="reparation.date"
-            required>
-        <span *ngIf="date.touched && !date.valid" class="text-danger">Ingrese una fecha valida</span>
-    </div>
+   
+   <!-- 
     <hr>
     <form #articleReparationForm="ngForm">
         <div class="form-group mb-3 d-flex row">
@@ -89,6 +97,7 @@
             </select>
         </div>
     </div>
+    -->
     <p>
         <input type="submit" class="btn btn-primary mt-3" [disabled]="reparationForm.invalid" value="Crear" />
     </p>

@@ -15,19 +15,19 @@ namespace MegaHerdt.Services.Services.Base
         {
             this.helper = helper;
         }
-        public virtual async Task<T> Create(T reparationState)
+        public virtual async Task<T> Create(T entity)
         {
-            return await this.helper.Create(reparationState);
+            return await this.helper.Create(entity);
         }
 
-        public virtual async Task Update(T reparationState)
+        public virtual async Task Update(T entity)
         {
-            await this.helper.Update(reparationState);
+            await this.helper.Update(entity);
         }
 
-        public virtual async Task Delete(T reparationState)
+        public virtual async Task Delete(T entity)
         {
-            await this.helper.Delete(reparationState);
+            await this.helper.Delete(entity);
         }
 
         public virtual IEnumerable<T> GetAll()

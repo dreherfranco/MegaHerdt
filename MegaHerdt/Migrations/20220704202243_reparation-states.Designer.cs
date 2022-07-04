@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220704202243_reparation-states")]
+    partial class reparationstates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -205,6 +207,7 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("SerialNumber")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -535,15 +538,8 @@ namespace MegaHerdt.API.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("ApproximateTime")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("BillId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("ClientDescription")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClientId")
                         .IsRequired()
@@ -553,10 +549,6 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("EmployeeId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("EmployeeObservation")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -665,21 +657,26 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = 5,
-                            Name = "FINALIZADO"
+                            Name = "EN REPARACION"
                         },
                         new
                         {
                             Id = 6,
-                            Name = "ENTREGADO"
+                            Name = "FINALIZADO"
                         },
                         new
                         {
                             Id = 7,
-                            Name = "PAGADO"
+                            Name = "ENTREGADO"
                         },
                         new
                         {
                             Id = 8,
+                            Name = "PAGADO"
+                        },
+                        new
+                        {
+                            Id = 9,
                             Name = "CANCELADO"
                         });
                 });
@@ -768,14 +765,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "3670df9f-9f1f-4e06-ad98-81540f9b0b45",
+                            ConcurrencyStamp = "28752508-f6f3-490a-9447-b471ad9dbae4",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "34997291-b706-4c45-b571-d0857257852b",
+                            ConcurrencyStamp = "c3ac4c43-3e13-4754-9386-32d2b79a4da6",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

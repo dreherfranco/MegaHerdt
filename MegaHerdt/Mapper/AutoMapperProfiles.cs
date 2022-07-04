@@ -61,8 +61,8 @@ namespace MegaHerdt.API.Mapper
             CreateMap<Reparation, ReparationDTO>()
                 .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleMap))
                 .ReverseMap();
-            CreateMap<ReparationCreationDTO, Reparation>()
-                .ForMember(x=>x.ReparationsArticles, x=>x.MapFrom(this.ReparationArticleCreationMap));
+            CreateMap<ReparationCreationDTO, Reparation>();
+            //    .ForMember(x=>x.ReparationsArticles, x=>x.MapFrom(this.ReparationArticleCreationMap));
             CreateMap<ReparationUpdateDTO, Reparation>()
                  .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleUpdateMap));
             CreateMap<Reparation, ReparationDetailDTO>();
@@ -197,6 +197,7 @@ namespace MegaHerdt.API.Mapper
         {
             var result = new List<ArticleProviderSerialNumber>();
             if (ArticleProviderCreationDTO.SerialNumbers == null) { return result; }
+            if (ArticleProviderCreationDTO.SerialNumbers != null && ArticleProviderCreationDTO.SerialNumbers[0] == null) { return result; }
 
             foreach (var serialNumber in ArticleProviderCreationDTO.SerialNumbers)
             {
@@ -356,7 +357,7 @@ namespace MegaHerdt.API.Mapper
             return result;
         }
 
-        private List<ReparationArticle> ReparationArticleCreationMap(ReparationCreationDTO reparationDTO, Reparation reparation)
+     /*   private List<ReparationArticle> ReparationArticleCreationMap(ReparationCreationDTO reparationDTO, Reparation reparation)
         {
             var result = new List<ReparationArticle>();
             if (reparationDTO.ReparationsArticles == null) { return result; }
@@ -371,7 +372,7 @@ namespace MegaHerdt.API.Mapper
                     });
             }
             return result;
-        }
+        }*/
 
         private List<ReparationArticle> ReparationArticleUpdateMap(ReparationUpdateDTO reparationDTO, Reparation reparation)
         {
