@@ -378,6 +378,7 @@ namespace MegaHerdt.API.Mapper
             }
             return result;
         }
+
         #endregion ReparationUtilsMethods
 
         #region ArticleUtilsMethods

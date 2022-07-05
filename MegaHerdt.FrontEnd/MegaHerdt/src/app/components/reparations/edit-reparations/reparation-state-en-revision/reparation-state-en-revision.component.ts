@@ -28,9 +28,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
   reparationArticle: ReparationArticle;
   paginate: Paginate;
   
-  constructor(private _articleService: ArticleService,
-    private _storageService: StorageService, private _userService: UserService,
-    private _reparationStateService: ReparationStateService, 
+  constructor(private _storageService: StorageService, private _userService: UserService,
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
     this.articles = new Array<ArticleName>();
@@ -42,9 +40,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadReparations();
-    this.loadArticles();
     this.loadClients();
-    this.loadReparationsStates();
   }
 
   openDialogUpdate(reparation: Reparation){
@@ -110,7 +106,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
   mapperReparation(reparation: Reparation): ReparationUpdate{
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill);
+      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription);
   }
 
   loadReparations(){
@@ -129,36 +125,6 @@ export class ReparationStateENREVISIONComponent implements OnInit {
     });
   }
 
-  loadArticles() {
-    this._articleService.getArticleNames().subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener articulos");
-        } else {
-          this.articles = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  loadReparationsStates() {
-    this._reparationStateService.getAll().subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener los estados de las reparaciones");
-        } else {
-          this.reparationsStates = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
   loadClients() {
     this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
       next: (response) => {
@@ -172,17 +138,6 @@ export class ReparationStateENREVISIONComponent implements OnInit {
         console.log(err)
       }
     })
-  }
-
-  addArticleReparation(reparation: Reparation) {
-    var articleName = "";
-    //buscar el articulo para extraer el nombre
-    for (let article of this.articles) {
-      if (article.id == this.reparationArticle.articleId)
-        articleName = article.name;
-    }
-    var reparationArticle = new ReparationArticle(this.reparationArticle.articleId, this.reparationArticle.articleQuantity,0,articleName);
-    reparation.reparationsArticles.push(reparationArticle);
   }
 
 }

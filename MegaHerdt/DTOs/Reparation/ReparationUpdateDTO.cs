@@ -7,6 +7,7 @@ namespace MegaHerdt.API.DTOs.Reparation
     {
         public int Id { get; set; }
         public List<ReparationArticleUpdateDTO> ReparationsArticles { get; set; }
-        public BillReparationDTO Bill { get; set; }
+        public int Amount { get; set; }
+       // public BillReparationDTO Bill { get; set; }
     }
 }

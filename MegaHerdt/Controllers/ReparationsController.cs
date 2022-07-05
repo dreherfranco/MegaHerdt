@@ -59,6 +59,7 @@ namespace MegaHerdt.API.Controllers
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
+                reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
                 if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
                 {
                     var mailRequest = this.ReparationService.mailRequest(reparationDb);

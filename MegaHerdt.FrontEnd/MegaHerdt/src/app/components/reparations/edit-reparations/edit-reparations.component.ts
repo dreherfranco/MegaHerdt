@@ -117,7 +117,7 @@ export class EditReparationsComponent implements OnInit {
   mapperReparation(reparation: Reparation): ReparationUpdate{
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill);
+      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription);
   }
 
   loadReparations(){

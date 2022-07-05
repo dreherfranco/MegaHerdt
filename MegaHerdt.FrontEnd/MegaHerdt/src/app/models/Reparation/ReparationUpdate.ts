@@ -10,9 +10,10 @@ export class ReparationUpdate {
     date: Date;
     reparationsArticles: Array<ReparationArticleUpdate>;
     bill: Bill;
-    
+    clientDescription: string;
+
     constructor(id: number, reparationStateId: number, employeeId: string, clientId: string, amount: number,
-        date: Date, reparationsArticles: Array<ReparationArticleUpdate>, bill: Bill,) {
+        date: Date, reparationsArticles: Array<ReparationArticleUpdate>, bill: Bill, clientDescription: string) {
         this.id = id;
         this.reparationStateId = reparationStateId;
         this.employeeId = employeeId;
@@ -21,6 +22,7 @@ export class ReparationUpdate {
         this.date = date;
         this.reparationsArticles = reparationsArticles;
         this.bill = bill;
+        this.clientDescription = clientDescription;
     }
 
 }
