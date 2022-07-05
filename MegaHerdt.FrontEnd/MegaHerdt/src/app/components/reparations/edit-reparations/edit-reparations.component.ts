@@ -195,10 +195,27 @@ export class EditReparationsComponent implements OnInit {
 
   //****************************NUEVO ************************************** */
   selectedState_INGRESO(){
-    this.reparationStateSelected = ReparationStatesEnum.INGRESO;
+   console.log( this.reparationStateSelected)// = ReparationStatesEnum.INGRESO;
   }
-
   selectedState_EN_REVISION(){
     this.reparationStateSelected = ReparationStatesEnum.EN_REVISION;
+  }
+  selectedState_EN_PRESUPUESTO(){
+    this.reparationStateSelected = ReparationStatesEnum.EN_PRESUPUESTO;
+  }
+  selectedState_EN_REPARACION(){
+    this.reparationStateSelected = ReparationStatesEnum.EN_REPARACION;
+  }
+  selectedState_FINALIZADO(){
+    this.reparationStateSelected = ReparationStatesEnum.FINALIZADO;
+  }
+  selectedState_ENTREGADO(){
+    this.reparationStateSelected = ReparationStatesEnum.ENTREGADO;
+  }
+  selectedState_PAGADO(){
+    this.reparationStateSelected = ReparationStatesEnum.PAGADO;
+  }
+  selectedState_CANCELADO(){
+    this.reparationStateSelected = ReparationStatesEnum.CANCELADO;
   }
 }
