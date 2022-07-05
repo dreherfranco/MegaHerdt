@@ -102,6 +102,14 @@ import { DialogRegisterSuccessComponent } from './components/users/register/dial
 import { DialogUpdatePriceArticleByCategoryComponent } from './components/articles/edit-articles/dialog-update-price-article-by-category/dialog-update-price-article-by-category.component';
 import { AdminCreateUserComponent } from './components/users/admin-create-user/admin-create-user.component';
 import { DialogAdminCreateUserComponent } from './components/users/admin-create-user/dialog-admin-create-user/dialog-admin-create-user.component';
+import { ReparationStateINGRESOComponent } from './components/reparations/edit-reparations/reparation-state-ingreso/reparation-state-ingreso.component';
+import { ReparationStateENREVISIONComponent } from './components/reparations/edit-reparations/reparation-state-en-revision/reparation-state-en-revision.component';
+import { ReparationStateENPRESUPUESTOComponent } from './components/reparations/edit-reparations/reparation-state-en-presupuesto/reparation-state-en-presupuesto.component';
+import { ReparationStateENREPARACIONComponent } from './components/reparations/edit-reparations/reparation-state-en-reparacion/reparation-state-en-reparacion.component';
+import { ReparationStateFINALIZADOComponent } from './components/reparations/edit-reparations/reparation-state-finalizado/reparation-state-finalizado.component';
+import { ReparationStateENTREGADOComponent } from './components/reparations/edit-reparations/reparation-state-entregado/reparation-state-entregado.component';
+import { ReparationStatePAGADOComponent } from './components/reparations/edit-reparations/reparation-state-pagado/reparation-state-pagado.component';
+import { ReparationStateCANCELADOComponent } from './components/reparations/edit-reparations/reparation-state-cancelado/reparation-state-cancelado.component';
 
 @NgModule({
   declarations: [
@@ -192,6 +200,14 @@ import { DialogAdminCreateUserComponent } from './components/users/admin-create-
     DialogUpdatePriceArticleByCategoryComponent,
     AdminCreateUserComponent,
     DialogAdminCreateUserComponent,
+    ReparationStateINGRESOComponent,
+    ReparationStateENREVISIONComponent,
+    ReparationStateENPRESUPUESTOComponent,
+    ReparationStateENREPARACIONComponent,
+    ReparationStateFINALIZADOComponent,
+    ReparationStateENTREGADOComponent,
+    ReparationStatePAGADOComponent,
+    ReparationStateCANCELADOComponent,
   ],
   imports: [
     BrowserModule,

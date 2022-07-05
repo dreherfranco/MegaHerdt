@@ -9,7 +9,8 @@ export class ReparationCreation {
     date: Date;
     reparationsArticles: Array<ReparationArticleCreation>;
     bill: BillCreation;
-    
+    clientDescription: string;
+
     constructor(reparationStateId: number, employeeId: string, clientId: string, amount: number,
         date: Date, reparationsArticles: Array<ReparationArticleCreation>, bill: BillCreation,) {
         this.reparationStateId = reparationStateId;
@@ -19,6 +20,7 @@ export class ReparationCreation {
         this.date = date;
         this.reparationsArticles = reparationsArticles;
         this.bill = bill;
+        this.clientDescription = '';
     }
 
 }

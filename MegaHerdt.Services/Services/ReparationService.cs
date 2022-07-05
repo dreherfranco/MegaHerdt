@@ -19,6 +19,12 @@ namespace MegaHerdt.Services.Services
             return this.helper.Get(filter).FirstOrDefault();
         }
 
+        public IQueryable<Reparation> GetReparationByStateId(int reparationStateId)
+        {
+            Expression<Func<Reparation, bool>> filter = x => x.ReparationStateId == reparationStateId;
+            return this.helper.Get(filter);
+        }
+
         public List<Reparation> GetClientReparations(string clientId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.ClientId == clientId;

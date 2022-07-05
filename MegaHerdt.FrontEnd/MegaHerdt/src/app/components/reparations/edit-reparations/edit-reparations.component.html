@@ -1,10 +1,36 @@
+<div class="data-user">
+    Filtrar por estado:
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked 
+    (click)="selectedState_INGRESO()">
+    <label class="form-check-label" for="exampleRadios1">
+        Ingreso
+    </label>
+</div>
+<div class="form-check">
+    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"
+    (click)="selectedState_EN_REVISION()">
+    <label class="form-check-label" for="exampleRadios2">
+        En revision
+    </label>
+</div>
+
+<!--
 <div class="table-responsive p-1">
     <table class="table">
         <thead>
             <tr>
                 <th>LISTADO DE REPARACIONES</th>
-                <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
-                
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+
             </tr>
             <tr>
                 <th scope="col">Articulos</th>
@@ -54,9 +80,9 @@
                             </div>
                             <div class="form-group mb-3 col">
                                 <label for="articleQuantity"><b>Cantidad </b></label>
-                                <input id="articleQuantity" name="articleQuantity" class="form-control data-user" type="number"
-                                    min="1" #articleQuantity="ngModel" [(ngModel)]="reparationArticle.articleQuantity"
-                                    required>
+                                <input id="articleQuantity" name="articleQuantity" class="form-control data-user"
+                                    type="number" min="1" #articleQuantity="ngModel"
+                                    [(ngModel)]="reparationArticle.articleQuantity" required>
                                 <span *ngIf="articleQuantity.touched && !articleQuantity.valid"
                                     class="text-danger">Ingrese
                                     un numero valido</span>
@@ -64,7 +90,8 @@
                             <div class="form-group mb-3 col">
                                 <p>
                                     <button class="btn btn-primary mt-3" (click)="addArticleReparation(reparation)"
-                                        [disabled]="articleReparationForm.invalid"><i class="bi bi-plus-circle-fill"></i></button>
+                                        [disabled]="articleReparationForm.invalid"><i
+                                            class="bi bi-plus-circle-fill"></i></button>
                                 </p>
                             </div>
                         </div>
@@ -82,8 +109,8 @@
                     </select>
                 </th>
                 <th>
-                    <input id="amount" name="amount" class="form-control data-user" type="number" min="0" #amount="ngModel"
-                        [(ngModel)]="reparation.amount" required>
+                    <input id="amount" name="amount" class="form-control data-user" type="number" min="0"
+                        #amount="ngModel" [(ngModel)]="reparation.amount" required>
                 </th>
                 <th>
                     <span class="form-control data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
@@ -102,7 +129,7 @@
                 <th>
                     <div *ngIf="reparation.bill != null">
                         <p>
-                            <label for="billNumber" ><b>Numero </b></label>
+                            <label for="billNumber"><b>Numero </b></label>
                             <input id="billNumber" name="billNumber" class="data-user" type="number"
                                 #billNumber="ngModel" [(ngModel)]="reparation.bill.number" required>
                         </p>
@@ -133,14 +160,15 @@
                             class="bi bi-trash-fill"></i></button>
                 </td>
             </tr>
-            
+
         </tbody>
-       
+
     </table>
-    <pagination-controls class="text-center data-user"
-    (pageChange)="this.paginate.page = $event" 
-    previousLabel="Anterior" 
-    nextLabel="Siguiente"
-    *ngIf="reparations.length > 6">
+    <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 6">
     </pagination-controls>
 </div>
+-->
+
+<app-reparation-state-ingreso *ngIf="this.reparationStateSelected === this.reparationStatesEnum.INGRESO"></app-reparation-state-ingreso>
+<app-reparation-state-en-revision *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_REVISION"></app-reparation-state-en-revision>

@@ -21,7 +21,7 @@ namespace MegaHerdt.Models.Models
         [Required]
         public DateTime Date { get; set; }
         public string ClientDescription { get; set; }
-        public string EmployeeObservation { get; set; }
+        public string EmployeeObservation { get; set; } = "";
         public DateTime ApproximateTime { get; set; }
         public ReparationState ReparationState { get; set; }
         public User Client { get; set; }

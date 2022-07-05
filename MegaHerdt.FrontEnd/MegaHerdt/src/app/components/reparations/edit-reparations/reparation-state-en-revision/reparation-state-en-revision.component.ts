@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
@@ -12,29 +13,21 @@ import { ReparationStateService } from 'src/app/services/reparation-states/repar
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
-import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
-import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
-import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { DialogUpdateReparationComponent } from './dialog-update-reparation/dialog-update-reparation.component';
+import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
 
 @Component({
-  selector: 'app-edit-reparations',
-  templateUrl: './edit-reparations.component.html',
-  styleUrls: ['./edit-reparations.component.css']
+  selector: 'app-reparation-state-en-revision',
+  templateUrl: './reparation-state-en-revision.component.html',
+  styleUrls: ['./reparation-state-en-revision.component.css']
 })
-export class EditReparationsComponent implements OnInit {
+export class ReparationStateENREVISIONComponent implements OnInit {
   reparations: Array<Reparation>;
   articles: Array<ArticleName>;
   clients: Array<UserDetail>;
-  billTypes = BillTypeEnum;
   reparationsStates: Array<ReparationState>;
   reparationArticle: ReparationArticle;
- 
-  
   paginate: Paginate;
-  reparationStatesEnum = ReparationStatesEnum;
-  reparationStateSelected = ReparationStatesEnum.INGRESO;
-
+  
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
     private _reparationStateService: ReparationStateService, 
@@ -121,7 +114,8 @@ export class EditReparationsComponent implements OnInit {
   }
 
   loadReparations(){
-    this._reparationService.getAll(this._storageService.getTokenValue()).subscribe({
+    let stateId = 2;
+    this._reparationService.getByStateId(stateId, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("error al obtener reparaciones");
@@ -191,14 +185,4 @@ export class EditReparationsComponent implements OnInit {
     reparation.reparationsArticles.push(reparationArticle);
   }
 
-
-
-  //****************************NUEVO ************************************** */
-  selectedState_INGRESO(){
-    this.reparationStateSelected = ReparationStatesEnum.INGRESO;
-  }
-
-  selectedState_EN_REVISION(){
-    this.reparationStateSelected = ReparationStatesEnum.EN_REVISION;
-  }
 }

@@ -14,6 +14,7 @@ export class Reparation {
     reparationsArticles: Array<ReparationArticle>;
     bill: Bill;
     reparationsClaims: Array<ReparationClaimDetail>;
+    clientDescription: string;
 
     constructor(id:number, reparationState: ReparationState, employee: UserDetail, client: UserDetail, amount: number,
         date: Date, reparationsArticles: Array<ReparationArticle>, bill: Bill) {
@@ -26,6 +27,7 @@ export class Reparation {
         this.reparationsArticles = reparationsArticles;
         this.bill = bill;
         this.reparationsClaims = [];
+        this.clientDescription = "";
     }
 
 }
