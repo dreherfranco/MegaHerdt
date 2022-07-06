@@ -15,9 +15,11 @@ export class Reparation {
     bill: Bill;
     reparationsClaims: Array<ReparationClaimDetail>;
     clientDescription: string;
+    employeeObservation: string;
+    totalArticleAmount: number; 
 
     constructor(id:number, reparationState: ReparationState, employee: UserDetail, client: UserDetail, amount: number,
-        date: Date, reparationsArticles: Array<ReparationArticle>, bill: Bill) {
+        date: Date, reparationsArticles: Array<ReparationArticle>, bill: Bill, employeeObservation: string) {
         this.id = id;
         this.reparationState = reparationState;
         this.employee = employee;
@@ -28,6 +30,8 @@ export class Reparation {
         this.bill = bill;
         this.reparationsClaims = [];
         this.clientDescription = "";
+        this.employeeObservation = employeeObservation;
+        this.totalArticleAmount = 0;
     }
 
 }

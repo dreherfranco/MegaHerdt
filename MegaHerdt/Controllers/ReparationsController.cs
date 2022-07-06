@@ -60,11 +60,11 @@ namespace MegaHerdt.API.Controllers
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
                 reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
-                if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
-                {
-                    var mailRequest = this.ReparationService.mailRequest(reparationDb);
-                    await this.MailService.SendEmailAsync(mailRequest);
-                }
+              // if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
+             //   {
+              //      var mailRequest = this.ReparationService.mailRequest(reparationDb);
+            //       await this.MailService.SendEmailAsync(mailRequest);
+            //   }
                 return true;
             }
             catch (Exception ex)

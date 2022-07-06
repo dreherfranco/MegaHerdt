@@ -117,7 +117,8 @@ export class EditReparationsComponent implements OnInit {
   mapperReparation(reparation: Reparation): ReparationUpdate{
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription);
+      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription,
+      reparation.employeeObservation);
   }
 
   loadReparations(){
@@ -191,31 +192,4 @@ export class EditReparationsComponent implements OnInit {
     reparation.reparationsArticles.push(reparationArticle);
   }
 
-
-
-  //****************************NUEVO ************************************** */
-  selectedState_INGRESO(){
-   console.log( this.reparationStateSelected)// = ReparationStatesEnum.INGRESO;
-  }
-  selectedState_EN_REVISION(){
-    this.reparationStateSelected = ReparationStatesEnum.EN_REVISION;
-  }
-  selectedState_EN_PRESUPUESTO(){
-    this.reparationStateSelected = ReparationStatesEnum.EN_PRESUPUESTO;
-  }
-  selectedState_EN_REPARACION(){
-    this.reparationStateSelected = ReparationStatesEnum.EN_REPARACION;
-  }
-  selectedState_FINALIZADO(){
-    this.reparationStateSelected = ReparationStatesEnum.FINALIZADO;
-  }
-  selectedState_ENTREGADO(){
-    this.reparationStateSelected = ReparationStatesEnum.ENTREGADO;
-  }
-  selectedState_PAGADO(){
-    this.reparationStateSelected = ReparationStatesEnum.PAGADO;
-  }
-  selectedState_CANCELADO(){
-    this.reparationStateSelected = ReparationStatesEnum.CANCELADO;
-  }
 }

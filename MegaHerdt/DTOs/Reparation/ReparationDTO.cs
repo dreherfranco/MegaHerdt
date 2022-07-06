@@ -12,6 +12,8 @@ namespace MegaHerdt.API.DTOs.Reparation
         public float Amount { get; set; }
         public DateTime Date { get; set; }
         public string ClientDescription { get; set; }
+        public string EmployeeObservation { get; set; }
+        public float TotalArticleAmount { get; set; }
         public UserDetailDTO Client { get; set; }
         public UserDetailDTO Employee { get; set; }
         public ReparationStateDTO ReparationState { get; set; }

@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
+import { Bill } from 'src/app/models/Bill/Bill';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
-import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ArticleService } from 'src/app/services/articles/article.service';
@@ -13,26 +12,25 @@ import { ReparationStateService } from 'src/app/services/reparation-states/repar
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
-import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
 
 @Component({
-  selector: 'app-reparation-state-ingreso',
-  templateUrl: './reparation-state-ingreso.component.html',
-  styleUrls: ['./reparation-state-ingreso.component.css']
+  selector: 'app-update-reparation-state-en-revision',
+  templateUrl: './update-reparation-state-en-revision.component.html',
+  styleUrls: ['./update-reparation-state-en-revision.component.css']
 })
-export class ReparationStateINGRESOComponent implements OnInit {
-  reparations: Array<Reparation>;
+export class UpdateReparationStateENREVISIONComponent implements OnInit {
   articles: Array<ArticleName>;
   clients: Array<UserDetail>;
   reparationsStates: Array<ReparationState>;
   reparationArticle: ReparationArticle;
   paginate: Paginate;
-  
+
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
     private _reparationStateService: ReparationStateService, 
-    private _reparationService: ReparationService, public dialog: MatDialog) { 
-    this.reparations = new Array<Reparation>();
+    private _reparationService: ReparationService,
+    public dialogRef: MatDialogRef<UpdateReparationStateENREVISIONComponent>,
+    @Inject(MAT_DIALOG_DATA) public reparation: Reparation) { 
     this.articles = new Array<ArticleName>();
     this.clients = new Array<UserDetail>();
     this.reparationsStates = new Array<ReparationState>();
@@ -41,33 +39,26 @@ export class ReparationStateINGRESOComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadReparations();
+    this.loadArticles();
     this.loadClients();
+    this.loadReparationsStates();
   }
 
-  openDialogUpdate(reparation: Reparation){
-    const dialogRef = this.dialog.open(DialogUpdateReparationComponent,
-      {
-        disableClose:true,
-        data: reparation
-      });
-
-    dialogRef.afterClosed().subscribe((result: Reparation) => {
-      if(result != undefined){
-        this.update(result);
-      }
-    });
+  confirm(){
+    this.dialogRef.close(this.reparation);
   }
 
-  update(reparation: Reparation){
-    var reparationUpdate = this.mapperReparation(reparation);
-    
-    this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
+  closeModal(){
+    this.dialogRef.close();
+  }
+
+  loadArticles() {
+    this._articleService.getArticleNames().subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          console.log("error al obtener articulos");
         } else {
-          this.loadReparations();
+          this.articles = response;
         }
       },
       error: (err) => {
@@ -76,27 +67,19 @@ export class ReparationStateINGRESOComponent implements OnInit {
     })
   }
 
-  mapperReparation(reparation: Reparation): ReparationUpdate{
-    let identity = this._storageService.getIdentity();
-    return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription
-      ,reparation.employeeObservation);
-  }
-
-  loadReparations(){
-    let stateId = 1;
-    this._reparationService.getByStateId(stateId, this._storageService.getTokenValue()).subscribe({
+  loadReparationsStates() {
+    this._reparationStateService.getAll().subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al obtener reparaciones");
+          console.log("error al obtener los estados de las reparaciones");
         } else {
-          this.reparations = response;
+          this.reparationsStates = response;
         }
       },
       error: (err) => {
         console.log(err)
       }
-    });
+    })
   }
 
   loadClients() {
@@ -114,6 +97,14 @@ export class ReparationStateINGRESOComponent implements OnInit {
     })
   }
 
- 
-
+  addArticleReparation() {
+    var articleName = "";
+    //buscar el articulo para extraer el nombre
+    for (let article of this.articles) {
+      if (article.id == this.reparationArticle.articleId)
+        articleName = article.name;
+    }
+    var reparationArticle = new ReparationArticle(this.reparationArticle.articleId, this.reparationArticle.articleQuantity,0,articleName);
+    this.reparation.reparationsArticles.push(reparationArticle);
+  }
 }

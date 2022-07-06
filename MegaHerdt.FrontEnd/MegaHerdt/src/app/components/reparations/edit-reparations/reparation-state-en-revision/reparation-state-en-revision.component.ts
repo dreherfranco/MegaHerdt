@@ -14,6 +14,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
+import { UpdateReparationStateENREVISIONComponent } from './update-reparation-state-en-revision/update-reparation-state-en-revision.component';
 
 @Component({
   selector: 'app-reparation-state-en-revision',
@@ -44,7 +45,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation){
-    const dialogRef = this.dialog.open(DialogUpdateReparationComponent,
+    const dialogRef = this.dialog.open(UpdateReparationStateENREVISIONComponent,
       {
         disableClose:true,
         data: reparation
@@ -53,37 +54,10 @@ export class ReparationStateENREVISIONComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: Reparation) => {
       if(result != undefined){
         this.update(result);
+      }else{
+        this.loadReparations();
       }
     });
-  }
-
-  openDialogDelete(reparationId: number){
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: reparationId
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteReparation(result);
-      }
-    });
-  }
-
-  deleteReparation(reparationId: number){
-    this._reparationService.delete(reparationId, this._storageService.getTokenValue()).subscribe({
-      next: (response) =>{
-        if(response.error){
-          console.log("error al eliminar reparacion");
-        }else{
-          this.loadReparations();
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
   }
 
   update(reparation: Reparation){
@@ -106,7 +80,8 @@ export class ReparationStateENREVISIONComponent implements OnInit {
   mapperReparation(reparation: Reparation): ReparationUpdate{
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription);
+      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription
+      ,reparation.employeeObservation);
   }
 
   loadReparations(){
@@ -117,6 +92,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
           console.log("error al obtener reparaciones");
         } else {
           this.reparations = response;
+          console.log(this.reparations)
         }
       },
       error: (err) => {
