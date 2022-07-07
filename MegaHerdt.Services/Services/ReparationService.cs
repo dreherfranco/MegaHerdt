@@ -7,10 +7,11 @@ namespace MegaHerdt.Services.Services
 {
     public class ReparationService: BaseService<Reparation>
     {
-        public ReparationService(ReparationHelper reparationHelper):
-            base(reparationHelper)
+        ReparationHelper reparationHelper;
+        public ReparationService(ReparationHelper helper):
+            base(helper)
         {
-            
+            this.reparationHelper = helper;   
         }
 
         public Reparation GetReparationById(int reparationId)
@@ -40,6 +41,11 @@ namespace MegaHerdt.Services.Services
         public bool isInBudget(string reparationStateName)
         {
             return reparationStateName.Contains("PRESUPUESTO");
+        }
+
+        public async Task UpdateBudget(Reparation reparation, bool isAccepted)
+        {
+            await this.reparationHelper.UpdateBudget(reparation, isAccepted);
         }
 
         public MailRequest mailRequest(Reparation reparation)

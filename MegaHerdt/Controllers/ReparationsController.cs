@@ -59,7 +59,7 @@ namespace MegaHerdt.API.Controllers
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
-                reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
+             //   reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
               // if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
              //   {
               //      var mailRequest = this.ReparationService.mailRequest(reparationDb);
@@ -72,6 +72,24 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(new { message = ex.Message });
             }
         }
+
+        [HttpPost("accept-budget")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> UpdateReparationAcceptBudget([FromBody] ReparationUpdateBudgetDTO reparationDTO)
+        {
+            try
+            {
+                var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
+                await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
         [HttpDelete("delete/{id}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ReparationCreation } from 'src/app/models/Reparation/ReparationCreation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
+import { ReparationUpdateBudget } from 'src/app/models/Reparation/ReparationUpdateBudget';
 import { Global } from 'src/app/utils/Global';
 
 @Injectable({
@@ -29,6 +30,12 @@ export class ReparationService {
     return this._http.post(this.url + "/update", params, { headers: this.headers });
   }
   
+  updateBudget(reparation: ReparationUpdateBudget, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(reparation);
+    return this._http.post(this.url + "/accept-budget", params, { headers: this.headers });
+  }
+
   getAll(token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url+"/get-all", { headers: this.headers });

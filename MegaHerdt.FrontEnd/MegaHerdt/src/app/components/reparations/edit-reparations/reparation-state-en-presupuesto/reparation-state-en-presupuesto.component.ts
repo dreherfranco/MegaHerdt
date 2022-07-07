@@ -6,12 +6,14 @@ import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
+import { ReparationUpdateBudget } from 'src/app/models/Reparation/ReparationUpdateBudget';
 import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { UpdateReparationStateENREVISIONComponent } from '../reparation-state-en-revision/update-reparation-state-en-revision/update-reparation-state-en-revision.component';
+import { UpdateReparationStateENPRESUPUESTOComponent } from './update-reparation-state-en-presupuesto/update-reparation-state-en-presupuesto.component';
 
 @Component({
   selector: 'app-reparation-state-en-presupuesto',
@@ -41,24 +43,23 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
     this.loadClients();
   }
 
-  openDialogUpdate(reparation: Reparation){
-    const dialogRef = this.dialog.open(UpdateReparationStateENREVISIONComponent,
+  openDialogUpdate(reparationId: number){
+    let data = new ReparationUpdateBudget(reparationId, true);
+    const dialogRef = this.dialog.open(UpdateReparationStateENPRESUPUESTOComponent,
       {
         disableClose:true,
-        data: reparation
+        data: data
       });
 
-    dialogRef.afterClosed().subscribe((result: Reparation) => {
+    dialogRef.afterClosed().subscribe((result: ReparationUpdateBudget) => {
       if(result != undefined){
-        this.update(result);
+        this.updateBudget(result);
       }
     });
   }
 
-  update(reparation: Reparation){
-    var reparationUpdate = this.mapperReparation(reparation);
-    
-    this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
+  updateBudget(reparation: ReparationUpdateBudget){
+    this._reparationService.updateBudget(reparation, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("error al actualizar reparacion");
@@ -72,11 +73,34 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
     })
   }
 
-  mapperReparation(reparation: Reparation): ReparationUpdate{
-    let identity = this._storageService.getIdentity();
-    return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription
-      ,reparation.employeeObservation);
+  openDialogRejectBudget(reparationId: number){
+    let data = new ReparationUpdateBudget(reparationId, false);
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: data
+      });
+
+    dialogRef.afterClosed().subscribe((result: ReparationUpdateBudget) => {
+      if(result != undefined){
+        this.updateBudget(result);
+      }
+    });
+  }
+
+  deleteReparation(reparationId: number){
+    this._reparationService.delete(reparationId, this._storageService.getTokenValue()).subscribe({
+      next: (response) =>{
+        if(response.error){
+          console.log("error al eliminar reparacion");
+        }else{
+          this.loadReparations();
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 
   loadReparations(){

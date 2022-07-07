@@ -49,6 +49,20 @@ namespace MegaHerdt.Helpers.Helpers
             }
         }
 
+        public async Task UpdateBudget(Reparation entity, bool isAccepted)
+        {
+            if (isAccepted)
+            {
+                ++entity.ReparationStateId;
+                await this.repository.Update(entity);
+            }
+            else
+            {
+                entity.ReparationStateId = 8; 
+                await this.repository.Update(entity);
+            }
+        }
+
         private bool isFinalState(Reparation entity)
         {
             return entity.ReparationStateId == 7 || entity.ReparationStateId == 8;
