@@ -112,6 +112,7 @@ import { ReparationStatePAGADOComponent } from './components/reparations/edit-re
 import { ReparationStateCANCELADOComponent } from './components/reparations/edit-reparations/reparation-state-cancelado/reparation-state-cancelado.component';
 import { UpdateReparationStateENREVISIONComponent } from './components/reparations/edit-reparations/reparation-state-en-revision/update-reparation-state-en-revision/update-reparation-state-en-revision.component';
 import { UpdateReparationStateENPRESUPUESTOComponent } from './components/reparations/edit-reparations/reparation-state-en-presupuesto/update-reparation-state-en-presupuesto/update-reparation-state-en-presupuesto.component';
+import { UpdateReparationStateFINALIZADOComponent } from './components/reparations/edit-reparations/reparation-state-finalizado/update-reparation-state-finalizado/update-reparation-state-finalizado.component';
 
 @NgModule({
   declarations: [
@@ -212,6 +213,7 @@ import { UpdateReparationStateENPRESUPUESTOComponent } from './components/repara
     ReparationStateCANCELADOComponent,
     UpdateReparationStateENREVISIONComponent,
     UpdateReparationStateENPRESUPUESTOComponent,
+    UpdateReparationStateFINALIZADOComponent,
   ],
   imports: [
     BrowserModule,

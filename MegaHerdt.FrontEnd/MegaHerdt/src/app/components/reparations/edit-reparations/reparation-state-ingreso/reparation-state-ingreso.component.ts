@@ -1,18 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { ArticleName } from 'src/app/models/Article/ArticleName';
-import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
-import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
-import { UserDetail } from 'src/app/models/User/UserDetail';
-import { ArticleService } from 'src/app/services/articles/article.service';
-import { ReparationStateService } from 'src/app/services/reparation-states/reparation-state.service';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { UserService } from 'src/app/services/users/user.service';
 import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
 
 @Component({
@@ -69,7 +61,7 @@ export class ReparationStateINGRESOComponent implements OnInit {
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
       reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription
-      ,reparation.employeeObservation);
+      ,reparation.employeeObservation,reparation.approximateTime);
   }
 
   loadReparations(){

@@ -81,7 +81,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
-                await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted);
+                await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted, reparationDTO.ApproximateTime);
                 return true;
             }
             catch (Exception ex)

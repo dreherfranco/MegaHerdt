@@ -43,9 +43,9 @@ namespace MegaHerdt.Services.Services
             return reparationStateName.Contains("PRESUPUESTO");
         }
 
-        public async Task UpdateBudget(Reparation reparation, bool isAccepted)
+        public async Task UpdateBudget(Reparation reparation, bool isAccepted, DateTime approximateTime)
         {
-            await this.reparationHelper.UpdateBudget(reparation, isAccepted);
+            await this.reparationHelper.UpdateBudget(reparation, isAccepted, approximateTime);
         }
 
         public MailRequest mailRequest(Reparation reparation)

@@ -9,14 +9,14 @@ import { ReparationUpdateBudget } from 'src/app/models/Reparation/ReparationUpda
 })
 export class UpdateReparationStateENPRESUPUESTOComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UpdateReparationStateENPRESUPUESTOComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ReparationUpdateBudget) { }
+    @Inject(MAT_DIALOG_DATA) public reparationUpdateBudget: ReparationUpdateBudget) { }
 
   ngOnInit(): void {
   }
 
   confirm(){
-    this.data.isAccepted = true;
-    this.dialogRef.close(this.data);
+    this.reparationUpdateBudget.isAccepted = true;
+    this.dialogRef.close(this.reparationUpdateBudget);
   }
 
   closeModal(){

@@ -28,7 +28,7 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   }
 
   openDialogUpdate(reparationId: number){
-    let data = new ReparationUpdateBudget(reparationId, true);
+    let data = new ReparationUpdateBudget(reparationId, true, new Date());
     const dialogRef = this.dialog.open(UpdateReparationStateENPRESUPUESTOComponent,
       {
         disableClose:true,
@@ -58,7 +58,7 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   }
 
   openDialogRejectBudget(reparationId: number){
-    let data = new ReparationUpdateBudget(reparationId, false);
+    let data = new ReparationUpdateBudget(reparationId, false, new Date());
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
       {
         disableClose:true,

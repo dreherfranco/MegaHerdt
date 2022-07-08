@@ -49,11 +49,12 @@ namespace MegaHerdt.Helpers.Helpers
             }
         }
 
-        public async Task UpdateBudget(Reparation entity, bool isAccepted)
+        public async Task UpdateBudget(Reparation entity, bool isAccepted, DateTime approximateTime)
         {
             if (isAccepted)
             {
                 ++entity.ReparationStateId;
+                entity.ApproximateTime = approximateTime;
                 await this.repository.Update(entity);
             }
             else

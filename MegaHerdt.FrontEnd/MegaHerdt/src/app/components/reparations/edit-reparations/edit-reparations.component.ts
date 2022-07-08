@@ -118,7 +118,7 @@ export class EditReparationsComponent implements OnInit {
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
       reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription,
-      reparation.employeeObservation);
+      reparation.employeeObservation,reparation.approximateTime);
   }
 
   loadReparations(){
