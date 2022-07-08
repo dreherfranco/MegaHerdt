@@ -1,19 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { ArticleName } from 'src/app/models/Article/ArticleName';
-import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
-import { ReparationState } from 'src/app/models/ReparationState/ReparationState';
-import { UserDetail } from 'src/app/models/User/UserDetail';
-import { ArticleService } from 'src/app/services/articles/article.service';
-import { ReparationStateService } from 'src/app/services/reparation-states/reparation-state.service';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { UserService } from 'src/app/services/users/user.service';
-import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
 import { UpdateReparationStateENREVISIONComponent } from './update-reparation-state-en-revision/update-reparation-state-en-revision.component';
 
 @Component({
@@ -23,25 +14,16 @@ import { UpdateReparationStateENREVISIONComponent } from './update-reparation-st
 })
 export class ReparationStateENREVISIONComponent implements OnInit {
   reparations: Array<Reparation>;
-  articles: Array<ArticleName>;
-  clients: Array<UserDetail>;
-  reparationsStates: Array<ReparationState>;
-  reparationArticle: ReparationArticle;
   paginate: Paginate;
   
-  constructor(private _storageService: StorageService, private _userService: UserService,
+  constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
-    this.articles = new Array<ArticleName>();
-    this.clients = new Array<UserDetail>();
-    this.reparationsStates = new Array<ReparationState>();
-    this.reparationArticle = new ReparationArticle(0,0,0,"");
     this.paginate = new Paginate(1,2);
   }
 
   ngOnInit(): void {
     this.loadReparations();
-    this.loadClients();
   }
 
   openDialogUpdate(reparation: Reparation){
@@ -99,21 +81,6 @@ export class ReparationStateENREVISIONComponent implements OnInit {
         console.log(err)
       }
     });
-  }
-
-  loadClients() {
-    this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener los usuarios");
-        } else {
-          this.clients = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
   }
 
 }

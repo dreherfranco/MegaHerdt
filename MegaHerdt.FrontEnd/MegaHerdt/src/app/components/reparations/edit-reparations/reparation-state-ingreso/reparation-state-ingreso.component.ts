@@ -22,27 +22,16 @@ import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dia
 })
 export class ReparationStateINGRESOComponent implements OnInit {
   reparations: Array<Reparation>;
-  articles: Array<ArticleName>;
-  clients: Array<UserDetail>;
-  reparationsStates: Array<ReparationState>;
-  reparationArticle: ReparationArticle;
   paginate: Paginate;
   
-  constructor(private _articleService: ArticleService,
-    private _storageService: StorageService, private _userService: UserService,
-    private _reparationStateService: ReparationStateService, 
+  constructor(private _storageService: StorageService, 
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
-    this.articles = new Array<ArticleName>();
-    this.clients = new Array<UserDetail>();
-    this.reparationsStates = new Array<ReparationState>();
-    this.reparationArticle = new ReparationArticle(0,0,0,"");
     this.paginate = new Paginate(1,2);
   }
 
   ngOnInit(): void {
     this.loadReparations();
-    this.loadClients();
   }
 
   openDialogUpdate(reparation: Reparation){
@@ -98,22 +87,5 @@ export class ReparationStateINGRESOComponent implements OnInit {
       }
     });
   }
-
-  loadClients() {
-    this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener los usuarios");
-        } else {
-          this.clients = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
- 
 
 }

@@ -1,1 +1,85 @@
-<p>reparation-state-en-reparacion works!</p>
+<div class="table-responsive p-1">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>LISTADO DE REPARACIONES</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th scope="col">Email empleado</th>
+                <th scope="col">Email cliente</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Descripcion del cliente</th>
+                <th scope="col">Observacion del Empleado</th>
+                <th scope="col">Monto mano de obra</th>
+                <th scope="col">Articulos a utilizar</th>
+                <th scope="col">Monto total articulos</th>
+                <th scope="col">Total</th>
+                <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let reparation of reparations 
+            | paginate: 
+            {
+                itemsPerPage: this.paginate.recordsPerPage, 
+                currentPage:this.paginate.page
+            }; 
+            let i = index">
+                <th>
+                    <span class="data-user form-control">{{ reparation.employee.email }}</span>
+                </th>
+                <th>
+                    <span class="data-user form-control">{{ reparation.client.userName }}</span>
+                </th>      
+                <th>
+                    <span class="form-control data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
+                </th>
+                <th>
+                    <span class="data-user form-control">{{ reparation.reparationState.name }}</span>
+                </th>        
+                <th>
+                    <span class="data-user form-control">{{ reparation.clientDescription }}</span>
+                </th>
+                <th>
+                    <span class="data-user form-control">{{ reparation.employeeObservation }}</span>
+                </th>
+                <th>
+                    <span class="data-user form-control">${{ reparation.amount }}</span>
+                </th>
+                <th>
+                    <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene
+                        articulos</span>
+                    <span class="form-control data-user" *ngFor="let reparationArticle of reparation.reparationsArticles" name="selectArticle">
+                        {{reparationArticle.articleName}} <i class="bi bi-arrow-right"></i> ${{ reparationArticle.articlePriceAtTheMoment }}
+                    </span>
+                </th>
+                <th>
+                    <span class="data-user form-control">${{ reparation.totalArticleAmount }}</span>
+                </th>
+                <th>
+                    <span class="data-user form-control">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
+                </th>
+                <td>
+                    <button class="btn btn-success" (click)="openDialogUpdate(reparation.id)"> <i
+                            class="bi bi-pencil-square"></i>Aceptar presupuesto</button>
+                </td>
+            </tr>
+
+        </tbody>
+
+    </table>
+    <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 2">
+    </pagination-controls>
+</div>
