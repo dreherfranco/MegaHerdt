@@ -12,8 +12,6 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
             </tr>
             <tr>
                 <th scope="col">Email empleado</th>
@@ -26,8 +24,6 @@
                 <th scope="col">Articulos a utilizar</th>
                 <th scope="col">Monto total articulos</th>
                 <th scope="col">Total</th>
-                <th scope="col">Tiempo aproximado</th>
-                <th scope="col">#</th>
             </tr>
         </thead>
         <tbody>
@@ -71,14 +67,7 @@
                 </th>
                 <th>
                     <span class="data-user form-control">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
-                </th>
-                <th>
-                    <span class="data-user form-control">{{ reparation.approximateTime | date: 'dd/MM/yyyy' }}</span>
-                </th>
-                <td>
-                    <button class="btn btn-success" (click)="openDialogUpdate(reparation)"> <i
-                            class="bi bi-pencil-square"></i></button>
-                </td>
+                </th>    
             </tr>
 
         </tbody>

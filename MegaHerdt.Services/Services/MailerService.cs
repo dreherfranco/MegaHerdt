@@ -20,6 +20,7 @@ namespace MegaHerdt.Services.Services
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
             email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
+            //email.To.Add(MailboxAddress.Parse("dreheragustin@hotmail.com"));
             email.Subject = mailRequest.Subject;
             var builder = new BodyBuilder();
             if (mailRequest.Attachments != null)

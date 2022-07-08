@@ -50,11 +50,13 @@ namespace MegaHerdt.Services.Services
 
         public MailRequest mailRequest(Reparation reparation)
         {
+            var total = reparation.Amount + reparation.TotalArticleAmount;
             return new MailRequest()
             {
                 ToEmail = reparation.Client.Email,
-                Subject = "ESTADO DE REPARACION",
-                Body = "El presupuesto de su reparacion está listo, su costo es de $" + reparation.Amount
+                Subject = "<b>Reparacion MegaHerdt</b> ",
+                Body = "<b>Su reparacion se encuentra en </b>" + reparation.ReparationState.Name +
+                "<br>El presupuesto de su reparacion está listo, su costo total es de $" + total
             };
         }
     }

@@ -59,12 +59,12 @@ namespace MegaHerdt.API.Controllers
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
-             //   reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
-              // if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
-             //   {
-              //      var mailRequest = this.ReparationService.mailRequest(reparationDb);
-            //       await this.MailService.SendEmailAsync(mailRequest);
-            //   }
+                reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
+                //if (this.ReparationService.isInBudget(reparationDb.ReparationState.Name))
+               // {
+                   var mailRequest = this.ReparationService.mailRequest(reparationDb);
+                   await this.MailService.SendEmailAsync(mailRequest);
+                //}
                 return true;
             }
             catch (Exception ex)
@@ -82,6 +82,9 @@ namespace MegaHerdt.API.Controllers
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted, reparationDTO.ApproximateTime);
+
+                var mailRequest = this.ReparationService.mailRequest(reparationDb);
+                await this.MailService.SendEmailAsync(mailRequest);
                 return true;
             }
             catch (Exception ex)
