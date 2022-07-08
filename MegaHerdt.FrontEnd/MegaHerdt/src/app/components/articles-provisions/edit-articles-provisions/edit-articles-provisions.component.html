@@ -17,7 +17,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let articleProvider of articlesProviders; let i = index">
+            <tr *ngFor="let articleProvider of articlesProviders | paginate: 
+            {
+                itemsPerPage: this.paginate.recordsPerPage, 
+                currentPage:this.paginate.page
+            };
+            let i = index">
                 <th>
                     <!--
                     <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.article.id" disabled>
@@ -85,4 +90,7 @@
             </tr>
         </tbody>
     </table>
+    <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="articlesProviders.length > 6">
+    </pagination-controls>
 </div>

@@ -29,8 +29,6 @@ export class EditReparationsComponent implements OnInit {
   billTypes = BillTypeEnum;
   reparationsStates: Array<ReparationState>;
   reparationArticle: ReparationArticle;
- 
-  
   paginate: Paginate;
   reparationStatesEnum = ReparationStatesEnum;
   reparationStateSelected = ReparationStatesEnum.INGRESO;
