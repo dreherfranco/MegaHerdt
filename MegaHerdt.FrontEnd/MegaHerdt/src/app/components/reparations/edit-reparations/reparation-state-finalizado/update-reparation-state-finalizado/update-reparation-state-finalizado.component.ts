@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
+import { Bill } from 'src/app/models/Bill/Bill';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
@@ -16,6 +17,7 @@ export class UpdateReparationStateFINALIZADOComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<UpdateReparationStateFINALIZADOComponent>,
     @Inject(MAT_DIALOG_DATA) public reparation: Reparation) { 
     this.paginate = new Paginate(1,2);
+    this.reparation.bill = new Bill(0,0,this.billTypes.A);
   }
 
   ngOnInit(): void {

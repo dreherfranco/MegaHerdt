@@ -42,7 +42,7 @@ export class ReparationStateFINALIZADOComponent implements OnInit {
   }
 
   loadReparations() {
-    let stateId = 4;
+    let stateId = 5;
     this._reparationService.getByStateId(stateId, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
