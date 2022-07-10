@@ -18,7 +18,7 @@ export class ShowUsersComponent implements OnInit {
 
   constructor(private _storageService: StorageService, private _userService: UserService) {
     this.users = new Array<UserDetail>();
-    this.paginate = new Paginate(1, 6);
+    this.paginate = new Paginate(1, 3);
     this.searchText = "";
   }
 
@@ -62,6 +62,8 @@ export class ShowUsersComponent implements OnInit {
           return compare(a.surname, b.surname, isAsc);
         case 'email':
           return compare(a.email, b.email, isAsc);
+        case 'userName':
+          return compare(a.userName, b.userName, isAsc);
         case 'createdDate':
           return compare(a.createdDate, b.createdDate, isAsc);
         case 'lastLogin':

@@ -15,7 +15,7 @@ export class PurchaseRecordComponent implements OnInit {
   paginate: Paginate;
 
   constructor(private _purchaseService: PurchaseService, private _storageService: StorageService) {
-    this.paginate = new Paginate(1,6);
+    this.paginate = new Paginate(1,4);
    }
 
   ngOnInit(): void {

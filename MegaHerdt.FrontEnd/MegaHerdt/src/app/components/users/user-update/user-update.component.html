@@ -4,19 +4,25 @@
   <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
     <div class="row">
       <div class="col-md-6">
+        <div class="row">
+          <div class="form-group mb-3 col">
+            <label for="username"><b>Username:</b></label>
+            <span class="form-control bg-secondary text-white"> {{ getUserName() }} </span>
+          </div>
 
-        <div class="form-group mb-3">
-          <label for="email"><b>Email:</b></label>
-          <input class="form-control" type="email" name="email" [email]="true" #email="ngModel" [(ngModel)]="user.email"
-             />
-          <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
+          <div class="form-group mb-3 col">
+            <label for="email"><b>Email:</b></label>
+            <input class="form-control" type="email" name="email" [email]="true" #email="ngModel"
+              [(ngModel)]="user.email" />
+            <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
+          </div>
         </div>
-
         <div class="form-group mb-3">
           <label for="dni"><b>(*)DNI:</b></label>
-          <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" 
-          required minlength="8" maxlength="8" pattern="[0-9]{8}"/>
-          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido, debe contener 8 numeros</span>
+          <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required
+            minlength="8" maxlength="8" pattern="[0-9]{8}" />
+          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido, debe contener 8
+            numeros</span>
         </div>
 
         <div class="row">
@@ -39,12 +45,12 @@
             <h2 class="text-center">Agregar telefono</h2>
             <label for="phone"><b>(*)Telefono:</b></label>
             <div class="d-flex flex-row">
-              <input class="form-control col-sm-4 h-40" type="text" name="phoneNumber" placeholder="Agregar telefono" #number="ngModel" [(ngModel)]="phoneNumber"
-                pattern="(^[0-9]+)" minlength="5" />
+              <input class="form-control col-sm-4 h-40" type="text" name="phoneNumber" placeholder="Agregar telefono"
+                #number="ngModel" [(ngModel)]="phoneNumber" pattern="(^[0-9]+)" minlength="5" />
               <div class="alert alert-warning col-sm-10 m-2 mt-0 h-40">
                 Ingrese al menos un telefono <i class="bi bi-exclamation-diamond-fill"></i>
               </div>
-           </div>
+            </div>
             <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono
               valido</span>
           </div>
@@ -62,7 +68,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
       <div class="col-md-6">
         <div *ngIf="user.addresses.length == 0">
@@ -83,7 +89,7 @@
           </div>
         </div>
       </div>
-      
+
       <hr class="height-hr-3">
       <div class="d-flex flex-row mb-2 w-50">
         <div class="col-sm-8 alert alert-warning">
@@ -92,15 +98,17 @@
         <label for="password" class="text-center m-3 mt-0"><b>(*)Password:</b></label>
         <div class="col-sm-6">
           <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
-            required minlength="5" placeholder="Ingrese su contraseña"/>
+            required minlength="5" placeholder="Ingrese su contraseña" />
           <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
         </div>
-        <input class="col-sm-2 btn btn-primary btn-submit m-3 mt-0 w-25" type="submit" value="Enviar" [disabled]="!updateForm.form.valid" />
+        <input class="col-sm-2 btn btn-primary btn-submit m-3 mt-0 w-25" type="submit" value="Enviar"
+          [disabled]="!updateForm.form.valid" />
       </div>
     </div>
-    
 
-    <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al actualizar el usuario: <span class="data-user">{{ error }}</span></p>
+
+    <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al actualizar el usuario: <span
+        class="data-user">{{ error }}</span></p>
     <p *ngIf="!addressOk" class="alert alert-danger m-3">Ingrese una direccion valida</p>
     <p *ngIf="!phoneOk" class="alert alert-danger m-3">Ingrese un numero telefono</p>
     <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizo correctamente</p>

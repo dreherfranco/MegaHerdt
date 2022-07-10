@@ -17,7 +17,7 @@ export class ReparationRecordComponent implements OnInit {
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService) { 
     this.reparations = new Array<Reparation>();
-    this.paginate = new Paginate(1,5);
+    this.paginate = new Paginate(1,4);
   }
 
   ngOnInit(): void {

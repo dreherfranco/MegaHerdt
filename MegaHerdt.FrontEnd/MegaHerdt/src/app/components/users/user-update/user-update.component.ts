@@ -112,7 +112,6 @@ export class UserUpdateComponent implements OnInit {
             console.log("usuario no encontrado");
           } else {
             this.user = response;
-            console.log(response)
           }
         },
         error: (err) => {
