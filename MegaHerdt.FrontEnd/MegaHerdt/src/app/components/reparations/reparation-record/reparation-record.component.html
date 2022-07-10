@@ -45,10 +45,10 @@
                         <span>{{ reparation.reparationState.name }}</span>
                     </th>
                     <th>
-                        <span class="data-user">{{ reparation.bill.number }}</span>
+                        <span class="data-user" *ngIf="reparation.bill !== null">{{ reparation.bill.number }}</span>
                     </th>
                     <th>
-                        <span class="data-user">{{ reparation.bill.type }}</span>
+                        <span class="data-user" *ngIf="reparation.bill !== null">{{ reparation.bill.type }}</span>
                     </th>
                     <th>
                         <button class="btn btn-danger w-25" [routerLink]="['reparation', reparation.id, 'claim']"> <i
@@ -63,14 +63,14 @@
                             <i class="bi bi-exclamation-diamond"></i>
                             Ya existen pagos de esta reparación
                         </p>
-                        <button *ngIf="reparation.bill.payments.length == 0" class="btn btn-primary"
+                        <button *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')" class="btn btn-primary"
                             [routerLink]="['reparation', reparation.id, 'payment']"> Pagar </button>
                     </th>
                 </tr>
             </tbody>
         </table>
         <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 6">
+            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 5">
         </pagination-controls>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="table-responsive p-1">
+<div class="table-responsive p-1" *ngIf="reparations.length > 0">
     <table class="table">
         <thead>
             <tr>
@@ -54,3 +54,4 @@
         previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 2">
     </pagination-controls>
 </div>
+<p class="alert alert-warning m-2 w-50 mx-auto" *ngIf="reparations.length === 0"><i class="bi bi-exclamation-circle-fill"></i> No existen reparaciones en este estado</p>

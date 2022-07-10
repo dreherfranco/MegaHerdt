@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Bill } from 'src/app/models/Bill/Bill';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
@@ -60,7 +61,7 @@ export class ReparationStateINGRESOComponent implements OnInit {
   mapperReparation(reparation: Reparation): ReparationUpdate{
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription
+      reparation.amount,reparation.date,reparation.reparationsArticles,new Bill(0,0,'A'), reparation.clientDescription
       ,reparation.employeeObservation,reparation.approximateTime);
   }
 

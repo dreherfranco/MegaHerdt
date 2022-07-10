@@ -57,7 +57,8 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     var id = this.getReparationId();
     this._reparationService.getById(id,this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
-          this.reparationAmount = result.amount;
+        console.log(result)
+          this.reparationAmount = result.amount + result.totalArticleAmount;
       },
       error: (err) => console.log(err)
     })

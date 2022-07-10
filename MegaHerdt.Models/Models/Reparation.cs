@@ -28,7 +28,7 @@ namespace MegaHerdt.Models.Models
         public User Employee { get; set; }
         public List<ReparationClaim> ReparationsClaims { get; set; }
         public List<ReparationArticle> ReparationsArticles { get; set; }
-        public Bill? Bill { get; set; }
+        public Bill Bill { get; set; }
 
         public float TotalArticleAmount
         {

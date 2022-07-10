@@ -40,7 +40,9 @@ namespace MegaHerdt.Helpers.Helpers
                 var bill = this.billRepository.Get(x => x.Id == reparation.BillId).FirstOrDefault();
                 bill.Payments = payments;
                 await this.billRepository.Update(bill);
-               
+                
+                reparation.ReparationStateId = 7;
+                await reparationRepository.Update(reparation);  
                 return subscription;
             }
             else

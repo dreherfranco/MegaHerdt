@@ -153,7 +153,8 @@ namespace MegaHerdt.API.Mapper
 
             #region ReparationPayment
             CreateMap<ReparationPaymentConfirmDTO, ReparationPaymentData>();
-            CreateMap<Payment, ReparationPaymentDTO>();
+            CreateMap<Payment, ReparationPaymentDTO>()
+                .ReverseMap();
             #endregion ReparationPayment
 
             #region Purchase

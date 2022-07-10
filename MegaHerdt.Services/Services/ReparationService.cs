@@ -17,25 +17,25 @@ namespace MegaHerdt.Services.Services
         public Reparation GetReparationById(int reparationId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.Id == reparationId;
-            return this.helper.Get(filter).FirstOrDefault();
+            return this.reparationHelper.Get(filter).FirstOrDefault();
         }
 
         public IQueryable<Reparation> GetReparationByStateId(int reparationStateId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.ReparationStateId == reparationStateId;
-            return this.helper.Get(filter);
+            return this.reparationHelper.Get(filter);
         }
 
         public List<Reparation> GetClientReparations(string clientId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.ClientId == clientId;
-            return this.helper.Get(filter).ToList();
+            return this.reparationHelper.Get(filter).ToList();
         }
 
         public List<Reparation> GetEmployeeReparations(string employeeId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.EmployeeId == employeeId;
-            return this.helper.Get(filter).ToList();
+            return this.reparationHelper.Get(filter).ToList();
         }
         
         public bool isInBudget(string reparationStateName)
