@@ -16,6 +16,7 @@ using MegaHerdt.API.DTOs.PurchasePayment;
 using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.ReparationArticle;
 using MegaHerdt.API.DTOs.ReparationClaim;
+using MegaHerdt.API.DTOs.ReparationClaimAnswer;
 using MegaHerdt.API.DTOs.ReparationPayment;
 using MegaHerdt.API.DTOs.ReparationState;
 using MegaHerdt.API.DTOs.Shipment;
@@ -81,6 +82,12 @@ namespace MegaHerdt.API.Mapper
             CreateMap<ReparationClaimUpdateDTO, ReparationClaim>();
             CreateMap<ReparationClaim, ReparationClaimDetailDTO>();
             #endregion ReparationClaim
+
+            #region ReparationClaimAnswer
+            CreateMap<ReparationClaimAnswerCreationDTO, ReparationClaimAnswer>();
+            CreateMap<ReparationClaimAnswerDTO, ReparationClaimAnswer>()
+                .ReverseMap();
+            #endregion ReparationClaimAnswer
 
             #region Bill
             CreateMap<Bill, BillReparationDTO>()

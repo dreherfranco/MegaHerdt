@@ -7,6 +7,7 @@ import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationClaimService } from 'src/app/services/reparation-claims/reparation-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowReparationDetailComponent } from '../../reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
+import { DialogShowReparationClaimAnswersComponent } from '../dialog-show-reparation-claim-answers/dialog-show-reparation-claim-answers.component';
 
 @Component({
   selector: 'app-client-reparation-claims',
@@ -44,12 +45,19 @@ export class ClientReparationClaimsComponent implements OnInit {
           console.log("error al obtener los reclamos");
         } else {
           this.reparationClaims = response;
-          console.log(response)
         }
       },
       error: (err) => {
         console.log(err)
       }
     });
+  }
+
+  openDialogClaimAnswers(reparationClaimId: number){
+    this.dialog.open(DialogShowReparationClaimAnswersComponent,
+      {
+        disableClose:true,
+        data: reparationClaimId
+      });
   }
 }

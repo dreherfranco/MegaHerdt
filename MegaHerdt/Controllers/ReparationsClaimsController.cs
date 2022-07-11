@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.ReparationClaim;
+using MegaHerdt.API.DTOs.ReparationClaimAnswer;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
@@ -142,23 +143,46 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("answer")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult<bool>> Answer([FromBody] ReparationClaimAnswerDTO reparationClaimDTO)
+        public async Task<ActionResult<bool>> Answer([FromBody] ReparationClaimAnswerCreationDTO reparationClaimAnswerDTO)
         {
             try
             {
-                Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimDTO.Id;
+                Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimAnswerDTO.ReparationClaimId;
                 var reparationClaimDb = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
                 var mailRequest = new MailRequest() 
                 { 
                     ToEmail = reparationClaimDb.Client.Email, 
-                    Body = reparationClaimDTO.Answer, 
+                    Body = reparationClaimAnswerDTO.Answer, 
                     Subject = "Respuesta a reclamo de reparacion" 
                 };
-                
                 await this.MailService.SendEmailAsync(mailRequest);
+
                 reparationClaimDb.Answered = true;
+                var reparationClaimAnswer = Mapper.Map<ReparationClaimAnswer>(reparationClaimAnswerDTO);
+                
+                if(reparationClaimDb.Answers == null)
+                {
+                    reparationClaimDb.Answers = new List<ReparationClaimAnswer>();
+                }
+                reparationClaimDb.Answers.Add(reparationClaimAnswer);
                 await this.ReparationClaimService.Update(reparationClaimDb);
                 return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("get-claim-answers/{reparationClaimId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<List<ReparationClaimAnswerDTO>> GetAnswersByClaimId(int reparationClaimId)
+        {
+            try
+            {
+                Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimId;
+                var reparationClaim = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<List<ReparationClaimAnswerDTO>>(reparationClaim.Answers);
             }
             catch (Exception ex)
             {

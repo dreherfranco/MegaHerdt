@@ -45,6 +45,7 @@ namespace MegaHerdt.Helpers.Helpers
         public override IQueryable<ReparationClaim> Get(Expression<Func<ReparationClaim, bool>> filter = null)
         {
             return repository.Get(filter)
+                .Include(x => x.Answers)
                 .Include(x => x.Client)
                 .Include(x => x.Reparation)
                 .ThenInclude(x => x.ReparationState)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ReparationClaimAnswer } from 'src/app/models/ReparationClaims/ReparationClaimAnswer';
+import { ReparationClaimAnswerCreation } from 'src/app/models/ReparationClaims/ReparationClaimAnswerCreation';
 import { ReparationClaimService } from 'src/app/services/reparation-claims/reparation-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -35,7 +35,8 @@ export class AnswerReparationClaimComponent implements OnInit {
 
   onSubmit(form: any){
     var idReparationClaim = this.getIdReparationClaim();
-    var reparationClaimAnswer = new ReparationClaimAnswer(idReparationClaim, this.answer);
+    var identity = this._storageService.getIdentity();
+    var reparationClaimAnswer = new ReparationClaimAnswerCreation(idReparationClaim, this.answer, identity.userName);
    
     this._reparationClaimService.answerClaim(reparationClaimAnswer,this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
