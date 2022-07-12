@@ -6,6 +6,7 @@ import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
+import { UpdateReparationStateENREPARACIONComponent } from './update-reparation-state-en-reparacion/update-reparation-state-en-reparacion.component';
 
 @Component({
   selector: 'app-reparation-state-en-reparacion',
@@ -27,7 +28,7 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation) {
-    const dialogRef = this.dialog.open(DialogUpdateReparationComponent,
+    const dialogRef = this.dialog.open(UpdateReparationStateENREPARACIONComponent,
       {
         disableClose: true,
         data: reparation

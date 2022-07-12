@@ -2,7 +2,7 @@
 <form #reparationForm="ngForm" (ngSubmit)="onSubmit(reparationForm)" class="w-50 mx-auto">
     <div class="row">
         <div class="form-group mb-3 col-sm-6">
-            <label for="client" class="m-1"><b>Cliente: </b></label>
+            <label for="client" class="m-1"><b>(*)Cliente: </b></label>
             <div class="row m-1">
                 <a (click)="openDialogAdminCreateUser()" class="col-sm-2 btn text-white bg-primary">
                     <i class="bi bi-person-plus-fill"></i>
@@ -17,92 +17,21 @@
 
         <div class="form-group mb-3 col-sm-4">
             <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
-            <!--
-            <select class="form-select data-user m-1" name="selectReparationState"
-                [(ngModel)]="reparation.reparationStateId">
-                <option class="data-user" name="reparationState" *ngFor="let reparationState of reparationsStates"
-                    [ngValue]="reparationState.id">{{reparationState.name}}
-                </option>
-            </select>
-            -->
             <span class="form-control data-user" *ngIf="reparationsStates && reparationsStates[0] != null">{{ reparationsStates[0].name }}</span>
         </div>
         <div class="form-group mb-3 col-sm-2">
             <label for="date" class="m-1"><b>Fecha: </b></label>
-           <!-- 
-            <input id="date" name="date" class="form-control" type="date" #date="ngModel" [(ngModel)]="reparation.date"
-                required>
-            <span *ngIf="date.touched && !date.valid" class="text-danger">Ingrese una fecha valida</span>
-            -->
             <span class="form-control data-user">{{ reparation.date | date: 'shortDate'  }}</span>
         </div>
     </div>
     <div class="form-group">
-        <label for="clientDescription" class="data-user">Descripcion del cliente:</label>
+        <label for="clientDescription" class="data-user">(*)Descripcion del cliente:</label>
         <textarea class="form-control" id="clientDescription" name="clientDescription" #clientDescription="ngModel" [(ngModel)]="reparation.clientDescription" required></textarea>
       </div>
-   <!-- 
-    <hr>
-    <form #articleReparationForm="ngForm">
-        <div class="form-group mb-3 d-flex row">
-            <div class="col">
-                <label for="article"><b>Seleccione articulos: </b></label>
-                <select class="form-select data-user mt-2" name="selectReparationState"
-                    [(ngModel)]="reparationArticle.articleId">
-                    <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">
-                        {{article.name}}
-                    </option>
-                </select>
-            </div>
-            <div class="form-group mb-3 col">
-                <label for="articleQuantity"><b>Cantidad de articulo: </b></label>
-                <input id="articleQuantity" name="articleQuantity" class="form-control mt-2" type="number" min="1"
-                    #articleQuantity="ngModel" [(ngModel)]="reparationArticle.articleQuantity" required>
-                <span *ngIf="articleQuantity.touched && !articleQuantity.valid" class="text-danger">Ingrese un numero
-                    valido</span>
-            </div>
-            <div class="form-group col mt-4">
-                <button class="btn btn-primary" [disabled]="articleReparationForm.invalid"
-                    (click)="addArticleReparation(articleReparationForm)"><i
-                        class="bi bi-plus-circle-fill"></i></button>
-            </div>
-        </div>
-    </form>
-    <div class="form-group mb-3" *ngIf="reparation.reparationsArticles.length > 0">
-        <h3><b>Articulos agregados: </b></h3>
-        <div *ngFor="let reparationArticle of articlesAdded">
-            <b>{{reparationArticle.articleName}} {{reparationArticle.articleQuantity}}</b>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-    <div class="form-group mb-3 col-sm-4">
-        <label for="amount"><b>Monto: </b></label>
-        <input id="amount" name="amount" class="form-control" type="number" min="0" #amount="ngModel"
-            [(ngModel)]="reparation.amount" required>
-        <span *ngIf="amount.touched && !amount.valid" class="text-danger">Ingrese un numero valido</span>
-    </div>
-    
-        <div class="form-group mb-3 col-sm-4">
-            <label for="billNumber"><b>Numero de factura: </b></label>
-            <input id="billNumber" name="billNumber" class="form-control" type="number" #billNumber="ngModel"
-                [(ngModel)]="reparation.bill.number" required>
-            <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
-        </div>
-
-        <div class="form-group mb-3 col-sm-4">
-            <label for="billType"><b>Tipo de factura: </b></label>
-            <select class="form-select data-user" name="selectBillType" [(ngModel)]="reparation.bill.type">
-                <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>{{billTypes.A}}</option>
-                <option class="data-user" name="billType" [ngValue]="billTypes.B">{{billTypes.B}}</option>
-                <option class="data-user" name="billType" [ngValue]="billTypes.C">{{billTypes.C}}</option>
-                <option class="data-user" name="billType" [ngValue]="billTypes.RECIBO">{{billTypes.RECIBO}}</option>
-            </select>
-        </div>
-    </div>
-    -->
     <p>
         <input type="submit" class="btn btn-primary mt-3" [disabled]="reparationForm.invalid" value="Crear" />
     </p>
     <p class="alert alert-danger" *ngIf="statusSubmit == 'failed' ">Error al intentar crear la reparacion</p>
+    <p class="alert alert-success" *ngIf="statusSubmit == 'success' ">La reparación se creó correctamente</p>
+
 </form>

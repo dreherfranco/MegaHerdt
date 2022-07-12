@@ -21,7 +21,7 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public reparation: Reparation) { 
     this.reparation.reparationsArticles = [];
     this.articles = new Array<ArticleName>();
-    this.reparationArticle = new ReparationArticle(0,0,0,"");
+    this.reparationArticle = new ReparationArticle(0,1,0,"");
     this.paginate = new Paginate(1,2);
   }
 

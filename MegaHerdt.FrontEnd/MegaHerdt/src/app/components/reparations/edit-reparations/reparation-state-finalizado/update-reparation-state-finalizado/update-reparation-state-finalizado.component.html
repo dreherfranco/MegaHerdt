@@ -18,14 +18,14 @@
     <div class="row">
         <h3 class="data-user">Facturación: </h3>
         <div class="form-group mb-3 col-sm-4">
-            <label for="billNumber"><b>Numero de factura: </b></label>
+            <label for="billNumber"><b>(*)Numero de factura: </b></label>
             <input id="billNumber" name="billNumber" class="form-control" type="number" #billNumber="ngModel"
-                [(ngModel)]="reparation.bill.number" required>
+                [(ngModel)]="reparation.bill.number" required min="1">
             <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
         </div>
 
         <div class="form-group mb-3 col-sm-4">
-            <label for="billType"><b>Tipo de factura: </b></label>
+            <label for="billType"><b>(*)Tipo de factura: </b></label>
             <select class="form-select data-user" name="selectBillType" [(ngModel)]="reparation.bill.type">
                 <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>{{billTypes.A}}</option>
                 <option class="data-user" name="billType" [ngValue]="billTypes.B">{{billTypes.B}}</option>
@@ -36,7 +36,7 @@
     </div>
     <div class=" d-flex justify-content-end flex-md-row flex-wrap">
         <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
-        <button class="btn btn-success d-flex p-2 m-2 " (click)="confirm()">Aceptar</button>
+        <button class="btn btn-success d-flex p-2 m-2 " [disabled]="reparationForm.invalid" (click)="confirm()">Aceptar</button>
     </div>
 
 </form>
