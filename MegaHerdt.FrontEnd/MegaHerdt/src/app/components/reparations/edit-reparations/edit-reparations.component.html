@@ -13,8 +13,8 @@
     <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_REPARACION">
         En reparacion
     </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.FINALIZADO">
-        Finalizado
+    <option class="data-user" [ngValue]="this.reparationStatesEnum.REPARADO">
+        Reparado
     </option>
     <option class="data-user" [ngValue]="this.reparationStatesEnum.ENTREGADO">
         Entregado
@@ -35,8 +35,8 @@
 </app-reparation-state-en-presupuesto>
 <app-reparation-state-en-reparacion *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_REPARACION">
 </app-reparation-state-en-reparacion>
-<app-reparation-state-finalizado *ngIf="this.reparationStateSelected === this.reparationStatesEnum.FINALIZADO">
-</app-reparation-state-finalizado>
+<app-reparation-state-reparado *ngIf="this.reparationStateSelected === this.reparationStatesEnum.REPARADO">
+</app-reparation-state-reparado>
 <app-reparation-state-entregado *ngIf="this.reparationStateSelected === this.reparationStatesEnum.ENTREGADO">
 </app-reparation-state-entregado>
 <app-reparation-state-pagado *ngIf="this.reparationStateSelected === this.reparationStatesEnum.PAGADO">

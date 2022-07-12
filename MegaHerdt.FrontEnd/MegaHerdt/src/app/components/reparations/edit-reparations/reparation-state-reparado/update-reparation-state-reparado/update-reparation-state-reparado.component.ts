@@ -5,14 +5,14 @@ import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
 
 @Component({
-  selector: 'app-update-reparation-state-finalizado',
-  templateUrl: './update-reparation-state-finalizado.component.html',
-  styleUrls: ['./update-reparation-state-finalizado.component.css']
+  selector: 'app-update-reparation-state-reparado',
+  templateUrl: './update-reparation-state-reparado.component.html',
+  styleUrls: ['./update-reparation-state-reparado.component.css']
 })
-export class UpdateReparationStateFINALIZADOComponent implements OnInit {
+export class UpdateReparationStateREPARADOComponent implements OnInit {
   paginate: Paginate;
   billTypes = BillTypeEnum;
-  constructor(public dialogRef: MatDialogRef<UpdateReparationStateFINALIZADOComponent>,
+  constructor(public dialogRef: MatDialogRef<UpdateReparationStateREPARADOComponent>,
     @Inject(MAT_DIALOG_DATA) public reparation: Reparation) { 
     this.paginate = new Paginate(1,2);
   }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PurchaseClaimAnswer } from 'src/app/models/PurchaseClaim/PurchaseClaimAnswer';
+import { PurchaseClaimAnswerCreation } from 'src/app/models/PurchaseClaim/PurchaseClaimAnswerCreation';
 import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -34,8 +34,9 @@ export class AnswerPurchaseClaimsComponent implements OnInit {
   }
 
   onSubmit(form: any){
+    var identity = this._storageService.getIdentity();
     var idPurchaseClaim = this.getIdPurchaseClaim();
-    var purchaseClaimAnswer = new PurchaseClaimAnswer(idPurchaseClaim, this.answer);
+    var purchaseClaimAnswer = new PurchaseClaimAnswerCreation(idPurchaseClaim, this.answer, identity.userName);
    
     this._purchaseClaimService.answerClaim(purchaseClaimAnswer,this._storageService.getTokenValue()).subscribe({
       next: (response) =>{

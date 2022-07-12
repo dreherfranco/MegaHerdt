@@ -7,6 +7,7 @@ import { UserDetail } from 'src/app/models/User/UserDetail';
 import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
+import { DialogShowPurchaseClaimAnswersComponent } from '../dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
 
 @Component({
   selector: 'app-client-purchase-claims',
@@ -53,4 +54,11 @@ export class ClientPurchaseClaimsComponent implements OnInit {
     });
   }
 
+  openDialogClaimAnswers(reparationClaimId: number){
+    this.dialog.open(DialogShowPurchaseClaimAnswersComponent,
+      {
+        disableClose:true,
+        data: reparationClaimId
+      });
+  }
 }

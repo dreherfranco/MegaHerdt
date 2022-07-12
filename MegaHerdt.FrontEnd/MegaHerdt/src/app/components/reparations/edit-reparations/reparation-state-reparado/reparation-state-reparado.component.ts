@@ -5,15 +5,14 @@ import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
-import { UpdateReparationStateFINALIZADOComponent } from './update-reparation-state-finalizado/update-reparation-state-finalizado.component';
+import { UpdateReparationStateREPARADOComponent } from './update-reparation-state-reparado/update-reparation-state-reparado.component';
 
 @Component({
-  selector: 'app-reparation-state-finalizado',
-  templateUrl: './reparation-state-finalizado.component.html',
-  styleUrls: ['./reparation-state-finalizado.component.css']
+  selector: 'app-reparation-state-reparado',
+  templateUrl: './reparation-state-reparado.component.html',
+  styleUrls: ['./reparation-state-reparado.component.css']
 })
-export class ReparationStateFINALIZADOComponent implements OnInit {
+export class ReparationStateREPARADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
 
@@ -28,7 +27,7 @@ export class ReparationStateFINALIZADOComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation) {
-    const dialogRef = this.dialog.open(UpdateReparationStateFINALIZADOComponent,
+    const dialogRef = this.dialog.open(UpdateReparationStateREPARADOComponent,
       {
         disableClose: true,
         data: reparation
@@ -80,4 +79,5 @@ export class ReparationStateFINALIZADOComponent implements OnInit {
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
       , reparation.employeeObservation, reparation.approximateTime);
   }
+
 }

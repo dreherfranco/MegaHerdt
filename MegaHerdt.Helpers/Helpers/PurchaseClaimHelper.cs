@@ -44,6 +44,7 @@ namespace MegaHerdt.Helpers.Helpers
         public override IQueryable<PurchaseClaim> Get(Expression<Func<PurchaseClaim, bool>> filter = null)
         {
             return repository.Get(filter)
+                .Include(x => x.Answers)
                 .Include(x => x.Client)
                 .Include(x => x.Purchase)
                 .ThenInclude(x => x.PurchasesArticles)

@@ -1,8 +1,13 @@
 export class PurchaseClaimAnswer{
     id: number;
+    purchaseClaimId: number;
     answer: string;
-    constructor(id: number, answer: string){
-        this.id = id;
-        this.answer = answer;
+    employeeUserName: string;
+
+    constructor(){
+        this.id = 0;
+        this.purchaseClaimId = 0;
+        this.answer = '';
+        this.employeeUserName = '';
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.PurchaseClaim;
+using MegaHerdt.API.DTOs.PurchaseClaimAnswer;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
@@ -141,23 +142,47 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("answer")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult<bool>> Answer([FromBody] PurchaseClaimAnswerDTO purchaseClaimDTO)
+        public async Task<ActionResult<bool>> Answer([FromBody] PurchaseClaimAnswerCreationDTO purchaseClaimAnswerDTO)
         {
             try
             {
-                Expression<Func<PurchaseClaim, bool>> filter = x => x.Id == purchaseClaimDTO.Id;
+                Expression<Func<PurchaseClaim, bool>> filter = x => x.Id == purchaseClaimAnswerDTO.PurchaseClaimId;
                 var purchaseClaimDb = this.PurchaseClaimService.GetBy(filter).FirstOrDefault();
                 var mailRequest = new MailRequest()
                 {
                     ToEmail = purchaseClaimDb.Client.Email,
-                    Body = purchaseClaimDTO.Answer,
+                    Body = purchaseClaimAnswerDTO.Answer,
                     Subject = "Respuesta a reclamo de compra"
                 };
-
                 await this.MailService.SendEmailAsync(mailRequest);
+
                 purchaseClaimDb.Answered = true;
+                var reparationClaimAnswer = Mapper.Map<PurchaseClaimAnswer>(purchaseClaimAnswerDTO);
+
+                if (purchaseClaimDb.Answers == null)
+                {
+                    purchaseClaimDb.Answers = new List<PurchaseClaimAnswer>();
+                }
+
+                purchaseClaimDb.Answers.Add(reparationClaimAnswer);
                 await this.PurchaseClaimService.Update(purchaseClaimDb);
                 return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("get-claim-answers/{purchaseClaimId}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public ActionResult<List<PurchaseClaimAnswerDTO>> GetAnswersByClaimId(int purchaseClaimId)
+        {
+            try
+            {
+                Expression<Func<PurchaseClaim, bool>> filter = x => x.Id == purchaseClaimId;
+                var purchaseClaim = this.PurchaseClaimService.GetBy(filter).FirstOrDefault();
+                return this.Mapper.Map<List<PurchaseClaimAnswerDTO>>(purchaseClaim.Answers);
             }
             catch (Exception ex)
             {

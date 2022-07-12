@@ -106,17 +106,18 @@ import { ReparationStateINGRESOComponent } from './components/reparations/edit-r
 import { ReparationStateENREVISIONComponent } from './components/reparations/edit-reparations/reparation-state-en-revision/reparation-state-en-revision.component';
 import { ReparationStateENPRESUPUESTOComponent } from './components/reparations/edit-reparations/reparation-state-en-presupuesto/reparation-state-en-presupuesto.component';
 import { ReparationStateENREPARACIONComponent } from './components/reparations/edit-reparations/reparation-state-en-reparacion/reparation-state-en-reparacion.component';
-import { ReparationStateFINALIZADOComponent } from './components/reparations/edit-reparations/reparation-state-finalizado/reparation-state-finalizado.component';
 import { ReparationStateENTREGADOComponent } from './components/reparations/edit-reparations/reparation-state-entregado/reparation-state-entregado.component';
 import { ReparationStatePAGADOComponent } from './components/reparations/edit-reparations/reparation-state-pagado/reparation-state-pagado.component';
 import { ReparationStateCANCELADOComponent } from './components/reparations/edit-reparations/reparation-state-cancelado/reparation-state-cancelado.component';
 import { UpdateReparationStateENREVISIONComponent } from './components/reparations/edit-reparations/reparation-state-en-revision/update-reparation-state-en-revision/update-reparation-state-en-revision.component';
 import { UpdateReparationStateENPRESUPUESTOComponent } from './components/reparations/edit-reparations/reparation-state-en-presupuesto/update-reparation-state-en-presupuesto/update-reparation-state-en-presupuesto.component';
-import { UpdateReparationStateFINALIZADOComponent } from './components/reparations/edit-reparations/reparation-state-finalizado/update-reparation-state-finalizado/update-reparation-state-finalizado.component';
 import { DialogShowReparationClaimAnswersComponent } from './components/reparation-claims/dialog-show-reparation-claim-answers/dialog-show-reparation-claim-answers.component';
 import { UpdateReparationStateENTREGADOComponent } from './components/reparations/edit-reparations/reparation-state-entregado/update-reparation-state-entregado/update-reparation-state-entregado.component';
 import { UpdateReparationStateINGRESOComponent } from './components/reparations/edit-reparations/reparation-state-ingreso/update-reparation-state-ingreso/update-reparation-state-ingreso.component';
 import { UpdateReparationStateENREPARACIONComponent } from './components/reparations/edit-reparations/reparation-state-en-reparacion/update-reparation-state-en-reparacion/update-reparation-state-en-reparacion.component';
+import { ReparationStateREPARADOComponent } from './components/reparations/edit-reparations/reparation-state-reparado/reparation-state-reparado.component';
+import { UpdateReparationStateREPARADOComponent } from './components/reparations/edit-reparations/reparation-state-reparado/update-reparation-state-reparado/update-reparation-state-reparado.component';
+import { DialogShowPurchaseClaimAnswersComponent } from './components/purchase-claims/dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
 
 @NgModule({
   declarations: [
@@ -211,17 +212,18 @@ import { UpdateReparationStateENREPARACIONComponent } from './components/reparat
     ReparationStateENREVISIONComponent,
     ReparationStateENPRESUPUESTOComponent,
     ReparationStateENREPARACIONComponent,
-    ReparationStateFINALIZADOComponent,
     ReparationStateENTREGADOComponent,
     ReparationStatePAGADOComponent,
     ReparationStateCANCELADOComponent,
     UpdateReparationStateENREVISIONComponent,
     UpdateReparationStateENPRESUPUESTOComponent,
-    UpdateReparationStateFINALIZADOComponent,
     DialogShowReparationClaimAnswersComponent,
     UpdateReparationStateENTREGADOComponent,
     UpdateReparationStateINGRESOComponent,
     UpdateReparationStateENREPARACIONComponent,
+    ReparationStateREPARADOComponent,
+    UpdateReparationStateREPARADOComponent,
+    DialogShowPurchaseClaimAnswersComponent,
   ],
   imports: [
     BrowserModule,

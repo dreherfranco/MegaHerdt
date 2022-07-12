@@ -12,6 +12,7 @@ using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Purchase;
 using MegaHerdt.API.DTOs.PurchaseArticle;
 using MegaHerdt.API.DTOs.PurchaseClaim;
+using MegaHerdt.API.DTOs.PurchaseClaimAnswer;
 using MegaHerdt.API.DTOs.PurchasePayment;
 using MegaHerdt.API.DTOs.Reparation;
 using MegaHerdt.API.DTOs.ReparationArticle;
@@ -178,6 +179,12 @@ namespace MegaHerdt.API.Mapper
             CreateMap<PurchaseClaimUpdateDTO, PurchaseClaim>();
             CreateMap<PurchaseClaim, PurchaseClaimDetailDTO>();
             #endregion PurchaseClaim
+
+            #region PurchaseClaimAnswer
+            CreateMap<PurchaseClaimAnswerCreationDTO, PurchaseClaimAnswer>();
+            CreateMap<PurchaseClaimAnswerDTO, PurchaseClaimAnswer>()
+                .ReverseMap();
+            #endregion PurchaseClaimAnswer
 
             #region PurchaseArticle
             CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();

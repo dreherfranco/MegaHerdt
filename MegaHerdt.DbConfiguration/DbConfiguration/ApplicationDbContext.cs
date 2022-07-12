@@ -127,7 +127,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             var reparationState5 = new ReparationState()
             {
                 Id = 5,
-                Name = "FINALIZADO"
+                Name = "REPARADO"
             };
             var reparationState6 = new ReparationState()
             {

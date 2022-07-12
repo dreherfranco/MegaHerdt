@@ -17,5 +17,6 @@ namespace MegaHerdt.Models.Models
         public bool Answered { get; set; } = false;
         public User Client { get; set; }
         public Purchase Purchase { get; set; }
+        public List<PurchaseClaimAnswer> Answers { get; set; }
     }
 }
