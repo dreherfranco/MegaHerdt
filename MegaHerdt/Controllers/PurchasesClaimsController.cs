@@ -77,7 +77,7 @@ namespace MegaHerdt.API.Controllers
 
         [HttpPost("create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<PurchaseClaimDTO>> Create([FromBody] PurchaseClaimCreationDTO purchaseClaimDTO)
+        public async Task<ActionResult<PurchaseClaimCreationDTO>> Create([FromBody] PurchaseClaimCreationDTO purchaseClaimDTO)
         {
             try
             {
@@ -85,7 +85,7 @@ namespace MegaHerdt.API.Controllers
                 {
                     var purchaseClaim = Mapper.Map<PurchaseClaim>(purchaseClaimDTO);
                     var purchaseClaimCreate = await this.PurchaseClaimService.Create(purchaseClaim);
-                    return this.Mapper.Map<PurchaseClaimDTO>(purchaseClaimCreate);
+                    return this.Mapper.Map<PurchaseClaimCreationDTO>(purchaseClaimCreate);
                 }
                 throw new Exception("User id is incorrect");
             }

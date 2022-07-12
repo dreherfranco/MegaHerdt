@@ -79,7 +79,7 @@ namespace MegaHerdt.API.Controllers
 
         [HttpPost("create")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<ActionResult<ReparationClaimDTO>> Create([FromBody] ReparationClaimCreationDTO reparationClaimDTO)
+        public async Task<ActionResult<ReparationClaimCreationDTO>> Create([FromBody] ReparationClaimCreationDTO reparationClaimDTO)
         {
             try
             {
@@ -87,7 +87,7 @@ namespace MegaHerdt.API.Controllers
                 {
                     var reparationClaim = Mapper.Map<ReparationClaim>(reparationClaimDTO);
                     var reparationClaimCreate = await this.ReparationClaimService.Create(reparationClaim);
-                    return this.Mapper.Map<ReparationClaimDTO>(reparationClaimCreate);
+                    return this.Mapper.Map<ReparationClaimCreationDTO>(reparationClaimCreate);
                 }
                 throw new Exception("User id is incorrect");
             }
