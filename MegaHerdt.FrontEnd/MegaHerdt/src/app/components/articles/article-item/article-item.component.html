@@ -4,9 +4,9 @@
     <span *ngIf="isOnOffer(article)" class="bg-primary rounded text-white p-1">ARTICULO EN OFERTA</span>
     <p *ngIf="!isOnOffer(article)" class="card-text data-user m-1">${{article.unitValue}}</p>
     <div *ngIf="isOnOffer(article)" class="m-2">
-      <span class="card-text line-through text-danger">${{article.unitValue}} </span>
-      <i class="bi bi-arrow-right p-2"></i>
       <span class="card-text data-user">${{article.unitValueWithOffer}}</span>
+      <i class="bi bi-arrow-left p-2"></i>
+      <span class="card-text line-through text-danger">${{article.unitValue}} </span>
     </div>
     <p class="data-article mt-0">{{article.name}} {{article.brand.name}} {{article.category.name}}
       {{article.stock}} unidades</p>

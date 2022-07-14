@@ -4,13 +4,16 @@
             <button class="btn btn-primary d-flex p-2 m-2" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="card-text">
-            <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">{{reparationArticle.articleName}}</p>
+            <p class="data-user" *ngIf="data.reparationsArticles.length > 0">Articulos:</p>
+            <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">&nbsp;&nbsp;&nbsp;&nbsp;{{reparationArticle.articleName}}</p>
             <p class="data-user"> Empleado: {{data.employee.name}} {{data.employee.surname}}</p>
             <p class="data-user"> Email del cliente: {{data.client.email}}</p>
             <p class="data-user"> Fecha: {{data.date | date: 'dd/MM/yyyy'}}</p>
             <p class="data-user"> Estado de la reparacion: {{data.reparationState.name}}</p>
-            <p class="data-user"> Numero de factura: {{data.bill.number}}</p>
-            <p class="data-user"> Tipo de factura: {{data.bill.type}}</p>
+            <div *ngIf="data.bill.number !== 0">
+                <p class="data-user"> Numero de factura: {{data.bill.number}}</p>
+                <p class="data-user"> Tipo de factura: {{data.bill.type}}</p>
+            </div>
         </div>
     </div>
    
