@@ -37,8 +37,8 @@ namespace MegaHerdt.API.Controllers
                     env.WebRootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
                 }
 
-                await BackupArticles();
-                await BackupArticlesProviders();
+                await BackupArticlesImages();
+                await BackupArticlesProvidersVouchers();
 
                 var actualUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}";
                 var urlArticlesZip = Path.Combine(actualUrl, Path.Combine(this.containerBackup, "articles.zip")).Replace("\\", "/");
@@ -57,7 +57,7 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-        private async Task BackupArticles()
+        private async Task BackupArticlesImages()
         {
             var articlesDb = this.articleService.GetAll();
             string folder = Path.Combine(env.WebRootPath, containerBackup, containerArticles);
@@ -98,7 +98,7 @@ namespace MegaHerdt.API.Controllers
        
         }
 
-        private async Task BackupArticlesProviders()
+        private async Task BackupArticlesProvidersVouchers()
         {
             var articleProvidersDb = this.articleProviderService.GetAll();
             
