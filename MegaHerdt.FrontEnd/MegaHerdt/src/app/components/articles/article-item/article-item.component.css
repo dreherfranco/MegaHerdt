@@ -19,3 +19,8 @@
 .line-through{
     text-decoration: line-through;
 }
+
+.data-user{
+    font-weight: bold !important;
+    font-size: x-large !important;
+}

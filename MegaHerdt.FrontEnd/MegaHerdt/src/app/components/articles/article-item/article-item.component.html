@@ -1,12 +1,12 @@
 <div class="card mb-3 article-card">
   <img [src]="article.image" class="card-img-top">
   <div class="card-body">
-    <span *ngIf="isOnOffer(article)" class="bg-primary rounded data-user text-white p-1">Articulo en oferta</span>
-    <p *ngIf="!isOnOffer(article)" class="card-text data-user mb-0">${{article.unitValue}}</p>
-    <div *ngIf="isOnOffer(article)" class="m-1">
-      <span class="card-text data-article line-through text-danger mt-2 mb-0">${{article.unitValue}} </span>
+    <span *ngIf="isOnOffer(article)" class="bg-primary rounded text-white p-1">ARTICULO EN OFERTA</span>
+    <p *ngIf="!isOnOffer(article)" class="card-text data-user m-1">${{article.unitValue}}</p>
+    <div *ngIf="isOnOffer(article)" class="m-2">
+      <span class="card-text line-through text-danger">${{article.unitValue}} </span>
       <i class="bi bi-arrow-right p-2"></i>
-      <span class="card-text text-success data-user">${{article.unitValueWithOffer}}</span>
+      <span class="card-text data-user">${{article.unitValueWithOffer}}</span>
     </div>
     <p class="data-article mt-0">{{article.name}} {{article.brand.name}} {{article.category.name}}
       {{article.stock}} unidades</p>
