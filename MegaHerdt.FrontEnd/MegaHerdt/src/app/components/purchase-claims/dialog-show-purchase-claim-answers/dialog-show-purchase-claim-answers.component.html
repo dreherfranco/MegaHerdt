@@ -3,12 +3,11 @@
         <div class=" d-flex justify-content-end">
             <button class="btn btn-primary d-flex p-2 m-2" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
         </div>
-        <h2 class="data-user">Respuestas: </h2>
-        <div class="card-text">
-            <p class="data-user" *ngFor="let purchaseClaimAnswer of purchaseClaimAnswers">
-                Respuesta: {{purchaseClaimAnswer.answer}} 
-            </p>
+        <h2 class="card-header data-user bg-dark text-white">Respuestas ({{ purchaseClaimAnswers.length }}): </h2>
+        <div class="card-body" *ngFor="let purchaseClaimAnswer of purchaseClaimAnswers">
+            <div class="card-text data-user">
+                <i class="bi bi-hash"></i> {{purchaseClaimAnswer.answer}} 
+            </div>
         </div>
     </div>
-   
 </div>

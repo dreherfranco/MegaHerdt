@@ -1,14 +1,14 @@
 <div class="container-fluid">
-    <div class="card p-3">
+    <div class="card bg-light p-3">
         <div class=" d-flex justify-content-end">
             <button class="btn btn-primary d-flex p-2 m-2" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
         </div>
-        <h2 class="data-user">Respuestas: </h2>
-        <div class="card-text">
-            <p class="data-user" *ngFor="let reparationClaimAnswer of reparationClaimAnswers">
-                Respuesta: {{reparationClaimAnswer.answer}} 
-            </p>
+        <h2 class="card-header data-user bg-dark text-white">Respuestas ({{ reparationClaimAnswers.length }}): </h2>
+        <div class="card-body" *ngFor="let reparationClaimAnswer of reparationClaimAnswers">
+            <div class="card-text data-user">
+                <i class="bi bi-hash"></i> {{reparationClaimAnswer.answer}} 
+            </div>
         </div>
     </div>
-   
+    
 </div>
