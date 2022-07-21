@@ -1,6 +1,5 @@
 ﻿using MegaHerdt.API.DTOs.Backup;
 using MegaHerdt.Services.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.IO.Compression;
 
@@ -49,6 +48,7 @@ namespace MegaHerdt.API.Controllers
                     UrlArticlesZip = urlArticlesZip, 
                     UrlArticlesProvidersZip = urlArticlesProvidersZip 
                 };
+                
                 return urlsDTO;
             }
             catch (Exception ex)
@@ -95,7 +95,7 @@ namespace MegaHerdt.API.Controllers
             {
                 ZipFile.CreateFromDirectory(folder, pathZip);
             }
-       
+      
         }
 
         private async Task BackupArticlesProvidersVouchers()
