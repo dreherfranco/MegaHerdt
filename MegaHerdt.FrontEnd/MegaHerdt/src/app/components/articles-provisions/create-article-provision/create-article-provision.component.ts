@@ -91,7 +91,9 @@ export class CreateArticleProvisionComponent implements OnInit {
 
   addSerialNumber(){
     let newSerialNumber = this.serialNumberToAdd;
-    this.articleProvider.serialNumbers.push(newSerialNumber);
-    this.serialNumberToAdd = '';
+    if(newSerialNumber !== "" && this.articleProvider.articleQuantity >= this.articleProvider.serialNumbers.length){
+      this.articleProvider.serialNumbers.push(newSerialNumber);
+      this.serialNumberToAdd = '';
+    }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {ArticleService} from '../../../services/articles/article.service';
 import { Article } from '../../../models/Article/Article';
 import { Paginate } from '../../../models/Paginate/Paginate';

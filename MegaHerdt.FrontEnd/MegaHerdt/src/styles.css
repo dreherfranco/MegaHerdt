@@ -47,11 +47,7 @@ table{
 }
 
 tr, td,th, thead{
-    border: 1px solid #219dcbeb !important;
-}
-
-tr{
-    box-shadow:inset 3px 3px 3px #26a6ef !important;
+    border: 1px solid #465358eb !important;
 }
 
 thead{
@@ -98,4 +94,14 @@ thead{
 
 .mat-sort-header-arrow {
     color: #000000;
+}
+
+.searcher{
+    box-shadow: 1px 1px 1px black !important;
+}
+
+.lens{
+    background-color: #0d6efd !important;
+    color:#fff !important;
+    border: 1px #fff;
 }

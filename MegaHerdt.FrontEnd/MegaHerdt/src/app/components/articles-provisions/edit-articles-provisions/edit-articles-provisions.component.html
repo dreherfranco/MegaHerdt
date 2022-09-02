@@ -1,9 +1,16 @@
+<div class="d-flex">
+    <div class="input-group mb-3 w-50 searcher" *ngIf="articles.length > 0">
+        <div class="input-group-prepend">
+          <div class="input-group-text lens">
+            <i class="bi bi-search"></i>
+          </div>
+        </div>
+        <input class="form-control w-50 input-search" type="text" [(ngModel)]="searchText" placeholder="Buscar provisiones">
+    </div>
+  </div>
 <div class="table-responsive">
     <table class="table">
         <thead>
-            <tr>
-                <th>LISTADO DE PROVISIONES</th> <th></th> <th></th><th></th><th></th><th></th><th></th><th></th><th></th>
-            </tr>
             <tr>
                 <th scope="col">Articulo</th>
                 <th scope="col">Cantidad proveída</th>
@@ -12,12 +19,14 @@
                 <th scope="col">Operacion</th>
                 <th scope="col">Numeros de serie</th>
                 <th scope="col">Comprobante</th>
-                <th scope="col">#</th>
-                <th scope="col">#</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let articleProvider of articlesProviders | paginate: 
+            <tr *ngFor="let articleProvider of articlesProviders
+            | filter: searchText 
+            | paginate: 
             {
                 itemsPerPage: this.paginate.recordsPerPage, 
                 currentPage:this.paginate.page

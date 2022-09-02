@@ -24,6 +24,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
   articlesProviders: Array<ArticleProvider>;
   updateSuccess: boolean;
   paginate: Paginate;
+  searchText: string = "";
   
   constructor(private _articleProvisionService: ArticleProvisionService, private _providerService: ProviderService, 
     private _storageService: StorageService, private _articleService: ArticleService,

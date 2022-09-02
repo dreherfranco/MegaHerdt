@@ -76,11 +76,18 @@ export class CategoryGraphicComponent implements OnInit {
         this.barChartData.datasets[0].label = "Cantidad articulos";
         this.barChartData.datasets[1].label = "Unidades compradas";
         this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
+
         for (var i = 0; i < this.categoryStatistics.length; i++) {
-          this.barChartData.labels?.push(this.categoryStatistics[i].name);
-          this.barChartData.datasets[0].data.push(this.categoryStatistics[i].articlesQuantity);
-          this.barChartData.datasets[1].data.push(this.categoryStatistics[i].purchasesQuantity);
-          this.barChartData.datasets[2].data.push(this.categoryStatistics[i].reparationsQuantity);
+          let articlesQuantity = this.categoryStatistics[i].articlesQuantity;
+          let purchasesQuantity = this.categoryStatistics[i].purchasesQuantity;
+          let reparationsQuantity = this.categoryStatistics[i].reparationsQuantity;
+          
+          if(articlesQuantity > 0 || purchasesQuantity > 0 || reparationsQuantity > 0){
+            this.barChartData.labels?.push(this.categoryStatistics[i].name);
+            articlesQuantity > 0 ? this.barChartData.datasets[0].data.push(articlesQuantity) : null;
+            purchasesQuantity > 0 ? this.barChartData.datasets[1].data.push(purchasesQuantity) : null;
+            reparationsQuantity > 0 ? this.barChartData.datasets[2].data.push(reparationsQuantity) : null;
+          }
         }
         this.chart?.update();
       }

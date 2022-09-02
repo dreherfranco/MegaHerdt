@@ -1,31 +1,38 @@
-<div class="data-user m-3 mb-0 p-1 "><i class="bi bi-funnel-fill"></i>Filtrar por estado</div>
-<select class="form-select data-user m-3 mt-1 w-25" name="selectReparationState"
-    [(ngModel)]="reparationStateSelected">
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.INGRESO">
-        Ingreso
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_REVISION">
-        En revision
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_PRESUPUESTO">
-        En presupuesto
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_REPARACION">
-        En reparacion
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.REPARADO">
-        Reparado
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.ENTREGADO">
-        Entregado
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.PAGADO">
-        Pagado
-    </option>
-    <option class="data-user" [ngValue]="this.reparationStatesEnum.CANCELADO">
-        Cancelado
-    </option>
-</select>
+<div class="d-flex flex-row justify-content-between">
+    <div class="col-sm-5">
+        <div class="data-user m-3 mb-0 p-1"><i class="bi bi-funnel-fill"></i>Filtrar por estado</div>
+        <select class="form-select data-user m-3 mt-1 w-25" name="selectReparationState"
+            [(ngModel)]="reparationStateSelected">
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.INGRESO">
+                Ingreso
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_REVISION">
+                En revision
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_PRESUPUESTO">
+                En presupuesto
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.EN_REPARACION">
+                En reparacion
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.REPARADO">
+                Reparado
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.ENTREGADO">
+                Entregado
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.PAGADO">
+                Pagado
+            </option>
+            <option class="data-user" [ngValue]="this.reparationStatesEnum.CANCELADO">
+                Cancelado
+            </option>
+        </select>
+    </div>
+    <div class="col">
+        <h2 class="mt-4">LISTADO DE REPARACIONES</h2>
+    </div>
+</div>
 
 <app-reparation-state-ingreso *ngIf="this.reparationStateSelected === this.reparationStatesEnum.INGRESO">
 </app-reparation-state-ingreso>
