@@ -11,6 +11,7 @@ namespace MegaHerdt.Models.Models
         public string Phone { get; set; }
         [EmailAddress]
         public string Email { get; set; }
+        public bool Enabled { get; set; } = true;
         public List<ArticleProvider> ArticlesProviders { get; set; }
     }
 }

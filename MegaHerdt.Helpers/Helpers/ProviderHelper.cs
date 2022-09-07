@@ -9,7 +9,16 @@ namespace MegaHerdt.Helpers.Helpers
         public ProviderHelper(Repository<Provider> repository):
             base(repository)
         {
+            
+        }
 
+        public override async Task Delete(Provider entity)
+        {
+            if (entity != null)
+            {
+                entity.Enabled = false;
+                await this.repository.Update(entity);
+            }
         }
     }
 }

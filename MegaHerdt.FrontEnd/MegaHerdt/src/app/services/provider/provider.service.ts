@@ -23,13 +23,15 @@ export class ProviderService {
     return this._http.post(this.url + "/create", params, { headers: this.headers });
   }
 
-  /**
-   * 
-   * @returns Array: Category 
-   */
   getAll(token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url, { headers: this.headers });
+  }
+
+
+  getAllEnableds(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url+"/get-enableds", { headers: this.headers });
   }
 
   update(provider: Provider, token: string): Observable<any>{

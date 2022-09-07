@@ -39,6 +39,21 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("get-enableds")]
+        public  ActionResult<List<ProviderDTO>> GetEnabledsProviders()
+        {
+            try
+            {
+
+                var providers = providerService.GetEnabledsProviders();
+                return this.Mapper.Map<List<ProviderDTO>>(providers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
 
         [HttpGet("{id}")]
         public ActionResult<ProviderDTO> Get(int id)
@@ -96,7 +111,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Boolean>> Delete(int id)
+        public async Task<ActionResult<bool>> Delete(int id)
         {
             try
             {
