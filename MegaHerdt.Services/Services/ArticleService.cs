@@ -53,6 +53,13 @@ namespace MegaHerdt.Services.Services
             return await this._helper.Create(article);
         }
 
+        public override async Task<string> Update(Article article)
+        {
+            article.Code = GenerateCode(article);
+            await this._helper.Update(article);
+            return article.Code;
+        }
+
         public async Task<List<Article>> UpdatePriceByCategory(int categoryId, int percentage)
         {
             Expression<Func<Article, bool>> filter = x => x.CategoryId == categoryId;

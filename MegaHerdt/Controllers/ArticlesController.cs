@@ -136,7 +136,7 @@ namespace MegaHerdt.API.Controllers
         [HttpPost("update")]
       //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
      //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
-        public async Task<ActionResult<bool>> Put([FromForm] ArticleUpdateDTO articleDTO)
+        public async Task<ActionResult<string>> Put([FromForm] ArticleUpdateDTO articleDTO)
         {
             try
             {
@@ -157,8 +157,8 @@ namespace MegaHerdt.API.Controllers
                 }*/
 
                 articleDb = this.Mapper.Map(articleDTO, articleDb);
-                await articleService.Update(articleDb);
-                return true;
+                var articleCode = await articleService.Update(articleDb);
+                return Ok(articleCode);
             }
             catch (Exception ex)
             {

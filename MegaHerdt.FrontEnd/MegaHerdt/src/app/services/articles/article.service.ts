@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { interval, Observable, timeInterval } from 'rxjs';
 import { Global } from '../../utils/Global';
 import { ArticlePriceUpdateByCategory } from 'src/app/models/Article/ArticlePriceUpdateByCategory';
 
@@ -31,7 +31,7 @@ export class ArticleService {
       //  xhr.setRequestHeader('Authorization',token);
         xhr.open('POST', Global.url + "Articles/"+ urlAction, true );  
         xhr.send(formData);
-        
+
         return this.getByName(article.name);
   }
 

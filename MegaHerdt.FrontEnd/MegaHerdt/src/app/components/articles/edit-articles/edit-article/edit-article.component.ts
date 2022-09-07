@@ -16,7 +16,7 @@ import { DialogUpdateArticleComponent } from '../dialog-update-article/dialog-up
 @Component({
   selector: 'app-edit-article',
   templateUrl: './edit-article.component.html',
-  styleUrls: ['./edit-article.component.css']
+  styleUrls: ['./edit-article.component.css'],
 })
 export class EditArticleComponent implements OnInit {
   @Input() article: Article;
@@ -24,14 +24,17 @@ export class EditArticleComponent implements OnInit {
   brands: Array<Brand>;
   image: File;
   updateSuccess: boolean;
-  constructor(private _categoryService: CategoryService, private _brandService: BrandService, 
-    private _articleService: ArticleService, private _storageService: StorageService, 
-    public dialog: MatDialog) 
-  { 
-    this.article = this.instanceArticle() ;
+  constructor(
+    private _categoryService: CategoryService,
+    private _brandService: BrandService,
+    private _articleService: ArticleService,
+    private _storageService: StorageService,
+    public dialog: MatDialog
+  ) {
+    this.article = this.instanceArticle();
     this.categories = new Array<Category>();
     this.brands = new Array<Brand>();
-    this.image = new File(new Array,'');
+    this.image = new File(new Array(), '');
     this.updateSuccess = false;
   }
 
@@ -41,10 +44,22 @@ export class EditArticleComponent implements OnInit {
   }
 
   private instanceArticle(): Article {
-    let brand = new Brand (0,'');
-    let category = new Category (0,'');
+    let brand = new Brand(0, '');
+    let category = new Category(0, '');
     let offers = new Array<ArticleOfferDetail>();
-    let article = new Article(0,'','',0,'',0,0,brand,category,offers, offers);
+    let article = new Article(
+      0,
+      '',
+      '',
+      0,
+      '',
+      0,
+      0,
+      brand,
+      category,
+      offers,
+      offers
+    );
     return article;
   }
 
@@ -52,102 +67,112 @@ export class EditArticleComponent implements OnInit {
     this._categoryService.getAll().subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("no se pudieron cargar las categorias");
+          console.log('no se pudieron cargar las categorias');
         } else {
           this.categories = response;
         }
       },
       error: (err) => {
-        console.log(err)
-      }
+        console.log(err);
+      },
     });
   }
 
-  loadBrands(){
+  loadBrands() {
     this._brandService.getAll().subscribe({
-        next: (response) => {
-          if (response.error) {
-              console.log("no se pudieron cargar las categorias");
-          } else {
-            this.brands = response;
-          }
-        },
-        error: (err) => {
-          console.log(err)
+      next: (response) => {
+        if (response.error) {
+          console.log('no se pudieron cargar las categorias');
+        } else {
+          this.brands = response;
         }
+      },
+      error: (err) => {
+        console.log(err);
+      },
     });
   }
 
-  onChange(fileInput: any){
+  onChange(fileInput: any) {
     this.image = <File>fileInput.target.files[0];
     var articleImage = new ArticleUpdateImage(this.article.id, this.image);
-    this._articleService.sendFormData(articleImage,"update-image")
+    this._articleService.sendFormData(articleImage, 'update-image');
   }
 
   openDialogUpdate() {
-    const dialogRef = this.dialog.open(DialogUpdateArticleComponent,
-      {
-        disableClose:true,
-        data: this.article
-      });
+    const dialogRef = this.dialog.open(DialogUpdateArticleComponent, {
+      disableClose: true,
+      data: this.article,
+    });
 
     dialogRef.afterClosed().subscribe((result: Article) => {
-      if(result != undefined){
+      if (result != undefined) {
         this.update();
       }
     });
   }
 
-  update(){
+  update() {
     var article = this.mapperArticle();
-    this._articleService.sendFormData(article, "update").subscribe({
+    this._articleService.sendFormData(article, 'update').subscribe({
       next: (response) => {
         if (response.error) {
-            console.log("no se pudieron cargar las marcas");
+          console.log('no se pudieron cargar las marcas');
         } else {
           this.updateSuccess = true;
         }
       },
       error: (err) => {
-        console.log(err)
-      }
+        console.log(err);
+      },
     });
+
+    setTimeout(() => {
+      this._articleService.getByName(article.name).subscribe({
+        next: (res) => (this.article.code = res.code),
+      });
+    }, 1000);
   }
 
-   openDialogDelete() {
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: this.article
-      });
+  openDialogDelete() {
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
+      disableClose: true,
+      data: this.article,
+    });
 
     dialogRef.afterClosed().subscribe((result: Article) => {
-      if(result != undefined){
+      if (result != undefined) {
         this.delete();
       }
     });
   }
-  
-  delete(){
-    this._articleService.delete(this.article.id, this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-            console.log("no se pudieron cargar las marcas");
-        } else {
-           window.location.reload();
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    });
 
+  delete() {
+    this._articleService
+      .delete(this.article.id, this._storageService.getTokenValue())
+      .subscribe({
+        next: (response) => {
+          if (response.error) {
+            console.log('no se pudieron cargar las marcas');
+          } else {
+            window.location.reload();
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
   }
 
-  mapperArticle(): ArticleUpdate{
-    return new ArticleUpdate(this.article.id, this.article.name,
+  mapperArticle(): ArticleUpdate {
+    return new ArticleUpdate(
+      this.article.id,
+      this.article.name,
       this.article.code,
-      this.article.stock,this.article.unitValue,
-      this.article.brand.id,this.article.category.id);
+      this.article.stock,
+      this.article.unitValue,
+      this.article.brand.id,
+      this.article.category.id
+    );
   }
 }
