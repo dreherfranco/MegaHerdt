@@ -1,22 +1,24 @@
-<div class="container-fluid">
+<div class="container-fluid w-75 mx-auto">
     <h2>Crear usuario</h2>
-    <hr><br>
-    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+    <hr class="w-75"><br>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" >
       <div class="row">
-        <div class="col-md-6">
-          <div class="form-group mb-3">
-            <label for="userName"><b>(*)Username:</b></label>
-            <input class="form-control" placeholder="Ingrese su username" type="text" name="username"
-              #userName="ngModel" [(ngModel)]="user.userName" required />
-            <span *ngIf="userName.touched && !userName.valid" class="text-danger">Ingrese un username valido</span>
-          </div>
-          
-          <div class="form-group mb-3">
-            <label for="email"><b>Email:</b></label>
-            <input class="form-control" placeholder="Ingrese su email" type="email" name="email" [email]="true"
-              #email="ngModel" [(ngModel)]="user.email" />
-            <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
-          </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="form-group mb-3 col-sm-6">
+              <label for="userName"><b>(*)Username:</b></label>
+              <input class="form-control" placeholder="Ingrese su username" type="text" name="username"
+                #userName="ngModel" [(ngModel)]="user.userName" required />
+              <span *ngIf="userName.touched && !userName.valid" class="text-danger">Ingrese un username valido</span>
+            </div>
+            
+            <div class="form-group mb-3 col-sm-6">
+              <label for="email"><b>Email:</b></label>
+              <input class="form-control" placeholder="Ingrese su email" type="email" name="email" [email]="true"
+                #email="ngModel" [(ngModel)]="user.email" />
+              <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
+            </div>
+         </div>
           <div class="form-group mb-3">
             <label for="password"><b>(*)Password:</b></label>
             <input class="form-control" placeholder="Ingrese su contraseña" type="password" name="password"
@@ -62,7 +64,7 @@
         <p *ngIf="!phoneOk" class="alert alert-danger m-1">Ingrese un numero telefono</p>
         
         <b class="required">(*)Obligatorio</b>
-        <input class="btn btn-primary w-25 m-2 mt-0 align-center" type="submit" value="Enviar"
+        <input class="btn btn-primary m-2 mt-0 align-center w-btn-submit" type="submit" value="Enviar"
           [disabled]="!registerForm.form.valid" />
       </div>
       <p *ngIf="statusSubmit === 'success'" class="alert alert-success m-1">Usuario creado correctamente</p>

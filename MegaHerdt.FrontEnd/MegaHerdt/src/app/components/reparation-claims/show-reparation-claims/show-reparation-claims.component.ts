@@ -30,7 +30,8 @@ export class ShowReparationClaimsComponent implements OnInit {
     this.dialog.open(DialogShowReparationDetailComponent,
       {
         disableClose:true,
-        data: reparation
+        data: reparation,
+        width: '550px'
       });
   }
 

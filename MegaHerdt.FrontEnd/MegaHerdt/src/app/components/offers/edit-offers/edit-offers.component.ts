@@ -35,7 +35,9 @@ export class EditOffersComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogUpdateOfferComponent,
       {
         disableClose:true,
-        data: offer
+        data: offer,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: ArticleOffer) => {
@@ -49,7 +51,9 @@ export class EditOffersComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
       {
         disableClose:true,
-        data: offerId
+        data: offerId,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: number) => {

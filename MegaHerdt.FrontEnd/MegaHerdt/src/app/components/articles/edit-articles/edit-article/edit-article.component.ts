@@ -103,6 +103,8 @@ export class EditArticleComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogUpdateArticleComponent, {
       disableClose: true,
       data: this.article,
+      height: '175px',
+      width: '500px'
     });
 
     dialogRef.afterClosed().subscribe((result: Article) => {
@@ -138,6 +140,8 @@ export class EditArticleComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
       disableClose: true,
       data: this.article,
+      height: '175px',
+      width: '500px'
     });
 
     dialogRef.afterClosed().subscribe((result: Article) => {

@@ -32,7 +32,8 @@ export class ClientReparationClaimsComponent implements OnInit {
     this.dialog.open(DialogShowReparationDetailComponent,
       {
         disableClose:true,
-        data: reparation
+        data: reparation,
+        width: '550px'
       });
   }
 
@@ -58,6 +59,7 @@ export class ClientReparationClaimsComponent implements OnInit {
       {
         disableClose:true,
         data: reparationClaimId
+        
       });
   }
 }

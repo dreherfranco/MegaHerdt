@@ -29,7 +29,9 @@ export class EditCategoriesComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogUpdateCategoryComponent,
       {
         disableClose:true,
-        data: category
+        data: category,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: Category) => {
@@ -49,7 +51,9 @@ export class EditCategoriesComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
       {
         disableClose:true,
-        data: categoryId
+        data: categoryId,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: number) => {

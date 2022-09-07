@@ -83,7 +83,9 @@ export class CreateArticleComponent implements OnInit {
   openDialogCreateBrand(){
     const dialogRef = this.dialog.open(DialogCreateBrandComponent,
       {
-        data: this.article
+        data: this.article,
+        height: '325px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result:any) => {
@@ -96,7 +98,9 @@ export class CreateArticleComponent implements OnInit {
   openDialogCreateCategory(){
     const dialogRef = this.dialog.open(DialogCreateCategoryComponent,
       {
-        data: this.article
+        data: this.article,
+        height: '325px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result:any) => {

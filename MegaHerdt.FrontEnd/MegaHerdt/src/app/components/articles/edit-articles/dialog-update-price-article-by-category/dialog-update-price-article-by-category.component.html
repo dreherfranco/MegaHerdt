@@ -1,22 +1,25 @@
 <div class="container-fluid">
-    <h3 class="d-flex align-content-center">Actualizar precios por categoria</h3>
+    <h3 class="data-user text-center">Actualizar precios por categoria</h3>
     <form enctype="multipart/form-data" #articlePriceCategoryForm="ngForm" (ngSubmit)="onClick()"
         class="p-2 w-75 mx-auto">
         <div class="row">
-            <div class="form-group mb-3 col-sm-8">
+            <div class="form-group mb-3 col-sm-12">
                 <label for="category"><b>(*)Categoria: </b></label>
                 <select class="form-select data-user" name="selectCategory" [(ngModel)]="articlePriceUpdate.categoryId">
                     <option class="data-user" name="category" *ngFor="let category of categories"
                         [ngValue]="category.id">{{category.name}}</option>
                 </select>
             </div>
-            
         </div>
-        <div class="form-group mb-3">
-            <label for="percentage"><b>(*)Porcentaje del aumento: </b></label>
-            <input id="percentage" name="percentage" class="form-control" type="number" min="1" max="100" #percentage="ngModel"
-                [(ngModel)]="articlePriceUpdate.pricePercentage" required>
-            <span *ngIf="percentage.touched && !percentage.valid" class="text-danger">Ingrese un numero del 1 al 100</span>
+
+        <div class="form-group mb-3 col-sm-10">    
+            <label for="percentage" ><b>(*)Porcentaje (-100 - 100): </b></label>
+            <div class="d-flex flex-row">
+            <input id="percentage" name="percentage" class="form-control w-50" type="number" min="-100" max="100" #percentage="ngModel"
+                    [(ngModel)]="articlePriceUpdate.pricePercentage" required>
+                    <span class="data-user m-2">%</span>
+                </div>
+            <span *ngIf="percentage.touched && !percentage.valid" class="text-danger">Ingrese un numero del -100 al 100</span>
         </div>
         
         <div class="d-flex flex-row">

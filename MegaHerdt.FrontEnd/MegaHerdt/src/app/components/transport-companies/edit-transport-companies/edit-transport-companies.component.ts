@@ -28,7 +28,9 @@ export class EditTransportCompaniesComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogUpdateTransportCompanyComponent,
       {
         disableClose:true,
-        data: transportCompany
+        data: transportCompany,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: TransportCompany) => {
@@ -58,7 +60,9 @@ export class EditTransportCompaniesComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
       {
         disableClose:true,
-        data: transportCompanyId
+        data: transportCompanyId,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: number) => {

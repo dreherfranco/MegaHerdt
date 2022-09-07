@@ -37,8 +37,6 @@ export class EditArticlesProvisionsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.loadArticles();
-    this.loadProviders(),
     this.loadArticlesProviders();
   }
 
@@ -46,7 +44,9 @@ export class EditArticlesProvisionsComponent implements OnInit {
       const dialogRef = this.dialog.open(DialogUpdateArticleProvisionComponent,
         {
           disableClose:true,
-          data: articleProvider
+          data: articleProvider,
+          height: '175px',
+          width: '500px'
         });
   
       dialogRef.afterClosed().subscribe((result: ArticleProvider) => {
@@ -82,7 +82,9 @@ export class EditArticlesProvisionsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
       {
         disableClose:true,
-        data: articleProviderId
+        data: articleProviderId,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: number) => {
@@ -114,36 +116,6 @@ export class EditArticlesProvisionsComponent implements OnInit {
         this.articlesProviders = res;
       }
     });
-  }
-
-  loadProviders(){
-    this._providerService.getAll(this._storageService.getTokenValue()).subscribe({
-        next: (response) => {
-          if (response.error) {
-              console.log("no se pudieron cargar los proveedores");
-          } else {
-            this.providers = response;
-          }
-        },
-        error: (err) => {
-          console.log(err)
-        }
-    });
-  }
-
-  loadArticles(){
-    this._articleService.getArticleNames().subscribe({
-      next: (response) =>{
-        if(response.error){
-          console.log("error al obtener articulos");
-        }else{
-          this.articles = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
   }
 
   onChange(fileInput: any, articleProvider: ArticleProvider){

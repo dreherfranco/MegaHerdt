@@ -29,7 +29,9 @@ export class EditBrandsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogUpdateBrandComponent,
       {
         disableClose:true,
-        data: brand
+        data: brand,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: Brand) => {
@@ -47,7 +49,9 @@ export class EditBrandsComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
       {
         disableClose:true,
-        data: brandId
+        data: brandId,
+        height: '175px',
+        width: '500px'
       });
 
     dialogRef.afterClosed().subscribe((result: number) => {
