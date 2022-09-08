@@ -13,7 +13,7 @@
         <tbody>
           <tr *ngFor="let reparationState of reparationsStates; let i = index">
             <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" [(ngModel)]="reparationState.name" ></td>
-            <td><button class="btn btn-success"  (click)="openDialogUpdate(reparationState)"> <i class="bi bi-pencil-square"></i> </button></td>
+            <td><button class="btn btn-primary"  (click)="openDialogUpdate(reparationState)"> <i class="bi bi-pencil-square"></i> </button></td>
             <td><button class="btn btn-danger" (click)="openDialogDelete(reparationState.id)"> <i class="bi bi-trash-fill"></i> </button></td>
           </tr>
         </tbody>

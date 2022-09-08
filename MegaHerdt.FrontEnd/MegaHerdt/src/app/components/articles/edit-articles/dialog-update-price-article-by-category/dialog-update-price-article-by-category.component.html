@@ -1,5 +1,9 @@
+<div class=" d-flex justify-content-end">
+    <button class="btn btn-primary d-flex p-2 m-2" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
+</div>
 <div class="container-fluid">
     <h3 class="data-user text-center">Actualizar precios por categoria</h3>
+    <hr class="w-75 mx-auto">
     <form enctype="multipart/form-data" #articlePriceCategoryForm="ngForm" (ngSubmit)="onClick()"
         class="p-2 w-75 mx-auto">
         <div class="row">
@@ -23,8 +27,7 @@
         </div>
         
         <div class="d-flex flex-row">
-            <button class="btn btn-danger d-flex p-2 m-1" (click)="closeModal()">Cerrar</button>
-            <input type="submit" class="btn btn-primary m-1" [disabled]="articlePriceCategoryForm.invalid" value="Actualizar" />
+            <input type="submit" class="btn btn-primary" [disabled]="articlePriceCategoryForm.invalid" value="Actualizar" />
         </div>
         <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
             El precio del articulo se actualizó correctamente
