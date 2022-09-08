@@ -1,16 +1,15 @@
 <div class="container-fluid">
     <div class="card p-3">
-        <div class=" d-flex justify-content-end">
-            <button class="btn btn-primary d-flex p-2 m-2" (click)="closeModal()"><i class="bi bi-x-lg"></i></button>
+        <div class="d-inline-block">
+            <div class="card-text float-left ">
+                <p class="data-user text-primary">Articulos: </p>
+                <p class="data-user mb-3" *ngFor="let purchaseArticle of data.purchasesArticles">{{purchaseArticle.article.name}}</p>
+                <p class="data-user mb-3"> Fecha de compra: {{data.date | date: 'dd/MM/yyyy'}}</p>
+                <p class="data-user mb-3">Total: {{ total }}</p>
+            </div>
+            <button class="btn btn-primary d-block float-right p-2 m-2" (click)="closeModal()" title="Cerrar"><i class="bi bi-x-lg"></i></button>
         </div>
-        <div class="card-text">
-            <p class="data-user text-primary">Articulos: </p>
-            <p class="data-user" *ngFor="let purchaseArticle of data.purchasesArticles">{{purchaseArticle.article.name}}</p>
-            <hr>
-            <p class="data-user"> Fecha de compra: {{data.date | date: 'dd/MM/yyyy'}}</p>
-            <hr>
-            <p class="data-user">Total: {{ total }}</p>
-        </div>
+       
     </div>
    
 </div>

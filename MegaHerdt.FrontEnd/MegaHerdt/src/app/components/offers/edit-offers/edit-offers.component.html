@@ -41,10 +41,10 @@
                     <input id="endDate" name="endDate" class="form-control" type="date" #endDate="ngModel"
                         [(ngModel)]="offer.endDate" required>
                 </td>
-                <td><button class="btn btn-primary" (click)="openDialogUpdate(offer)"> <i class="bi bi-pencil-square"></i>
+                <td><button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(offer)" title="Editar"> <i class="bi bi-pencil-square"></i>
                     </button>
                 </td>
-                <td><button class="btn btn-danger" (click)="openDialogDelete(offer.id)"> <i class="bi bi-trash-fill"></i>
+                <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(offer.id)" title="Eliminar"> <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>
                 

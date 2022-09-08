@@ -87,12 +87,12 @@
                     <input id="voucher" name="voucher" class="form-control" type="file" (change)="onChange($event, articleProvider)">
                 </td>
                 <td>
-                    <button class="btn btn-primary" (click)="openDialogUpdate(articleProvider)">
+                    <button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(articleProvider)" title="Editar">
                         <i class="bi bi-pencil-square"></i>
                     </button>
                 </td>
                 <td>
-                    <button class="btn btn-danger" (click)="openDialogDelete(articleProvider.id)">
+                    <button class="btn btn-danger col-sm-12" (click)="openDialogDelete(articleProvider.id)" title="Eliminar">
                         <i class="bi bi-trash-fill"></i>
                     </button>
                 </td>

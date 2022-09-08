@@ -1,20 +1,20 @@
 <div class="table-responsive">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>LISTADO DE ESTADOS DE REPARACIONES</th><th></th><th></th>
-            </tr>
+  <div class="d-flex">
+    <h2 class="mx-auto">LISTADO DE PROVEEDORES</h2>
+  </div>
+    <table class="table w-75 mx-auto">
+        <thead>        
           <tr>
             <th scope="col">Nombre</th>
-            <th scope="col">#</th>
-            <th scope="col">#</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let reparationState of reparationsStates; let i = index">
             <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" [(ngModel)]="reparationState.name" ></td>
-            <td><button class="btn btn-primary"  (click)="openDialogUpdate(reparationState)"> <i class="bi bi-pencil-square"></i> </button></td>
-            <td><button class="btn btn-danger" (click)="openDialogDelete(reparationState.id)"> <i class="bi bi-trash-fill"></i> </button></td>
+            <td><button class="btn btn-primary col-sm-12"  (click)="openDialogUpdate(reparationState)" title="Editar"> <i class="bi bi-pencil-square"></i> </button></td>
+            <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(reparationState.id)" title="Eliminar"> <i class="bi bi-trash-fill"></i> </button></td>
           </tr>
         </tbody>
       </table>
