@@ -37,7 +37,7 @@ export class ArticleListComponent implements OnInit {
   }
 
   loadProducts(){
-    this._articleService.getArticles().subscribe(
+    this._articleService.getAllEnableds().subscribe(
       {
         next: (response) => 
         {

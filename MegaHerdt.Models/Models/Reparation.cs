@@ -23,6 +23,7 @@ namespace MegaHerdt.Models.Models
         public string ClientDescription { get; set; }
         public string EmployeeObservation { get; set; } = "";
         public DateTime ApproximateTime { get; set; }
+        public bool Enabled { get; set; } = true;
         public ReparationState ReparationState { get; set; }
         public User Client { get; set; }
         public User Employee { get; set; }

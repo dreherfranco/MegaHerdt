@@ -44,6 +44,21 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("get-enableds")]
+        public async Task<ActionResult<List<ArticleDTO>>> GetEnabledsArticles()
+        {
+            try
+            {
+                var articles = articleService.GetEnabledsArticles();
+                return this.Mapper.Map<List<ArticleDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
         [HttpGet("get-article-names")]
         public ActionResult<List<ArticleNameDTO>> GetArticlesNames()
         {

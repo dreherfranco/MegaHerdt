@@ -120,7 +120,7 @@ export class EditReparationsComponent implements OnInit {
   }
 
   loadReparations(){
-    this._reparationService.getAll(this._storageService.getTokenValue()).subscribe({
+    this._reparationService.getAllEnableds(this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("error al obtener reparaciones");

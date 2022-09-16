@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220916213721_borrado-logico-reparation-and-article")]
+    partial class borradologicoreparationandarticle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -111,9 +113,6 @@ namespace MegaHerdt.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -127,9 +126,6 @@ namespace MegaHerdt.API.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Enabled")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -151,9 +147,6 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("DiscountPercentage")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Enabled")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("EndDate")
@@ -187,9 +180,6 @@ namespace MegaHerdt.API.Migrations
                     b.Property<string>("DiscountReason")
                         .IsRequired()
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ProviderId")
                         .HasColumnType("INTEGER");
@@ -702,9 +692,6 @@ namespace MegaHerdt.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -717,49 +704,41 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = 1,
-                            Enabled = true,
                             Name = "INGRESO"
                         },
                         new
                         {
                             Id = 2,
-                            Enabled = true,
                             Name = "EN REVISION"
                         },
                         new
                         {
                             Id = 3,
-                            Enabled = true,
                             Name = "EN PRESUPUESTO"
                         },
                         new
                         {
                             Id = 4,
-                            Enabled = true,
                             Name = "EN REPARACION"
                         },
                         new
                         {
                             Id = 5,
-                            Enabled = true,
                             Name = "REPARADO"
                         },
                         new
                         {
                             Id = 6,
-                            Enabled = true,
                             Name = "ENTREGADO"
                         },
                         new
                         {
                             Id = 7,
-                            Enabled = true,
                             Name = "PAGADO"
                         },
                         new
                         {
                             Id = 8,
-                            Enabled = true,
                             Name = "CANCELADO"
                         });
                 });
@@ -806,9 +785,6 @@ namespace MegaHerdt.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Enabled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -851,14 +827,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "9ea6ec14-ac2d-400e-8949-d5bb469c0a92",
+                            ConcurrencyStamp = "e7adb3be-5ec0-4412-a613-dca807233656",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "40978760-13e7-4055-b1b1-db4c336ca62b",
+                            ConcurrencyStamp = "e6790714-fb4e-4645-b794-78206bbce931",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

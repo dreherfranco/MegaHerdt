@@ -9,6 +9,7 @@ namespace MegaHerdt.Models.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public bool Enabled { get; set; } = true;
         public List<Reparation> Reparations { get; set; }
     }
 }

@@ -41,6 +41,13 @@ export class ReparationService {
     return this._http.get(this.url+"/get-all", { headers: this.headers });
   }
 
+  getAllEnableds(token: string): Observable<any> {
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + '/get-enableds', {
+      headers: this.headers,
+    });
+  }
+
   getById(id:number, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url+ "/" + id, { headers: this.headers });

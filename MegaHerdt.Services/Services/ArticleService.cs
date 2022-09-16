@@ -85,5 +85,9 @@ namespace MegaHerdt.Services.Services
             return code;
         }
 
+        public IEnumerable<Article> GetEnabledsArticles()
+        {
+            return this.helper.Get().Where(x => x.Enabled);
+        }
     }
 }

@@ -26,8 +26,8 @@ export class EditArticlesProvisionsComponent implements OnInit {
   paginate: Paginate;
   searchText: string = "";
   
-  constructor(private _articleProvisionService: ArticleProvisionService, private _providerService: ProviderService, 
-    private _storageService: StorageService, private _articleService: ArticleService,
+  constructor(private _articleProvisionService: ArticleProvisionService,
+    private _storageService: StorageService,
     public dialog: MatDialog) {
     this.providers = new Array<Provider>();
     this.articles = new Array<ArticleName>();

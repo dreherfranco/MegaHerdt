@@ -20,6 +20,12 @@ export class ArticleService {
     return this._http.get(this.url,{headers: this.headers});
   }
 
+  getAllEnableds(): Observable<any> {
+    return this._http.get(this.url + '/get-enableds', {
+      headers: this.headers,
+    });
+  }
+
   sendFormData(article: any, urlAction:string): Observable<any>{
     const formData: FormData = new FormData();
       var xhr = new XMLHttpRequest();

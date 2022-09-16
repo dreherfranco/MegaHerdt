@@ -23,7 +23,8 @@ namespace MegaHerdt.Helpers.Helpers
             return repository.Get(filter)
                 .Include(x => x.Provider)
                 .Include(x => x.Article)
-                .Include(x => x.SerialNumbers);
+                .Include(x => x.SerialNumbers)
+                .OrderByDescending(x => x.ProvisionDate);
         }
      
     }

@@ -60,9 +60,10 @@ namespace MegaHerdt.API.Controllers
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
                 await this.ReparationService.Update(reparationDb);
                 
-                reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
-                var mailRequest = this.ReparationService.mailRequest(reparationDb);
-                await this.MailService.SendEmailAsync(mailRequest);
+                //MAILER
+              //  reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
+            //    var mailRequest = this.ReparationService.mailRequest(reparationDb);
+         //       await this.MailService.SendEmailAsync(mailRequest);
                 return true;
             }
             catch (Exception ex)
@@ -81,9 +82,10 @@ namespace MegaHerdt.API.Controllers
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted, reparationDTO.ApproximateTime);
                 
-                reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
-                var mailRequest = this.ReparationService.mailRequest(reparationDb);
-                await this.MailService.SendEmailAsync(mailRequest);
+                //MAILER
+              //  reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
+           //     var mailRequest = this.ReparationService.mailRequest(reparationDb);
+               // await this.MailService.SendEmailAsync(mailRequest);
                 return true;
             }
             catch (Exception ex)
@@ -123,6 +125,20 @@ namespace MegaHerdt.API.Controllers
             catch (Exception ex)
             {
                 return BadRequest(new { message = ex.Message });
+            }
+        }
+
+        [HttpGet("get-enableds")]
+        public ActionResult<List<ReparationDTO>> GetEnabledsReparations()
+        {
+            try
+            {
+                var reparations = ReparationService.GetEnabledsReparations();
+                return this.Mapper.Map<List<ReparationDTO>>(reparations);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
             }
         }
 

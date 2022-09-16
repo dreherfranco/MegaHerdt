@@ -2,13 +2,15 @@
     <h3><b>Direccion:</b></h3>
     <form #addressForm="ngForm" action="#">
     <div class="row">
-        <div class="form-group col-sm-3 mb-3">
-            <label for="province"><b>(*)Provincia:</b></label>
-            <select class="form-select data-user" name="selectProvince" [(ngModel)]="provinceId" (change)="onChangeProvinces()">
-                <option class="data-user" name="province" *ngFor="let province of provinces.provincias" [ngValue]="province.id">{{province.nombre}}</option>
-            </select>
+        <div class="row">
+            <div class="form-group col-sm-6 mb-3">
+                <label for="province"><b>(*)Provincia:</b></label>
+                <select class="form-select data-user" name="selectProvince" [(ngModel)]="provinceId" (change)="onChangeProvinces()">
+                    <option class="data-user" name="province" *ngFor="let province of provinces.provincias" [ngValue]="province.id">{{province.nombre}}</option>
+                </select>
+            </div>
         </div>
-
+       <div class="row">
         <div class="form-group col-sm-6 mb-3">
             <label for="department"><b>(*)Departamento:</b></label>
             <select *ngIf="provinceChoosed" class="form-select data-user" name="selectDepartment" [(ngModel)]="departmentId" (change)="onChangeDepartments()">
@@ -17,13 +19,14 @@
             <div *ngIf="!provinceChoosed" class="alert alert-secondary ">Seleccione provincia con anterioridad</div>
         </div>
 
-        <div class="form-group col-sm-3 mb-3">
+        <div class="form-group col-sm-6 mb-3">
             <label for="townName"><b>(*)Localidad:</b></label>
             <select *ngIf="departmentChoosed" class="form-select data-user" name="selectLocality" [(ngModel)]="localityId" (change)="onChangeLocalities()">
                 <option class="data-user" name="locality" *ngFor="let locality of this.localities" [ngValue]="locality.id">{{locality.nombre}}</option>
             </select>
             <div *ngIf="!departmentChoosed" class="alert alert-secondary ">Seleccione departamento con anterioridad</div>
         </div>
+       </div>
 
         <div class="row">
             <div class="form-group col-sm-6 mb-3">

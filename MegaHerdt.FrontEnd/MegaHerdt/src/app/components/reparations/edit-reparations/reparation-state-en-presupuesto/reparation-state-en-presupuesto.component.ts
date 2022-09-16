@@ -80,7 +80,6 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
           console.log("error al obtener reparaciones");
         } else {
           this.reparations = response;
-          console.log(response)
         }
       },
       error: (err) => {

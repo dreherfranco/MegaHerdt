@@ -7,7 +7,7 @@
                 <th scope="col">Email cliente</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Descripcion del cliente</th>
+                <th scope="col">Descripcion del servicio requerido segun el cliente</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -20,19 +20,19 @@
             }; 
             let i = index">
                 <th>
-                    <span class="data-user form-control">{{ reparation.employee.email }}</span>
+                    <span class="data-user">{{ reparation.employee.email }}</span>
                 </th>
                 <th>
-                    <span class="data-user form-control">{{ reparation.client.userName }}</span>
+                    <span class="data-user">{{ reparation.client.userName }}</span>
                 </th>      
                 <th>
-                    <span class="form-control data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
+                    <span class="data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
                 </th>
                 <th>
-                    <span class="data-user form-control">{{ reparation.reparationState.name }}</span>
+                    <span class="data-user">{{ reparation.reparationState.name }}</span>
                 </th>        
                 <th>
-                    <span class="data-user form-control">{{ reparation.clientDescription }}</span>
+                    <span class="data-user">{{ reparation.clientDescription }}</span>
                 </th>
                 <td>
                     <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)"> <i

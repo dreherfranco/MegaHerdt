@@ -49,7 +49,7 @@ export class CreateArticleProvisionComponent implements OnInit {
   }
 
   loadProviders() {
-    this._providerService.getAll(this._storageService.getTokenValue()).subscribe({
+    this._providerService.getAllEnableds(this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           console.log("no se pudieron cargar los proveedores");

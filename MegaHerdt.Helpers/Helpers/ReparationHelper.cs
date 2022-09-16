@@ -35,6 +35,15 @@ namespace MegaHerdt.Helpers.Helpers
             return await this.repository.Add(entity);
         }
 
+        public override async Task Delete(Reparation entity)
+        {
+            if (entity != null)
+            {
+                entity.Enabled = false;
+                await this.repository.Update(entity);
+            }
+        }
+
         public override async Task Update(Reparation entity)
         {
             if (!isFinalState(entity))

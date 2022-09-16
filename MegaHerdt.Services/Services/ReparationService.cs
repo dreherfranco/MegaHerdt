@@ -59,5 +59,10 @@ namespace MegaHerdt.Services.Services
                 "<br>El presupuesto de su reparacion está listo, su costo total es de $" + total
             };
         }
+
+        public IEnumerable<Reparation> GetEnabledsReparations()
+        {
+            return this.helper.Get().Where(x => x.Enabled);
+        }
     }
 }

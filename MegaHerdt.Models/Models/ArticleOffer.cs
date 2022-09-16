@@ -17,6 +17,7 @@ namespace MegaHerdt.Models.Models
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
+        public bool Enabled { get; set; } = true;
         public Article Article { get; set; }
         
     }

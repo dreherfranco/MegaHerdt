@@ -18,6 +18,7 @@ namespace MegaHerdt.Models.Models
         public string Name { get; set; }
         public string Image { get; set; }
         public float UnitValue { get; set; }
+        public bool Enabled { get; set; } = true;
         public ArticleBrand Brand { get; set; }
         public ArticleCategory Category { get; set; }
         public List<ArticleOffer> Offers { get; set; }

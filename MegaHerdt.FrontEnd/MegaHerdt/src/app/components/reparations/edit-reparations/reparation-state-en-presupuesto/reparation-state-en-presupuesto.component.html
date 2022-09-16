@@ -7,8 +7,9 @@
                 <th scope="col">Email cliente</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Descripcion del cliente</th>
+                <th scope="col">Descripcion del servicio requerido segun el cliente</th>
                 <th scope="col">Observacion del Empleado</th>
+                <th scope="col">Tiempo aproximado</th>
                 <th scope="col">Monto mano de obra</th>
                 <th scope="col">Articulos a utilizar</th>
                 <th scope="col">Monto total articulos</th>
@@ -26,25 +27,28 @@
             }; 
             let i = index">
                 <th>
-                    <span class="data-user form-control">{{ reparation.employee.email }}</span>
+                    <span class="data-user">{{ reparation.employee.email }}</span>
                 </th>
                 <th>
-                    <span class="data-user form-control">{{ reparation.client.userName }}</span>
+                    <span class="data-user">{{ reparation.client.userName }}</span>
                 </th>      
                 <th>
-                    <span class="form-control data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
+                    <span class="data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
                 </th>
                 <th>
-                    <span class="data-user form-control">{{ reparation.reparationState.name }}</span>
+                    <span class="data-user">{{ reparation.reparationState.name }}</span>
                 </th>        
                 <th>
-                    <span class="data-user form-control">{{ reparation.clientDescription }}</span>
+                    <span class="data-user">{{ reparation.clientDescription }}</span>
                 </th>
                 <th>
-                    <span class="data-user form-control">{{ reparation.employeeObservation }}</span>
+                    <span class="data-user">{{ reparation.employeeObservation }}</span>
                 </th>
                 <th>
-                    <span class="data-user form-control">${{ reparation.amount }}</span>
+                    <span class="data-user">{{ reparation.approximateTime | date: 'dd/MM/yyyy' }}</span>
+                </th>
+                <th>
+                    <span class="data-user">${{ reparation.amount }}</span>
                 </th>
                 <th>
                     <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene

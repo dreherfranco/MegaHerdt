@@ -84,7 +84,7 @@ export class CreateArticleComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogCreateBrandComponent,
       {
         data: this.article,
-        height: '325px',
+        height: '400px',
         width: '500px'
       });
 
@@ -99,7 +99,7 @@ export class CreateArticleComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogCreateCategoryComponent,
       {
         data: this.article,
-        height: '325px',
+        height: '400px',
         width: '500px'
       });
 

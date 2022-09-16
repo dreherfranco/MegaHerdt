@@ -1,13 +1,6 @@
 <div class="container-fluid">
     <p class="alert alert-warning d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center">¿Seguro que querés aceptar el presupuesto de esta reparación?</p>
     <form #reparationForm="ngForm" class="w-75 mx-auto mt-3">
-        <div class="form-group mb-3">
-            <label for="approximateTime" class="m-1"><b>(*)Fecha estimada para finalizar la reparacion: </b></label>
-
-            <input id="approximateTime" name="approximateTime" class="form-control" type="date" #approximateTime="ngModel" [(ngModel)]="reparationUpdateBudget.approximateTime"
-                required>
-            <span *ngIf="approximateTime.touched && !approximateTime.valid" class="text-danger">Ingrese una fecha valida</span>
-        </div>
         <div class=" d-flex justify-content-end flex-md-row flex-wrap">
             <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
             <button class="btn btn-primary d-flex p-2 m-2 " [disabled]="reparationForm.invalid" (click)="confirm()">Aceptar</button>

@@ -1,4 +1,9 @@
 
 .btn{
     padding: 0.1rem 0.2rem !important;
+    width: 5rem !important;
+}
+
+.user-credentials{
+    border-right: 1px solid gray;
 }

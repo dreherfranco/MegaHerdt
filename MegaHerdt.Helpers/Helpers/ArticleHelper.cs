@@ -52,5 +52,14 @@ namespace MegaHerdt.Helpers.Helpers
             return code;
         }
 
+        public override async Task Delete(Article entity)
+        {
+            if (entity != null)
+            {
+                entity.Enabled = false;
+                await this.repository.Update(entity);
+            }
+        }
+
     }
 }

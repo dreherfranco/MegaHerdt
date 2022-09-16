@@ -18,6 +18,7 @@ namespace MegaHerdt.Models.Models
         public bool Add { get; set; } = true;
         public string DiscountReason { get; set; }
         public List<ArticleProviderSerialNumber> ?SerialNumbers { get; set; }
+        public bool Enabled { get; set; } = true;
         public Provider Provider { get; set; }
         public Article Article { get; set; }
     }
