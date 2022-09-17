@@ -38,7 +38,6 @@ import { ForgetPasswordComponent } from './components/users/forget-password/forg
 import { CreateReparationComponent } from './components/reparations/create-reparation/create-reparation.component';
 import { EditReparationsComponent } from './components/reparations/edit-reparations/edit-reparations.component';
 import { AdminCreateUserComponent } from './components/users/admin-create-user/admin-create-user.component';
-import { BackupComponent } from './components/backup/backup/backup.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -140,11 +139,6 @@ const routes: Routes = [
     path: 'administrate/show-users/edit-role-user/:userName', component: EditRoleUserComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN ] }  
   },
-  { 
-    path: 'administrate/backup', component: BackupComponent, canActivate: [AuthGuard, RoleGuard], 
-      data: { expectedsRoles: [ Role.ADMIN ] }  
-  },
-  
   { path: '**', component: HomeComponent }
 ];
 

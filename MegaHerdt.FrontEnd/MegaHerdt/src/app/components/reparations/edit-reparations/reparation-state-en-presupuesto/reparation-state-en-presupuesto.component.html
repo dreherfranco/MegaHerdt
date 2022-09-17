@@ -53,15 +53,15 @@
                 <th>
                     <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene
                         articulos</span>
-                    <span class="form-control data-user" *ngFor="let reparationArticle of reparation.reparationsArticles" name="selectArticle">
+                    <span class="data-user" *ngFor="let reparationArticle of reparation.reparationsArticles" name="selectArticle">
                         {{reparationArticle.articleName}} <i class="bi bi-arrow-right"></i> ${{ reparationArticle.articlePriceAtTheMoment }}
                     </span>
                 </th>
                 <th>
-                    <span class="data-user form-control">${{ reparation.totalArticleAmount }}</span>
+                    <span class="data-user">${{ reparation.totalArticleAmount }}</span>
                 </th>
                 <th>
-                    <span class="data-user form-control">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
+                    <span class="data-user">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
                 </th>
                 <td>
                     <button class="btn btn-primary col-sm-12" title="Aceptar presupuesto" (click)="openDialogUpdate(reparation.id)"> <i

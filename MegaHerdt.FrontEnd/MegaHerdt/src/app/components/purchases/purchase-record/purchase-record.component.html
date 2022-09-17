@@ -30,29 +30,37 @@
                         <span *ngIf="purchase.shipment == null" class="text-secondary">
                             Esta compra no posee envío
                         </span>
-                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" class="text-secondary">
+                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null"
+                            class="text-secondary">
                             No se ha asignado un envío aún
                         </span>
-                        <div *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
-                            <p class="d-flex row">Direccion: {{purchase.shipment.address.streetName}} {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}}, {{purchase.shipment.address.province}}</p> 
-                            <a href="{{purchase.shipment.transportCompany.url}}/{{purchase.shipment.trackingNumber}}"><p class="row"> URL de seguimiento </p> </a>
+                        <div *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null"
+                            class="data-user">
+                            <p class="d-flex row">Direccion: {{purchase.shipment.address.streetName}}
+                                {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}},
+                                {{purchase.shipment.address.province}}</p>
+                            <a href="{{purchase.shipment.transportCompany.url}}/{{purchase.shipment.trackingNumber}}">
+                                <p class="row"> URL de seguimiento </p>
+                            </a>
                         </div>
                     </th>
                     <th>
-                        <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']" > <i class="bi bi-exclamation-circle-fill" ></i> </button>
-                        <div class="alert alert-warning mt-1" role="alert" *ngIf="purchase.purchasesClaims.length > 0">
-                            <i class="bi bi-exclamation-diamond"></i> 
-                            {{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta reparación
+                        <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']">
+                            <i class="bi bi-exclamation-circle-fill"></i>
+                        </button>
+                        <div>
+                            <button type="button" class="btn btn-warning mt-1"
+                                *ngIf="purchase.purchasesClaims.length > 0"
+                                popover="{{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta reparación">
+                                <i class="bi bi-exclamation-diamond"></i>
+                            </button>
                         </div>
                     </th>
                 </tr>
             </tbody>
         </table>
-        <pagination-controls class="text-center data-user"
-        (pageChange)="this.paginate.page = $event" 
-        previousLabel="Anterior" 
-        nextLabel="Siguiente"
-        *ngIf="purchases.length > 4">
+        <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="purchases.length > 4">
         </pagination-controls>
     </div>
 </div>

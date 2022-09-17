@@ -10,6 +10,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { ColorPickerModule } from 'ngx-color-picker';
 import {MatSortModule} from '@angular/material/sort';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { PopoverModule } from 'ngx-bootstrap/popover'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -118,7 +119,6 @@ import { UpdateReparationStateENREPARACIONComponent } from './components/reparat
 import { ReparationStateREPARADOComponent } from './components/reparations/edit-reparations/reparation-state-reparado/reparation-state-reparado.component';
 import { UpdateReparationStateREPARADOComponent } from './components/reparations/edit-reparations/reparation-state-reparado/update-reparation-state-reparado/update-reparation-state-reparado.component';
 import { DialogShowPurchaseClaimAnswersComponent } from './components/purchase-claims/dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
-import { BackupComponent } from './components/backup/backup/backup.component';
 import { DialogDownloadBackupComponent } from './components/backup/dialog-download-backup/dialog-download-backup.component';
 
 @NgModule({
@@ -226,7 +226,6 @@ import { DialogDownloadBackupComponent } from './components/backup/dialog-downlo
     ReparationStateREPARADOComponent,
     UpdateReparationStateREPARADOComponent,
     DialogShowPurchaseClaimAnswersComponent,
-    BackupComponent,
     DialogDownloadBackupComponent,
   ],
   imports: [
@@ -245,6 +244,7 @@ import { DialogDownloadBackupComponent } from './components/backup/dialog-downlo
     NgChartsModule,
     MatSortModule,
     MatAutocompleteModule,
+    PopoverModule.forRoot(),
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
   ],
   providers: [],

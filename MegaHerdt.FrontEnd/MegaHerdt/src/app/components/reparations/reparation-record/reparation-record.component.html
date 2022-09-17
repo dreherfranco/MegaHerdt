@@ -51,20 +51,27 @@
                         <span class="data-user" *ngIf="reparation.bill !== null">{{ reparation.bill.type }}</span>
                     </th>
                     <th>
-                        <button class="btn btn-danger w-25" [routerLink]="['reparation', reparation.id, 'claim']"> <i
-                                class="bi bi-exclamation-circle-fill"></i> </button>
-                        <div class="alert alert-warning mt-1" role="alert" *ngIf="reparation.reparationsClaims.length > 0">
-                            <i class="bi bi-exclamation-diamond"></i> 
-                            {{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación
+                        <button class="btn btn-danger w-100" [routerLink]="['reparation', reparation.id, 'claim']"> 
+                            <i class="bi bi-exclamation-circle-fill"></i> 
+                        </button>
+
+                        <div class="mt-1" role="alert" *ngIf="reparation.reparationsClaims.length > 0">
+                            <button type="button" class="btn btn-warning w-100"
+                                popover="{{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación">
+                                <i class="bi bi-exclamation-diamond"></i>
+                            </button>
                         </div>
                     </th>
                     <th>
-                        <p class="alert alert-warning" *ngIf="reparation.bill.payments.length > 0">
+                        <button *ngIf="reparation.bill.payments.length > 0" type="button" class="btn btn-warning w-100"
+                            popover="Ya existen pagos de esta reparación">
                             <i class="bi bi-exclamation-diamond"></i>
-                            Ya existen pagos de esta reparación
-                        </p>
-                        <button *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')" class="btn btn-primary"
-                            [routerLink]="['reparation', reparation.id, 'payment']"> <i class="bi bi-credit-card"></i> </button>
+                        </button>
+                        <button
+                            *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')"
+                            class="btn btn-primary w-100" [routerLink]="['reparation', reparation.id, 'payment']"> <i
+                                class="bi bi-credit-card"></i> 
+                        </button>
                     </th>
                 </tr>
             </tbody>
