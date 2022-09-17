@@ -26,7 +26,7 @@ namespace MegaHerdt.API.Controllers
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        [HttpPost("backup")]
+        [HttpGet]
         public async Task<ActionResult<URLsZipDTO>> Backup()
         {
             try
@@ -38,17 +38,20 @@ namespace MegaHerdt.API.Controllers
 
                 await BackupArticlesImages();
                 await BackupArticlesProvidersVouchers();
+                await BackupDatabase();
 
                 var actualUrl = $"{httpContextAccessor.HttpContext.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}";
                 var urlArticlesZip = Path.Combine(actualUrl, Path.Combine(this.containerBackup, "articles.zip")).Replace("\\", "/");
                 var urlArticlesProvidersZip = Path.Combine(actualUrl, Path.Combine(this.containerBackup, "articles-providers.zip")).Replace("\\", "/");
-                
+                var urlDatabaseZip = Path.Combine(actualUrl, Path.Combine(this.containerBackup, "database.zip")).Replace("\\", "/");
+
                 var urlsDTO = new URLsZipDTO()
-                { 
-                    UrlArticlesZip = urlArticlesZip, 
-                    UrlArticlesProvidersZip = urlArticlesProvidersZip 
+                {
+                    UrlArticlesZip = urlArticlesZip,
+                    UrlArticlesProvidersZip = urlArticlesProvidersZip,
+                    UrlDatabaseZip = urlDatabaseZip
                 };
-                
+
                 return urlsDTO;
             }
             catch (Exception ex)
@@ -73,7 +76,7 @@ namespace MegaHerdt.API.Controllers
             }
 
             foreach (var article in articlesDb)
-            {           
+            {
                 var articleImageName = article.Image.Split("/").LastOrDefault();
                 var articlePath = Path.Combine(env.WebRootPath, containerArticles, articleImageName);
                 var articleBackupPath = Path.Combine(folder, articleImageName);
@@ -95,13 +98,13 @@ namespace MegaHerdt.API.Controllers
             {
                 ZipFile.CreateFromDirectory(folder, pathZip);
             }
-      
+
         }
 
         private async Task BackupArticlesProvidersVouchers()
         {
             var articleProvidersDb = this.articleProviderService.GetAll();
-            
+
             string folder = Path.Combine(env.WebRootPath, containerBackup, containerArticlesProviders);
 
             if (Directory.Exists(folder))
@@ -137,5 +140,43 @@ namespace MegaHerdt.API.Controllers
                 ZipFile.CreateFromDirectory(folder, pathZip);
             }
         }
+
+        private async Task BackupDatabase()
+        {
+            string folder = Path.Combine(env.WebRootPath, containerBackup, "database");
+
+            if (Directory.Exists(folder))
+            {
+                Directory.Delete(folder, true);
+                Directory.CreateDirectory(folder);
+            }
+            else
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+
+            var dbPath = Path.Combine(Environment.CurrentDirectory, "MegaHerdtAPI.db");
+            var dbBackupPath = Path.Combine(folder, "MegaHerdtAPI.db");
+
+            if (!System.IO.File.Exists(dbBackupPath))
+            {
+                System.IO.File.Copy(dbPath, dbBackupPath);
+            }
+
+            var pathZip = Path.Combine(env.WebRootPath, containerBackup, "database.zip");
+            if (System.IO.File.Exists(pathZip))
+            {
+                System.IO.File.Delete(pathZip);
+                ZipFile.CreateFromDirectory(folder, pathZip);
+            }
+            else
+            {
+                ZipFile.CreateFromDirectory(folder, pathZip);
+            }
+
+        }
+
+
     }
 }

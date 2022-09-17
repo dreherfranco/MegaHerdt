@@ -4,5 +4,6 @@
     {
         public string UrlArticlesZip { get; set; }
         public string UrlArticlesProvidersZip { get; set; }
+        public string UrlDatabaseZip { get; set; }
     }
 }

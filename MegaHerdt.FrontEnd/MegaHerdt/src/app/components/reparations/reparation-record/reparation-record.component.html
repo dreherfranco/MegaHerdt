@@ -64,7 +64,7 @@
                             Ya existen pagos de esta reparación
                         </p>
                         <button *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')" class="btn btn-primary"
-                            [routerLink]="['reparation', reparation.id, 'payment']"> Pagar </button>
+                            [routerLink]="['reparation', reparation.id, 'payment']"> <i class="bi bi-credit-card"></i> </button>
                     </th>
                 </tr>
             </tbody>

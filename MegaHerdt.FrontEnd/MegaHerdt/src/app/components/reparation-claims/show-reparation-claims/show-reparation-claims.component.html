@@ -51,10 +51,10 @@
                         <span class="data-user text-danger" *ngIf="!reparationClaim.answered">NO</span>
                     </th>
                     <th>
-                        <button class="btn btn-primary" (click)="openDialog(reparationClaim.reparation)">Ver reparacion</button>
+                        <button class="btn btn-primary" (click)="openDialog(reparationClaim.reparation)"><i class="bi bi-eye-fill text-dark"></i></button>
                     </th>
                     <th>
-                        <button [routerLink]="['answer-reparation-claim', reparationClaim.id]"  class="btn btn-primary">Contestar reclamo</button>
+                        <button [routerLink]="['answer-reparation-claim', reparationClaim.id]"  class="btn btn-primary"><i class="bi bi-envelope"></i></button>
                     </th>
                 </tr>
             </tbody>
