@@ -3,11 +3,11 @@
   <hr class="height-hr-3 mb-0"><br>
   <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-6 user-credentials">
         <div class="row">
           <div class="form-group mb-3 col">
             <label for="username"><b>Username:</b></label>
-            <span class="form-control bg-secondary text-white"> {{ getUserName() }} </span>
+            <input disabled class="form-control" type="text" value="{{ getUserName() }}" />
           </div>
 
           <div class="form-group mb-3 col">
@@ -45,11 +45,15 @@
             <h2 class="text-center">Agregar telefono</h2>
             <label for="phone"><b>(*)Telefono:</b></label>
             <div class="d-flex flex-row">
+              <div role="alert" class="w-100 m-1">
+                <button type="button" class="btn btn-warning"
+                    popover="Ingrese al menos un telefono">
+                    <i class="bi bi-exclamation-diamond"></i>
+                </button>
+              </div>
               <input class="form-control col-sm-4 h-40" type="text" name="phoneNumber" placeholder="Agregar telefono"
                 #number="ngModel" [(ngModel)]="phoneNumber" pattern="(^[0-9]+)" minlength="5" />
-              <div class="alert alert-warning col-sm-10 m-2 mt-0 h-40">
-                Ingrese al menos un telefono <i class="bi bi-exclamation-diamond-fill"></i>
-              </div>
+              
             </div>
             <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono
               valido</span>
@@ -72,10 +76,18 @@
       </div>
       <div class="col-md-6">
         <div *ngIf="user.addresses.length == 0">
-          <p class="alert alert-warning">
-            Ingrese al menos una direccion <i class="bi bi-exclamation-diamond-fill"></i>
-          </p>
-          <h2 class="text-center">Agregar direccion</h2>
+         
+          
+          <h2 class="text-center d-flex flex-row justify-content-center">
+            <div role="alert">
+              <button type="button" class="btn btn-warning"
+                  popover="Ingrese al menos una direccion">
+                  <i class="bi bi-exclamation-diamond"></i>
+              </button>
+            </div>
+            Agregar direccion
+          </h2>
+       
           <app-address-creation [address]="this.newAddress" class="col-md-6">
           </app-address-creation>
         </div>
@@ -90,18 +102,21 @@
         </div>
       </div>
 
-      <hr class="height-hr-3">
+      <hr class="height-hr-3 mt-2">
       <div class="d-flex flex-row mb-2 w-50">
-        <div class="col-sm-8 alert alert-warning">
-          Ingrese su contraseña antes de actualizar<i class="bi bi-exclamation-diamond-fill"></i>
+        <div class="mt-1" role="alert">
+          <button type="button" class="btn btn-warning w-100"
+              popover="Ingrese su contraseña antes de actualizar">
+              <i class="bi bi-exclamation-diamond"></i>
+          </button>
         </div>
-        <label for="password" class="text-center m-3 mt-0"><b>(*)Password:</b></label>
-        <div class="col-sm-6">
+        <label for="password" class="text-center m-2"><b>(*)Password:</b></label>
+        <div class="col-sm-6 m-1">
           <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
             required minlength="5" placeholder="Ingrese su contraseña" />
           <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
         </div>
-        <input class="col-sm-2 btn btn-primary btn-submit m-3 mt-0 w-25" type="submit" value="Enviar"
+        <input class="col-sm-1 btn btn-primary m-1" type="submit" value="Enviar"
           [disabled]="!updateForm.form.valid" />
       </div>
     </div>

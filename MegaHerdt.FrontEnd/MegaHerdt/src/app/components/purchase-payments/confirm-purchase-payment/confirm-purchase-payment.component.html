@@ -51,9 +51,13 @@
                 (click)="confirmPayment()" [disabled]="!confirmPaymentFormOk()">Confirmar pago</button>
         </form>
         
-        <div *ngIf="subscriptionActive" class="alert alert-success">
-            Pago efectuado correctamente
-        </div>
+        <ng-container *ngIf="subscriptionActive">
+            <div class="alert alert-success">
+                Pago efectuado correctamente
+            </div>
+
+            <a class="btn btn-primary" [routerLink]="['']">Regresar al inicio</a>
+        </ng-container>
     </div>
     
     <div class="w-25 ml-auto">

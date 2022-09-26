@@ -33,13 +33,6 @@
             };
             let i = index">
                 <th>
-                    <!--
-                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.article.id" disabled>
-                        <option class="data-user" name="article" *ngFor="let article of articles"
-                            [ngValue]="article.id">{{article.name}}
-                        </option>
-                    </select>
-                    -->
                     <input id="article" name="article" class="form-control data-user"
                     #article="ngModel" [(ngModel)]="articleProvider.article.name" disabled required>
                 </th>
@@ -48,13 +41,6 @@
                         #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" disabled required>
                 </td>
                 <td>
-                    <!--
-                    <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.provider.id">
-                        <option class="data-user" name="provider" *ngFor="let provider of providers"
-                            [ngValue]="provider.id">{{provider.email}}
-                        </option>
-                    </select>
-                    -->
                     <input id="provider" name="article" class="form-control data-user"
                     #provider="ngModel" [(ngModel)]="articleProvider.provider.email" disabled required>
                 </td>
