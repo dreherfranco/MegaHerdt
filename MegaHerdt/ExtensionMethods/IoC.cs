@@ -108,6 +108,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<PurchaseClaimHelper>();
             builder.Services.AddTransient<PurchasePaymentHelper>();
             builder.Services.AddTransient<TransportCompanyHelper>();
+            builder.Services.AddTransient<DebtorsHelper>();
             return builder;
         }
 
@@ -130,6 +131,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<PurchaseClaimService>();
             builder.Services.AddTransient<PurchasePaymentService>();
             builder.Services.AddTransient<TransportCompanyService>();
+            builder.Services.AddTransient<DebtorsService>();
             return builder;
         }
 

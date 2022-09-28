@@ -36,9 +36,11 @@
                     <span class="data-user">{{ reparation.reparationState.name }}</span>
                 </th>        
                 <th>
+                    <span *ngIf="reparation.clientDescription === '' " class="text-secondary">No existe descripción</span>
                     <span class="data-user">{{ reparation.clientDescription }}</span>
                 </th>
                 <th>
+                    <span *ngIf="reparation.employeeObservation === '' " class="text-secondary">No existe observación</span>
                     <span class="data-user">{{ reparation.employeeObservation }}</span>
                 </th>
                 <th>

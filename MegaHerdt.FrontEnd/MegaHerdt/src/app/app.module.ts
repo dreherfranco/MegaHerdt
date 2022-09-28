@@ -120,6 +120,7 @@ import { ReparationStateREPARADOComponent } from './components/reparations/edit-
 import { UpdateReparationStateREPARADOComponent } from './components/reparations/edit-reparations/reparation-state-reparado/update-reparation-state-reparado/update-reparation-state-reparado.component';
 import { DialogShowPurchaseClaimAnswersComponent } from './components/purchase-claims/dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
 import { DialogDownloadBackupComponent } from './components/backup/dialog-download-backup/dialog-download-backup.component';
+import { ShowDebtorsComponent } from './components/debts/show-debtors/show-debtors.component';
 
 @NgModule({
   declarations: [
@@ -227,6 +228,7 @@ import { DialogDownloadBackupComponent } from './components/backup/dialog-downlo
     UpdateReparationStateREPARADOComponent,
     DialogShowPurchaseClaimAnswersComponent,
     DialogDownloadBackupComponent,
+    ShowDebtorsComponent
   ],
   imports: [
     BrowserModule,

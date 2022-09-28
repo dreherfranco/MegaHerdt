@@ -129,7 +129,7 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-enableds")]
-        public ActionResult<List<ReparationDTO>> GetEnabledsReparations()
+        public async  Task<ActionResult<List<ReparationDTO>>> GetEnabledsReparations()
         {
             try
             {

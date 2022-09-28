@@ -7,7 +7,7 @@
                 <th scope="col">Email cliente</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Estado</th>
-                <th scope="col">Descripcion del servicio requerido segun el cliente/th>
+                <th scope="col">Descripcion del servicio requerido segun el cliente</th>
                 <th scope="col">Observacion del Empleado</th>
                 <th scope="col">Monto mano de obra</th>
                 <th scope="col">Articulos a utilizar</th>
@@ -36,9 +36,11 @@
                     <span class="data-user">{{ reparation.reparationState.name }}</span>
                 </th>        
                 <th>
+                    <span *ngIf="reparation.clientDescription === '' " class="text-secondary">No existe descripción</span>
                     <span class="data-user">{{ reparation.clientDescription }}</span>
                 </th>
                 <th>
+                    <span *ngIf="reparation.employeeObservation === '' " class="text-secondary">No existe observación</span>
                     <span class="data-user">{{ reparation.employeeObservation }}</span>
                 </th>
                 <th>

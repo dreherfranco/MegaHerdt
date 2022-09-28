@@ -18,5 +18,19 @@ namespace MegaHerdt.Models.Models
         public Shipment? Shipment { get; set; }
         public List<PurchaseArticle> PurchasesArticles { get; set; }
 
+        public float TotalArticleAmount
+        {
+            get
+            {
+                float total = 0;
+
+                foreach (var purchaseArticle in PurchasesArticles)
+                {
+                    total += purchaseArticle.ArticlePriceAtTheMoment;
+                }
+                return total;
+            }
+        }
+
     }
 }
