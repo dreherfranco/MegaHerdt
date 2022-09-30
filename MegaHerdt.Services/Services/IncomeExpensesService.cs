@@ -1,4 +1,5 @@
 ﻿using MegaHerdt.Helpers.Helpers;
+using MegaHerdt.Models.Models.IncomeExpensesData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace MegaHerdt.Services.Services
             this._helper = helper;
         }
 
-        public float GetReparationsIncome(int year, int month, int day)
+        public List<ReparationIncomeExpenses> GetReparationsIncome(int year, int month, int day)
         {
             return _helper.GetReparationsIncome(year, month, day);
         }
@@ -23,6 +24,16 @@ namespace MegaHerdt.Services.Services
         public float GetPurchasesIncome(int year, int month, int day)
         {
             return _helper.GetPurchasesIncome(year, month, day);
+        }
+
+        public float GetTotalReparationIncomeExpenses(List<ReparationIncomeExpenses> listIncomeExpenses)
+        {
+            float total = 0;
+            foreach(var incomeExpenses in listIncomeExpenses)
+            {
+                total += incomeExpenses.TotalIncomePaidByReparation;
+            }
+            return total;
         }
     }
 }

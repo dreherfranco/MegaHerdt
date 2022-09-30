@@ -8,6 +8,7 @@ using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.DTOs.ArticleProviderSerialNumber;
 using MegaHerdt.API.DTOs.Bill;
 using MegaHerdt.API.DTOs.Bill.BillPurchaseDTO;
+using MegaHerdt.API.DTOs.IncomeExpenses;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Purchase;
@@ -26,6 +27,7 @@ using MegaHerdt.API.DTOs.TransportCompany;
 using MegaHerdt.API.DTOs.User;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.Identity;
+using MegaHerdt.Models.Models.IncomeExpensesData;
 using MegaHerdt.Models.Models.PaymentData;
 
 namespace MegaHerdt.API.Mapper
@@ -142,7 +144,7 @@ namespace MegaHerdt.API.Mapper
                 .ForMember(opt=>opt.Image, opt=> opt.Ignore());
             CreateMap<ArticleUpdateDTO, Article>()
                 .ForMember(opt => opt.Image, opt => opt.Ignore());
-            CreateMap<Article, ArticleDetailDTO>();
+            CreateMap<Article, DTOs.Article.ArticleDetailDTO>();
             CreateMap<Article, ArticleNameDTO>();
             #endregion Article
 
@@ -225,6 +227,12 @@ namespace MegaHerdt.API.Mapper
             CreateMap<Shipment, ShipmentDTO>();
             CreateMap<ShipmentUpdateDTO, Shipment>();
             #endregion Shipment
+
+            #region IncomeExpenses
+            CreateMap<ArticleDetail, DTOs.IncomeExpenses.ArticleDetailDTO>();
+            CreateMap<ClientDetail, ClientDetailDTO>();
+            CreateMap<ReparationIncomeExpenses, ReparationIncomeExpensesDTO>();
+            #endregion IncomeExpenses
 
         }
 

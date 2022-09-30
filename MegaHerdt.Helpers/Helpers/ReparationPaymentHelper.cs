@@ -149,7 +149,7 @@ namespace MegaHerdt.Helpers.Helpers
                 var payment = new Payment()
                 {
                     Amount = (total / reparationPaymentData.Installments),
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = DateTime.Now.AddMonths(i),
                     PaymentMethod = paymentMethod,
                     BillId = reparation.BillId
                 };

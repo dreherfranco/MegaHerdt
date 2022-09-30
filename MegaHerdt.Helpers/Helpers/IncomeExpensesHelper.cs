@@ -1,6 +1,7 @@
 ﻿
 using MegaHerdt.Helpers.Utils;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.IncomeExpensesData;
 using MegaHerdt.Repository.Base;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,12 +17,15 @@ namespace MegaHerdt.Helpers.Helpers
             this.purchaseRepository = purchaseRepository;
         }
 
-        public float GetReparationsIncome(int year, int month, int day)
+        public List<ReparationIncomeExpenses> GetReparationsIncome(int year, int month, int day)
         {
             var reparations = this.reparationRepository
                 .Get()
+                .Include(x => x.ReparationsArticles)
+                .ThenInclude(x => x.Article)
                 .Include(x => x.Bill)
                 .ThenInclude(x => x.Payments)
+                .Include(x => x.Client)
                 .ToList();
 
             if (month == 0 && day == 0)
@@ -43,7 +47,7 @@ namespace MegaHerdt.Helpers.Helpers
                 .Include(x => x.Bill)
                 .ThenInclude(x => x.Payments)
                 .ToList();
-
+            
             if (month == 0 && day == 0)
             {
                 return IncomeExpensesPurchasesUtils.GetIncomeYearly(purchases, year);

@@ -1,4 +1,6 @@
-﻿using MegaHerdt.Services.Services;
+﻿using AutoMapper;
+using MegaHerdt.API.DTOs.IncomeExpenses;
+using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +11,11 @@ namespace MegaHerdt.API.Controllers
     public class IncomeExpensesController : ControllerBase
     {
         private readonly IncomeExpensesService incomeExpensesService;
-        public IncomeExpensesController(IncomeExpensesService incomeExpensesService)
+        private readonly IMapper mapper;
+        public IncomeExpensesController(IncomeExpensesService incomeExpensesService, IMapper mapper)
         {
             this.incomeExpensesService = incomeExpensesService;
+            this.mapper = mapper;
         }
 
         [HttpGet("get-reparations-income/{year}/{month?}/{day?}")]
@@ -19,8 +23,11 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var incomes = this.incomeExpensesService.GetReparationsIncome(year, month, day);
-                return Ok( new { incomes } );
+                var incomesExpenses = this.incomeExpensesService.GetReparationsIncome(year, month, day);
+                var total = this.incomeExpensesService.GetTotalReparationIncomeExpenses(incomesExpenses);
+                var detailIncomeExpenses = new DetailsReparationIncomeExpensesDTO { Total = total };
+                detailIncomeExpenses.ReparationIncomeExpenses = this.mapper.Map<List<ReparationIncomeExpensesDTO>>(incomesExpenses);
+                return Ok( detailIncomeExpenses );
             }catch(Exception ex)
             {
                 return BadRequest(ex.Message);
