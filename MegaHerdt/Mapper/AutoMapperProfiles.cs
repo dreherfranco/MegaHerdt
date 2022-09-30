@@ -7,6 +7,7 @@ using MegaHerdt.API.DTOs.ArticleOffer;
 using MegaHerdt.API.DTOs.ArticleProvider;
 using MegaHerdt.API.DTOs.ArticleProviderSerialNumber;
 using MegaHerdt.API.DTOs.Bill;
+using MegaHerdt.API.DTOs.Bill.BillPurchaseDTO;
 using MegaHerdt.API.DTOs.Phone;
 using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Purchase;
@@ -72,6 +73,9 @@ namespace MegaHerdt.API.Mapper
             CreateMap<Reparation, ReparationDebtDTO>()
                .ForMember(dest => dest.Total, opt => opt.MapFrom(src => (src.TotalArticleAmount + src.Amount)))
                .ForMember(dest => dest.ClientUserName, opt => opt.MapFrom(src => src.Client.UserName))
+               .ForMember(dest => dest.ClientName, opt => opt.MapFrom(src => src.Client.Name))
+               .ForMember(dest => dest.ClientSurname, opt => opt.MapFrom(src => src.Client.Surname))
+               .ForMember(dest => dest.ClientDni, opt => opt.MapFrom(src => src.Client.Dni))
                .ReverseMap();
             #endregion Reparation
 
@@ -100,6 +104,9 @@ namespace MegaHerdt.API.Mapper
             CreateMap<Bill, BillReparationDTO>()
                 .ReverseMap();
             CreateMap<BillReparationCreationDTO, Bill>();
+
+            CreateMap<Bill, BillPurchaseDTO>()
+                .ReverseMap();
             #endregion Bill
 
             #region ArticleBrand
@@ -203,6 +210,8 @@ namespace MegaHerdt.API.Mapper
             #region PurchasePayment
             CreateMap<PurchasePaymentConfirmDTO, PurchasePaymentData>();
             CreateMap<Payment, ReparationPaymentDTO>()
+                .ReverseMap();
+            CreateMap<Payment, PurchasePaymentDTO>()
                 .ReverseMap();
             #endregion PurchasePayment
 

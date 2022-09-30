@@ -38,7 +38,7 @@ namespace MegaHerdt.Models.Models
                 float total = 0;
                 foreach(var reparationArticle in ReparationsArticles)
                 {
-                    total += reparationArticle.ArticlePriceAtTheMoment;
+                    total += (reparationArticle.ArticlePriceAtTheMoment * reparationArticle.ArticleQuantity);
                 }
                 return total;
             }

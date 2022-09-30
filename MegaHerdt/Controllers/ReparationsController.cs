@@ -58,6 +58,7 @@ namespace MegaHerdt.API.Controllers
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                
                 await this.ReparationService.Update(reparationDb);
                 
                 //MAILER

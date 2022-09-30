@@ -56,7 +56,8 @@
                     <span *ngIf="reparation.reparationsArticles.length == 0" class="text-secondary"> No contiene
                         articulos</span>
                     <span class="data-user" *ngFor="let reparationArticle of reparation.reparationsArticles" name="selectArticle">
-                        {{reparationArticle.articleName}} <i class="bi bi-arrow-right"></i> ${{ reparationArticle.articlePriceAtTheMoment }}
+                        {{reparationArticle.articleName}} <i class="bi bi-arrow-right"></i> 
+                        ${{ reparationArticle.articlePriceAtTheMoment }} x {{ reparationArticle.articleQuantity}}
                     </span>
                 </th>
                 <th>

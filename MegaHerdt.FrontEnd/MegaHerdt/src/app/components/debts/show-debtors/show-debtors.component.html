@@ -1,24 +1,48 @@
 <div class="d-flex">
-    <h2 class="mx-auto"><b>LISTADO DE DEUDORES</b></h2>
-  </div>
-  <div class="table-responsive">
+  <h2 class="mx-auto"><b>LISTADO DE DEUDORES</b></h2>
+</div>
+<div class="table-responsive w-75 text-center mx-auto">
   <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Username del deudor</th>
-          <th scope="col">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let reparationDebt of debts.reparationDebts; let i = index">
-            <td>
-                <span class="data-user">{{ reparationDebt.clientUserName }}</span>
-            </td>
-            <td>
-                <span class="data-user">{{ reparationDebt.total }}</span>
-            </td>
-        </tr>
-      </tbody>
-    </table>
-    
-  </div>
+    <thead>
+      <tr>
+        <th scope="col">Username del deudor</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Apellido</th>
+        <th scope="col">Dni</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let reparationDebt of debts.reparationDebts | paginate: 
+      {
+          itemsPerPage: this.paginate.recordsPerPage, 
+          currentPage:this.paginate.page
+      }; 
+      let i = index">
+        <td>
+          <span class="data-user">{{ reparationDebt.clientUserName }}</span>
+        </td>
+        <td>
+          <span class="data-user">{{ reparationDebt.clientName }}</span>
+        </td>
+        <td>
+          <span class="data-user">{{ reparationDebt.clientSurname }}</span>
+        </td>
+        <td>
+          <span class="data-user">{{ reparationDebt.clientDni }}</span>
+        </td>
+        <td>
+          <span class="data-user">{{ reparationDebt.total }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <pagination-controls
+    class="text-center data-user"
+    (pageChange)="this.paginate.page = $event"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    *ngIf="debts.reparationDebts.length > 6"
+  >
+  </pagination-controls>
+</div>

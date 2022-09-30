@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { filter } from 'lodash';
 import { Debts } from 'src/app/models/Debts/Debts';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { ReparationDebt } from 'src/app/models/Reparation/ReparationDebt';
 import { DebtsService } from 'src/app/services/debts/debts.service';
 
@@ -11,10 +12,12 @@ import { DebtsService } from 'src/app/services/debts/debts.service';
 })
 export class ShowDebtorsComponent implements OnInit {
   debts: Debts = new Debts();
+  paginate: Paginate;
 
-  constructor(private DebtsService: DebtsService) {
-
-   }
+  constructor(private DebtsService: DebtsService) 
+  {
+      this.paginate = new Paginate(1,6);
+  }
 
   ngOnInit(): void {
     this.loadDebts();

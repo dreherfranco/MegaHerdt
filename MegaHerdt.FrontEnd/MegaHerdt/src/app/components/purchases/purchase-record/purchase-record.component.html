@@ -23,7 +23,7 @@
                         <span *ngIf="purchase.purchasesArticles.length == 0" class="text-secondary"> No contiene
                             articulos</span>
                         <p *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
-                            {{ purchaseArticle.article.name }}
+                            {{ purchaseArticle.article.name }} x {{ purchaseArticle.articleQuantity }}
                         </p>
                     </th>
                     <th>

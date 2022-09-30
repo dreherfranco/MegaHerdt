@@ -1,4 +1,5 @@
-﻿using MegaHerdt.API.DTOs.PurchaseArticle;
+﻿using MegaHerdt.API.DTOs.Bill.BillPurchaseDTO;
+using MegaHerdt.API.DTOs.PurchaseArticle;
 using MegaHerdt.API.DTOs.PurchaseClaim;
 using MegaHerdt.API.DTOs.Shipment;
 using MegaHerdt.API.DTOs.User;
@@ -13,5 +14,6 @@ namespace MegaHerdt.API.DTOs.Purchase
         public ShipmentDTO? Shipment { get; set; }
         public List<PurchaseArticleDTO> PurchasesArticles { get; set; }
         public List<PurchaseClaimDetailDTO> PurchasesClaims { get; set; }
+        public BillPurchaseDTO Bill { get; set; }
     }
 }

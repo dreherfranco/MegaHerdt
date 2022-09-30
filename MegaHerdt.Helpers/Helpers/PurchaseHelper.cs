@@ -25,6 +25,8 @@ namespace MegaHerdt.Helpers.Helpers
                 .ThenInclude(x => x.Address)
                 .Include(x => x.Shipment)
                 .ThenInclude(x => x.TransportCompany)
+                .Include(x => x.Bill)
+                .ThenInclude(x => x.Payments)
                 .OrderByDescending(x => x.Date);
         }
 

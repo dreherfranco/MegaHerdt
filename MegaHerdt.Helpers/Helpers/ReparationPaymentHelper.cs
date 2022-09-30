@@ -144,9 +144,11 @@ namespace MegaHerdt.Helpers.Helpers
                     StartValidity = DateTime.Now.AddMonths(i),
                     EndValidity = DateTime.Now.AddMonths(i + 1),
                 };
+
+                var total = (reparation.TotalArticleAmount + reparation.Amount);
                 var payment = new Payment()
                 {
-                    Amount = (reparation.Amount / reparationPaymentData.Installments),
+                    Amount = (total / reparationPaymentData.Installments),
                     PaymentDate = DateTime.Now,
                     PaymentMethod = paymentMethod,
                     BillId = reparation.BillId

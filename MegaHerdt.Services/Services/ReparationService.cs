@@ -23,7 +23,7 @@ namespace MegaHerdt.Services.Services
         public IQueryable<Reparation> GetReparationByStateId(int reparationStateId)
         {
             Expression<Func<Reparation, bool>> filter = x => x.ReparationStateId == reparationStateId;
-            return this.reparationHelper.Get(filter);
+            return this.reparationHelper.Get(filter).Where(x => x.Enabled);
         }
 
         public List<Reparation> GetClientReparations(string clientId)
