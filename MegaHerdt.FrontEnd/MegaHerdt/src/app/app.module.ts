@@ -121,6 +121,10 @@ import { UpdateReparationStateREPARADOComponent } from './components/reparations
 import { DialogShowPurchaseClaimAnswersComponent } from './components/purchase-claims/dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
 import { DialogDownloadBackupComponent } from './components/backup/dialog-download-backup/dialog-download-backup.component';
 import { ShowDebtorsComponent } from './components/debts/show-debtors/show-debtors.component';
+import { PurchaseIncomeExpensesComponent } from './components/income-expenses/purchase-income-expenses/purchase-income-expenses.component';
+import { ReparationIncomeExpensesComponent } from './components/income-expenses/reparation-income-expenses/reparation-income-expenses.component';
+import { ShowIncomeExpensesComponent } from './components/income-expenses/show-income-expenses/show-income-expenses.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 @NgModule({
   declarations: [
@@ -228,7 +232,10 @@ import { ShowDebtorsComponent } from './components/debts/show-debtors/show-debto
     UpdateReparationStateREPARADOComponent,
     DialogShowPurchaseClaimAnswersComponent,
     DialogDownloadBackupComponent,
-    ShowDebtorsComponent
+    ShowDebtorsComponent,
+    PurchaseIncomeExpensesComponent,
+    ReparationIncomeExpensesComponent,
+    ShowIncomeExpensesComponent
   ],
   imports: [
     BrowserModule,
@@ -248,6 +255,7 @@ import { ShowDebtorsComponent } from './components/debts/show-debtors/show-debto
     MatAutocompleteModule,
     PopoverModule.forRoot(),
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
+    BsDatepickerModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

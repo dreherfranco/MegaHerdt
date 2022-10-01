@@ -231,7 +231,8 @@ namespace MegaHerdt.API.Mapper
             #region IncomeExpenses
             CreateMap<ArticleDetail, DTOs.IncomeExpenses.ArticleDetailDTO>();
             CreateMap<ClientDetail, ClientDetailDTO>();
-            CreateMap<ReparationIncomeExpenses, ReparationIncomeExpensesDTO>();
+            CreateMap<IncomeExpenses, IncomeExpensesDTO>()
+                .ForMember(dest => dest.AmountOfLabor, opt => opt.MapFrom(src => src.Amount));
             #endregion IncomeExpenses
 
         }

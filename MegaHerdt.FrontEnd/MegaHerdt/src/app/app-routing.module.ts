@@ -39,6 +39,7 @@ import { CreateReparationComponent } from './components/reparations/create-repar
 import { EditReparationsComponent } from './components/reparations/edit-reparations/edit-reparations.component';
 import { AdminCreateUserComponent } from './components/users/admin-create-user/admin-create-user.component';
 import { ShowDebtorsComponent } from './components/debts/show-debtors/show-debtors.component';
+import { ShowIncomeExpensesComponent } from './components/income-expenses/show-income-expenses/show-income-expenses.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -128,6 +129,10 @@ const routes: Routes = [
   },
   { 
     path: 'administrate/show-debtors', component: ShowDebtorsComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/show-income-expenses', component: ShowIncomeExpensesComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   //ADMIN ROUTES

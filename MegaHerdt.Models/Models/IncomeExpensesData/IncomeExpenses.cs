@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MegaHerdt.Models.Models.IncomeExpensesData
 {
-    public class ReparationIncomeExpenses
+    public class IncomeExpenses
     {
         public List<ArticleDetail> Articles { get; set; } = new List<ArticleDetail>();
         public int Amount { get; set; } = 0;

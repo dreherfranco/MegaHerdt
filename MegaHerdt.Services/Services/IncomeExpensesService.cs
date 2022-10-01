@@ -16,17 +16,17 @@ namespace MegaHerdt.Services.Services
             this._helper = helper;
         }
 
-        public List<ReparationIncomeExpenses> GetReparationsIncome(int year, int month, int day)
+        public List<IncomeExpenses> GetReparationsIncome(int year, int month, int day)
         {
             return _helper.GetReparationsIncome(year, month, day);
         }
 
-        public float GetPurchasesIncome(int year, int month, int day)
+        public List<IncomeExpenses> GetPurchasesIncome(int year, int month, int day)
         {
             return _helper.GetPurchasesIncome(year, month, day);
         }
 
-        public float GetTotalReparationIncomeExpenses(List<ReparationIncomeExpenses> listIncomeExpenses)
+        public float GetTotalIncomeExpenses(List<IncomeExpenses> listIncomeExpenses)
         {
             float total = 0;
             foreach(var incomeExpenses in listIncomeExpenses)

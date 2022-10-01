@@ -17,7 +17,7 @@ namespace MegaHerdt.Helpers.Helpers
             this.purchaseRepository = purchaseRepository;
         }
 
-        public List<ReparationIncomeExpenses> GetReparationsIncome(int year, int month, int day)
+        public List<IncomeExpenses> GetReparationsIncome(int year, int month, int day)
         {
             var reparations = this.reparationRepository
                 .Get()
@@ -40,12 +40,15 @@ namespace MegaHerdt.Helpers.Helpers
             return IncomeExpensesReparationsUtils.GetIncomeDaily(reparations, year, month, day);
         }
 
-        public float GetPurchasesIncome(int year, int month, int day)
+        public List<IncomeExpenses> GetPurchasesIncome(int year, int month, int day)
         {
             var purchases = this.purchaseRepository
                 .Get()
                 .Include(x => x.Bill)
                 .ThenInclude(x => x.Payments)
+                .Include(x => x.PurchasesArticles)
+                .ThenInclude(x => x.Article)
+                .Include(x => x.Client)
                 .ToList();
             
             if (month == 0 && day == 0)

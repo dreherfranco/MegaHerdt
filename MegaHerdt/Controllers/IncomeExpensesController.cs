@@ -24,9 +24,11 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var incomesExpenses = this.incomeExpensesService.GetReparationsIncome(year, month, day);
-                var total = this.incomeExpensesService.GetTotalReparationIncomeExpenses(incomesExpenses);
-                var detailIncomeExpenses = new DetailsReparationIncomeExpensesDTO { Total = total };
-                detailIncomeExpenses.ReparationIncomeExpenses = this.mapper.Map<List<ReparationIncomeExpensesDTO>>(incomesExpenses);
+                var total = this.incomeExpensesService.GetTotalIncomeExpenses(incomesExpenses);
+                var detailIncomeExpenses = new DetailsIncomeExpensesDTO { Total = total };
+                
+                detailIncomeExpenses.IncomeExpenses = this.mapper.Map<List<IncomeExpensesDTO>>(incomesExpenses);
+                
                 return Ok( detailIncomeExpenses );
             }catch(Exception ex)
             {
@@ -39,8 +41,12 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var incomes = this.incomeExpensesService.GetPurchasesIncome(year, month, day);
-                return Ok(new { incomes });
+                var incomesExpenses = this.incomeExpensesService.GetPurchasesIncome(year, month, day);
+                var total = this.incomeExpensesService.GetTotalIncomeExpenses(incomesExpenses);
+                var detailIncomeExpenses = new DetailsIncomeExpensesDTO { Total = total };
+
+                detailIncomeExpenses.IncomeExpenses = this.mapper.Map<List<IncomeExpensesDTO>>(incomesExpenses);
+                return Ok( detailIncomeExpenses );
             }
             catch (Exception ex)
             {

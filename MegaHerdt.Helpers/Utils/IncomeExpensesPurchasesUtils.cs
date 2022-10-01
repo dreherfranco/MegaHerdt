@@ -1,19 +1,19 @@
 ﻿using MegaHerdt.Models.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MegaHerdt.Models.Models.IncomeExpensesData;
+using MegaHerdt.Helpers.Utils.ExtensionMethods;
 
 namespace MegaHerdt.Helpers.Utils
 {
     public static class IncomeExpensesPurchasesUtils
     {
-        public static float GetIncomeYearly(List<Purchase> purchases, int year)
+        public static List<IncomeExpenses> GetIncomeYearly(List<Purchase> purchases, int year)
         {
-            float totalIncome = 0;
+            var listIncomeExpenses = new List<IncomeExpenses>();
+
             foreach (var purchase in purchases)
             {
+                var band = true;
+                var incomeExpenses = new IncomeExpenses();
                 if (purchase.Bill != null && purchase.Bill.Payments.Count != 0)
                 {
                     foreach (var payment in purchase.Bill.Payments)
@@ -21,19 +21,37 @@ namespace MegaHerdt.Helpers.Utils
                         var actualMonth = DateTime.UtcNow.Month;
                         if (payment.PaymentDate.Year == year && payment.PaymentDate.Month <= actualMonth)
                         {
-                            totalIncome += payment.Amount;
+                            if (band)
+                            {
+                                incomeExpenses.SetArticles(purchase);
+                                incomeExpenses.SetClientDetails(purchase);
+                            }
+                            band = false;
+                            incomeExpenses.PaymentsMade++;
+                            incomeExpenses.TotalIncomePaidByReparation += payment.Amount;
+
                         }
                     }
+                    if (!band)
+                    {
+                        incomeExpenses.TotalPayments = purchase.Bill.Payments.Count;
+                        listIncomeExpenses.Add(incomeExpenses);
+                    }
+
                 }
             }
-            return totalIncome;
+            return listIncomeExpenses;
         }
 
-        public static float GetIncomeMonthly(List<Purchase> purchases, int year, int month)
+        public static List<IncomeExpenses> GetIncomeMonthly(List<Purchase> purchases, int year, int month)
         {
-            float totalIncome = 0;
+            var listIncomeExpenses = new List<IncomeExpenses>();
+
             foreach (var purchase in purchases)
             {
+                var incomeExpenses = new IncomeExpenses();
+                var band = true;
+
                 if (purchase.Bill != null && purchase.Bill.Payments.Count != 0)
                 {
                     foreach (var payment in purchase.Bill.Payments)
@@ -41,19 +59,36 @@ namespace MegaHerdt.Helpers.Utils
                         var actualMonth = DateTime.UtcNow.Month;
                         if (payment.PaymentDate.Year == year && payment.PaymentDate.Month == month)
                         {
-                            totalIncome += payment.Amount;
+                            if (band)
+                            {
+                                incomeExpenses.SetArticles(purchase);
+                                incomeExpenses.SetClientDetails(purchase);
+                            }
+                            band = false;
+                            incomeExpenses.PaymentsMade++;
+                            incomeExpenses.TotalIncomePaidByReparation += payment.Amount;
                         }
+                    }
+                    if (!band)
+                    {
+                        incomeExpenses.TotalPayments = purchase.Bill.Payments.Count;
+                        listIncomeExpenses.Add(incomeExpenses);
                     }
                 }
             }
-            return totalIncome;
+
+            return listIncomeExpenses;
         }
 
-        public static float GetIncomeDaily(List<Purchase> purchases, int year, int month, int day)
+        public static List<IncomeExpenses> GetIncomeDaily(List<Purchase> purchases, int year, int month, int day)
         {
-            float totalIncome = 0;
+            var listIncomeExpenses = new List<IncomeExpenses>();
+
             foreach (var purchase in purchases)
             {
+                var incomeExpenses = new IncomeExpenses();
+                var band = true;
+
                 if (purchase.Bill != null && purchase.Bill.Payments.Count != 0)
                 {
                     foreach (var payment in purchase.Bill.Payments)
@@ -61,12 +96,24 @@ namespace MegaHerdt.Helpers.Utils
                         var actualMonth = DateTime.UtcNow.Month;
                         if (payment.PaymentDate.Year == year && payment.PaymentDate.Month == month && payment.PaymentDate.Day == day)
                         {
-                            totalIncome += payment.Amount;
+                            if (band)
+                            {
+                                incomeExpenses.SetArticles(purchase);
+                                incomeExpenses.SetClientDetails(purchase);
+                            }
+                            band = false;
+                            incomeExpenses.PaymentsMade++;
+                            incomeExpenses.TotalIncomePaidByReparation += payment.Amount;
                         }
+                    }
+                    if (!band)
+                    {
+                        incomeExpenses.TotalPayments = purchase.Bill.Payments.Count;
+                        listIncomeExpenses.Add(incomeExpenses);
                     }
                 }
             }
-            return totalIncome;
+            return listIncomeExpenses;
         }
     }
 }

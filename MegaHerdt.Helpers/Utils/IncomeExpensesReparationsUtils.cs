@@ -5,19 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MegaHerdt.Helpers.Utils.ExtensionMethods;
 
 namespace MegaHerdt.Helpers.Utils
 {
     public static class IncomeExpensesReparationsUtils
     {
-        public static List<ReparationIncomeExpenses> GetIncomeYearly(List<Reparation> reparations, int year)
+        public static List<IncomeExpenses> GetIncomeYearly(List<Reparation> reparations, int year)
         {
-            var listIncomeExpenses = new List<ReparationIncomeExpenses>();
-            
+            var listIncomeExpenses = new List<IncomeExpenses>();
+
             foreach (var reparation in reparations)
             {
                 var band = true;
-                var incomeExpenses = new ReparationIncomeExpenses();
+                var incomeExpenses = new IncomeExpenses();
                 if (reparation.Bill != null && reparation.Bill.Payments.Count != 0)
                 {
                     foreach (var payment in reparation.Bill.Payments)
@@ -29,7 +30,7 @@ namespace MegaHerdt.Helpers.Utils
                             {
                                 incomeExpenses.SetArticles(reparation);
                                 incomeExpenses.Amount = reparation.Amount;
-                                incomeExpenses.SetClientDetails(reparation);   
+                                incomeExpenses.SetClientDetails(reparation);
                             }
                             band = false;
                             incomeExpenses.PaymentsMade++;
@@ -49,13 +50,13 @@ namespace MegaHerdt.Helpers.Utils
             return listIncomeExpenses;
         }
 
-        public static List<ReparationIncomeExpenses> GetIncomeMonthly(List<Reparation> reparations, int year, int month)
-        {      
-            var listIncomeExpenses = new List<ReparationIncomeExpenses>();
+        public static List<IncomeExpenses> GetIncomeMonthly(List<Reparation> reparations, int year, int month)
+        {
+            var listIncomeExpenses = new List<IncomeExpenses>();
 
             foreach (var reparation in reparations)
             {
-                var incomeExpenses = new ReparationIncomeExpenses();
+                var incomeExpenses = new IncomeExpenses();
                 var band = true;
 
                 if (reparation.Bill != null && reparation.Bill.Payments.Count != 0)
@@ -70,7 +71,6 @@ namespace MegaHerdt.Helpers.Utils
                                 incomeExpenses.SetArticles(reparation);
                                 incomeExpenses.Amount = reparation.Amount;
                                 incomeExpenses.SetClientDetails(reparation);
-                                incomeExpenses.SetClientDetails(reparation);
                             }
                             band = false;
                             incomeExpenses.PaymentsMade++;
@@ -88,13 +88,13 @@ namespace MegaHerdt.Helpers.Utils
             return listIncomeExpenses;
         }
 
-        public static List<ReparationIncomeExpenses> GetIncomeDaily(List<Reparation> reparations, int year, int month, int day)
+        public static List<IncomeExpenses> GetIncomeDaily(List<Reparation> reparations, int year, int month, int day)
         {
-            var listIncomeExpenses = new List<ReparationIncomeExpenses>();        
+            var listIncomeExpenses = new List<IncomeExpenses>();
 
             foreach (var reparation in reparations)
             {
-                var incomeExpenses = new ReparationIncomeExpenses();
+                var incomeExpenses = new IncomeExpenses();
                 var band = true;
 
                 if (reparation.Bill != null && reparation.Bill.Payments.Count != 0)
@@ -109,7 +109,6 @@ namespace MegaHerdt.Helpers.Utils
                                 incomeExpenses.SetArticles(reparation);
                                 incomeExpenses.Amount = reparation.Amount;
                                 incomeExpenses.SetClientDetails(reparation);
-                                incomeExpenses.SetClientDetails(reparation);
                             }
                             band = false;
                             incomeExpenses.PaymentsMade++;
@@ -126,27 +125,6 @@ namespace MegaHerdt.Helpers.Utils
             return listIncomeExpenses;
         }
 
-        private static void SetArticles(this ReparationIncomeExpenses reparationIncomeExpenses,Reparation reparation)
-        {
-            foreach(var reparationArticle in reparation.ReparationsArticles)
-            {
-                reparationIncomeExpenses.Articles.Add(new ArticleDetail()
-                {
-                    Name = reparationArticle.Article.Name,
-                    Quantity = reparationArticle.ArticleQuantity,
-                    PriceAtTheMoment = reparationArticle.ArticlePriceAtTheMoment
-                });
-            }
-        }
 
-        private static void SetClientDetails(this ReparationIncomeExpenses reparationIncomeExpenses, Reparation reparation)
-        {
-              reparationIncomeExpenses.Client = new ClientDetail()
-              {
-                  Name = reparation.Client.Name,
-                  Surname = reparation.Client.Surname,
-                  Dni = reparation.Client.Dni
-              };
-            }
-        }
     }
+}

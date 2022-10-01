@@ -204,7 +204,7 @@ namespace MegaHerdt.Helpers.Helpers
                 var payment = new Payment()
                 {
                     Amount =(float)(amount / purchasePaymentData.Installments),
-                    PaymentDate = DateTime.Now,
+                    PaymentDate = DateTime.Now.AddMonths(i),
                     PaymentMethod = paymentMethod,
                 };
                 payments.Add(payment);
