@@ -4,6 +4,7 @@ import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdateBudget } from 'src/app/models/Reparation/ReparationUpdateBudget';
+import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStateENPRESUPUESTOComponent } from './update-reparation-state-en-presupuesto/update-reparation-state-en-presupuesto.component';
@@ -16,7 +17,8 @@ import { UpdateReparationStateENPRESUPUESTOComponent } from './update-reparation
 export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
-  
+  userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
+
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
@@ -25,6 +27,13 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadReparations();
+
+    this._storageService.identityObserver.subscribe({
+      next: (res) =>{
+        this.userAuthenticated = res;
+
+      }
+    });
   }
 
   openDialogUpdate(reparationId: number){

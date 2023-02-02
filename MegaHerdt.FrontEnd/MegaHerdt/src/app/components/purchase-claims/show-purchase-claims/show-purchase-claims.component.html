@@ -1,17 +1,11 @@
+<div class="d-flex">
+    <h2 class="mx-auto">LISTADO DE RECLAMOS</h2>
+  </div>
 <div class="container-fluid">
     <div class="table-responsive">
         <table class="table">
             <thead>
                 <tr>
-                    <th>RECLAMOS DE COMPRAS</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr>
-                    <th scope="col">Id reclamo</th>
                     <th scope="col">Descripcion reclamo</th>
                     <th scope="col">Fecha emision</th>
                     <th scope="col">Respondido</th>
@@ -27,9 +21,6 @@
                     currentPage:this.paginate.page
                 }; 
                 let i = index">
-                    <th>
-                        <span class="data-user">{{ purchaseClaim.id }}</span>
-                    </th>
                     <th>
                         <span class="data-user">{{ purchaseClaim.description }}</span>
                     </th>

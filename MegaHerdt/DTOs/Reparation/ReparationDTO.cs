@@ -21,5 +21,7 @@ namespace MegaHerdt.API.DTOs.Reparation
         public List<ReparationArticleDTO> ReparationsArticles { get; set; }
         public BillReparationDTO Bill { get; set; }
         public List<ReparationClaimDetailDTO> ReparationsClaims { get; set; }
+        public Guid NumeroTicket { get; set; }
+        public bool Facturada { get; set; }
     }
 }

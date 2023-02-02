@@ -3,6 +3,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th scope="col">N° Ticket</th>
                 <th scope="col">Email empleado</th>
                 <th scope="col">Email cliente</th>
                 <th scope="col">Fecha</th>
@@ -20,6 +21,9 @@
             }; 
             let i = index">
                 <th>
+                    <span class="data-user">{{ reparation.numeroTicket }}</span>
+                </th>
+                <th>
                     <span class="data-user">{{ reparation.employee.email }}</span>
                 </th>
                 <th>
@@ -36,7 +40,7 @@
                     <span class="data-user">{{ reparation.clientDescription }}</span>
                 </th>
                 <td>
-                    <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)"> <i
+                    <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
                             class="bi bi-pencil-square"></i></button>
                 </td>
             </tr>

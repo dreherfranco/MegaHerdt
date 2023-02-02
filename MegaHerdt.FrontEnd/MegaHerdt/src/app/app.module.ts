@@ -125,6 +125,7 @@ import { PurchaseIncomeExpensesComponent } from './components/income-expenses/pu
 import { ReparationIncomeExpensesComponent } from './components/income-expenses/reparation-income-expenses/reparation-income-expenses.component';
 import { ShowIncomeExpensesComponent } from './components/income-expenses/show-income-expenses/show-income-expenses.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { UpdateReparationStatePagadoComponent } from './components/reparations/edit-reparations/reparation-state-pagado/update-reparation-state-pagado/update-reparation-state-pagado.component';
 
 @NgModule({
   declarations: [
@@ -235,7 +236,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     ShowDebtorsComponent,
     PurchaseIncomeExpensesComponent,
     ReparationIncomeExpensesComponent,
-    ShowIncomeExpensesComponent
+    ShowIncomeExpensesComponent,
+    UpdateReparationStatePagadoComponent
   ],
   imports: [
     BrowserModule,

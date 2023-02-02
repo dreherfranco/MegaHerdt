@@ -38,6 +38,7 @@ namespace MegaHerdt.API.Controllers
                 var reparation = Mapper.Map<Reparation>(reparationDTO);
                 reparation.ReparationStateId = 1;
                 reparation.Date = DateTime.UtcNow;
+                reparation.NumeroTicket = Guid.NewGuid();
                 await this.ReparationService.Create(reparation);
 
                 var reparationCreated = this.ReparationService.GetReparationById(reparation.Id);        
@@ -57,8 +58,10 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
+                var payments = Mapper.Map<List<Payment>>(reparationDb.Bill.Payments);
                 reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
-                
+                reparationDb.Bill.Payments = payments;
+
                 await this.ReparationService.Update(reparationDb);
                 
                 //MAILER

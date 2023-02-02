@@ -9,5 +9,6 @@ namespace MegaHerdt.API.DTOs.Reparation
         public DateTime Date { get; set; }
         public UserDetailDTO Client { get; set; }
         public UserDetailDTO Employee { get; set; }
+        public Guid NumeroTicket { get; set; }
     }
 }

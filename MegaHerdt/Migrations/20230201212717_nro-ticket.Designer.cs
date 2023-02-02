@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201212717_nro-ticket")]
+    partial class nroticket
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -605,12 +607,6 @@ namespace MegaHerdt.API.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Facturada")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<Guid>("NumeroTicket")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ReparationStateId")
                         .HasColumnType("INTEGER");
 
@@ -857,14 +853,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "5e179144-a03b-435b-a52b-f03b3a4c7ebc",
+                            ConcurrencyStamp = "d21fdb58-dbae-4bb7-93a3-cb83d1131627",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "c362034d-63e0-4739-8cb4-1c07d0c3eab0",
+                            ConcurrencyStamp = "a6a55f42-320c-4e9a-9061-c3e71cbe26ce",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

@@ -4,6 +4,7 @@ import { Bill } from 'src/app/models/Bill/Bill';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
+import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
@@ -14,10 +15,11 @@ import { UpdateReparationStateINGRESOComponent } from './update-reparation-state
   templateUrl: './reparation-state-ingreso.component.html',
   styleUrls: ['./reparation-state-ingreso.component.css']
 })
-export class ReparationStateINGRESOComponent implements OnInit {
+export class ReparationStateINGRESOComponent implements OnInit   {
   reparations: Array<Reparation>;
   paginate: Paginate;
-  
+  userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
+
   constructor(private _storageService: StorageService, 
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
@@ -26,6 +28,13 @@ export class ReparationStateINGRESOComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadReparations();
+
+    this._storageService.identityObserver.subscribe({
+      next: (res) =>{
+        this.userAuthenticated = res;
+
+      }
+    });
   }
 
   openDialogUpdate(reparation: Reparation){

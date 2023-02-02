@@ -26,6 +26,7 @@ namespace MegaHerdt.Helpers.Helpers
                 .ThenInclude(x => x.Article)
                 .Include(x=>x.Bill)
                 .ThenInclude(x => x.Payments)
+                .ThenInclude(p => p.PaymentMethod)
                 .OrderByDescending(x => x.Date);
         }
 
@@ -48,8 +49,17 @@ namespace MegaHerdt.Helpers.Helpers
         {
             if (!isFinalState(entity))
             {
-                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);         
-                ++entity.ReparationStateId;
+                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+                // Si el estado es distinto de reparado
+                if (entity.ReparationStateId != 7)
+                {
+                    
+                    ++entity.ReparationStateId;
+                }
+                else
+                {
+                    entity.Facturada = true;
+                }
                 await this.repository.Update(entity);
             }
             else
@@ -75,7 +85,7 @@ namespace MegaHerdt.Helpers.Helpers
 
         private bool isFinalState(Reparation entity)
         {
-            return entity.ReparationStateId == 7 || entity.ReparationStateId == 8;
+            return entity.ReparationStateId == 8;  // || entity.ReparationStateId == 7 
         }
 
         private List<ReparationArticle> SetArticlePriceAtTheMoment(Reparation entity)

@@ -67,11 +67,11 @@
                     <span class="data-user">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
                 </th>
                 <td>
-                    <button class="btn btn-primary col-sm-12" title="Aceptar presupuesto" (click)="openDialogUpdate(reparation.id)"> <i
+                    <button class="btn btn-primary col-sm-12" title="Aceptar presupuesto" (click)="openDialogUpdate(reparation.id)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
                             class="bi bi-pencil-square"></i></button>
                 </td>
                 <td>
-                    <button class="btn btn-danger col-sm-12" title="Rechazar presupuesto" (click)="openDialogRejectBudget(reparation.id)"> <i
+                    <button class="btn btn-danger col-sm-12" title="Rechazar presupuesto" (click)="openDialogRejectBudget(reparation.id)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
                             class="bi bi-trash-fill"></i></button>
                 </td>
             </tr>

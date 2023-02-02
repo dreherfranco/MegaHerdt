@@ -3,6 +3,7 @@ using System;
 using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230201213146_ticket2")]
+    partial class ticket2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -605,9 +607,6 @@ namespace MegaHerdt.API.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Facturada")
-                        .HasColumnType("INTEGER");
-
                     b.Property<Guid>("NumeroTicket")
                         .HasColumnType("TEXT");
 
@@ -857,14 +856,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "5e179144-a03b-435b-a52b-f03b3a4c7ebc",
+                            ConcurrencyStamp = "97826165-2669-4a8a-805a-1e8ab4d5fc05",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "c362034d-63e0-4739-8cb4-1c07d0c3eab0",
+                            ConcurrencyStamp = "8ddefc49-f613-4258-84fd-960a81d48b52",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
