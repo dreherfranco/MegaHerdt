@@ -7,7 +7,7 @@ namespace MegaHerdt.API.DTOs.Bill.BillPurchaseDTO
         public int Id { get; set; }
         public int? PurchaseId { get; set; }
         public string Type { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
         public List<PurchasePaymentDTO> Payments { get; set; }
     }
 }

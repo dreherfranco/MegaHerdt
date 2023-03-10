@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { Bill } from 'src/app/models/Bill/Bill';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
@@ -19,11 +20,13 @@ export class ReparationStateINGRESOComponent implements OnInit   {
   reparations: Array<Reparation>;
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
+  searchText: string;
 
   constructor(private _storageService: StorageService, 
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1,2);
+    this.searchText = '';
   }
 
   ngOnInit(): void {
@@ -71,7 +74,7 @@ export class ReparationStateINGRESOComponent implements OnInit   {
   mapperReparation(reparation: Reparation): ReparationUpdate{
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,new Bill(0,0,'A'), reparation.clientDescription
+      reparation.amount,reparation.date,reparation.reparationsArticles,new Bill(0,'0','A'), reparation.clientDescription
       ,reparation.employeeObservation,reparation.approximateTime);
   }
 
@@ -91,4 +94,6 @@ export class ReparationStateINGRESOComponent implements OnInit   {
     });
   }
 
+
 }
+

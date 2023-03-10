@@ -31,7 +31,7 @@ export class CreateReparationComponent implements OnInit {
     public dialog: MatDialog) {
     this.clients = new Array<UserDetail>();
     this.reparation = new ReparationCreation(1, '', '', 0, new Date(),
-      new Array<ReparationArticleCreation>(), new BillCreation(0, ''));
+      new Array<ReparationArticleCreation>(), new BillCreation('0', ''));
     this.reparationsStates = new Array<ReparationState>();
     this.statusSubmit = "";
   }

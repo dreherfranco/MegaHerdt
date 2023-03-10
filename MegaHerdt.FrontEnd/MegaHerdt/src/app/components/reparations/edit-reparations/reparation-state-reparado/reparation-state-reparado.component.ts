@@ -17,11 +17,13 @@ export class ReparationStateREPARADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
+  searchText: string;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) {
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1, 2);
+    this.searchText = '';
   }
 
   ngOnInit(): void {

@@ -1,7 +1,7 @@
 export class BillCreation{
-    number: number;
+    number: string;
     type: string;
-    constructor(number: number, type: string){
+    constructor(number: string, type: string){
         this.number=number;
         this.type = type;
     }

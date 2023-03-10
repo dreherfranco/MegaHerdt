@@ -12,11 +12,14 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ReparationStateCANCELADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
+  searchText: string;
   
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService) { 
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1,2);
+    this.searchText = '';
+
   }
 
   ngOnInit(): void {

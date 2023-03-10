@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
@@ -13,11 +14,13 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ReparationStateENTREGADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
+  searchText: string;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) {
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1, 2);
+    this.searchText = '';
   }
 
   ngOnInit(): void {
@@ -40,4 +43,6 @@ export class ReparationStateENTREGADOComponent implements OnInit {
     });
   }
 
+  
 }
+

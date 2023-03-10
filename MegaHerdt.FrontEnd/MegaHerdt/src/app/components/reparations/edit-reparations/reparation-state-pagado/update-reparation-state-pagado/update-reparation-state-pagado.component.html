@@ -1,3 +1,4 @@
+
 <h1 class="text-center">Actualizar reparacion (estado actual: PAGADO)</h1>
 <form #reparationForm="ngForm" class="w-100">
     <div class="row">
@@ -19,8 +20,8 @@
         <h3 class="data-user">Facturación: </h3>
         <div class="form-group mb-3 col-sm-4">
             <label for="billNumber"><b>(*)Numero de factura: </b></label>
-            <input id="billNumber" name="billNumber" class="form-control" type="number" #billNumber="ngModel"
-                [(ngModel)]="reparation.bill.number" required min="1">
+            <input id="billNumber" pattern="^([0-9]{5}-[0-9]{8})$" name="billNumber" class="form-control" type="text" #billNumber="ngModel"
+                [(ngModel)]="reparation.bill.number" required>
             <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
         </div>
 

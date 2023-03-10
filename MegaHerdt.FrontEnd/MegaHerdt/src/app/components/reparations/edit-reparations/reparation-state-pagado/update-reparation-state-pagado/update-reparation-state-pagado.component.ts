@@ -13,6 +13,7 @@ export class UpdateReparationStatePagadoComponent implements OnInit {
 
   paginate: Paginate;
   billTypes = BillTypeEnum;
+
   constructor(public dialogRef: MatDialogRef<UpdateReparationStatePagadoComponent>,
     @Inject(MAT_DIALOG_DATA) public reparation: Reparation) { 
     this.paginate = new Paginate(1,2);

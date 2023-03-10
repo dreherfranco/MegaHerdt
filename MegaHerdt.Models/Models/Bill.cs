@@ -10,7 +10,7 @@ namespace MegaHerdt.Models.Models
         public int? ReparationId { get; set; }
         public int? PurchaseId { get; set; }
         public string Type { get; set; }
-        public int Number { get; set; }
+        public string Number { get; set; }
         public Reparation? Reparation { get; set; }
         public Purchase? Purchase { get; set; }
         public List<Payment> Payments { get; set; }

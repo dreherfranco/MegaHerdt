@@ -39,7 +39,7 @@ namespace MegaHerdt.Helpers.Helpers
             
             var purchase = new Purchase() { ClientId = purchasePaymentData.ClientId, Date = DateTime.Now};
             var payments = this.InstancePayments(purchasePaymentData);
-            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number=123335554, Payments = payments };
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number="123335554", Payments = payments };
             purchase.Bill = bill;
 
             var purchasesArticles = new List<PurchaseArticle>();

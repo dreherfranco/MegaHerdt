@@ -10,7 +10,7 @@
             <p class="data-user"> Email del cliente: {{data.client.email}}</p>
             <p class="data-user"> Fecha: {{data.date | date: 'dd/MM/yyyy'}}</p>
             <p class="data-user"> Estado de la reparacion: {{data.reparationState.name}}</p>
-            <div *ngIf="data.bill.number !== 0">
+            <div *ngIf="data.bill.number === ''">
                 <p class="data-user"> Numero de factura: {{data.bill.number}}</p>
                 <p class="data-user"> Tipo de factura: {{data.bill.type}}</p>
             </div>
