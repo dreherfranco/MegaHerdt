@@ -18,11 +18,23 @@
 
     <div class="row">
         <h3 class="data-user">Facturación: </h3>
-        <div class="form-group mb-3 col-sm-4">
-            <label for="billNumber"><b>(*)Numero de factura: </b></label>
-            <input id="billNumber" pattern="^([0-9]{5}-[0-9]{8})$" name="billNumber" class="form-control" type="text" #billNumber="ngModel"
-                [(ngModel)]="reparation.bill.number" required>
-            <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
+        <div class="form-group mb-3 col-sm-6">
+            <label for="billSaleNumber"><b>(*)Numero de factura: </b></label>
+            <div class="row">
+                <div class="col-sm-4">
+                    
+                    <input id="billSaleNumber" pattern="^([0-9]{5})$" name="billSaleNumber" class="form-control" type="text" #billSaleNumber="ngModel"
+                        [(ngModel)]="reparation.bill.saleNumber" required>
+                    <span *ngIf="billSaleNumber.touched && !billSaleNumber.valid" class="text-danger">Ingrese un numero valido</span>
+                </div>
+                -
+                <div class="col-sm-6">
+                    <input id="billNumber" pattern="^([0-9]{8})$" name="billNumber" class="form-control" type="text" #billNumber="ngModel"
+                        [(ngModel)]="reparation.bill.number" required>
+                    <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
+                </div>
+             
+            </div>     
         </div>
 
         <div class="form-group mb-3 col-sm-4">

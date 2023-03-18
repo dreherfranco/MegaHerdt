@@ -32,11 +32,12 @@ namespace MegaHerdt.Helpers.Helpers
             var stripeProducts = await this.CreateProduct(reparation.ReparationsArticles);
             var prices = await this.CreatePrice(reparationPaymentData.Installments, reparation.ReparationsArticles, stripeProducts, reparation);
             var subscription = await this.CreateSubscription(customer, prices, reparation.ReparationsArticles);
-           
-            if (subscription.Status == "active")
-            {
-                //save payment in DB
-                var payments = this.InstancePayments(subscription, reparation, reparationPaymentData);
+
+            /// REVISAR TAMBIEN EL FRONTEND
+            //if (subscription.Status == "active")
+            //{
+            //save payment in DB
+            var payments = this.InstancePayments(subscription, reparation, reparationPaymentData);
                 var bill = this.billRepository.Get(x => x.Id == reparation.BillId).FirstOrDefault();
                 bill.Payments = payments;
                 await this.billRepository.Update(bill);
@@ -44,11 +45,11 @@ namespace MegaHerdt.Helpers.Helpers
                 reparation.ReparationStateId = 7;
                 await reparationRepository.Update(reparation);  
                 return subscription;
-            }
-            else
-            {
-                throw new Exception("The payment has failed");
-            }
+           // }
+           // else
+            //{
+             //   throw new Exception("The payment has failed");
+           // }
 
         }
 

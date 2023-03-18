@@ -138,9 +138,10 @@ export class ConfirmReparationPaymentComponent implements OnInit {
     this._reparationPaymentService.confirmPayment(paymentConfirm, this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
         console.log(result);
-        if(result.subscription.status == "active"){
+        /// REVISAR TAMBIEN EL BACKEND
+       // if(result.subscription.status == "active"){
           this.subscriptionActive = true;
-        }
+       // }
       }
     });
   }

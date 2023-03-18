@@ -10,5 +10,6 @@ namespace MegaHerdt.API.DTOs.Reparation
         public string ClientId { get; set; }
         public DateTime Date { get; set; }
         public string ClientDescription { get; set; }
+        //public BillReparationCreationDTO Bill { get; set; }
     }
 }

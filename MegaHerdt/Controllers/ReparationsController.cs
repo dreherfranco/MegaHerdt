@@ -58,10 +58,16 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
-                var payments = Mapper.Map<List<Payment>>(reparationDb.Bill.Payments);
-                reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
-                reparationDb.Bill.Payments = payments;
-
+                if (reparationDb.Bill is not null)
+                {
+                    var payments = Mapper.Map<List<Payment>>(reparationDb.Bill.Payments);
+                    reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                    reparationDb.Bill.Payments = payments;
+                }
+                else
+                {
+                    reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                }
                 await this.ReparationService.Update(reparationDb);
                 
                 //MAILER
