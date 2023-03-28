@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
@@ -14,7 +14,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ReparationStateENTREGADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
-  searchText: string;
+  @Input() searchText: string;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) {

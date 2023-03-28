@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
@@ -18,7 +18,7 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
-  searchText: string;
+  @Input() searchText: string;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) { 

@@ -90,7 +90,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
-                await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted, reparationDTO.ApproximateTime);
+                await this.ReparationService.UpdateBudget(reparationDb, reparationDTO.IsAccepted/*, reparationDTO.ApproximateTime*/);
                 
                 //MAILER
               //  reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);

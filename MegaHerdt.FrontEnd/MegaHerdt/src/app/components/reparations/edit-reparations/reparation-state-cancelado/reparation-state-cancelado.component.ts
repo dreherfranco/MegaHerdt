@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
@@ -12,7 +12,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class ReparationStateCANCELADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
-  searchText: string;
+  @Input() searchText: string;
   
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService) { 

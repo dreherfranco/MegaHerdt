@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
@@ -17,7 +17,7 @@ export class ReparationStateREPARADOComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
-  searchText: string;
+  @Input() searchText: string;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) {

@@ -32,6 +32,7 @@ export class EditReparationsComponent implements OnInit {
   paginate: Paginate;
   reparationStatesEnum = ReparationStatesEnum;
   reparationStateSelected = ReparationStatesEnum.INGRESO;
+  searchText: string = '';
 
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
