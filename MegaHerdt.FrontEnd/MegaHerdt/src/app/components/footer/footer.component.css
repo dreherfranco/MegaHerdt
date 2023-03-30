@@ -1,3 +1,16 @@
 *{
-    color: white !important;
+    color: #fff !important;
+}
+
+button{
+   margin: 0.25rem !important;
+   color: #fff !important;
+}
+
+.div-header{
+    height: 5.5rem !important;
+}
+
+.prueba{
+    height: 4rem !important;
 }
