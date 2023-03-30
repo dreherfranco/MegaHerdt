@@ -126,6 +126,8 @@ import { ReparationIncomeExpensesComponent } from './components/income-expenses/
 import { ShowIncomeExpensesComponent } from './components/income-expenses/show-income-expenses/show-income-expenses.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UpdateReparationStatePagadoComponent } from './components/reparations/edit-reparations/reparation-state-pagado/update-reparation-state-pagado/update-reparation-state-pagado.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -255,6 +257,9 @@ import { UpdateReparationStatePagadoComponent } from './components/reparations/e
     NgChartsModule,
     MatSortModule,
     MatAutocompleteModule,
+    MatFormFieldModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
     PopoverModule.forRoot(),
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
     BsDatepickerModule.forRoot(),

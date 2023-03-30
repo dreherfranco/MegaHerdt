@@ -1,8 +1,11 @@
 <div class="form-group mb-3 w-25 mx-auto">
     <label for="date"><b>(*)Fecha: </b></label>
-    <input id="date" name="date" class="form-control" type="date" 
+    <input id="date" name="date" class="form-control" [(ngModel)]="selectedDate" type="date" 
         required>
+        <button class="btn btn-primary" (click)="showFormattedDate()">Mostrar fecha formateada</button>
+        <strong>buscar por año, mes o dia</strong>
 </div>
+
 
 <div class="d-flex flex-row">
     <app-purchase-income-expenses class="col-sm-6"></app-purchase-income-expenses>

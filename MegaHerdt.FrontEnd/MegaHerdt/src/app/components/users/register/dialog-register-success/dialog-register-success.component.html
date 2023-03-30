@@ -1,7 +1,13 @@
 <div class="container-fluid">
-    <p class="alert alert-success d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center">Registro exitoso</p>
-    <div class=" d-flex justify-content-end flex-md-row flex-wrap">
-        <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
-        <a class="btn btn-primary d-flex p-2 m-2" [routerLink]="['/login']" (click)="closeModal()"  >Ir al login</a>
+    <p class="alert alert-success d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center">
+      Registro exitoso<i class="bi bi-check"></i>
+    </p>
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-danger btn-sm p-2 m-2" (click)="closeModal()">
+        <i class="bi bi-x-circle-fill me-2"></i>Cancelar
+      </button>
+      <a class="btn btn-primary btn-sm p-2 m-2" [routerLink]="['/login']" (click)="closeModal()">
+        <i class="bi bi-box-arrow-right me-2"></i>Ir al login
+      </a>
     </div>
-</div>
+  </div>
