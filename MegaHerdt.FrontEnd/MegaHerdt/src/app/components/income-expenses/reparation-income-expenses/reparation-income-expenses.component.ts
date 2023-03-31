@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { DetailsIncomeExpenses } from 'src/app/models/IncomeExpenses/DetailsIncomeExpenses';
+import { IncomeExpenses } from 'src/app/models/IncomeExpenses/IncomeExpenses';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 
 @Component({
   selector: 'app-reparation-income-expenses',
@@ -6,10 +10,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./reparation-income-expenses.component.css']
 })
 export class ReparationIncomeExpensesComponent implements OnInit {
+  @Input() reparationsIncomes: DetailsIncomeExpenses ;
+  @Input() reparationsIncomes$: Observable<DetailsIncomeExpenses> = new Observable<DetailsIncomeExpenses>();
+  paginate: Paginate;
 
-  constructor() { }
+  constructor() {
+    this.paginate = new Paginate(1,6);
+    this.reparationsIncomes = new DetailsIncomeExpenses;
+   }
 
   ngOnInit(): void {
+    this.reparationsIncomes$.subscribe(data => {
+      this.reparationsIncomes = data;
+      console.log(data, 'hola')
+      // Aquí actualizas los datos del componente
+    });
   }
 
 }

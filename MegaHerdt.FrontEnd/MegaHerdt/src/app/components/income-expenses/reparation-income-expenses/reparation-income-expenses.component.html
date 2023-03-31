@@ -1,1 +1,58 @@
-<p>reparation-income-expenses works!</p>
+<div class="d-flex">
+    <h2 class="mx-auto"><b>INGRESOS DE REPARACIONES -> total: {{ reparationsIncomes.total }}</b></h2>
+  </div>
+  <div class="table-responsive w-75 text-center mx-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Monto mano de obra</th>
+          <th scope="col">Ingresos totales por reparación</th>
+          <th scope="col">Pagos efectuados</th>
+          <th scope="col">Pagos totales</th>
+          <th scope="col">Total</th>
+          <th scope="col">Nombre del cliente</th>
+          <th scope="col">Apellido del cliente</th>
+          <th scope="col">Dni del cliente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let reparationIncome of reparationsIncomes.incomeExpenses| paginate: 
+        {
+            itemsPerPage: this.paginate.recordsPerPage, 
+            currentPage:this.paginate.page
+        } ; 
+        let i = index">
+          <td>
+            <span class="data-user">{{ reparationIncome.amountOfLabor }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ reparationIncome.totalIncomePaidByReparation }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ reparationIncome.paymentsMade }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ reparationIncome.totalPayments }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ reparationIncome.client.name }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ reparationIncome.client.surname }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ reparationIncome.client.dni }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls
+      class="text-center data-user"
+      (pageChange)="this.paginate.page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      *ngIf="reparationsIncomes.incomeExpenses.length > 6"
+    >
+    </pagination-controls>
+  </div>
+  

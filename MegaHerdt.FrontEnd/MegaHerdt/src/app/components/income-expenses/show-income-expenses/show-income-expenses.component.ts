@@ -1,9 +1,12 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { IncomeExpenses } from 'src/app/models/IncomeExpenses/IncomeExpenses';
 import { IncomeExpensesService } from 'src/app/services/income-expenses/income-expenses.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { filter } from 'rxjs/operators';
+import { DetailsIncomeExpenses } from 'src/app/models/IncomeExpenses/DetailsIncomeExpenses';
 
 @Component({
   selector: 'app-show-income-expenses',
@@ -12,11 +15,14 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class ShowIncomeExpensesComponent implements OnInit {
   selectedDate: Date = new Date();
-  incomeExpenses: IncomeExpenses[] = [];
+  reparationsIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses;
+  reparationsIncomes$: BehaviorSubject<DetailsIncomeExpenses> = new BehaviorSubject<DetailsIncomeExpenses>(new DetailsIncomeExpenses);
 
-  constructor(private _storageService: StorageService,private miServicio: IncomeExpensesService) { }
+  constructor(private _storageService: StorageService,private incExpServices: IncomeExpensesService, 
+    private changeDetector: ChangeDetectorRef,) { }
 
   ngOnInit(): void {
+    this.reparationsIncomes$.next(this.reparationsIncomes);
   }
 
   showFormattedDate() {
@@ -32,7 +38,7 @@ export class ShowIncomeExpensesComponent implements OnInit {
     const month = parseInt(formatDate(this.selectedDate, 'M', 'en-US'));
     const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
     
-    this.miServicio.getIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
+    this.incExpServices.getIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
       console.log(result); // aquí maneja la respuesta del servidor
     });
   }
@@ -41,7 +47,7 @@ export class ShowIncomeExpensesComponent implements OnInit {
     const month = parseInt(formatDate(this.selectedDate, 'M', 'en-US'));
     const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
     
-    this.miServicio.getIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
+    this.incExpServices.getIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
       console.log(result); // aquí maneja la respuesta del servidor
     });
   }
@@ -49,7 +55,8 @@ export class ShowIncomeExpensesComponent implements OnInit {
   searchByYear(){
     const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
 
-    this.miServicio.getIncomes(this._storageService.getTokenValue(), year).subscribe(
+    this.incExpServices.getIncomes(this._storageService.getTokenValue(), year)
+    .subscribe(
       //console.log(result); // aquí maneja la respuesta del servidor
       {
         next: (response) => {
@@ -57,8 +64,10 @@ export class ShowIncomeExpensesComponent implements OnInit {
             //this.statusSubmit = "failed";
           } else {
            // this.statusSubmit = "success";
-             this.incomeExpenses = response;
-             console.log(this.incomeExpenses);
+             this.reparationsIncomes = response;
+             this.changeDetector.detectChanges();
+             this.reparationsIncomes$.next(this.reparationsIncomes);
+             console.log(this.reparationsIncomes);
           }
         },
         error: (err) => {
