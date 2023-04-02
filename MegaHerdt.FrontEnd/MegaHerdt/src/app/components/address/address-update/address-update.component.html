@@ -1,5 +1,4 @@
 <div>
-    <h3><b>Direccion:</b></h3>
     <form #addressForm="ngForm" action="#">
         <div class="row">
             <div class="form-group col-sm-3 mb-3">
@@ -38,7 +37,7 @@
             </div>
 
             <div class="form-group col-sm-6 mb-3">
-                <label for="streetNumber"><b>Numero de calle:</b></label>
+                <label for="streetNumber"><b>Número de calle:</b></label>
                 <input class="form-control" type="text" name="streetNumber" #streetNumber="ngModel"
                     [(ngModel)]="address.streetNumber" required />
                 <span *ngIf="streetNumber.touched && !streetNumber.valid" class="text-danger">Ingrese un numero de calle
@@ -48,7 +47,7 @@
 
         <div class="row">
             <div class="form-group col-sm-3 mb-3">
-                <label for="postalCode"><b>Codigo Postal:</b></label>
+                <label for="postalCode"><b>Código Postal:</b></label>
                 <input class="form-control" type="text" name="postalCode" #postalCode="ngModel"
                     [(ngModel)]="address.postalCode" required />
                 <span *ngIf="postalCode.touched && !postalCode.valid" class="text-danger">Ingrese un numero postal

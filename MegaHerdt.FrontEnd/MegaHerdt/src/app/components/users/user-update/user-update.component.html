@@ -1,5 +1,5 @@
 <div class="container-fluid" *ngIf="authenticated()">
-  <h2>Actualizar datos</h2>
+  <h2 class="bg-light">Actualizar datos</h2>
   <hr class="height-hr-3 mb-0"><br>
   <form #updateForm="ngForm" (ngSubmit)="onSubmit(updateForm)">
     <div class="row">
@@ -21,29 +21,29 @@
           <label for="dni"><b>(*)DNI:</b></label>
           <input class="form-control" type="text" name="dni" #dni="ngModel" [(ngModel)]="user.dni" required
             minlength="8" maxlength="8" pattern="[0-9]{8}" />
-          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI valido, debe contener 8
-            numeros</span>
+          <span *ngIf="dni.touched && !dni.valid" class="text-danger">Ingrese un DNI válido, debe contener 8
+            números</span>
         </div>
 
         <div class="row">
           <div class="form-group col-sm-6 mb-3">
             <label for="name"><b>(*)Nombre:</b></label>
             <input class="form-control" type="text" name="name" #name="ngModel" [(ngModel)]="user.name" required />
-            <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
+            <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre válido</span>
           </div>
 
           <div class="form-group col-sm-6 mb-3">
             <label for="surname"><b>(*)Apellido:</b></label>
             <input class="form-control" type="text" name="surname" #surname="ngModel" [(ngModel)]="user.surname"
               required />
-            <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido valido</span>
+            <span *ngIf="surname.touched && !surname.valid" class="text-danger">Ingrese una apellido válido</span>
           </div>
         </div>
         <hr class="height-hr-3">
         <div class="row">
           <div class="col-md-6 mb-2" *ngIf="user.phones.length == 0">
-            <h2 class="text-center">Agregar telefono</h2>
-            <label for="phone"><b>(*)Telefono:</b></label>
+            <h2 class="text-center">Agregar télefono</h2>
+            <label for="phone"><b>(*)Teléfono:</b></label>
             <div class="d-flex flex-row">
               <div role="alert" class="w-100 m-1">
                 <button type="button" class="btn btn-warning"
@@ -55,17 +55,17 @@
                 #number="ngModel" [(ngModel)]="phoneNumber" pattern="(^[0-9]+)" minlength="5" />
               
             </div>
-            <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un numero de telefono
+            <span *ngIf="number.touched && !number.valid" class="text-danger">Ingrese un número de telefono
               valido</span>
           </div>
           <div class="col-md-6">
             <div *ngIf="user.phones.length > 0">
-              <h2 class="text-center">Telefonos cargados</h2>
+              <h2 class="text-center bg-light">Mis Teléfonos</h2>
               <div *ngFor="let phone of user.phones; let i = index;">
                 <p>
                   <app-phone-update [phone]="phone"></app-phone-update>
-                  <button (click)="removePhone(i)" class="btn btn-danger mb-3">
-                    <i class="bi bi-x-circle"></i>
+                  <button (click)="removePhone(i)" class="btn bg-light mb-3" title="Remover teléfono">
+                    <i class="bi bi-x-circle"></i> Remover
                   </button>
                 </p>
               </div>
@@ -85,18 +85,18 @@
                   <i class="bi bi-exclamation-diamond"></i>
               </button>
             </div>
-            Agregar direccion
+            Agregar dirección
           </h2>
        
           <app-address-creation [address]="this.newAddress" class="col-md-6">
           </app-address-creation>
         </div>
         <div *ngIf="user.addresses.length > 0">
-          <h2 class="text-center">Direcciones cargadas</h2>
+          <h2 class="text-center bg-light">Mis Direcciones</h2>
           <div *ngFor="let address of user.addresses; let i = index;">
             <app-address-update [address]="address"></app-address-update>
-            <button (click)="removeAddress(i)" class="btn btn-danger mt-3 mb-3">
-              <i class="bi bi-x-circle"></i>
+            <button (click)="removeAddress(i)" class="btn bg-light mt-3 mb-3" title="Remover dirección">
+              <i class="bi bi-x-circle"></i> Remover
             </button>
           </div>
         </div>
@@ -114,9 +114,9 @@
         <div class="col-sm-6 m-1">
           <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
             required minlength="5" placeholder="Ingrese su contraseña" />
-          <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña valida</span>
+          <span *ngIf="password.touched && !password.valid" class="text-danger">Ingrese una contraseña válida</span>
         </div>
-        <input class="col-sm-1 btn btn-primary m-1" type="submit" value="Enviar"
+        <input class="col-sm-2 btn btn-primary m-1" type="submit" value="Actualizar"
           [disabled]="!updateForm.form.valid" />
       </div>
     </div>
@@ -124,9 +124,9 @@
 
     <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al actualizar el usuario: <span
         class="data-user">{{ error }}</span></p>
-    <p *ngIf="!addressOk" class="alert alert-danger m-3">Ingrese una direccion valida</p>
-    <p *ngIf="!phoneOk" class="alert alert-danger m-3">Ingrese un numero telefono</p>
-    <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizo correctamente</p>
+    <p *ngIf="!addressOk" class="alert alert-danger m-3">Ingrese una dirección valida</p>
+    <p *ngIf="!phoneOk" class="alert alert-danger m-3">Ingrese un número teléfono</p>
+    <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizó correctamente</p>
 
   </form>
 

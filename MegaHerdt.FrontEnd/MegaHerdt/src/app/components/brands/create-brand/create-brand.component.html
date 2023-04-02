@@ -3,11 +3,11 @@
   <div class="form-group mb-3">
     <label for="name"><b>Nombre: </b></label>
     <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre de la marca" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="brand.name" required minlength="3">
-    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de marca valido</span>
+    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de marca válido</span>
    <p>
      <input type="submit" class="btn btn-primary mt-3" [disabled]="brandForm.invalid" value="Crear"/>
    </p> 
-   <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear la marca, el nombre ya está siendo usado</p>
+   <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear la marca, el nombre ya se encuentra en uso</p>
    <p *ngIf="statusSubmit == 'success'" class="alert alert-success">Marca creada correctamente</p>
   </div> 
 </form>

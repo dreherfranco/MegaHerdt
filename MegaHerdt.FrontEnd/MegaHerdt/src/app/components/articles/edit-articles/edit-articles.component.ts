@@ -47,8 +47,8 @@ export class EditArticlesComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogUpdatePriceArticleByCategoryComponent,
       {
         disableClose:true,
-        height: '400px',
-        width: '400px'
+        height: '420px',
+        width: '500px'
       });
       dialogRef.afterClosed().subscribe(() => {
         this.loadProducts();

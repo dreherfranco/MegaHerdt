@@ -105,3 +105,7 @@ thead{
     color:#fff !important;
     border: 1px #fff;
 }
+
+.bg-custom-light{
+    background-color: #ededed;
+}

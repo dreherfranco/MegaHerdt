@@ -1,13 +1,13 @@
-<h1 class="text-center">Crear categoria</h1>
+<h1 class="text-center">Crear categoría</h1>
 <form #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)" class="w-50 mx-auto">
   <div class="form-group mb-3">
     <label for="name"><b>Nombre: </b></label>
     <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre de la categoria" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="category.name" required minlength="3">
-    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de categoria valido</span>
+    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de categoría valido</span>
    <p>
      <input type="submit" class="btn btn-primary mt-3" [disabled]="categoryForm.invalid" value="Crear"/>
    </p> 
-   <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear la categoria, el nombre ya está siendo usado</p>
-   <p *ngIf="statusSubmit == 'success'" class="alert alert-success">La categoria se creó correctamente</p>
+   <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear la categoría, el nombre ya se encuentra en uso</p>
+   <p *ngIf="statusSubmit == 'success'" class="alert alert-success">La categoría se creó correctamente</p>
   </div>  
 </form>

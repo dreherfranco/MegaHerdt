@@ -19,9 +19,9 @@ export class BrandService {
     this.updateBrands();
   }
 
-  create(category: BrandCreation, token: string): Observable<any>{
+  create(brand: BrandCreation, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
-    let params = JSON.stringify(category);
+    let params = JSON.stringify(brand);
     return this._http.post(this.url + "/create", params, { headers: this.headers });
   }
 

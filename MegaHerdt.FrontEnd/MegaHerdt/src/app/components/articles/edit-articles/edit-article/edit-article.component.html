@@ -16,7 +16,7 @@
                 [(ngModel)]="article.unitValue"></p>
 
 
-        <p class="card-text data-article">Codigo: <input class="form-control data-article" [(ngModel)]="article.code"
+        <p class="card-text data-article">Código: <input class="form-control data-article" [(ngModel)]="article.code"
                 disabled>
         </p>
         <p class="card-text data-article">Stock: <input class="form-control data-article" [(ngModel)]="article.stock"
@@ -31,7 +31,7 @@
                     </option>
                 </select>
             </div>
-            <div class="card-text data-article col-sm-6">Categoria:
+            <div class="card-text data-article col-sm-6">Categoría:
                 <select class="form-select data-article" name="selectCategory" [(ngModel)]="article.category.id"
                     required>
                     <option class="data-user" name="category" *ngFor="let category of categories"
@@ -42,6 +42,6 @@
         </div>
         <button class="btn btn-primary m-2 col-sm-3" (click)="openDialogUpdate()" title="Editar"><i class="bi bi-pencil-square"></i></button>
         <button class="btn btn-danger m-2 col-sm-3" (click)="openDialogDelete()" title="Eliminar"><i class="bi bi-trash-fill"></i></button>
-        <p class="alert alert-success" *ngIf="updateSuccess">Se actualizo correctamente</p>
+        <p class="alert alert-success" *ngIf="updateSuccess">Se actualizó correctamente</p>
     </div>
 </div>
