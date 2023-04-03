@@ -11,7 +11,6 @@ import { Paginate } from 'src/app/models/Paginate/Paginate';
 })
 export class ReparationIncomeExpensesComponent implements OnInit {
   @Input() reparationsIncomes: DetailsIncomeExpenses ;
-  @Input() reparationsIncomes$: Observable<DetailsIncomeExpenses> = new Observable<DetailsIncomeExpenses>();
   paginate: Paginate;
 
   constructor() {
@@ -20,11 +19,6 @@ export class ReparationIncomeExpensesComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.reparationsIncomes$.subscribe(data => {
-      this.reparationsIncomes = data;
-      console.log(data, 'hola')
-      // Aquí actualizas los datos del componente
-    });
   }
 
 }

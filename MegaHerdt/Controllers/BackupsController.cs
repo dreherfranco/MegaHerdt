@@ -81,9 +81,13 @@ namespace MegaHerdt.API.Controllers
                 var articlePath = Path.Combine(env.WebRootPath, containerArticles, articleImageName);
                 var articleBackupPath = Path.Combine(folder, articleImageName);
 
-                if (!System.IO.File.Exists(articleBackupPath))
+                // Comprueba si existe el archivo en la carpeta de articulos.
+                if (System.IO.File.Exists(articlePath))
                 {
-                    System.IO.File.Copy(articlePath, articleBackupPath);
+                    if (!System.IO.File.Exists(articleBackupPath))
+                    {
+                        System.IO.File.Copy(articlePath, articleBackupPath);
+                    }
                 }
 
             }

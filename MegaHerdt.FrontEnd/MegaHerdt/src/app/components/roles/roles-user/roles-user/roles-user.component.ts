@@ -84,6 +84,7 @@ export class RolesUserComponent implements OnInit {
         } else {
           this.roles = response;
           this.updateRoles();
+          this.roleSelected = this.roles[0];
         }
       },
       error: (err) => {

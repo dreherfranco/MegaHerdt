@@ -16,11 +16,15 @@ export class IncomeExpensesService {
     this.url = Global.url + "IncomeExpenses";
   }
 
-  getIncomes(token: string, year: number, month?: number, day?: number): Observable<any>{
+  getReparationsIncomes(token: string, year: number, month?: number, day?: number): Observable<any>{
 
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url + `/get-reparations-income/${year}/${month ?? 0}/${day ?? 0}`, { headers: this.headers } )
   }
 
-  
+  getPurchasesIncomes(token: string, year: number, month?: number, day?: number): Observable<any>{
+
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + `/get-purchases-income/${year}/${month ?? 0}/${day ?? 0}`, { headers: this.headers } )
+  }
 }

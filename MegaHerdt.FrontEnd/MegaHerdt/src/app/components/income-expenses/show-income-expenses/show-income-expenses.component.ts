@@ -16,13 +16,11 @@ import { DetailsIncomeExpenses } from 'src/app/models/IncomeExpenses/DetailsInco
 export class ShowIncomeExpensesComponent implements OnInit {
   selectedDate: Date = new Date();
   reparationsIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses;
-  reparationsIncomes$: BehaviorSubject<DetailsIncomeExpenses> = new BehaviorSubject<DetailsIncomeExpenses>(new DetailsIncomeExpenses);
+  purchasesIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses;
 
-  constructor(private _storageService: StorageService,private incExpServices: IncomeExpensesService, 
-    private changeDetector: ChangeDetectorRef,) { }
+  constructor(private _storageService: StorageService,private incExpServices: IncomeExpensesService) { }
 
   ngOnInit(): void {
-    this.reparationsIncomes$.next(this.reparationsIncomes);
   }
 
   showFormattedDate() {
@@ -38,8 +36,12 @@ export class ShowIncomeExpensesComponent implements OnInit {
     const month = parseInt(formatDate(this.selectedDate, 'M', 'en-US'));
     const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
     
-    this.incExpServices.getIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
-      console.log(result); // aquí maneja la respuesta del servidor
+    this.incExpServices.getReparationsIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
+      this.reparationsIncomes = result;
+    });
+
+    this.incExpServices.getPurchasesIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
+       this.purchasesIncomes = result;
     });
   }
 
@@ -47,33 +49,28 @@ export class ShowIncomeExpensesComponent implements OnInit {
     const month = parseInt(formatDate(this.selectedDate, 'M', 'en-US'));
     const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
     
-    this.incExpServices.getIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
-      console.log(result); // aquí maneja la respuesta del servidor
+    this.incExpServices.getReparationsIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
+          this.reparationsIncomes = result;
+    });
+    this.incExpServices.getPurchasesIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
+      this.purchasesIncomes = result;
     });
   }
 
   searchByYear(){
     const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
 
-    this.incExpServices.getIncomes(this._storageService.getTokenValue(), year)
+    this.incExpServices.getReparationsIncomes(this._storageService.getTokenValue(), year)
     .subscribe(
-      //console.log(result); // aquí maneja la respuesta del servidor
-      {
-        next: (response) => {
-          if (response.error) {
-            //this.statusSubmit = "failed";
-          } else {
-           // this.statusSubmit = "success";
-             this.reparationsIncomes = response;
-             this.changeDetector.detectChanges();
-             this.reparationsIncomes$.next(this.reparationsIncomes);
-             console.log(this.reparationsIncomes);
-          }
-        },
-        error: (err) => {
-          //this.statusSubmit = "failed";
-          console.log(err)
-        }
+      result => {
+             this.reparationsIncomes = result;
+      }
+    );
+
+    this.incExpServices.getPurchasesIncomes(this._storageService.getTokenValue(), year)
+    .subscribe(
+      result => {
+             this.purchasesIncomes = result;
       }
     );
   }

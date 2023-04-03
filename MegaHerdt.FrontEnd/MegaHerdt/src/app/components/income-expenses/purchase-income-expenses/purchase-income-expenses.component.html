@@ -1,1 +1,63 @@
-<p>purchase-income-expenses works!</p>
+<div *ngIf="purchasesIncomes.incomeExpenses.length > 0; else noData">
+  <div class="d-flex">
+    <h2 class="mx-auto"><b>INGRESOS DE VENTA DE ARTÍCULOS -> total: {{ purchasesIncomes.total }}</b></h2>
+  </div>
+  <div class="table-responsive text-center mx-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Monto mano de obra</th>
+          <th scope="col">Ingresos totales por reparación</th>
+          <th scope="col">Pagos efectuados</th>
+          <th scope="col">Pagos totales</th>
+          <th scope="col">Total</th>
+          <th scope="col">Nombre del cliente</th>
+          <th scope="col">Apellido del cliente</th>
+          <th scope="col">Dni del cliente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let purchaseIncome of purchasesIncomes.incomeExpenses| paginate: 
+        {
+            itemsPerPage: this.paginate.recordsPerPage, 
+            currentPage:this.paginate.page
+        } ; 
+        let i = index">
+          <td>
+            <span class="data-user">{{ purchaseIncome.amountOfLabor }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ purchaseIncome.totalIncomePaidByReparation }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ purchaseIncome.paymentsMade }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ purchaseIncome.totalPayments }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ purchaseIncome.client.name }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ purchaseIncome.client.surname }}</span>
+          </td>
+          <td>
+            <span class="data-user">{{ purchaseIncome.client.dni }}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls
+      class="text-center data-user"
+      (pageChange)="this.paginate.page = $event"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      *ngIf="purchasesIncomes.incomeExpenses.length > 6"
+    >
+    </pagination-controls>
+  </div>
+</div>
+<ng-template #noData>
+    No hay datos para mostrar
+</ng-template>
+  

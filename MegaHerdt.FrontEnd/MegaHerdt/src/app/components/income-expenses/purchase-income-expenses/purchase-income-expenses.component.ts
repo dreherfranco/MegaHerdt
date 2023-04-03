@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DetailsIncomeExpenses } from 'src/app/models/IncomeExpenses/DetailsIncomeExpenses';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 
 @Component({
   selector: 'app-purchase-income-expenses',
@@ -6,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./purchase-income-expenses.component.css']
 })
 export class PurchaseIncomeExpensesComponent implements OnInit {
+  @Input() purchasesIncomes: DetailsIncomeExpenses ;
+  paginate: Paginate;
 
-  constructor() { }
+  constructor() {
+    this.paginate = new Paginate(1,6);
+    this.purchasesIncomes = new DetailsIncomeExpenses;
+   }
 
   ngOnInit(): void {
   }
