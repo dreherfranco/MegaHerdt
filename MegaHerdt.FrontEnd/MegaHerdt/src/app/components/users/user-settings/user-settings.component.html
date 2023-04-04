@@ -1,15 +1,17 @@
 <li role="menuitem">
-    <a [routerLink]="['user/settings/update']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+    <a [routerLink]="['user/settings/update']" class="dropdown-item">
         <i class="bi bi-arrow-clockwise"></i> Actualizar datos
     </a>
 </li>
+<li><hr class="dropdown-divider"></li>
 <li role="menuitem">
-    <a [routerLink]="['user/settings/change-password']" class="dropdown-item btn text-dark link-custom border border-color-custom">
+    <a [routerLink]="['user/settings/change-password']" class="dropdown-item">
         <i class="bi bi-lock-fill"></i> Cambiar contraseña
     </a>
 </li>
+<li><hr class="dropdown-divider"></li>
 <li role="menuitem">
-    <a (click)="openDialogDeleteProfile()" class="dropdown-item btn text-dark link-custom border border-color-custom">
+    <a (click)="openDialogDeleteProfile()" class="btn dropdown-item">
         <i class="bi bi-person-x-fill"></i> Eliminar perfil
     </a>
 </li>

@@ -1,7 +1,9 @@
 *{
-    color: black !important;
+    color: #000 !important;
 }
-
+.colours{
+    color: #fff !important;
+}
 .border-color-custom{
  border-color: #007BC1 !important;
  border-width: 0.12rem !important;
