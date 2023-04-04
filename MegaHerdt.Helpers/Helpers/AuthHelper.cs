@@ -60,7 +60,10 @@ namespace MegaHerdt.Helpers.Helpers
 
                 return await BuildToken(findUser, jwtKey);
             }
-            throw new Exception("Invalid login attempt.");
+            var strError = findUser is null ? "{NullUser}" : string.Empty;
+            strError += !findUser.Enabled ? "{UserNotEnabled}" : string.Empty;
+            strError += !result.Succeeded ? "{resultNotSucceeded}" : string.Empty;
+            throw new Exception("Invalid login attempt." + strError);
         }
 
         public async Task<UserToken> UserUpdate(User user, string jwtKey)
@@ -99,8 +102,8 @@ namespace MegaHerdt.Helpers.Helpers
             if (userDb != null)
             {
                 var token = await this.userManager.GeneratePasswordResetTokenAsync(userDb);
-                await this.userManager.ResetPasswordAsync(userDb, token, newPassword);
-                //await this.userManager.ChangePasswordAsync(userDb, userDb.Password, newPassword);
+                var result = await this.userManager.ResetPasswordAsync(userDb, token, newPassword);
+                //var result = await this.userManager.ChangePasswordAsync(userDb, userDb.Password, newPassword);
                 return await BuildToken(userDb, jwtKey);
             }
             throw new Exception("User doesn't exists");

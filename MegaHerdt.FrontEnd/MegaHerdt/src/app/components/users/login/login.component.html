@@ -16,7 +16,7 @@
     </span>
   </div>
 
-    <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al loguearse</p>
+    <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al loguearse. {{ errorString }}</p>
 
     <a class="color-blue" [routerLink]="['/forget-password']" >Olvidé mi contraseña</a> <br>
     <input type="submit" class="btn btn-primary mt-1" [disabled]="loginForm.invalid" value="Entrar"/>

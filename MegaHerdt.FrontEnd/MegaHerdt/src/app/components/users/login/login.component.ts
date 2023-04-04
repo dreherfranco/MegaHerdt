@@ -13,6 +13,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   statusSubmit: string;
+  errorString: string = '';
 
   constructor(
     private _userService: UserService, 
@@ -60,6 +61,9 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           this.statusSubmit = "failed";
           console.log(err)
+          if(err.error.message.includes("UserNotEnabled")){
+            this.errorString = "Esta cuenta ha sido deshabilitada, contactese para mas información.";
+          };
         }
       });
   }
