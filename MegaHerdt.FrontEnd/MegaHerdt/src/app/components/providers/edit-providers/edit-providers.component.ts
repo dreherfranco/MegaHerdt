@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Provider } from 'src/app/models/Provider/Provider';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateProviderComponent } from './dialog-update-provider/dialog-update-provider.component';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-providers',
@@ -14,6 +15,7 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 export class EditProvidersComponent implements OnInit {
   providers: Array<Provider>;
   statusSubmit: string;
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _storageService: StorageService, private _providerService: ProviderService,public dialog: MatDialog) {
     this.providers = new Array<Provider>();
@@ -106,5 +108,8 @@ export class EditProvidersComponent implements OnInit {
     }
     );
   }
-
+  
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
 }

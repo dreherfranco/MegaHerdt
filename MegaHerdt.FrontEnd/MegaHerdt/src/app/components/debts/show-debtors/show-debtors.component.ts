@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { filter } from 'lodash';
 import { Debts } from 'src/app/models/Debts/Debts';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { ReparationDebt } from 'src/app/models/Reparation/ReparationDebt';
 import { DebtsService } from 'src/app/services/debts/debts.service';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-show-debtors',
@@ -13,6 +14,7 @@ import { DebtsService } from 'src/app/services/debts/debts.service';
 export class ShowDebtorsComponent implements OnInit {
   debts: Debts = new Debts();
   paginate: Paginate;
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private DebtsService: DebtsService) 
   {
@@ -36,5 +38,9 @@ export class ShowDebtorsComponent implements OnInit {
       },
       error: (err) => console.log(err)
     })
+  }
+
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
   }
 }

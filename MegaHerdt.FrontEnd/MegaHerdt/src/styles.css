@@ -109,3 +109,7 @@ thead{
 .bg-custom-light{
     background-color: #ededed;
 }
+
+.padding-custom{
+    padding: 3px !important;
+}

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Article } from 'src/app/models/Article/Article';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { DialogUpdatePriceArticleByCategoryComponent } from './dialog-update-price-article-by-category/dialog-update-price-article-by-category.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-articles',
@@ -15,6 +16,7 @@ export class EditArticlesComponent implements OnInit {
   paginate: Paginate;
   searchText: string;
   filterByStock: boolean = false;
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _articleService: ArticleService, public dialog: MatDialog) 
   { 
@@ -54,5 +56,8 @@ export class EditArticlesComponent implements OnInit {
         this.loadProducts();
       });
   }
-
+  
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
 }

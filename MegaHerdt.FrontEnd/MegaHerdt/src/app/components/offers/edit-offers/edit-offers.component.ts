@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ArticleOffer } from 'src/app/models/ArticleOffer/ArticleOffer';
@@ -7,6 +7,7 @@ import { OfferService } from 'src/app/services/offers/offer.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateOfferComponent } from './dialog-update-offer/dialog-update-offer.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-offers',
@@ -18,6 +19,7 @@ export class EditOffersComponent implements OnInit {
   offers: Array<ArticleOffer>;
   articles: Array<ArticleName>;
   statusSubmit: string;
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _offerService: OfferService, private _storageService: StorageService,
     private _articleService: ArticleService,public dialog: MatDialog) {
@@ -126,4 +128,7 @@ export class EditOffersComponent implements OnInit {
     })
   }
 
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
@@ -16,6 +16,7 @@ import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
 import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateReparationComponent } from './dialog-update-reparation/dialog-update-reparation.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-reparations',
@@ -33,6 +34,7 @@ export class EditReparationsComponent implements OnInit {
   reparationStatesEnum = ReparationStatesEnum;
   reparationStateSelected = ReparationStatesEnum.INGRESO;
   searchText: string = '';
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _articleService: ArticleService,
     private _storageService: StorageService, private _userService: UserService,
@@ -191,4 +193,7 @@ export class EditReparationsComponent implements OnInit {
     reparation.reparationsArticles.push(reparationArticle);
   }
 
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
 }

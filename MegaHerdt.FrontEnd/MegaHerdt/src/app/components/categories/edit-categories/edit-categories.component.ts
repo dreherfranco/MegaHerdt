@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/models/ArticleCategory/Category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateCategoryComponent } from './dialog-update-category/dialog-update-category.component';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
+
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-categories',
@@ -14,7 +16,8 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 export class EditCategoriesComponent implements OnInit {
   categories: Array<Category>;
   statusSubmit: string;
-
+  @ViewChild('content', { static: true }) content!: ElementRef;
+  
   constructor(private _storageService: StorageService, private _categoryService: CategoryService,public dialog: MatDialog) {
     this.categories = new Array<Category>();
     this.statusSubmit = "";
@@ -95,5 +98,9 @@ export class EditCategoriesComponent implements OnInit {
         }
     }
     );
+  }
+
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
   }
 }

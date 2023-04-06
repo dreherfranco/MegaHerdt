@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ArticleProvider } from 'src/app/models/ArticleProvider/ArticleProvider';
@@ -12,6 +12,7 @@ import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateArticleProvisionComponent } from './dialog-update-article-provision/dialog-update-article-provision.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-articles-provisions',
@@ -25,7 +26,8 @@ export class EditArticlesProvisionsComponent implements OnInit {
   updateSuccess: boolean;
   paginate: Paginate;
   searchText: string = "";
-  
+  @ViewChild('content', { static: true }) content!: ElementRef;
+
   constructor(private _articleProvisionService: ArticleProvisionService,
     private _storageService: StorageService,
     public dialog: MatDialog) {
@@ -125,4 +127,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher")
   }
 
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
 }

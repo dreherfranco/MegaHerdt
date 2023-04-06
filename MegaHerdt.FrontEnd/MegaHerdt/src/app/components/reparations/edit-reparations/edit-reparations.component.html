@@ -1,6 +1,10 @@
 <div class="row">
-    <div class="text-center">
-      <h2>LISTADO DE REPARACIONES</h2>
+    <div class="d-flex">
+      <h2 class="mx-auto">LISTADO DE REPARACIONES
+        <button class="btn btn-dark padding-custom" (click)="generatePDF()">
+          <i class="bi bi-filetype-pdf"></i>
+        </button>
+      </h2>
     </div>
   </div>
   
@@ -48,20 +52,21 @@
     </div>
   </div>
   
-
-<app-reparation-state-ingreso [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.INGRESO">
-</app-reparation-state-ingreso>
-<app-reparation-state-en-revision [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_REVISION">
-</app-reparation-state-en-revision>
-<app-reparation-state-en-presupuesto [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_PRESUPUESTO">
-</app-reparation-state-en-presupuesto>
-<app-reparation-state-en-reparacion [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_REPARACION">
-</app-reparation-state-en-reparacion>
-<app-reparation-state-reparado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.REPARADO">
-</app-reparation-state-reparado>
-<app-reparation-state-entregado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.ENTREGADO">
-</app-reparation-state-entregado>
-<app-reparation-state-pagado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.PAGADO">
-</app-reparation-state-pagado>
-<app-reparation-state-cancelado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.CANCELADO">
-</app-reparation-state-cancelado>
+<div #content>
+  <app-reparation-state-ingreso [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.INGRESO">
+  </app-reparation-state-ingreso>
+  <app-reparation-state-en-revision [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_REVISION">
+  </app-reparation-state-en-revision>
+  <app-reparation-state-en-presupuesto [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_PRESUPUESTO">
+  </app-reparation-state-en-presupuesto>
+  <app-reparation-state-en-reparacion [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.EN_REPARACION">
+  </app-reparation-state-en-reparacion>
+  <app-reparation-state-reparado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.REPARADO">
+  </app-reparation-state-reparado>
+  <app-reparation-state-entregado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.ENTREGADO">
+  </app-reparation-state-entregado>
+  <app-reparation-state-pagado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.PAGADO">
+  </app-reparation-state-pagado>
+  <app-reparation-state-cancelado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.CANCELADO">
+  </app-reparation-state-cancelado>
+</div>

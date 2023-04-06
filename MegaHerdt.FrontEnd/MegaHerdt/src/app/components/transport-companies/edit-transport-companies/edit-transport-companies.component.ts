@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { TransportCompany } from 'src/app/models/TransportCompany/TransportCompany';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { TransportCompanyService } from 'src/app/services/transport-companies/transport-company.service';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateTransportCompanyComponent } from './dialog-update-transport-company/dialog-update-transport-company.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-transport-companies',
@@ -14,6 +15,7 @@ import { DialogUpdateTransportCompanyComponent } from './dialog-update-transport
 export class EditTransportCompaniesComponent implements OnInit {
   transportCompanies: Array<TransportCompany> = new Array<TransportCompany>();
   statusSubmit: string = '';
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _storageService: StorageService, private _transportCompanyService: TransportCompanyService,
     public dialog: MatDialog) {
@@ -104,6 +106,10 @@ export class EditTransportCompaniesComponent implements OnInit {
         }
     }
     );
+  }
+
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
   }
 
 }

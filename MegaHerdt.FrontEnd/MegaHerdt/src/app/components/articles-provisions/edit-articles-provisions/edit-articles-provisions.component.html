@@ -1,14 +1,27 @@
-<div class="d-flex">
-    <div class="input-group mb-3 w-50 searcher" *ngIf="articlesProviders.length > 0">
-        <div class="input-group-prepend">
-          <div class="input-group-text lens">
-            <i class="bi bi-search"></i>
-          </div>
-        </div>
-        <input class="form-control w-50 input-search" type="text" [(ngModel)]="searchText" placeholder="Buscar provisiones">
+<div class="bg-light">
+    <div class="d-flex">
+        <h2 class="mx-auto">LISTADO DE PROVISIONES
+            <button class="btn btn-dark padding-custom" (click)="generatePDF()">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>
+        </h2>
     </div>
-  </div>
-<div class="table-responsive">
+    <div class="d-flex row">
+        <div class="col-md-10">
+            <div class="col-md-4" *ngIf="articlesProviders.length > 0">
+                <div class="input-group">
+                  <div class="input-group-append">
+                      <div class="input-group-text bg-primary">
+                        <i class="bi bi-search text-white"></i>
+                      </div>
+                    </div>
+                  <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar provisiones">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive" #content>
     <table class="table">
         <thead>
             <tr>

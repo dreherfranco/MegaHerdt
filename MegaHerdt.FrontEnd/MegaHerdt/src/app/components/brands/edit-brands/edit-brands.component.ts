@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Brand } from 'src/app/models/ArticleBrand/Brand';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateBrandComponent } from './dialog-update-brand/dialog-update-brand.component';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-edit-brands',
@@ -14,7 +15,8 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 export class EditBrandsComponent implements OnInit {
   brands: Array<Brand>;
   statusSubmit: string;
-
+  @ViewChild('content', { static: true }) content!: ElementRef;
+  
   constructor(private _storageService: StorageService, private _brandService: BrandService,public dialog: MatDialog) {
     this.brands = new Array<Brand>();
     this.statusSubmit = "";
@@ -93,5 +95,9 @@ export class EditBrandsComponent implements OnInit {
         }
     }
     );
+  }
+  
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
   }
 }

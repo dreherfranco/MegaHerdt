@@ -12,6 +12,12 @@
         </ng-template>
         
         <nav class="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+            <div class="btn-group" >
+                <a type="button" 
+                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" [routerLink]="['']">
+                    Inicio <span class="caret"></span>
+                </a>
+            </div>
             <div class="btn-group" dropdown *ngIf="authenticated()">
                 <a id="button-basic" dropdownToggle type="button" 
                     class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
