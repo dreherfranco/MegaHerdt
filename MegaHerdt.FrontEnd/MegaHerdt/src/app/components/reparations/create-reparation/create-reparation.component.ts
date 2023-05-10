@@ -14,6 +14,8 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
 import { DialogAdminCreateUserComponent } from '../../users/admin-create-user/dialog-admin-create-user/dialog-admin-create-user.component';
+import { jsPDF } from 'jspdf';
+import { Reparation } from 'src/app/models/Reparation/Reparation';
 
 @Component({
   selector: 'app-create-reparation',
@@ -51,6 +53,7 @@ export class CreateReparationComponent implements OnInit {
           this.statusSubmit = "failed";
         } else {
           this.statusSubmit = "success";
+          this.generatePDF(response);
         }
       },
       error: (err) => {
@@ -98,5 +101,39 @@ export class CreateReparationComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: any) => {
         this.loadClients();
     });
+  }
+
+  generatePDF(reparationData: Reparation) {
+    const doc = new jsPDF();
+    //Ticket
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Orden de trabajo - Ticket: ${reparationData.numeroTicket}`, 10, 10);
+    doc.setFont('helvetica', 'normal');
+    
+    // Estado
+    doc.setFont('helvetica', 'bold');
+    doc.text('Estado: ', 10, 30);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${reparationData.reparationState.name}`, 30, 30);
+
+    // Empleado
+    doc.setFont('helvetica', 'bold');
+    doc.text('Empleado: ', 10, 40);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${reparationData.employee.name} ${reparationData.employee.surname}`, 40, 40);
+    
+    // Cliente
+    doc.setFont('helvetica', 'bold');
+    doc.text('Cliente: ', 10, 50);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${reparationData.client.name} ${reparationData.client.surname}`, 35, 50);
+
+    // Descripcion del cliente
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Descripcion del servicio requerido segun el cliente: `, 10, 60);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${reparationData.clientDescription}`, 150, 60);
+
+    doc.save('orden-trabajo.pdf');
   }
 }
