@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateProviderComponent } from './dialog-update-provider/dialog-update-provider.component';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 
 @Component({
   selector: 'app-edit-providers',
@@ -16,10 +17,12 @@ export class EditProvidersComponent implements OnInit {
   providers: Array<Provider>;
   statusSubmit: string;
   @ViewChild('content', { static: true }) content!: ElementRef;
+  paginate: Paginate;
 
   constructor(private _storageService: StorageService, private _providerService: ProviderService,public dialog: MatDialog) {
     this.providers = new Array<Provider>();
     this.statusSubmit = "";
+    this.paginate = new Paginate(1,3);
   }
 
 

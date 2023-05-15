@@ -20,7 +20,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let offer of offers; let i = index">
+            <tr *ngFor="let offer of offers 
+            | paginate: 
+            {
+                itemsPerPage: this.paginate.recordsPerPage, 
+                currentPage:this.paginate.page
+            }; let i = index">
                 <th>
                     <select class="form-select data-user" name="selectArticle" [(ngModel)]="offer.articleId">
                         <option class="data-user" name="article" *ngFor="let article of articles"
@@ -55,5 +60,7 @@
             </tr>
         </tbody>
     </table>
-
+    <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="offers.length > 3">
+    </pagination-controls>
 </div>

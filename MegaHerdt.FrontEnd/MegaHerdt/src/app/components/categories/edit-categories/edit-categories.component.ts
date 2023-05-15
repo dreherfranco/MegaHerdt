@@ -7,6 +7,7 @@ import { DialogUpdateCategoryComponent } from './dialog-update-category/dialog-u
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 
 @Component({
   selector: 'app-edit-categories',
@@ -17,10 +18,12 @@ export class EditCategoriesComponent implements OnInit {
   categories: Array<Category>;
   statusSubmit: string;
   @ViewChild('content', { static: true }) content!: ElementRef;
-  
+  paginate: Paginate;
+
   constructor(private _storageService: StorageService, private _categoryService: CategoryService,public dialog: MatDialog) {
     this.categories = new Array<Category>();
-    this.statusSubmit = "";
+    this.statusSubmit = "";    
+    this.paginate = new Paginate(1,6);
   }
 
 

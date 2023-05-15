@@ -35,7 +35,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this.articles = new Array<ArticleName>();
     this.articlesProviders = new Array<ArticleProvider>();
     this.updateSuccess = false;
-    this.paginate = new Paginate(1,3)
+    this.paginate = new Paginate(1,3);
    }
 
   ngOnInit(): void {

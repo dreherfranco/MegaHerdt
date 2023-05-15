@@ -51,7 +51,8 @@
                         <div>
                             <button type="button" class="btn btn-warning mt-1"
                                 *ngIf="purchase.purchasesClaims.length > 0"
-                                popover="{{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta reparación">
+                                matTooltipPosition="above"
+                                matTooltip="{{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta compra">
                                 <i class="bi bi-exclamation-diamond"></i>
                             </button>
                         </div>

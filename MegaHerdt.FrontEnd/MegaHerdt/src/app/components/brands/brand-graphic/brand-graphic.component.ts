@@ -24,8 +24,8 @@ export class BrandGraphicComponent implements OnInit {
     responsive: true,
     // We use these empty structures as placeholders for dynamic theming.
     scales: {
-      x: {},
-      y: {
+      x: {stacked: true },
+      y: {stacked: true,
         min: 0
       }
     },
@@ -49,13 +49,13 @@ export class BrandGraphicComponent implements OnInit {
     datasets: [
       {
         data: []
-      },
+      }/*,
       {
         data: []
       },
       {
         data: []
-      }
+      }*/
     ]
   };
 
@@ -73,18 +73,18 @@ export class BrandGraphicComponent implements OnInit {
       next: res => {
         this.brandsStatistics = res;
         this.barChartData.datasets[0].label = "Cantidad articulos";
-        this.barChartData.datasets[1].label = "Unidades compradas";
-        this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
+        //this.barChartData.datasets[1].label = "Unidades compradas";
+        //this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
         
         for (var i = 0; i < this.brandsStatistics.length; i++) {
           let articlesQuantity = this.brandsStatistics[i].articlesQuantity;
-          let purchasesQuantity = this.brandsStatistics[i].purchasesQuantity;
-          let reparationsQuantity = this.brandsStatistics[i].reparationsQuantity;
-          if(articlesQuantity > 0 || purchasesQuantity > 0 || reparationsQuantity > 0){
+        //  let purchasesQuantity = this.brandsStatistics[i].purchasesQuantity;
+        //  let reparationsQuantity = this.brandsStatistics[i].reparationsQuantity;
+          if(articlesQuantity > 0 /*|| purchasesQuantity > 0 || reparationsQuantity > 0*/){
             this.barChartData.labels?.push(this.brandsStatistics[i].name);
             articlesQuantity > 0 ? this.barChartData.datasets[0].data.push(articlesQuantity) : null; 
-            purchasesQuantity > 0 ? this.barChartData.datasets[1].data.push(purchasesQuantity) : null;    
-            reparationsQuantity > 0 ? this.barChartData.datasets[2].data.push(reparationsQuantity) : null;
+            //purchasesQuantity > 0 ? this.barChartData.datasets[1].data.push(purchasesQuantity) : null;    
+           // reparationsQuantity > 0 ? this.barChartData.datasets[2].data.push(reparationsQuantity) : null;
           }
         }
         this.chart?.update();

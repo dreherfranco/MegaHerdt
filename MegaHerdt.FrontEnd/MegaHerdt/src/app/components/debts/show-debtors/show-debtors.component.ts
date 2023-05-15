@@ -15,6 +15,7 @@ export class ShowDebtorsComponent implements OnInit {
   debts: Debts = new Debts();
   paginate: Paginate;
   @ViewChild('content', { static: true }) content!: ElementRef;
+  searchText: string = "";
 
   constructor(private DebtsService: DebtsService) 
   {

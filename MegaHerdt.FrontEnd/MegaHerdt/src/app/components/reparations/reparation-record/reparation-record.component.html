@@ -65,14 +65,16 @@
 
                         <div class="mt-1" role="alert" *ngIf="reparation.reparationsClaims.length > 0">
                             <button type="button" class="btn btn-warning w-100"
-                                popover="{{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación">
+                                matTooltipPosition="above"
+                                matTooltip="{{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación">
                                 <i class="bi bi-exclamation-diamond"></i>
                             </button>
                         </div>
                     </th>
                     <th>
                         <button *ngIf="reparation.bill.payments.length > 0" type="button" class="btn btn-warning w-100"
-                            popover="Ya existen pagos de esta reparación">
+                            matTooltip="Ya existen pagos de esta reparación"
+                            matTooltipPosition="above">
                             <i class="bi bi-exclamation-diamond"></i>
                         </button>
                         <button

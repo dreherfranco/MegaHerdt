@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateOfferComponent } from './dialog-update-offer/dialog-update-offer.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 
 @Component({
   selector: 'app-edit-offers',
@@ -19,6 +20,7 @@ export class EditOffersComponent implements OnInit {
   offers: Array<ArticleOffer>;
   articles: Array<ArticleName>;
   statusSubmit: string;
+  paginate: Paginate;
   @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _offerService: OfferService, private _storageService: StorageService,
@@ -26,6 +28,7 @@ export class EditOffersComponent implements OnInit {
     this.offers = new Array<ArticleOffer>();
     this.articles = new Array<ArticleName>();
     this.statusSubmit = "";
+    this.paginate = new Paginate(1,3);
   }
 
   ngOnInit(): void {

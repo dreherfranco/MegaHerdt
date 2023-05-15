@@ -20,12 +20,18 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let category of categories; let i = index">
+      <tr *ngFor="let category of categories| paginate: 
+      {
+          itemsPerPage: this.paginate.recordsPerPage, 
+          currentPage:this.paginate.page
+      }; let i = index">
         <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{category.name}}" [(ngModel)]="category.name" ></td>
         <td><button class="btn btn-primary col-sm-12"  (click)="openDialogUpdate(category)" title="Editar"> <i class="bi bi-pencil-square"></i> </button></td>
         <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(category.id)" title="Eliminar"> <i class="bi bi-trash-fill"></i> </button></td>
       </tr>
     </tbody>
   </table>
-  
+  <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="categories.length > 6">
+    </pagination-controls>
 </div>

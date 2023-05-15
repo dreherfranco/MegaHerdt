@@ -20,7 +20,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let provider of providers; let i = index">
+      <tr *ngFor="let provider of providers | paginate: 
+      {
+          itemsPerPage: this.paginate.recordsPerPage, 
+          currentPage:this.paginate.page
+      }; let i = index">
         <th><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{provider.name}}"
             [(ngModel)]="provider.name"></th>
         <td><input class="form-control data-user" pattern="(^[0-9]+)" minlength="5" value="{{provider.phone}}"
@@ -34,4 +38,7 @@
       </tr>
     </tbody>
   </table>
+  <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="providers.length > 3">
+    </pagination-controls>
 </div>

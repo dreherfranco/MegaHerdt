@@ -50,13 +50,13 @@ export class CategoryGraphicComponent implements OnInit {
     datasets: [
       {
         data: []
-      },
+      }/*,
       {
         data: []
       },
       {
         data: []
-      }
+      }*/
     ]
   };
 
@@ -74,19 +74,19 @@ export class CategoryGraphicComponent implements OnInit {
       next: res => {
         this.categoryStatistics = res;
         this.barChartData.datasets[0].label = "Cantidad articulos";
-        this.barChartData.datasets[1].label = "Unidades compradas";
-        this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
+       // this.barChartData.datasets[1].label = "Unidades compradas";
+       // this.barChartData.datasets[2].label = "Unidades utilizadas por reparaciones";
 
         for (var i = 0; i < this.categoryStatistics.length; i++) {
           let articlesQuantity = this.categoryStatistics[i].articlesQuantity;
-          let purchasesQuantity = this.categoryStatistics[i].purchasesQuantity;
-          let reparationsQuantity = this.categoryStatistics[i].reparationsQuantity;
+          //let purchasesQuantity = this.categoryStatistics[i].purchasesQuantity;
+          //let reparationsQuantity = this.categoryStatistics[i].reparationsQuantity;
           
-          if(articlesQuantity > 0 || purchasesQuantity > 0 || reparationsQuantity > 0){
+          if(articlesQuantity > 0 /*|| purchasesQuantity > 0 || reparationsQuantity > 0*/){
             this.barChartData.labels?.push(this.categoryStatistics[i].name);
             articlesQuantity > 0 ? this.barChartData.datasets[0].data.push(articlesQuantity) : null;
-            purchasesQuantity > 0 ? this.barChartData.datasets[1].data.push(purchasesQuantity) : null;
-            reparationsQuantity > 0 ? this.barChartData.datasets[2].data.push(reparationsQuantity) : null;
+          //  purchasesQuantity > 0 ? this.barChartData.datasets[1].data.push(purchasesQuantity) : null;
+          //  reparationsQuantity > 0 ? this.barChartData.datasets[2].data.push(reparationsQuantity) : null;
           }
         }
         this.chart?.update();

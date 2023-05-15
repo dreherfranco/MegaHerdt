@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogUpdateBrandComponent } from './dialog-update-brand/dialog-update-brand.component';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { Paginate } from 'src/app/models/Paginate/Paginate';
 
 @Component({
   selector: 'app-edit-brands',
@@ -16,10 +17,12 @@ export class EditBrandsComponent implements OnInit {
   brands: Array<Brand>;
   statusSubmit: string;
   @ViewChild('content', { static: true }) content!: ElementRef;
-  
+  paginate: Paginate;
+
   constructor(private _storageService: StorageService, private _brandService: BrandService,public dialog: MatDialog) {
     this.brands = new Array<Brand>();
     this.statusSubmit = "";
+    this.paginate = new Paginate(1,6);
   }
 
 
