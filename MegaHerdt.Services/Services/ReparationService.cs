@@ -48,6 +48,11 @@ namespace MegaHerdt.Services.Services
             await this.reparationHelper.UpdateBudget(reparation, isAccepted/*, approximateTime*/);
         }
 
+        public async Task UpdateDecrementState(Reparation reparation)
+        {
+            await this.reparationHelper.UpdateDecrementState(reparation);
+        }
+
         public MailRequest mailRequest(Reparation reparation)
         {
             var total = reparation.Amount + reparation.TotalArticleAmount;

@@ -15,6 +15,7 @@
                 <th scope="col">Monto total articulos</th>
                 <th scope="col">Total</th>
                 <th scope="col"></th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -70,6 +71,10 @@
                 <td>
                     <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
                             class="bi bi-pencil-square"></i></button>
+                </td>
+                <td>
+                    <button class="btn btn-danger col-sm-12" title="Rechazar presupuesto" (click)="openDialogBackToBudget(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
+                            class="bi bi-trash-fill"></i></button>
                 </td>
             </tr>
 

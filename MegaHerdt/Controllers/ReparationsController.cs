@@ -82,6 +82,42 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Metodo implementado para volver atras en los estados de las reparaciones (principalmente de 'En Reparacion' hacia 'Presupuesto')
+        /// </summary>
+        /// <param name="reparationDTO"></param>
+        /// <returns></returns>
+        [HttpPost("update-decrement-state")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> UpdateDecrementState([FromBody] ReparationUpdateDTO reparationDTO)
+        {
+            try
+            {
+                var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
+                if (reparationDb.Bill is not null)
+                {
+                    var payments = Mapper.Map<List<Payment>>(reparationDb.Bill.Payments);
+                    reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                    reparationDb.Bill.Payments = payments;
+                }
+                else
+                {
+                    reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                }
+                await this.ReparationService.UpdateDecrementState(reparationDb);
+
+                //MAILER
+                //  reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
+                //    var mailRequest = this.ReparationService.mailRequest(reparationDb);
+                //       await this.MailService.SendEmailAsync(mailRequest);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
         [HttpPost("accept-budget")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [AuthorizeRoles(Role.Admin, Role.Empleado)]

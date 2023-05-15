@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ReparationCreation } from 'src/app/models/Reparation/ReparationCreation';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { ReparationUpdateBudget } from 'src/app/models/Reparation/ReparationUpdateBudget';
@@ -34,6 +35,12 @@ export class ReparationService {
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(reparation);
     return this._http.post(this.url + "/accept-budget", params, { headers: this.headers });
+  }
+
+  updateDecrementState(reparation: ReparationUpdate, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(reparation);
+    return this._http.post(this.url + "/update-decrement-state", params, { headers: this.headers });
   }
 
   getAll(token: string): Observable<any>{

@@ -83,6 +83,21 @@ namespace MegaHerdt.Helpers.Helpers
             }
         }
 
+        public async Task UpdateDecrementState(Reparation entity)
+        {
+            if (!isFinalState(entity))
+            {
+                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+                --entity.ReparationStateId;
+                
+                await this.repository.Update(entity);
+            }
+            else
+            {
+                throw new Exception("Reparation: couldn't update," + entity.ReparationStateId + "is final state");
+            }
+        }
+
         private bool isFinalState(Reparation entity)
         {
             return entity.ReparationStateId == 8;  // || entity.ReparationStateId == 7 

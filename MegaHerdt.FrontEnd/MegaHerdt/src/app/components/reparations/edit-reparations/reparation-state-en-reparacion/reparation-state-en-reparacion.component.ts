@@ -8,6 +8,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dialog-update-reparation.component';
 import { UpdateReparationStateENREPARACIONComponent } from './update-reparation-state-en-reparacion/update-reparation-state-en-reparacion.component';
+import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 
 @Component({
   selector: 'app-reparation-state-en-reparacion',
@@ -90,5 +91,38 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
       , reparation.employeeObservation, reparation.approximateTime);
+  }
+
+  // Abrir el dialogo para volver la reparacion a presupuesto
+  openDialogBackToBudget(reparation: Reparation){
+
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: reparation
+      });
+    dialogRef.componentInstance.mensajeConfirmacion = "¿Seguro quieres volver al estado 'En Presupuesto'?";
+    
+      dialogRef.afterClosed().subscribe((result: Reparation) => {
+      if(result != undefined){
+        this.updateDecrementState(result);
+      }
+    });
+  }
+
+  updateDecrementState(reparation: Reparation) {
+    var reparationUpdate = this.mapperReparation(reparation);
+    this._reparationService.updateDecrementState(reparationUpdate, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          console.log("error al actualizar reparacion");
+        } else {
+          this.loadReparations();
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
   }
 }

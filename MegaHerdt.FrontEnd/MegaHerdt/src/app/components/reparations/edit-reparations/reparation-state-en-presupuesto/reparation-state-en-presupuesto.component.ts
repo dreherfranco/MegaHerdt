@@ -75,6 +75,7 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
         disableClose:true,
         data: data
       });
+      dialogRef.componentInstance.mensajeConfirmacion = "¿Seguro quieres mover la reparación al estado 'Cancelado'?";
 
     dialogRef.afterClosed().subscribe((result: ReparationUpdateBudget) => {
       if(result != undefined){
