@@ -24,6 +24,32 @@
 
 
 <div class="d-flex flex-row p-3">
-    <app-purchase-income-expenses [purchasesIncomes]="purchasesIncomes" class="col-sm-6 m-1"></app-purchase-income-expenses>
-    <app-reparation-income-expenses [reparationsIncomes]="reparationsIncomes" class="col-sm-6 m-1"></app-reparation-income-expenses>
+
+  <mat-card class="alert-card col-sm-6 mx-auto text-center" *ngIf="purchasesIncomes.incomeExpenses.length == 0 && reparationsIncomes.incomeExpenses.length == 0">
+    <mat-card-header class="text-center mx-auto w-50">
+      <mat-card-title class="alert-title text-center mx-auto">No se encontraron ingresos/egresos en esta fecha</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      Intente buscando por otra fecha.
+    </mat-card-content>
+  </mat-card>
+
+    <app-purchase-income-expenses *ngIf="purchasesIncomes.incomeExpenses.length > 0" [purchasesIncomes]="purchasesIncomes" 
+    [ngClass]="
+    {
+      'col-sm-6':  purchasesIncomes.incomeExpenses.length > 0 && reparationsIncomes.incomeExpenses.length > 0, 
+      'col-sm-12 m-1': purchasesIncomes.incomeExpenses.length > 0 && reparationsIncomes.incomeExpenses.length == 0,
+      'm-1': purchasesIncomes.incomeExpenses.length > 0 && reparationsIncomes.incomeExpenses.length > 0
+    }">
+    </app-purchase-income-expenses>
+
+    <app-reparation-income-expenses *ngIf="reparationsIncomes.incomeExpenses.length > 0" 
+    [reparationsIncomes]="reparationsIncomes" 
+    [ngClass]="
+    {
+      'col-sm-6':  reparationsIncomes.incomeExpenses.length > 0 && purchasesIncomes.incomeExpenses.length > 0, 
+      'col-sm-12 m-1': reparationsIncomes.incomeExpenses.length > 0 && purchasesIncomes.incomeExpenses.length == 0,
+      'm-1': purchasesIncomes.incomeExpenses.length > 0 && reparationsIncomes.incomeExpenses.length > 0
+    }"
+    ></app-reparation-income-expenses>
 </div>
