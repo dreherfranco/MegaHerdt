@@ -181,8 +181,9 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                 });
 
             var user = new User() { Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe", Dni="42464099", Password= "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=", Name="Admin", Surname="Admin", Enabled=true, IsActive=true, CreatedDate= DateTime.UtcNow, UserName= "megaherdt.electronica@hotmail.com",NormalizedUserName= "MEGAHERDT.ELECTRONICA@HOTMAIL.COM", Email= "megaherdt.electronica@hotmail.com", NormalizedEmail= "MEGAHERDT.ELECTRONICA@HOTMAIL.COM", EmailConfirmed=false, PasswordHash= "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==", LockoutEnabled=true, TwoFactorEnabled=false };
+            var user2 = new User() { Id = "7c2e2a04-d48d-4dd7-a3b9-4474c400dcbe", Dni="45698746", Password= "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=", Name="Tomi", Surname="Zappa", Enabled=true, IsActive=true, CreatedDate= DateTime.UtcNow, UserName= "conefecto77@gmail.com",NormalizedUserName= "CONEFECTO77@GMAIL.COM", Email= "conefecto77@gmail.com", NormalizedEmail= "CONEFECTO77@GMAIL.COM", EmailConfirmed=false, PasswordHash= "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==", LockoutEnabled=true, TwoFactorEnabled=false };
             modelBuilder.Entity<User>()
-               .HasData( user );
+               .HasData( user, user2 );
 
             modelBuilder.Entity<IdentityUserRole<string>>()
                .HasData( new IdentityUserRole<string>() { RoleId= "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", UserId= "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe" } );
