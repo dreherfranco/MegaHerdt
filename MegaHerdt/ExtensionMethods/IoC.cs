@@ -20,7 +20,7 @@ namespace MegaHerdt.API.ExtensionMethods
         {
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ApplicationDbContext>(
-                            options =>options.UseSqlite(connectionString, b => b.MigrationsAssembly("MegaHerdt.API"))
+                            options =>options.UseSqlServer(connectionString, b => b.MigrationsAssembly("MegaHerdt.API"))
                            //options => options.UseNpgsql(connectionString, b => b.MigrationsAssembly("MegaHerdt.API"))
                            );
 

@@ -39,6 +39,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
+            #region User
             modelBuilder.Entity<User>()
                        .HasIndex(u => u.Dni)
                        .IsUnique();
@@ -46,40 +47,66 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             modelBuilder.Entity<User>()
                        .Property(u => u.Dni)
                        .IsRequired(false);
+            #endregion
 
+            #region Article
             modelBuilder.Entity<Article>()
            .HasIndex(u => u.Code)
            .IsUnique();
 
             modelBuilder.Entity<Article>()
                 .Ignore(x => x.UnitValueWithOffer);
+            #endregion
 
+            #region Reparation
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Client)
                    .WithMany(u => u.ClientReparations)
-                   .HasForeignKey(r => r.ClientId);
+                   .HasForeignKey(r => r.ClientId)
+                   .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Reparation>()
                    .HasOne(r => r.Employee)
                    .WithMany(u => u.EmployeeReparations)
-                   .HasForeignKey(r => r.EmployeeId);
+                   .HasForeignKey(r => r.EmployeeId)
+                   .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Reparation>()
                 .HasOne(x => x.Bill)
                 .WithOne(x => x.Reparation)
                 .HasForeignKey<Bill>(x => x.ReparationId);
+            #endregion
 
+            #region ReparationArticle
             modelBuilder.Entity<ReparationArticle>()
                 .HasKey(x => new { x.ArticleId, x.ReparationId });
+            #endregion
 
+            #region Purchase 
             modelBuilder.Entity<Purchase>()
                 .HasOne(x => x.Bill)
                 .WithOne(x => x.Purchase)
                 .HasForeignKey<Bill>(x => x.PurchaseId);
-            
+
+            modelBuilder.Entity<Purchase>()
+                .HasOne(p => p.Shipment)
+                .WithOne(s => s.Purchase)
+                .HasForeignKey<Shipment>(s => s.PurchaseId)
+                .OnDelete(DeleteBehavior.Restrict);
+            #endregion
+
+            #region PurchaseClaim
+            modelBuilder.Entity<PurchaseClaim>()
+                .HasOne(p => p.Purchase)
+                .WithMany(p => p.PurchasesClaims)
+                .HasForeignKey(p => p.PurchaseId)
+                .OnDelete(DeleteBehavior.Restrict);
+            #endregion
+
+            #region PurchaseArticle
             modelBuilder.Entity<PurchaseArticle>()
                 .HasKey(x => new { x.ArticleId, x.PurchaseId });
-
+            #endregion
 
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
@@ -152,6 +179,14 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                     reparationState, reparationState2, reparationState3, reparationState4, 
                     reparationState5, reparationState6, reparationState7, reparationState8,                
                 });
+
+            var user = new User() { Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe", Dni="42464099", Password= "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=", Name="Admin", Surname="Admin", Enabled=true, IsActive=true, CreatedDate= DateTime.UtcNow, UserName= "megaherdt.electronica@hotmail.com",NormalizedUserName= "MEGAHERDT.ELECTRONICA@HOTMAIL.COM", Email= "megaherdt.electronica@hotmail.com", NormalizedEmail= "MEGAHERDT.ELECTRONICA@HOTMAIL.COM", EmailConfirmed=false, PasswordHash= "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==", LockoutEnabled=true, TwoFactorEnabled=false };
+            modelBuilder.Entity<User>()
+               .HasData( user );
+
+            modelBuilder.Entity<IdentityUserRole<string>>()
+               .HasData( new IdentityUserRole<string>() { RoleId= "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d", UserId= "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe" } );
+
         }
     }
 }

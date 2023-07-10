@@ -9,7 +9,7 @@ namespace MegaHerdt.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = Role.Admin)]
     public class RolesController : ControllerBase
     {
         private readonly RoleService RoleService;
