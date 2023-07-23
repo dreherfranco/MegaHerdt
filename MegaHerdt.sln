@@ -15,7 +15,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MegaHerdt.Repository", "Meg
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MegaHerdt.Helpers", "MegaHerdt.Helpers\MegaHerdt.Helpers.csproj", "{70F2C074-0CFE-4D97-8A1F-657E153B3578}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MegaHerdt.FrontEnd", "MegaHerdt.FrontEnd\MegaHerdt.FrontEnd.csproj", "{845884C6-B559-48D3-9D7F-4840B22A54EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MegaHerdt.FrontEnd", "MegaHerdt.FrontEnd\MegaHerdt.FrontEnd.csproj", "{845884C6-B559-48D3-9D7F-4840B22A54EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D253210C-4A37-4C1D-B993-8FAF47A146C7}"
+	ProjectSection(SolutionItems) = preProject
+		Bugs.txt = Bugs.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

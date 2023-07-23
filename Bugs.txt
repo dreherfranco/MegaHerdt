@@ -1,0 +1,3 @@
+Zappa 22/07
+* INPUT nombre articulo en crear articulo no pemite el ingreso de numeros.
+* INPUT de nombre de marca en crear marca no me deja q la marca sea longitud = 2. Es necesario para marcas como HP y LG 
