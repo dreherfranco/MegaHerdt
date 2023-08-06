@@ -8,6 +8,7 @@ import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStateENPRESUPUESTOComponent } from './update-reparation-state-en-presupuesto/update-reparation-state-en-presupuesto.component';
+import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 
 @Component({
   selector: 'app-reparation-state-en-presupuesto',
@@ -67,6 +68,46 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
       }
     })
   }
+
+  openDialogBackToRevision(reparation: Reparation){
+
+    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
+      {
+        disableClose:true,
+        data: reparation
+      });
+    dialogRef.componentInstance.mensajeConfirmacion = "¿Seguro quieres volver al estado 'En Revisión'?";
+    
+      dialogRef.afterClosed().subscribe((result: Reparation) => {
+      if(result != undefined){
+        this.updateDecrementState(result);
+      }
+    });
+  }
+
+  updateDecrementState(reparation: Reparation) {
+    var reparationUpdate = this.mapperReparation(reparation);
+    this._reparationService.updateDecrementState(reparationUpdate, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          console.log("error al actualizar reparacion");
+        } else {
+          this.loadReparations();
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    })
+  }
+
+  mapperReparation(reparation: Reparation): ReparationUpdate {
+    let identity = this._storageService.getIdentity();
+    return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
+      reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
+      , reparation.employeeObservation, reparation.approximateTime);
+  }
+
 
   openDialogRejectBudget(reparationId: number){
     let data = new ReparationUpdateBudget(reparationId, false, new Date());
