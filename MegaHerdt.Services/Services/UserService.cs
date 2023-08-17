@@ -18,12 +18,13 @@ namespace MegaHerdt.Services.Services
         {
             
             var users = AuthHelper.Get()
-                .Where(x => x.Enabled);
-            users = await this.UpdateActivesUsers(users, jwtKey);
-            return users;
+                .Where(x => x.Enabled).ToList();
+
+            var updatedUsers = await this.UpdateActivesUsers(users, jwtKey);
+            return updatedUsers.ToList();
         }
 
-        private async Task<IQueryable<User>> UpdateActivesUsers(IQueryable<User> users, string jwtKey)
+        private async Task<IEnumerable<User>> UpdateActivesUsers(IEnumerable<User> users, string jwtKey)
         {
             foreach (var user in users)
             {
