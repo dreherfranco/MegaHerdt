@@ -1,3 +1,8 @@
 Zappa 22/07
 * INPUT nombre articulo en crear articulo no pemite el ingreso de numeros.
-* INPUT de nombre de marca en crear marca no me deja q la marca sea longitud = 2. Es necesario para marcas como HP y LG 
+* INPUT de nombre de marca en crear marca no me deja q la marca sea longitud = 2. Es necesario para marcas como HP y LG
+
+Zappa 17/08
+* Se queda iterando algo por un evento, en el listado de provisiones(demoran en cargar los articulos cuando se le da al drop de articulo puede ser por eso).
+* Las columnas de el listado no se ajustan al contenido. o la de nombre no se alcanza a ver q articulo es.
+* Ver porq se ejecuta el generarCode cuando creamos categoria.
