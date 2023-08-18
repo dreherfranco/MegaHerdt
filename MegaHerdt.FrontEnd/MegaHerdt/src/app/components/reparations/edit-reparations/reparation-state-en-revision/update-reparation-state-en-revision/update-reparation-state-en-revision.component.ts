@@ -44,6 +44,7 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
           console.log("error al obtener articulos");
         } else {
           this.articles = response;
+          this.articles = this.articles.filter(x => x.stock > 0);
         }
       },
       error: (err) => {
@@ -57,9 +58,12 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
     //buscar el articulo para extraer el nombre
     for (let article of this.articles) {
       if (article.id == this.reparationArticle.articleId)
+      {
         articleName = article.name;
+        var reparationArticle = new ReparationArticle(this.reparationArticle.articleId, this.reparationArticle.articleQuantity,0,articleName);
+        this.reparation.reparationsArticles.push(reparationArticle);
+      }
     }
-    var reparationArticle = new ReparationArticle(this.reparationArticle.articleId, this.reparationArticle.articleQuantity,0,articleName);
-    this.reparation.reparationsArticles.push(reparationArticle);
+    
   }
 }

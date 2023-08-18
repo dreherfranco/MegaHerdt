@@ -68,7 +68,7 @@
                     <app-user-settings></app-user-settings>
                 </ul>
               </div>
-              <div class="btn-group" dropdown *ngIf="authenticated()">
+              <div class="btn-group" dropdown *ngIf="authenticated() && isAdmin()" >
                 <a id="button-basic" dropdownToggle type="button" 
                     class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
                     aria-controls="dropdown-basic">

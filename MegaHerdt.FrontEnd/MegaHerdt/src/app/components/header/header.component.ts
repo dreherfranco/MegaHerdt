@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
       }
     });
     
+    
   }
 
   authenticated(): boolean{
@@ -30,6 +31,12 @@ export class HeaderComponent implements OnInit {
   isEmployeeOrAdmin(): boolean{
     let expectedsRoles = new Array<string>();
     expectedsRoles.push(Role.ADMIN, Role.EMPLEADO);
+    return this._storageService.areExpectedRoles(expectedsRoles);
+  }
+
+  isAdmin(): boolean{
+    let expectedsRoles = new Array<string>();
+    expectedsRoles.push(Role.ADMIN);
     return this._storageService.areExpectedRoles(expectedsRoles);
   }
 }
