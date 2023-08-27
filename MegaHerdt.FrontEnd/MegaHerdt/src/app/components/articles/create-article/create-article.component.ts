@@ -43,13 +43,19 @@ export class CreateArticleComponent implements OnInit {
     this.article.categoryId = this.categoryId;
     this.article.brandId = this.brandId;
     this._articleService.sendFormData(this.article, "create").subscribe({
-      next: (response) => {
+      next: (response) => { 
+        console.log(response);
         if (response.error) {
           console.log("no se pudo crear el articulo");
           this.statusSubmit = "failed";
         } else {
           this.statusSubmit = "success";
-          window.location.reload();
+
+          this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0);
+          this.imageOk = false;
+          this.categoryId = 0;
+          this.brandId = 0;
+        //  window.location.reload();
         }
       },
       error: (err) => {

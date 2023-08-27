@@ -46,19 +46,22 @@
             };
             let i = index">
                 <th>
-                    <input id="article" name="article" class="form-control data-user"
-                    #article="ngModel" [(ngModel)]="articleProvider.article.name" disabled required>
+                    <span class="data-user" disabled>
+                        {{articleProvider.article.name}}
+                    </span>
                 </th>
                 <td>
-                    <input id="articleQuantity" name="articleQuantity" class="form-control data-user" type="number" min="0"
-                        #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" disabled required>
+                    <span class="data-user" disabled>
+                        {{articleProvider.articleQuantity}}
+                    </span>
                 </td>
                 <td>
-                    <input id="provider" name="article" class="form-control data-user"
-                    #provider="ngModel" [(ngModel)]="articleProvider.provider.email" disabled required>
+                    <span class="data-user" disabled>
+                        {{articleProvider.provider.email}}
+                    </span>
                 </td>
                 <td>
-                    <span class="form-control data-user disabled">
+                    <span class="data-user" disabled>
                         {{articleProvider.provisionDate | date: 'dd/MM/yyyy' }}
                     </span>
                 </td>

@@ -89,12 +89,20 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet("get-by-name/{name}")]
-        public ActionResult<ArticleDTO> GetByName(string name)
+        public async Task<ActionResult<ArticleDTO>> GetByName(string name)
         {
             try
             {
                 Expression<Func<Article, bool>> filter = x => x.Name == name;
                 var article = articleService.GetBy(filter).FirstOrDefault();
+              
+                if(article is null)
+                {
+                    await Task.Delay(1500);
+                    article = articleService.GetBy(filter).FirstOrDefault();
+                }
+
+                await Task.CompletedTask;
                 return this.Mapper.Map<ArticleDTO>(article);
             }
             catch (Exception ex)

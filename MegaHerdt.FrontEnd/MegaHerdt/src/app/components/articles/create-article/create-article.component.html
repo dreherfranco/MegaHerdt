@@ -1,7 +1,18 @@
 <div class="card w-50 mx-auto">
     <h1 class="text-center m-2">Crear artículo</h1>
-    <form enctype="multipart/form-data" #articleForm="ngForm" (ngSubmit)="onSubmit(articleForm)"
+
+   
+
+    <form enctype="multipart/form-data" #articleForm="ngForm" 
         class="p-2 w-75 mx-auto">
+        
+        <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
+            El artículo se creo correctamente
+        </p>
+        <p class=" alert alert-danger mt-3" *ngIf="statusSubmit == 'failed'">
+            Error al intentar crear el artículo
+        </p>
+
         <div class="row">
             <div class="form-group mb-3 col-sm-6">
                 <label for="name"><b>(*)Nombre: </b></label>
@@ -55,13 +66,8 @@
             <b class="required">(*)Obligatorio</b>
         </div>
         <p>
-            <input type="submit" class="btn btn-primary mt-3" [disabled]="disabledForm(articleForm)" value="Crear" />
+            <button type="button" (click)="onSubmit(articleForm)" class="btn btn-primary mt-3" [disabled]="disabledForm(articleForm)">Crear</button>
         </p>
-        <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
-            El artículo se creo correctamente
-        </p>
-        <p class=" alert alert-danger mt-3" *ngIf="statusSubmit == 'failed'">
-            Error al intentar crear el artículo
-        </p>
+       
     </form>
 </div>

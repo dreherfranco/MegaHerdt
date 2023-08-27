@@ -1,10 +1,10 @@
 <h1 class="text-center">Crear reparacion</h1>
-<form #reparationForm="ngForm" (ngSubmit)="onSubmit(reparationForm)" class="w-50 mx-auto">
+<form #reparationForm="ngForm" (ngSubmit)="onSubmit(reparationForm)" class="w-75 mx-auto">
     <div class="row">
         <div class="form-group mb-3 col-sm-6">
             <label for="client" class="m-1"><b>(*)Cliente: </b></label>
             <div class="row m-1">
-                <a (click)="openDialogAdminCreateUser()" class="col-sm-2 btn text-white bg-primary" title="Crear usuario">
+                <a (click)="openDialogAdminCreateUser()" class="col-sm-1 btn text-white bg-primary" title="Crear usuario">
                     <i class="bi bi-person-plus-fill"></i>
                 </a>
                 <select class="form-select data-user w-75" name="selectArticle" [(ngModel)]="reparation.clientId">
@@ -16,12 +16,12 @@
         </div>
 
         <div class="form-group mb-3 col-sm-4">
-            <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
-            <span class="form-control data-user" *ngIf="reparationsStates && reparationsStates[0] != null">{{ reparationsStates[0].name }}</span>
+            <label for="reparationState" class="m-1"><b>Estado de la reparacion: 
+                <span  *ngIf="reparationsStates && reparationsStates[0] != null">{{ reparationsStates[0].name }}</span>
+            </b></label>
         </div>
         <div class="form-group mb-3 col-sm-2">
-            <label for="date" class="m-1"><b>Fecha: </b></label>
-            <span class="form-control data-user">{{ reparation.date | date: 'shortDate'  }}</span>
+            <label for="date" class="m-1"><b>Fecha: {{ reparation.date | date: 'shortDate'  }}</b></label>
         </div>
     </div>
     <div class="form-group">
