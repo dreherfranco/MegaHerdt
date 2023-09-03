@@ -206,11 +206,18 @@ namespace MegaHerdt.API.Mapper
 
             #region PurchaseArticle
             CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();
+
             CreateMap<PurchaseArticle, PurchaseArticleDTO>();
             #endregion PurchaseArticle
 
             #region PurchasePayment
-            CreateMap<PurchasePaymentConfirmDTO, PurchasePaymentData>();
+           // CreateMap<PurchasePaymentConfirmDTO, PurchasePaymentData>();
+
+            //MERCADO PAGO
+            CreateMap<PurchasePaymentMPDTO, PurchasePaymentMP>();
+            CreateMap<PurchasePaymentPayerMPDTO, PurchasePaymentPayerMP>();
+            CreateMap<PurchasePaymentPayerIdentificationMPDTO, PurchasePaymentPayerIdentificationMP>();
+
             CreateMap<Payment, ReparationPaymentDTO>()
                 .ReverseMap();
             CreateMap<Payment, PurchasePaymentDTO>()

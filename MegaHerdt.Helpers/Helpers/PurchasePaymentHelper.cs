@@ -1,7 +1,10 @@
 ﻿using MegaHerdt.Models.Models;
 using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Repository.Base;
+using MercadoPago.Client.Common;
+using MercadoPago.Client.Payment;
 using Stripe;
+using mercadopago = MercadoPago.Resource.Payment;
 
 namespace MegaHerdt.Helpers.Helpers
 {
@@ -15,18 +18,38 @@ namespace MegaHerdt.Helpers.Helpers
             this.articleRepository = articleRepository;
         }
 
-        public async Task<Subscription> AddPayment(PurchasePaymentData purchasePaymentData)
+        public async Task<mercadopago.Payment> AddPaymentMP(PurchasePaymentMP purchasePaymentData)
         {
-            var customer = await this.CreateCustomer(purchasePaymentData.ClientEmail, purchasePaymentData.StripeToken);
-            var stripeProducts = await this.CreateProduct(purchasePaymentData.PurchaseArticles);
-            var prices = await this.CreatePrice(purchasePaymentData.Installments, purchasePaymentData.PurchaseArticles, stripeProducts);
-            var subscription = await this.CreateSubscription(customer, prices, purchasePaymentData.PurchaseArticles);
+            // Construyo la Request para mandar a la API de MercadoPago y crear el pago.
+            var paymentRequest = new PaymentCreateRequest
+            {
+                TransactionAmount = purchasePaymentData.Transaction_Amount,
+                Token = purchasePaymentData.Token,
+                Description = purchasePaymentData.Description,
+                Installments = purchasePaymentData.Installments,
+                PaymentMethodId = purchasePaymentData.Payment_Method_Id,
+                Payer = new PaymentPayerRequest
+                {
+                    Email = purchasePaymentData?.Payer?.Email,
+                    Identification = new IdentificationRequest
+                    {
+                        Type = purchasePaymentData?.Payer?.Identification?.Type,
+                        Number = purchasePaymentData?.Payer?.Identification?.Number,
+                    },
+                    //FirstName = "First Name"
+                }
+            };
 
-            if (subscription.Status == "active")
+            var client = new PaymentClient();
+            // Ejecuto la accion de pago.
+            mercadopago.Payment payment = await client.CreateAsync(paymentRequest);
+
+            // Si el pago fue aprobado se debe dejar constancia en la bdd de los productos que fueron comprados y actualizar el stock.
+            if (payment.Status == "approved")
             {
                 var purchase = await this.CreatePurchase(purchasePaymentData);
                 await this.UpdateArticlesStock(purchasePaymentData.PurchaseArticles);
-                return subscription;
+                return payment;
             }
             else
             {
@@ -34,16 +57,17 @@ namespace MegaHerdt.Helpers.Helpers
             }
 
         }
-        private async Task<Purchase> CreatePurchase(PurchasePaymentData purchasePaymentData)
+
+        private async Task<Purchase> CreatePurchase(PurchasePaymentMP purchasePaymentData)
         {
-            
-            var purchase = new Purchase() { ClientId = purchasePaymentData.ClientId, Date = DateTime.Now};
+
+            var purchase = new Purchase() { ClientId = purchasePaymentData.ClientId, Date = DateTime.Now };
             var payments = this.InstancePayments(purchasePaymentData);
-            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number="123335554", Payments = payments };
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "12333555", SaleNumber = "00001", Payments = payments };
             purchase.Bill = bill;
 
             var purchasesArticles = new List<PurchaseArticle>();
-            foreach(var purchaseArticle in purchasePaymentData.PurchaseArticles)
+            foreach (var purchaseArticle in purchasePaymentData.PurchaseArticles)
             {
                 var newPurchaseArticle = new PurchaseArticle()
                 {
@@ -51,17 +75,19 @@ namespace MegaHerdt.Helpers.Helpers
                     ArticlePriceAtTheMoment = purchaseArticle.ArticlePriceAtTheMoment,
                     ArticleQuantity = purchaseArticle.ArticleQuantity
                 };
-               purchasesArticles.Add(newPurchaseArticle);
+                purchasesArticles.Add(newPurchaseArticle);
             }
             purchase.PurchasesArticles = purchasesArticles;
 
+            // Si la compra tiene Envio se debe asignar el correspondiente seleccionado.
             if (purchasePaymentData.HasShipment)
             {
-                purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId };            
+                purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId.Value };
             }
             return await this.purchaseRepository.Add(purchase);
         }
 
+   
         private async Task UpdateArticlesStock(List<PurchaseArticleData> purchaseArticles)
         {
             foreach(var purchaseArticle in purchaseArticles)
@@ -71,124 +97,10 @@ namespace MegaHerdt.Helpers.Helpers
                 await this.articleRepository.Update(article);
             }
         }
-        private async Task<Customer> CreateCustomer(string customerEmail, string stripeToken)
-        {
-            var customerService = new CustomerService();
+  
+    
 
-            var customer = await customerService.CreateAsync(new CustomerCreateOptions
-            {
-                Email = customerEmail,
-                Source = stripeToken
-            });
-            return customer;
-        }
-
-        private async Task<List<Product>> CreateProduct(List<PurchaseArticleData> purchasesArticles)
-        {
-            var service = new ProductService();
-            var productsStripe = new List<Product>();
-
-            /* foreach (var purchaseArticle in purchasesArticles)
-             {
-                 var options = new ProductCreateOptions
-                 {
-                     Name = purchaseArticle.ArticleName,
-                 };
-                  productsStripe.Add(await service.CreateAsync(options));
-
-             }*/
-            var options = new ProductCreateOptions
-            {
-                Name = "Purchase",
-            };
-            productsStripe.Add(await service.CreateAsync(options));
-
-            return productsStripe;
-        }
-
-        private async Task<List<Price>> CreatePrice(int installmentsQuantity, List<PurchaseArticleData> purchasesArticles, List<Product> stripeProducts)
-        {
-            var service = new PriceService();
-            var prices = new List<Price>();
-            var total = 0.0;
-
-            /*foreach (var stripeProduct in stripeProducts)
-            {       
-                
-                var purchaseArticle = purchasesArticles.Where(x => x.ArticleName.Contains(stripeProduct.Name)).FirstOrDefault();      
-                var options = new PriceCreateOptions
-                {
-                    Nickname = "Installment",
-                    Product = stripeProduct.Id,
-                    UnitAmount = (long)purchaseArticle.ArticlePriceAtTheMoment * 100,
-                    Currency = "ars",
-                    Recurring = new PriceRecurringOptions
-                    {
-                        Interval = "month",
-                        IntervalCount = installmentsQuantity,
-                        UsageType = "licensed",
-                    },
-                };
-                var price = await service.CreateAsync(options);
-
-                prices.Add(price);
-            }*/
-            foreach(var purchaseArticle in purchasesArticles)
-            {
-                total += purchaseArticle.ArticlePriceAtTheMoment;
-            }
-
-            var options = new PriceCreateOptions
-            {
-                Nickname = "Installment",
-                Product = stripeProducts[0].Id,
-                UnitAmount = (long)(total * 100),
-                Currency = "ars",
-                Recurring = new PriceRecurringOptions
-                {
-                    Interval = "month",
-                    IntervalCount = installmentsQuantity,
-                    UsageType = "licensed",
-                },
-            };
-            var price = await service.CreateAsync(options);
-
-            prices.Add(price);
-
-            return prices;
-        }
-
-        private async Task<Subscription> CreateSubscription(Customer customer, List<Price> prices, List<PurchaseArticleData> purchasesArticles)
-        {
-            var productService = new ProductService();
-            var subscriptionCreateOptions = new List<SubscriptionItemOptions>();
-            foreach (var price in prices)
-            {
-                var product = productService.Get(price.ProductId);
-           //     var purchaseArticle = purchasesArticles.Where(x => x.ArticleName.Contains(product.Name)).FirstOrDefault();
-                var subscriptionItemOptions = new SubscriptionItemOptions
-                {
-                    Price = price.Id,
-                    Quantity = 1
-                };
-                subscriptionCreateOptions.Add(subscriptionItemOptions);
-            }
-
-
-            var optionsSub = new SubscriptionCreateOptions
-            {
-                Customer = customer.Id,
-                Items = subscriptionCreateOptions,
-                OffSession = true,         
-                CancelAt = DateTime.Now.AddMonths(1)
-            };
-
-            var subscriptionService = new SubscriptionService();
-            var subscription = await subscriptionService.CreateAsync(optionsSub);
-            return subscription;
-        }
-
-        private List<Payment> InstancePayments(PurchasePaymentData purchasePaymentData)
+        private List<Payment> InstancePayments(PurchasePaymentMP purchasePaymentData)
         {
             var payments = new List<Payment>();
             var amount = 0.0;
@@ -197,13 +109,13 @@ namespace MegaHerdt.Helpers.Helpers
             {
                 var paymentMethod = new Models.Models.PaymentMethod()
                 {
-                    InstallmentQuantity = purchasePaymentData.Installments,
+                    InstallmentQuantity = purchasePaymentData.Installments.Value,
                     StartValidity = DateTime.Now.AddMonths(i),
                     EndValidity = DateTime.Now.AddMonths(i + 1),
                 };
                 var payment = new Payment()
                 {
-                    Amount =(float)(amount / purchasePaymentData.Installments),
+                    Amount = (float)(amount / purchasePaymentData.Installments),
                     PaymentDate = DateTime.Now.AddMonths(i),
                     PaymentMethod = paymentMethod,
                 };
@@ -211,7 +123,6 @@ namespace MegaHerdt.Helpers.Helpers
             }
             return payments;
         }
-
 
     }
 }

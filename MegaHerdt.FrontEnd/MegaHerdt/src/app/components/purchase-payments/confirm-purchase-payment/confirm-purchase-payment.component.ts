@@ -21,7 +21,14 @@ import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
  */
 declare global {
   interface Window {
+    // Monto total del carrito.
     amount: number;
+
+    // Articulos en el carrito.
+    purchaseArticles: Array<PurchaseArticleCreation>;
+
+    // Identidad del usuario logueado.
+    identity: UserDetail;
   }
 }
 
@@ -78,14 +85,18 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
     // SETEO EL MONTO DEL CARRITO
     window.amount = this.purchaseAmount;
-    
+    // Dejo los articulos del carrito seteados globalmente.
+    window.purchaseArticles = this.getPurchasesArticles();
+    // Dejo la identidad de usuario logueado seteada globalmente.
+    window.identity = this._storageService.getIdentity();
+
     script.textContent = `
     setTimeout(function() {
       console.log('DOMContentLoaded event fired');
 
       // MUESTRO EL MONTO DEL CARRITO
       console.log(window.amount);
-
+      console.log(window.purchaseArticles);
       const backendURL = "https://localhost:7032"; // Reemplaza con la URL de tu backend
       const endpoint = "/api/PurchasePayments/confirm-payment-mp";
       
@@ -98,8 +109,10 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         const settings = {
           initialization: {
             // PROBAR SACAR EL MONTO DINAMICAMENTE DEL TOTAL DEL CARRITO
-            amount: 100, // monto a ser pago
+            amount: window.amount, // monto a ser pago
             payer: {
+              // EMAIL PARA HACER LAS PRUEBAS EN MERCADO PAGO
+              // AGREGAR OTROS EMAILS PARA HACER MAS PRUEBAS
               email: "",
             },
           },
@@ -118,7 +131,11 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
               // callback llamado cuando Brick esté listo
             },
             onSubmit: (cardFormData) => {
-              
+              // ENVIO LOS DATOS DE LOS ARTICULOS QUE SE VAN A COMPRAR
+              cardFormData.purchaseArticles = window.purchaseArticles;
+              cardFormData.clientEmail = window.identity.email;
+              cardFormData.clientId = window.identity.id;
+
               //  callback llamado cuando el usuario haga clic en el botón enviar los datos
               //  ejemplo de envío de los datos recolectados por el Brick a su servidor
               return new Promise((resolve, reject) => {
@@ -130,10 +147,13 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
                   body: JSON.stringify(cardFormData)
                 })
                   .then((response) => {
+
+                    console.log(response);
                     // recibir el resultado del pago
                     resolve();
                   })
                   .catch((error) => {
+                    console.log(error);
                     // tratar respuesta de error al intentar crear el pago
                     reject();
                   })
@@ -141,6 +161,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
             },
             onError: (error) => {
               // callback llamado para todos los casos de error de Brick
+              console.log(error);
             },
           },
         };
@@ -153,8 +174,13 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     document.head.appendChild(script);
   }
 
-  test(): any{
-    console.log("prueba desde componente .ts");
+  getPurchasesArticles(): PurchaseArticleCreation[]{
+    var cartArticles: CartArticleDetail[] = this._cartService.getCartFromStorage();
+    var purchasesArticles: PurchaseArticleCreation[] = [];
+    for(var i=0; i<cartArticles.length; i++){
+       purchasesArticles.push(cartArticles[i].purchaseArticle);
+    }
+    return purchasesArticles;
   }
 
 /*

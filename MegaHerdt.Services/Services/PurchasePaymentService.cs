@@ -1,6 +1,8 @@
 ﻿
 using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models.PaymentData;
+using MercadoPago.Client.Payment;
+using mercadopago = MercadoPago.Resource.Payment;
 using Stripe;
 
 namespace MegaHerdt.Services.Services
@@ -13,9 +15,15 @@ namespace MegaHerdt.Services.Services
             this._helper = _helper;
         }
 
-        public async Task<Subscription> AddPayment(PurchasePaymentData purchasePaymentData)
+       // [Obsolete]
+        //public async Task<Subscription> AddPayment(PurchasePaymentData purchasePaymentData)
+        //{
+        //    return await this._helper.AddPayment(purchasePaymentData);
+        //}
+
+        public async Task<mercadopago.Payment> AddPaymentMP(PurchasePaymentMP purchasePaymentData)
         {
-            return await this._helper.AddPayment(purchasePaymentData);
+            return await this._helper.AddPaymentMP(purchasePaymentData);
         }
     }
 }

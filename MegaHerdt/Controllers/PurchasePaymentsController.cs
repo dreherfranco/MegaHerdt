@@ -2,6 +2,7 @@
 using MegaHerdt.API.DTOs.PurchasePayment;
 using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Services.Services;
+using MercadoPago.Client.Common;
 using MercadoPago.Client.Customer;
 using MercadoPago.Client.Payment;
 using MercadoPago.Client.Preference;
@@ -26,46 +27,17 @@ namespace MegaHerdt.API.Controllers
             this.mapper = mapper;
         }
 
-        [HttpPost("confirm-payment")]
-        public async Task<IActionResult> ConfirmPayment([FromBody] PurchasePaymentConfirmDTO purchasePaymentDTO)
-        {
-            try
-            {  
-                var purchasePaymentData = this.mapper.Map<PurchasePaymentData>(purchasePaymentDTO);
-                var subscription = await this.purchasePaymentService.AddPayment(purchasePaymentData);
-                return Ok(new { subscription = subscription });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
         [HttpPost("confirm-payment-mp")]
         public async Task<IActionResult> ConfirmPaymentMP([FromBody] PurchasePaymentMPDTO purchasePaymentDTO)
         {
             try
             {
-                var request = new PreferenceRequest
-                {
-                    Items = new List<PreferenceItemRequest>
-                    {
-                        new PreferenceItemRequest
-                        {
-                            Title = "Mi producto",
-                            Quantity = 1,
-                            CurrencyId = "ARS",
-                            UnitPrice = 75.56m,
-                        },
-                    },
-                };
+                
+                var purchasePaymentData = this.mapper.Map<PurchasePaymentMP>(purchasePaymentDTO);
 
-                // Crea la preferencia usando el client
-                var client = new PreferenceClient();
-                Preference preference = await client.CreateAsync(request);
+                var paymentResponse = await this.purchasePaymentService.AddPaymentMP(purchasePaymentData);
 
-
-                return Ok();
+                return Ok(paymentResponse);
             }
             catch (Exception ex)
             {
