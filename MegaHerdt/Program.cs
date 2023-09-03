@@ -4,6 +4,7 @@ using MegaHerdt.API.FileManager.Interface;
 using MegaHerdt.Models.Models;
 using MegaHerdt.Services.Services;
 using MegaHerdt.Services.Services.Interfaces;
+using MercadoPago.Config;
 using Stripe;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,6 +28,7 @@ IoC.RepositoryInjection(builder);
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 builder.Services.AddTransient<IMailerService, MailerService>();
 StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe")["apiKey"];
+MercadoPagoConfig.AccessToken = builder.Configuration.GetSection("MercadoPago")["apiKey"];
 
 builder.Services.AddCors(options =>
 {

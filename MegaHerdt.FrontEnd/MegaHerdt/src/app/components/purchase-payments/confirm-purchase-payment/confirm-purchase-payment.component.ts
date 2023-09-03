@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
@@ -16,6 +16,15 @@ import { UserService } from 'src/app/services/users/user.service';
 import { availablePlans } from 'src/app/utils/AvailablePlans';
 import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 
+/**
+ * Defino la interfaz para definir el monto del carrito
+ */
+declare global {
+  interface Window {
+    amount: number;
+  }
+}
+
 @Component({
   selector: 'app-confirm-purchase-payment',
   templateUrl: './confirm-purchase-payment.component.html',
@@ -23,14 +32,17 @@ import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 })
 export class ConfirmPurchasePaymentComponent implements OnInit {
 
-  @ViewChild(StripeCardComponent) card: StripeCardComponent;
+  //@Output() activateScript: EventEmitter<void> = new EventEmitter();
+  purchaseAmount: number = 0;
+
+  /*@ViewChild(StripeCardComponent) card: StripeCardComponent;
   availablePlans: Array<PaymentPlan> = availablePlans;
   planSelected: PaymentPlan = new PaymentPlan(0, '', '');
   stripeToken: string = "";
   showCreateTokenForm: boolean = true;
   showShipmentForm: boolean = false;
   showPlanSelectForm: boolean = false;
-  purchaseAmount: number = 0;
+  
   cardOptions: StripeCardElementOptions = cardOptions;
   userAddresses: UserAddresses = new UserAddresses(new Array<AddressUpdate>());
   addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
@@ -43,20 +55,109 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   };
 
   stripeTest: FormGroup;
-
-  constructor(private fb: FormBuilder, private stripeService: StripeService,
+  */
+  constructor(/*private fb: FormBuilder, private stripeService: StripeService,*/
     private _storageService: StorageService,
     private _purchasePaymentService: PurchasePaymentService, private _cartService: CartService, private _userService: UserService) {
-    this.stripeTest = this.fb.group({
-      name: ['', [Validators.required]]
-    });
-    this.card = new StripeCardComponent(new StripeElementsService(stripeService));
+   // this.stripeTest = this.fb.group({
+    //  name: ['', [Validators.required]]
+   // });
+   // this.card = new StripeCardComponent(new StripeElementsService(stripeService));
   }
 
   ngOnInit(): void {
     this.purchaseAmount = this._cartService.total.getValue();
+
+    this.activarScript();
   }
 
+  // EJECUTA EL SCRIPT DE MERCADO PAGO Y AL DARLE CLICK AL BOTON DE PAGAR 
+  // VA AL BACKEND Y VUELVE CON UNA RESPUESTA
+  activarScript() {
+    const script = document.createElement('script');
+
+    // SETEO EL MONTO DEL CARRITO
+    window.amount = this.purchaseAmount;
+    
+    script.textContent = `
+    setTimeout(function() {
+      console.log('DOMContentLoaded event fired');
+
+      // MUESTRO EL MONTO DEL CARRITO
+      console.log(window.amount);
+
+      const backendURL = "https://localhost:7032"; // Reemplaza con la URL de tu backend
+      const endpoint = "/api/PurchasePayments/confirm-payment-mp";
+      
+      const mp = new MercadoPago('TEST-a14e30b8-57d4-45a9-9907-6e1f31a8cfe7', {
+        locale: 'es-AR'
+      });
+  
+      const bricksBuilder = mp.bricks();
+      const renderCardPaymentBrick = async (bricksBuilder) => {
+        const settings = {
+          initialization: {
+            // PROBAR SACAR EL MONTO DINAMICAMENTE DEL TOTAL DEL CARRITO
+            amount: 100, // monto a ser pago
+            payer: {
+              email: "",
+            },
+          },
+          customization: {
+            visual: {
+              style: {
+                theme: 'default', // | 'dark' | 'bootstrap' | 'flat'
+              }
+            },
+            paymentMethods: {
+              maxInstallments: 12,
+            }
+          },
+          callbacks: {
+            onReady: () => {
+              // callback llamado cuando Brick esté listo
+            },
+            onSubmit: (cardFormData) => {
+              
+              //  callback llamado cuando el usuario haga clic en el botón enviar los datos
+              //  ejemplo de envío de los datos recolectados por el Brick a su servidor
+              return new Promise((resolve, reject) => {
+                fetch(\`https://localhost:7032/api/PurchasePayments/confirm-payment-mp\`, {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(cardFormData)
+                })
+                  .then((response) => {
+                    // recibir el resultado del pago
+                    resolve();
+                  })
+                  .catch((error) => {
+                    // tratar respuesta de error al intentar crear el pago
+                    reject();
+                  })
+              });
+            },
+            onError: (error) => {
+              // callback llamado para todos los casos de error de Brick
+            },
+          },
+        };
+        window.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
+      };
+      renderCardPaymentBrick(bricksBuilder);
+    }, 1000);
+    `;
+
+    document.head.appendChild(script);
+  }
+
+  test(): any{
+    console.log("prueba desde componente .ts");
+  }
+
+/*
   createToken(): void {
     const name = this.stripeTest.controls['name'].value;
     this.stripeService
@@ -114,7 +215,9 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
       return false;
     }
   }
-
+  test(): any{
+    console.log("prueba desde componente .ts");
+  }
   comeBackInShipmentForm(){
     this.showShipmentForm = false;
     this.showCreateTokenForm = true;
@@ -175,5 +278,5 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   confirmPaymentFormOk(): boolean{
       return this.planSelected.count != 0;
-  }
+  }*/
 }
