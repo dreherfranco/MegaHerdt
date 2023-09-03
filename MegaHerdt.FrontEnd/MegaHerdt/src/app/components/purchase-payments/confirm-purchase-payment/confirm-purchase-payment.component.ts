@@ -93,7 +93,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     script.textContent = `
     setTimeout(function() {
       console.log('DOMContentLoaded event fired');
-
+      
       // MUESTRO EL MONTO DEL CARRITO
       console.log(window.amount);
       console.log(window.purchaseArticles);
@@ -147,8 +147,20 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
                   body: JSON.stringify(cardFormData)
                 })
                   .then((response) => {
-
                     console.log(response);
+                    
+                    //Si la response es existosa
+                    if(response.status >= 200 && response.status <= 300){
+                      //REDIRIGE AL COMPONENTE purchase-success.component
+                      window.location.href = "http://localhost:4200/purchase-success";
+                    }
+                    // En caso de error
+                    else
+                    {
+                      //REDIRIGE AL COMPONENTE purchase-failed.component
+                      window.location.href = "http://localhost:4200/purchase-failed";
+                    }
+
                     // recibir el resultado del pago
                     resolve();
                   })

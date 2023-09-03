@@ -130,6 +130,8 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { UpdateReparationStatePagadoComponent } from './components/reparations/edit-reparations/reparation-state-pagado/update-reparation-state-pagado/update-reparation-state-pagado.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
+import { PurchaseSuccessComponent } from './components/purchase-payments/purchase-success/purchase-success.component';
+import { PurchaseFailedComponent } from './components/purchase-payments/purchase-failed/purchase-failed.component';
 
 @NgModule({
   declarations: [
@@ -241,7 +243,9 @@ import { MatNativeDateModule } from '@angular/material/core';
     PurchaseIncomeExpensesComponent,
     ReparationIncomeExpensesComponent,
     ShowIncomeExpensesComponent,
-    UpdateReparationStatePagadoComponent
+    UpdateReparationStatePagadoComponent,
+    PurchaseSuccessComponent,
+    PurchaseFailedComponent
   ],
   imports: [
     BrowserModule,
