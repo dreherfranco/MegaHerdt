@@ -20,6 +20,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Elementos de la solución", "Elementos de la solución", "{D253210C-4A37-4C1D-B993-8FAF47A146C7}"
 	ProjectSection(SolutionItems) = preProject
 		Bugs.txt = Bugs.txt
+		Funcionalidades.txt = Funcionalidades.txt
 	EndProjectSection
 EndProject
 Global
