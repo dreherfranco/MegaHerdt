@@ -2,15 +2,6 @@
 using MegaHerdt.API.DTOs.PurchasePayment;
 using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Services.Services;
-using MercadoPago.Client.Common;
-using MercadoPago.Client.Customer;
-using MercadoPago.Client.Payment;
-using MercadoPago.Client.Preference;
-using MercadoPago.Resource;
-using MercadoPago.Resource.Customer;
-using MercadoPago.Resource.Payment;
-using MercadoPago.Resource.Preference;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MegaHerdt.API.Controllers

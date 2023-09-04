@@ -132,6 +132,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule } from '@angular/material/core';
 import { PurchaseSuccessComponent } from './components/purchase-payments/purchase-success/purchase-success.component';
 import { PurchaseFailedComponent } from './components/purchase-payments/purchase-failed/purchase-failed.component';
+import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
+import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
+import { PaymentsComponent } from './components/mercado-pago/payments/payments.component';
 
 @NgModule({
   declarations: [
@@ -245,7 +248,10 @@ import { PurchaseFailedComponent } from './components/purchase-payments/purchase
     ShowIncomeExpensesComponent,
     UpdateReparationStatePagadoComponent,
     PurchaseSuccessComponent,
-    PurchaseFailedComponent
+    PurchaseFailedComponent,
+    ReparationPaymentFailedComponent,
+    ReparationPaymentSuccessComponent,
+    PaymentsComponent
   ],
   imports: [
     BrowserModule,

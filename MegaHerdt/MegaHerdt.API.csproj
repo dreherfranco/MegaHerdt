@@ -33,6 +33,10 @@
     <ProjectReference Include="..\MegaHerdt.Services\MegaHerdt.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DTOs\MercadoPago\" />
+  </ItemGroup>
+
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

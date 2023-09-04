@@ -20,19 +20,23 @@ namespace MegaHerdt.API.Controllers
             this.mapper = mapper;
         }
 
-        [HttpPost("confirm-payment")]
-        public async Task<IActionResult> ConfirmPayment([FromBody] ReparationPaymentConfirmDTO reparationPaymentDTO)
+        [HttpPost("confirm-payment-mp")]
+        public async Task<IActionResult> ConfirmPaymentMP([FromBody] ReparationPaymentMPDTO reparationPaymentDTO)
         {
             try
             {
-                var reparationPaymentData = this.mapper.Map<ReparationPaymentData>(reparationPaymentDTO);
-                var subscription =  await this.reparationPaymentService.AddPayment(reparationPaymentData);
-                return Ok(new { subscription = subscription });
+
+                var reparationPaymentData = this.mapper.Map<ReparationPaymentMP>(reparationPaymentDTO);
+
+                var paymentResponse = await this.reparationPaymentService.AddPaymentMP(reparationPaymentData);
+
+                return Ok(paymentResponse);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
     }
 }

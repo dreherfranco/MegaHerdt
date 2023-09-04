@@ -1,11 +1,12 @@
-﻿using MegaHerdt.API.DTOs.PurchaseArticle;
-using MegaHerdt.API.DTOs.PurchasePayment;
-using MegaHerdt.API.DTOs.ReparationArticle;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace MegaHerdt.API.DTOs.ReparationPayment
+namespace MegaHerdt.Models.Models.PaymentData
 {
-
-    public class ReparationPaymentMPDTO
+    public class ReparationPaymentMP
     {
         #region Datos para efectuar el pago
         public decimal? Transaction_Amount { get; set; }
@@ -13,13 +14,11 @@ namespace MegaHerdt.API.DTOs.ReparationPayment
         public string? Description { get; set; }
         public int? Installments { get; set; }
         public string? Payment_Method_Id { get; set; }
-        public PurchasePaymentPayerMPDTO? Payer { get; set; }
+        public PurchasePaymentPayerMP? Payer { get; set; }
         #endregion
 
         #region Datos para dejar constancia del pago en la BDD
         public int ReparationId { get; set; }
         #endregion
-
     }
-
 }

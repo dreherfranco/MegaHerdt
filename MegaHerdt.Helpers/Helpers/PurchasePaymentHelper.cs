@@ -3,7 +3,6 @@ using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Repository.Base;
 using MercadoPago.Client.Common;
 using MercadoPago.Client.Payment;
-using Stripe;
 using mercadopago = MercadoPago.Resource.Payment;
 
 namespace MegaHerdt.Helpers.Helpers
@@ -58,6 +57,13 @@ namespace MegaHerdt.Helpers.Helpers
 
         }
 
+        #region Metodos privados
+        /// <summary>
+        /// Se crea la instancia de una compra con los datos proporcionados.
+        /// Por ultimo se almacena en la BDD y devuelve la compra que fue guardada.
+        /// </summary>
+        /// <param name="purchasePaymentData"></param>
+        /// <returns></returns>
         private async Task<Purchase> CreatePurchase(PurchasePaymentMP purchasePaymentData)
         {
 
@@ -87,7 +93,11 @@ namespace MegaHerdt.Helpers.Helpers
             return await this.purchaseRepository.Add(purchase);
         }
 
-   
+        /// <summary>
+        /// Actualiza el stock de los articulos involucrados en la compra.
+        /// </summary>
+        /// <param name="purchaseArticles"></param>
+        /// <returns></returns>
         private async Task UpdateArticlesStock(List<PurchaseArticleData> purchaseArticles)
         {
             foreach(var purchaseArticle in purchaseArticles)
@@ -99,7 +109,12 @@ namespace MegaHerdt.Helpers.Helpers
         }
   
     
-
+        /// <summary>
+        /// Crea los pagos que se van a efectuar para almacenarlos en la BDD
+        /// Se tiene en cuenta las cuotas y los precios de los articulos en el momento de efectuar el pago.
+        /// </summary>
+        /// <param name="purchasePaymentData"></param>
+        /// <returns></returns>
         private List<Payment> InstancePayments(PurchasePaymentMP purchasePaymentData)
         {
             var payments = new List<Payment>();
@@ -123,6 +138,9 @@ namespace MegaHerdt.Helpers.Helpers
             }
             return payments;
         }
+
+        #endregion
+
 
     }
 }

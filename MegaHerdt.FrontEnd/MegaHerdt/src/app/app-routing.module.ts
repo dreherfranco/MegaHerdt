@@ -42,6 +42,8 @@ import { ShowDebtorsComponent } from './components/debts/show-debtors/show-debto
 import { ShowIncomeExpensesComponent } from './components/income-expenses/show-income-expenses/show-income-expenses.component';
 import { PurchaseSuccessComponent } from './components/purchase-payments/purchase-success/purchase-success.component';
 import { PurchaseFailedComponent } from './components/purchase-payments/purchase-failed/purchase-failed.component';
+import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
+import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -58,6 +60,8 @@ const routes: Routes = [
   { path: 'confirm-purchase', component: ConfirmPurchasePaymentComponent, canActivate: [AuthGuard] },
   { path: 'purchase-success', component: PurchaseSuccessComponent, canActivate: [AuthGuard] },
   { path: 'purchase-failed', component: PurchaseFailedComponent, canActivate: [AuthGuard] },
+  { path: 'reparation-payment-success', component: ReparationPaymentSuccessComponent, canActivate: [AuthGuard] },
+  { path: 'reparation-payment-failed', component: ReparationPaymentFailedComponent, canActivate: [AuthGuard] },
   { path: 'purchases/record', component: PurchaseRecordComponent, canActivate: [AuthGuard] },
   { path: 'purchases/record/purchase/:id/claim', component: CreatePurchaseClaimComponent, canActivate: [AuthGuard] },
   { path: 'client-purchase-claims', component: ClientPurchaseClaimsComponent, canActivate: [AuthGuard] },
