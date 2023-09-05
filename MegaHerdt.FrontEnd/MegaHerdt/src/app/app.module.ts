@@ -13,6 +13,7 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -275,6 +276,7 @@ import { PaymentsComponent } from './components/mercado-pago/payments/payments.c
     PopoverModule.forRoot(),
     MatTooltipModule,
     MatCardModule,
+    MatProgressSpinnerModule,
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
     BsDatepickerModule.forRoot()
   ],

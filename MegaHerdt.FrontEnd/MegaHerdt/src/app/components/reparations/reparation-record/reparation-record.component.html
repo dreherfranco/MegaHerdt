@@ -80,11 +80,11 @@
                             matTooltipPosition="above">
                             <i class="bi bi-exclamation-diamond"></i>
                         </button>
-                        <button
-                            *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')"
-                            class="btn btn-primary w-100" [routerLink]="['reparation', reparation.id, 'payment']"> <i
+                        <a  *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')"
+                            class="btn btn-primary w-100"
+                            href="http://localhost:4200/reparations/record/reparation/{{reparation.id}}/payment"> <i
                                 class="bi bi-credit-card"></i> 
-                        </button>
+                        </a>
                     </th>
                 </tr>
             </tbody>

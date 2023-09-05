@@ -15,6 +15,7 @@ export class ArticleListComponent implements OnInit {
   paginate: Paginate;
   searchText: string;
   cartArticles: Array<CartArticleDetail>;
+  isLoading: boolean = true;
 
   constructor(private _articleService: ArticleService, private _cartService: CartService) 
   { 
@@ -28,7 +29,8 @@ export class ArticleListComponent implements OnInit {
     this._cartService.cartArticlesDetails.subscribe({
       next: result => 
       {
-        this.cartArticles=result
+        this.cartArticles=result;
+        this.isLoading = false;
       }
     })
     this._cartService.articles.subscribe({

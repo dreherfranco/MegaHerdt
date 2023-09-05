@@ -1,35 +1,42 @@
-<div class="user-search-container p-3">
-  <div class="d-flex justify-content-between align-items-center">
-    <div class="input-group search-box w-50">
-      <div class="input-group-prepend">
-        <span class="input-group-text search-icon"><i class="bi bi-search"></i></span>
+<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" class=" mt-5 mx-auto"></mat-progress-spinner>
+
+<div *ngIf="!isLoading">
+
+  <div class="user-search-container p-3">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="input-group search-box w-50">
+        <div class="input-group-prepend">
+          <span class="input-group-text search-icon"><i class="bi bi-search"></i></span>
+        </div>
+        <input class="form-control form-control-sm search-input" type="text" [(ngModel)]="searchText" placeholder="Buscar artículos">
       </div>
-      <input class="form-control form-control-sm search-input" type="text" [(ngModel)]="searchText" placeholder="Buscar artículos">
     </div>
   </div>
+
+  <div class="row">    
+
+      <div class="col-md-4" *ngFor="let article of articles 
+      | filter: searchText
+      | paginate: 
+      {
+          itemsPerPage: this.paginate.recordsPerPage, 
+          currentPage:this.paginate.page
+      } 
+      ">
+
+      <app-article-item [article]="article" 
+      >
+      </app-article-item>
+
+      </div>
+      <pagination-controls class="text-center data-user"
+      (pageChange)="this.paginate.page = $event" 
+      previousLabel="Anterior" 
+      nextLabel="Siguiente"
+      *ngIf="articles.length > 6">
+      </pagination-controls>
+
+  </div>
+
 </div>
 
-<div class="row">    
-
-    <div class="col-md-4" *ngFor="let article of articles 
-    | filter: searchText
-    | paginate: 
-    {
-        itemsPerPage: this.paginate.recordsPerPage, 
-        currentPage:this.paginate.page
-    } 
-    ">
-
-    <app-article-item [article]="article" 
-    >
-    </app-article-item>
-
-    </div>
-    <pagination-controls class="text-center data-user"
-    (pageChange)="this.paginate.page = $event" 
-    previousLabel="Anterior" 
-    nextLabel="Siguiente"
-    *ngIf="articles.length > 6">
-    </pagination-controls>
-
-</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { CartService } from 'src/app/services/cart/cart.service';
 
@@ -11,7 +12,7 @@ export class CartComponent implements OnInit {
   cartArticles: Array<CartArticleDetail>;
   total: number;
 
-  constructor(private _cartService: CartService) {
+  constructor(private _cartService: CartService, private router: Router) {
     this.cartArticles = new Array<CartArticleDetail>();
     this.total = 0;
    }
@@ -29,5 +30,6 @@ export class CartComponent implements OnInit {
   emptyCart(){
     this._cartService.emptyCart();
   }
+
 
 }
