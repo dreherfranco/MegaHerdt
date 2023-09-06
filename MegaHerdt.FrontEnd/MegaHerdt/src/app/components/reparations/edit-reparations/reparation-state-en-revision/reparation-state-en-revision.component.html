@@ -1,18 +1,18 @@
 
 <div class="table-responsive p-1" *ngIf="reparations.length > 0">
-    <table class="table">
+    <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
-                <th scope="col">Email empleado</th>
-                <th scope="col">Email cliente</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Descripcion del servicio requerido segun el cliente</th>
+                <th mat-sort-header="ticket" scope="col">N° Ticket</th>
+                <th mat-sort-header="employeeEmail" scope="col">Email empleado</th>
+                <th mat-sort-header="clientEmail" scope="col">Cliente</th>
+                <th mat-sort-header="date" scope="col">Fecha</th>
+                <th mat-sort-header="clientDescription" scope="col">Descripcion del servicio requerido segun el cliente</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let reparation of reparations 
+            <tr *ngFor="let reparation of sortedData 
             | filter: searchText
             | paginate: 
             {
@@ -20,6 +20,9 @@
                 currentPage:this.paginate.page
             }; 
             let i = index">
+                <th>
+                    <span class="data-user">{{ reparation.id }}</span>
+                </th>
                 <th>
                     <span class="data-user">{{ reparation.employee.email }}</span>
                 </th>
@@ -29,9 +32,7 @@
                 <th>
                     <span class="data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
                 </th>
-                <th>
-                    <span class="data-user">{{ reparation.reparationState.name }}</span>
-                </th>        
+        
                 <th>               
                     <span *ngIf="reparation.clientDescription === '' " class="text-secondary">No existe descripción</span>
                     <span class="data-user">{{ reparation.clientDescription }}</span>
@@ -46,7 +47,7 @@
 
     </table>
     <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 2">
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="sortedData.length > 2">
     </pagination-controls>
 </div>
 <p class="alert alert-warning m-2 w-50 mx-auto" *ngIf="reparations.length === 0"><i class="bi bi-exclamation-circle-fill"></i> No existen reparaciones en este estado</p>

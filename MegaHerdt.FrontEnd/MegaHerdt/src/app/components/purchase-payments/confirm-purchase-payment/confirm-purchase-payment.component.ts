@@ -35,8 +35,6 @@ declare global {
     // Identidad del usuario logueado.
     identity: UserDetail;
 
-    // Monto total de la reparación.
-    reparationAmount: number;
   }
 }
 
@@ -46,19 +44,16 @@ declare global {
   styleUrls: ['./confirm-purchase-payment.component.css']
 })
 export class ConfirmPurchasePaymentComponent implements OnInit {
-
-  //@Output() activateScript: EventEmitter<void> = new EventEmitter();
+  isLoading: boolean = true;
   purchaseAmount: number = 0;
 
   /*
-
-  
   userAddresses: UserAddresses = new UserAddresses(new Array<AddressUpdate>());
   addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
   hasShipment: boolean = false;
   isAddressSelected: boolean = false;
-
   */
+
   constructor(
     private _storageService: StorageService,
     private _purchasePaymentService: PurchasePaymentService, 
@@ -69,8 +64,10 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.purchaseAmount = this._cartService.total.getValue();
-
     this.activarScript();
+    setTimeout(() =>{
+      this.isLoading = false;
+    },1500);
   }
 
  

@@ -8,19 +8,19 @@
     </button>
   </h2>
 </div>
-<div class="table-responsive" #content>
-  <table class="table">
+<div  class="table-responsive" #content>
+  <table matSort (matSortChange)="sortData($event)"  class="table">
     <thead>
       <tr>
-        <th scope="col">Nombre</th>
-        <th scope="col">Telefono</th>
-        <th scope="col">Email</th>
+        <th mat-sort-header="name" scope="col">Nombre</th>
+        <th mat-sort-header="phone" scope="col">Telefono</th>
+        <th mat-sort-header="email" scope="col">Email</th>
         <th scope="col"></th>
         <th scope="col"></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let provider of providers | paginate: 
+      <tr *ngFor="let provider of sortedData | paginate: 
       {
           itemsPerPage: this.paginate.recordsPerPage, 
           currentPage:this.paginate.page

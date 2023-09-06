@@ -31,7 +31,7 @@ declare global {
   styleUrls: ['./confirm-reparation-payment.component.css']
 })
 export class ConfirmReparationPaymentComponent implements OnInit {
-
+  isLoading: boolean = true;
   reparationAmount: number;
 
   constructor(private fb: FormBuilder, 
@@ -45,6 +45,10 @@ export class ConfirmReparationPaymentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getReparation();
+    
+    setTimeout(() => {
+      this.isLoading = false;
+    }, 1500);
   }
 
   getReparation(){
@@ -126,6 +130,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
               // callback llamado cuando Brick esté listo
             },
             onSubmit: (cardFormData) => {
+              // SETEO EL ID DE LA REPARACION
               cardFormData.reparationId = window.reparationId;
 
               //  callback llamado cuando el usuario haga clic en el botón enviar los datos
@@ -174,7 +179,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
         window.cardPaymentBrickController = await bricksBuilder.create('cardPayment', 'cardPaymentBrick_container', settings);
       };
       renderCardPaymentBrick(bricksBuilder);
-    }, 3000);
+    }, 1000);
     `;
 
     document.head.appendChild(script);

@@ -1,4 +1,4 @@
-
+<mat-progress-spinner *ngIf="isLoading" mode="indeterminate" class=" mt-5 mx-auto"></mat-progress-spinner>
 
 <div class="container-fluid d-flex row items-align-center">
     
@@ -9,7 +9,7 @@
 
     </div>
     
-    <div class="w-25 ml-auto">
+    <div *ngIf="!isLoading" class="w-25 ml-auto">
         <app-cart-detail></app-cart-detail>
     </div>
 </div>

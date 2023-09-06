@@ -7,6 +7,7 @@ import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStatePagadoComponent } from './update-reparation-state-pagado/update-reparation-state-pagado.component';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-reparation-state-pagado',
@@ -15,6 +16,7 @@ import { UpdateReparationStatePagadoComponent } from './update-reparation-state-
 })
 export class ReparationStatePAGADOComponent implements OnInit {
   reparations: Array<Reparation>;
+  sortedData: Reparation[] = [];
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
   @Input() searchText: string;
@@ -44,6 +46,7 @@ export class ReparationStatePAGADOComponent implements OnInit {
           console.log("error al obtener reparaciones");
         } else {
           this.reparations = response;
+          this.sortedData = this.reparations.slice();
           console.log(this.reparations)
         }
       },
@@ -91,4 +94,47 @@ export class ReparationStatePAGADOComponent implements OnInit {
       , reparation.employeeObservation, reparation.approximateTime);
   }
   
+  sortData(sort: Sort) {
+    const data = this.reparations.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'ticket':
+          return compare(a.id, b.id, isAsc);
+        case 'employeeEmail':
+          return compare(a.employee.email, b.employee.email, isAsc);
+        case 'clientEmail':
+            return compare(a.client.email, b.client.email, isAsc);
+        case 'date':
+              return compare(a.date, b.date, isAsc);
+        case 'reparationState':
+            return compare(a.reparationState.name, b.reparationState.name, isAsc);
+        case 'clientDescription':
+            return compare(a.clientDescription, b.clientDescription, isAsc);
+       case 'employeeObservation':
+            return compare(a.employeeObservation, b.employeeObservation, isAsc);
+       case 'approximateTime':
+            return compare(a.approximateTime, b.approximateTime, isAsc);
+        case 'amount':
+              return compare(a.amount, b.amount, isAsc);
+        case 'totalArticleAmount':
+              return compare(a.totalArticleAmount, b.totalArticleAmount, isAsc);
+        case 'total':
+              return compare(a.totalArticleAmount + a.amount, b.totalArticleAmount + b.amount, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+}
+
+function compare(a: number | string | Date | string[], b: number | string | Date | string[], isAsc: boolean) {
+  
+   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

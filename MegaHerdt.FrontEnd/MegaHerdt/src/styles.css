@@ -113,3 +113,10 @@ thead{
 .padding-custom{
     padding: 3px !important;
 }
+
+/**FLECHA DE LA TABLA DE ORDENAMIENTO -ANGULAR MATERIAL- **/
+.mat-sort-header-arrow {
+    color: #1ed3e7;
+    height: 15px !important;
+    width: 14px !important;
+}

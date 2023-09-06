@@ -18,6 +18,7 @@ import { UpdateReparationStateINGRESOComponent } from './update-reparation-state
 })
 export class ReparationStateINGRESOComponent implements OnInit   {
   reparations: Array<Reparation>;
+  sortedData: Reparation[] = [];
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
   @Input() searchText: string;
@@ -86,6 +87,7 @@ export class ReparationStateINGRESOComponent implements OnInit   {
           console.log("error al obtener reparaciones");
         } else {
           this.reparations = response;
+          this.sortedData = this.reparations.slice()
         }
       },
       error: (err) => {
@@ -95,5 +97,37 @@ export class ReparationStateINGRESOComponent implements OnInit   {
   }
 
 
+  sortData(sort: Sort) {
+    const data = this.reparations.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'ticket':
+          return compare(a.id, b.id, isAsc);
+        case 'employeeEmail':
+          return compare(a.employee.email, b.employee.email, isAsc);
+        case 'clientEmail':
+            return compare(a.client.email, b.client.email, isAsc);
+        case 'date':
+              return compare(a.date, b.date, isAsc);
+        case 'reparationState':
+            return compare(a.reparationState.name, b.reparationState.name, isAsc);
+        case 'clientDescription':
+            return compare(a.clientDescription, b.clientDescription, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
 }
 
+function compare(a: number | string | Date | string[], b: number | string | Date | string[], isAsc: boolean) {
+  
+   return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}

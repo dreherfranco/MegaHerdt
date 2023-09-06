@@ -1,24 +1,23 @@
 
 <div class="table-responsive p-1" *ngIf="reparations.length > 0">
-    <table class="table">
+    <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
-                <th scope="col">Email empleado</th>
-                <th scope="col">Email cliente</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Descripcion del servicio requerido segun el cliente</th>
-                <th scope="col">Observacion del Empleado</th>
-                <th scope="col">Monto mano de obra</th>
-                <th scope="col">Articulos a utilizar</th>
-                <th scope="col">Monto total articulos</th>
-                <th scope="col">Total</th>
-                <th scope="col">Tiempo aproximado</th>
+                <th mat-sort-header="ticket" scope="col">N° Ticket</th>
+                <th mat-sort-header="employeeEmail" scope="col">Email empleado</th>
+                <th mat-sort-header="clientEmail" scope="col">Cliente</th>
+                <th mat-sort-header="date" scope="col">Fecha</th>
+                <th mat-sort-header="clientDescription" scope="col">Descripción del servicio requerido según el cliente</th>
+                <th mat-sort-header="employeeObservation" scope="col">Observación del Empleado</th>
+                <th mat-sort-header="amount" scope="col">Monto mano de obra</th>
+                <th scope="col">Artículos a utilizar</th>
+                <th mat-sort-header="totalArticleAmount" scope="col">Monto total artículos</th>
+                <th mat-sort-header="total" scope="col">Total</th>
                 <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let reparation of reparations 
+            <tr *ngFor="let reparation of sortedData 
             | filter: searchText
             | paginate: 
             {
@@ -27,6 +26,9 @@
             }; 
             let i = index">
                 <th>
+                    <span class="data-user">{{ reparation.id }}</span>
+                </th>
+                <th>
                     <span class="data-user">{{ reparation.employee.email }}</span>
                 </th>
                 <th>
@@ -34,10 +36,7 @@
                 </th>      
                 <th>
                     <span class="data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
-                </th>
-                <th>
-                    <span class="data-user">{{ reparation.reparationState.name }}</span>
-                </th>        
+                </th>            
                 <th>
                     <span *ngIf="reparation.clientDescription === '' " class="text-secondary">No existe descripción</span>
                     <span class="data-user">{{ reparation.clientDescription }}</span>
@@ -46,6 +45,7 @@
                     <span *ngIf="reparation.employeeObservation === '' " class="text-secondary">No existe observación</span>
                     <span class="data-user">{{ reparation.employeeObservation }}</span>
                 </th>
+                
                 <th>
                     <span class="data-user">${{ reparation.amount }}</span>
                 </th>
@@ -63,9 +63,6 @@
                 <th>
                     <span class="data-user">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
                 </th>
-                <th>
-                    <span class="data-user">{{ reparation.approximateTime | date: 'dd/MM/yyyy' }}</span>
-                </th>
                 <td>
                     <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
                             class="bi bi-pencil-square"></i></button>
@@ -76,7 +73,7 @@
 
     </table>
     <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="reparations.length > 2">
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="sortedData.length > 2">
     </pagination-controls>
 </div>
 <p class="alert alert-warning m-2 w-50 mx-auto" *ngIf="reparations.length === 0"><i class="bi bi-exclamation-circle-fill"></i> No existen reparaciones en este estado</p>
