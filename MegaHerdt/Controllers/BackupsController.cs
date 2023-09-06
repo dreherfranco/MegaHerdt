@@ -1,6 +1,8 @@
 ﻿using MegaHerdt.API.DTOs.Backup;
+using MegaHerdt.DbConfiguration.DbConfiguration;
 using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System.IO.Compression;
 
 namespace MegaHerdt.API.Controllers
@@ -16,14 +18,16 @@ namespace MegaHerdt.API.Controllers
         private readonly ArticleProviderService articleProviderService;
         private readonly IWebHostEnvironment env;
         private readonly IHttpContextAccessor httpContextAccessor;
-
+        private readonly IConfiguration _configuration;
         public BackupsController(IWebHostEnvironment env, ArticleService articleService,
-            ArticleProviderService articleProviderService, IHttpContextAccessor httpContextAccessor)
+            ArticleProviderService articleProviderService, IHttpContextAccessor httpContextAccessor, 
+            IConfiguration _configuration)
         {
             this.articleService = articleService;
             this.env = env;
             this.articleProviderService = articleProviderService;
             this.httpContextAccessor = httpContextAccessor;
+            this._configuration = _configuration;
         }
 
         [HttpGet]
@@ -159,13 +163,23 @@ namespace MegaHerdt.API.Controllers
                 Directory.CreateDirectory(folder);
             }
 
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
-            var dbPath = Path.Combine(Environment.CurrentDirectory, "MegaHerdtAPI.db");
-            var dbBackupPath = Path.Combine(folder, "MegaHerdtAPI.db");
+            // Nombre de la base de datos
+            string databaseName = "MegaHerdtAPI";
 
-            if (!System.IO.File.Exists(dbBackupPath))
+            // Genera un nombre de archivo de copia de seguridad único
+            string backupFileName = $"{databaseName}_Backup_{DateTime.Now:yyyyMMddHHmmss}.bak";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                System.IO.File.Copy(dbPath, dbBackupPath);
+                connection.Open();
+
+                // Ejecuta el comando de copia de seguridad
+                using (SqlCommand command = new SqlCommand($"BACKUP DATABASE {databaseName} TO DISK='{Path.Combine(folder, backupFileName)}'", connection))
+                {
+                    command.ExecuteNonQuery();
+                }
             }
 
             var pathZip = Path.Combine(env.WebRootPath, containerBackup, "database.zip");
@@ -178,6 +192,25 @@ namespace MegaHerdt.API.Controllers
             {
                 ZipFile.CreateFromDirectory(folder, pathZip);
             }
+
+            //var dbPath = Path.Combine(Environment.CurrentDirectory, "MegaHerdtAPI.db");
+            //var dbBackupPath = Path.Combine(folder, "MegaHerdtAPI.db");
+
+            //if (!System.IO.File.Exists(dbBackupPath))
+            //{
+            //    System.IO.File.Copy(dbPath, dbBackupPath);
+            //}
+
+            //var pathZip = Path.Combine(env.WebRootPath, containerBackup, "database.zip");
+            //if (System.IO.File.Exists(pathZip))
+            //{
+            //    System.IO.File.Delete(pathZip);
+            //    ZipFile.CreateFromDirectory(folder, pathZip);
+            //}
+            //else
+            //{
+            //    ZipFile.CreateFromDirectory(folder, pathZip);
+            //}
 
         }
 
