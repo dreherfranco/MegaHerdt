@@ -5,6 +5,7 @@ import { PhoneCreation } from 'src/app/models/Phone/PhoneCreation';
 import { UserCreate } from 'src/app/models/User/UserCreate';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-create-user',
@@ -42,12 +43,28 @@ export class AdminCreateUserComponent implements OnInit {
               this.statusSubmit = "failed";
             } else {
               this.statusSubmit = "success";
+              Swal.fire({
+                title: 'Usuario creado correctamente',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                backdrop: `rgba(0, 0,125, 0.37)`,
+              }).then((result) => {
+                if (result.isConfirmed) {                
+                  this._router.navigate(['/administrate/show-users']);
+                }
+              });
              // form.reset();
             }
           },
           error: (err) => {
             this.statusSubmit = "failed";
             this.error = err.error.message;
+            Swal.fire({
+              icon: 'error',
+              title: 'Error al crear el usuario',
+              text: this.error,
+              backdrop: `rgba(0, 0,125, 0.37)`,
+            });
             console.log(err)
           }
         }
