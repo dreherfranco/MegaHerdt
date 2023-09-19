@@ -59,15 +59,14 @@
             </div>
           </div>
         </div>
-  
-        <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al crear el usuario: <span class="data-user">{{ error }}</span></p>
         <p *ngIf="!phoneOk" class="alert alert-danger m-1">Ingrese un numero telefono</p>
         
         <b class="required">(*)Obligatorio</b>
-        <input class="btn btn-primary m-2 mt-0 align-center w-btn-submit" type="submit" value="Enviar"
+        <input class="btn btn-primary m-2 mt-0 align-center w-btn-submit" type="submit" value="Crear"
           [disabled]="!registerForm.form.valid" />
       </div>
-      <p *ngIf="statusSubmit === 'success'" class="alert alert-success m-1">Usuario creado correctamente</p>
+      
+      <!-- <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al crear el usuario: <span class="data-user">{{ error }}</span></p> -->
+      <!--<p *ngIf="statusSubmit === 'success'" class="alert alert-success m-1">Usuario creado correctamente</p>-->
     </form>
-  
   </div>

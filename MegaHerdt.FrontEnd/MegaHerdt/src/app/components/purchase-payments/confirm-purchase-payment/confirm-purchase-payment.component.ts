@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
+import { isBetween } from 'ngx-bootstrap/chronos/utils/date-compare';
 import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
@@ -16,6 +17,7 @@ import { UserService } from 'src/app/services/users/user.service';
 import { availablePlans } from 'src/app/utils/AvailablePlans';
 import { Global } from 'src/app/utils/Global';
 import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
+import Swal from 'sweetalert2';
 
 /**
  * Defino la interfaz para definir el monto del carrito
@@ -35,6 +37,7 @@ declare global {
     // Identidad del usuario logueado.
     identity: UserDetail;
 
+    pagoStatus: Function;
   }
 }
 
@@ -77,12 +80,38 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     
     const script = document.createElement('script');
 
+    window.pagoStatus = (_status: any)=>{
+      if(_status >=200 && _status <= 300){
+        Swal.fire({
+          title: '¡La compra se realizó correctamente!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+          backdrop: 'rgba(0, 0,125, 0.37)',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = window.paymentSuccessRedirect;
+          }
+        }); 
+      }else{
+        Swal.fire({
+          title: 'Hubo un error con tu compra',
+          icon: 'error',
+          confirmButtonText: 'OK',
+          backdrop: 'rgba(0, 0,125, 0.37)',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = window.paymentFailedRedirect
+          }
+        }); 
+      }
+    }
+
     //URL DEL BACKEND
     window.apiConfirmPaymentUrl = `${Global.url}PurchasePayments/confirm-payment-mp`;
 
     // URL's DE REDIRECCION
     window.paymentSuccessRedirect = "http://localhost:4200/purchase-success";
-    window.paymentFailedRedirect = "http://localhost:4200/purchase-failed";
+    window.paymentFailedRedirect = "http://localhost:4200/confirm-purchase";
 
     // SETEO EL MONTO DEL CARRITO
     window.amount = this.purchaseAmount;
@@ -151,17 +180,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
                   .then((response) => {
                     console.log(response);
                     
-                    //Si la response es existosa
-                    if(response.status >= 200 && response.status <= 300){
-                      //REDIRIGE AL COMPONENTE purchase-success.component
-                      window.location.href = window.paymentSuccessRedirect;
-                    }
-                    // En caso de error
-                    else
-                    {
-                      //REDIRIGE AL COMPONENTE purchase-failed.component
-                      window.location.href = window.paymentFailedRedirect;
-                    }
+                    window.pagoStatus(response.status)
 
                     // recibir el resultado del pago
                     resolve();

@@ -6,24 +6,25 @@
     <form enctype="multipart/form-data" #articleForm="ngForm" 
         class="p-2 w-75 mx-auto">
         
-        <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
+        <!-- <p class="alert alert-success mt-3" *ngIf="statusSubmit == 'success'">
             El artículo se creo correctamente
         </p>
         <p class=" alert alert-danger mt-3" *ngIf="statusSubmit == 'failed'">
             Error al intentar crear el artículo
-        </p>
+        </p> -->
 
         <div class="row">
             <div class="form-group mb-3 col-sm-6">
                 <label for="name"><b>(*)Nombre: </b></label>
-                <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre del articulo" name="name"
+                <input id="name" pattern="^([0-9 \u00c0-\u01ffa-zA-Z'\-\_])+$" placeholder="Nombre del articulo" name="name"
                     class="form-control" type="text" #name="ngModel" [(ngModel)]="article.name" required minlength="3">
                 <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre válido</span>
             </div>
 
             <div class="form-group mb-3 col-sm-6">
                 <label for="unitValue"><b>(*)Valor unitario: </b></label>
-                <input id="unitValue" required placeholder="Valor unitario" name="unitValue" class="form-control"
+                <input id="unitValue" required pattern="^(\d*|\d+(\.\d+)?)$"
+                placeholder="Valor unitario" name="unitValue" class="form-control"
                     type="text" #unitValue="ngModel" [(ngModel)]="article.unitValue">
                 <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor unitario
                     válido</span>

@@ -12,6 +12,7 @@ import { BrandService } from 'src/app/services/brand/brand.service';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogUpdateArticleComponent } from '../dialog-update-article/dialog-update-article.component';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit-article',
@@ -137,21 +138,40 @@ export class EditArticleComponent implements OnInit {
   }
 
   openDialogDelete() {
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
-      disableClose: true,
-      data: this.article,
-      height: '175px',
-      width: '500px'
-    });
-
-    dialogRef.afterClosed().subscribe((result: Article) => {
-      if (result != undefined) {
-        this.delete();
+    Swal.fire({
+      title: '¿Estas por borrar un artículo?',
+      text: "¡No podrás revertir esto!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Eliminar',
+      backdrop: `rgba(0, 0,125, 0.37)`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: '¡Eliminado!',
+          text: "El articulo ha sido eliminado.",
+          icon: 'success',
+          backdrop: `rgba(0, 0,125, 0.37)`
+        }).then((result)=>{this.delete();})
       }
-    });
+    })
+    //  const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
+    //    disableClose: true,
+    //    data: this.article,
+    //    height: '175px',
+    //    width: '500px'
+    //  })
+    //   dialogRef.afterClosed().subscribe((result: Article) => {
+    //     if (result != undefined) {
+    //       this.delete();
+    //     }
+    //   });
   }
 
   delete() {
+    console.log(this._articleService)
     this._articleService
       .delete(this.article.id, this._storageService.getTokenValue())
       .subscribe({

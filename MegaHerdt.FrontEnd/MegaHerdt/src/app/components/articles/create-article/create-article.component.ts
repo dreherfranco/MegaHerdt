@@ -9,6 +9,10 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogCreateBrandComponent } from '../../brands/create-brand/dialog-create-brand/dialog-create-brand.component';
 import { DialogCreateCategoryComponent } from '../../categories/create-category/dialog-create-category/dialog-create-category.component';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
+
 
 @Component({
   selector: 'app-create-article',
@@ -23,8 +27,9 @@ export class CreateArticleComponent implements OnInit {
   categoryId: number;
   brandId: number;
   imageOk: boolean = false;
+  
 
-  constructor(private _storageService: StorageService, private _articleService: ArticleService,
+  constructor(private _storageService: StorageService, private _articleService: ArticleService, private _router: Router,
     private _categoryService: CategoryService, private _brandService: BrandService,public dialog: MatDialog) {
     this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0);
     this.statusSubmit = "";
@@ -48,13 +53,28 @@ export class CreateArticleComponent implements OnInit {
         if (response.error) {
           console.log("no se pudo crear el articulo");
           this.statusSubmit = "failed";
+          Swal.fire({
+            title: 'No se pudo crear el articulo',
+            icon: 'error',            
+            backdrop: `rgba(0, 0,125, 0.37)`,
+          });
         } else {
           this.statusSubmit = "success";
-
           this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0);
           this.imageOk = false;
           this.categoryId = 0;
           this.brandId = 0;
+
+          Swal.fire({
+            title: 'Articulo creado correctamente',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            backdrop: `rgba(0, 0,125, 0.37)`,
+          }).then((result) => {
+            if (result.isConfirmed) {                
+              this._router.navigate(['/administrate/administrate-articles/edit']);
+            }
+          });
         //  window.location.reload();
         }
       },
