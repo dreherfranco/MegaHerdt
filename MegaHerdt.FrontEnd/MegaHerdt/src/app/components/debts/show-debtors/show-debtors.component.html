@@ -8,7 +8,7 @@
   </div>
   <div class="d-flex row w-75 mx-auto">
     <div class="col-md-10 pl-0" >
-        <div class="col-md-4" *ngIf="debts.reparationDebts.length > 0">
+        <div class="col-md-4" *ngIf="reparationDebtsSortedData.length > 0">
             <div class="input-group">
               <div class="input-group-append">
                   <div class="input-group-text bg-primary">
@@ -22,18 +22,18 @@
   </div>
 </div>
 <div class="table-responsive w-75 text-center mx-auto">
-  <table class="table">
+  <table matSort (matSortChange)="sortData($event)" class="table">
     <thead>
       <tr>
-        <th scope="col">Identificador del deudor</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Apellido</th>
-        <th scope="col">Dni</th>
-        <th scope="col">Total</th>
+        <th mat-sort-header="clientUsername" scope="col">Identificador del deudor</th>
+        <th mat-sort-header="name" scope="col">Nombre</th>
+        <th mat-sort-header="surname"  scope="col">Apellido</th>
+        <th mat-sort-header="dni" scope="col">Dni</th>
+        <th mat-sort-header="total" scope="col">Total</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let reparationDebt of debts.reparationDebts | filter: searchText | paginate: 
+      <tr *ngFor="let reparationDebt of reparationDebtsSortedData | filter: searchText | paginate: 
       {
           itemsPerPage: this.paginate.recordsPerPage, 
           currentPage:this.paginate.page
@@ -62,7 +62,7 @@
     (pageChange)="this.paginate.page = $event"
     previousLabel="Anterior"
     nextLabel="Siguiente"
-    *ngIf="debts.reparationDebts.length > 6"
+    *ngIf="reparationDebtsSortedData.length > 6"
   >
   </pagination-controls>
 </div>

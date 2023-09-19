@@ -57,7 +57,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
       next: (result) =>{
         console.log(result)
           this.reparationAmount = result.amount + result.totalArticleAmount;
-
+          
           this.activarScript();
 
       },
@@ -90,6 +90,7 @@ export class ConfirmReparationPaymentComponent implements OnInit {
 
     // SETEO EL MONTO DEL CARRITO
     window.reparationAmount = this.reparationAmount;
+ 
     window.reparationId = this.getReparationId();
     // Dejo la identidad de usuario logueado seteada globalmente.
     window.identity = this._storageService.getIdentity();
