@@ -149,12 +149,8 @@ export class EditArticleComponent implements OnInit {
       backdrop: `rgba(0, 0,125, 0.37)`,
     }).then((result) => {
       if (result.isConfirmed) {
-        Swal.fire({
-          title: '¡Eliminado!',
-          text: "El articulo ha sido eliminado.",
-          icon: 'success',
-          backdrop: `rgba(0, 0,125, 0.37)`
-        }).then((result)=>{this.delete();})
+        this.delete();
+       
       }
     })
     //  const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
@@ -179,10 +175,28 @@ export class EditArticleComponent implements OnInit {
           if (response.error) {
             console.log('no se pudieron cargar las marcas');
           } else {
-            window.location.reload();
+            //window.location.reload();
+            Swal.fire({
+              title: '¡Eliminado!',
+              text: "El articulo ha sido eliminado.",
+              icon: 'success',
+              backdrop: `rgba(0, 0,125, 0.37)`
+            }).then((result)=>
+                    {
+                      // Si fue exitoso se recarga la pagina
+                      window.location.reload();
+                    })
           }
         },
         error: (err) => {
+          Swal.fire({
+            title: 'Error al querer eliminar el artículo!',
+            icon: 'warning',
+            backdrop: `rgba(0, 0,125, 0.37)`
+          }).then((result)=>
+                  {
+                    // Insertar acciones en caso de fallo
+                  })
           console.log(err);
         },
       });

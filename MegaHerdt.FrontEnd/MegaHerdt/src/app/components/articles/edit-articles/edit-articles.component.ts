@@ -29,7 +29,7 @@ export class EditArticlesComponent implements OnInit {
   }
 
   loadProducts(){
-    this._articleService.getArticles().subscribe(
+    this._articleService.getAllEnableds().subscribe(
       {
         next: (response) => this.articles = response,
         error: (err) => console.log(err)

@@ -1,11 +1,8 @@
 import { Component, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
 import { isBetween } from 'ngx-bootstrap/chronos/utils/date-compare';
-import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
-import { PaymentPlan } from 'src/app/models/Payment/PaymentPlan';
 import { PurchasePaymentConfirm } from 'src/app/models/Payment/PurchasePaymentConfirm';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { UserAddresses } from 'src/app/models/User/UserAddresses';
@@ -14,32 +11,8 @@ import { CartService } from 'src/app/services/cart/cart.service';
 import { PurchasePaymentService } from 'src/app/services/purchase-payments/purchase-payment.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
-import { availablePlans } from 'src/app/utils/AvailablePlans';
 import { Global } from 'src/app/utils/Global';
-import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 import Swal from 'sweetalert2';
-
-/**
- * Defino la interfaz para definir el monto del carrito
- */
-declare global {
-  interface Window {
-    apiConfirmPaymentUrl: string;
-
-    paymentSuccessRedirect: string;
-    paymentFailedRedirect: string;
-    // Monto total del carrito.
-    amount: number;
-
-    // Articulos en el carrito.
-    purchaseArticles: Array<PurchaseArticleCreation>;
-
-    // Identidad del usuario logueado.
-    identity: UserDetail;
-
-    pagoStatus: Function;
-  }
-}
 
 @Component({
   selector: 'app-confirm-purchase-payment',

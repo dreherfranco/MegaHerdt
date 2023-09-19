@@ -1,29 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { StripeCardElementOptions, StripeElementsOptions } from '@stripe/stripe-js';
-import { StripeCardComponent, StripeElementsService, StripeService } from 'ngx-stripe';
 import { ReparationPaymentConfirm } from 'src/app/models/Payment/ReparationPaymentConfirm';
-import { PaymentPlan } from 'src/app/models/Payment/PaymentPlan';
 import { ReparationPaymentService } from 'src/app/services/reparation-payments/reparation-payment.service';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { availablePlans } from 'src/app/utils/AvailablePlans';
-import { cardOptions } from 'src/app/utils/StripeCardElementsOptions';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { Global } from 'src/app/utils/Global';
 
-/**
- * Defino la interfaz para definir las variables globales que utilizaré en el script.
- */
-declare global {
-  interface Window {
-    // Monto total de la reparación.
-    reparationAmount: number;
 
-    reparationId: number;
-  }
-}
 
 @Component({
   selector: 'app-confirm-reparation-payment',
