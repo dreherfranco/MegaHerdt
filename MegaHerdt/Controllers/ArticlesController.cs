@@ -248,6 +248,8 @@ namespace MegaHerdt.API.Controllers
                 Expression<Func<Article, bool>> filter = x => x.Id == id;
                 var article = this.articleService.GetBy(filter).FirstOrDefault();
                 await articleService.Delete(article);
+                // Elimina la imagen
+                await fileManager.DeleteFile(article.Image, container);
                 return true;
             }
             catch (Exception ex)
