@@ -148,13 +148,13 @@ namespace MegaHerdt.API.Controllers
             {
                 Expression<Func<PurchaseClaim, bool>> filter = x => x.Id == purchaseClaimAnswerDTO.PurchaseClaimId;
                 var purchaseClaimDb = this.PurchaseClaimService.GetBy(filter).FirstOrDefault();
-                var mailRequest = new MailRequest()
-                {
-                    ToEmail = purchaseClaimDb.Client.Email,
-                    Body = purchaseClaimAnswerDTO.Answer,
-                    Subject = "Respuesta a reclamo de compra"
-                };
-                await this.MailService.SendEmailAsync(mailRequest);
+                //var mailRequest = new MailRequest()
+                //{
+                //    ToEmail = purchaseClaimDb.Client.Email,
+                //    Body = purchaseClaimAnswerDTO.Answer,
+                //    Subject = "Respuesta a reclamo de compra"
+                //};
+                //await this.MailService.SendEmailAsync(mailRequest);
 
                 purchaseClaimDb.Answered = true;
                 var reparationClaimAnswer = Mapper.Map<PurchaseClaimAnswer>(purchaseClaimAnswerDTO);

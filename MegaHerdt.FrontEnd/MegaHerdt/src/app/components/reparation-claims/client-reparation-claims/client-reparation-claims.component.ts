@@ -8,6 +8,7 @@ import { ReparationClaimService } from 'src/app/services/reparation-claims/repar
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowReparationDetailComponent } from '../../reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 import { DialogShowReparationClaimAnswersComponent } from '../dialog-show-reparation-claim-answers/dialog-show-reparation-claim-answers.component';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-client-reparation-claims',
@@ -17,6 +18,7 @@ import { DialogShowReparationClaimAnswersComponent } from '../dialog-show-repara
 export class ClientReparationClaimsComponent implements OnInit {
   reparationClaims: Array<ReparationClaim>;
   paginate: Paginate;
+  sortedData: ReparationClaim[] = [];
 
   constructor(private _reparationClaimService: ReparationClaimService, 
     private _storageService: StorageService, public dialog: MatDialog) {
@@ -46,6 +48,7 @@ export class ClientReparationClaimsComponent implements OnInit {
           console.log("error al obtener los reclamos");
         } else {
           this.reparationClaims = response;
+          this.sortedData = this.reparationClaims.slice();
         }
       },
       error: (err) => {
@@ -62,4 +65,35 @@ export class ClientReparationClaimsComponent implements OnInit {
         
       });
   }
+
+  sortData(sort: Sort) {
+    const data = this.reparationClaims.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+          case 'description':
+            return compare(a.description, b.description, isAsc);
+          case 'date':
+            return compare(a.date, b.date, isAsc);
+          case 'employeeEmail':
+            return compare(a.reparation.employee.email, b.reparation.employee.email, isAsc);
+          case 'clientEmail':
+              return compare(a.reparation.client.email, b.reparation.client.email, isAsc);
+          case 'answered':
+            return compare(a.answered, b.answered, isAsc);
+          default:
+            return 0;
+      }
+    });
+  }
+
+}
+
+function compare(a: number | boolean | string | Date | string[], b: number | boolean | string | Date | string[], isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

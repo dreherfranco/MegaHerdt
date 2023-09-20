@@ -4,19 +4,19 @@
 <div class="container-fluid">
     <p *ngIf="reparationClaims.length == 0" class="alert alert-warning">No tiene reclamos para mostrar</p>
     <div class="table-responsive" *ngIf="reparationClaims.length != 0">
-        <table class="table">
+        <table matSort (matSortChange)="sortData($event)" class="table">
             <thead>              
                 <tr>
-                    <th scope="col">Descripcion reclamo</th>
-                    <th scope="col">Fecha emision</th>
-                    <th scope="col">Empleado</th>
-                    <th scope="col">Email cliente</th>
-                    <th scope="col">Respondido</th>
+                    <th mat-sort-header="description" scope="col">Descripcion reclamo</th>
+                    <th mat-sort-header="date" scope="col">Fecha emision</th>
+                    <th mat-sort-header="employeeEmail" scope="col">Email empleado</th>
+                    <th mat-sort-header="clientEmail" scope="col">Email cliente</th>
+                    <th mat-sort-header="answered" scope="col">Respondido</th>
                     <th scope="col">Ver reparacion</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let reparationClaim of reparationClaims 
+                <tr *ngFor="let reparationClaim of sortedData 
                 | paginate: 
                 {
                     itemsPerPage: this.paginate.recordsPerPage, 
@@ -30,7 +30,7 @@
                         <span class="data-user">{{ reparationClaim.date | date: 'dd/MM/yyyy' }}</span>
                     </th>
                     <th>
-                        <span class="data-user">{{ reparationClaim.reparation.employee.name }} {{ reparationClaim.reparation.employee.surname }}</span>
+                        <span class="data-user">{{ reparationClaim.reparation.employee.email }} {{ reparationClaim.reparation.employee.surname }}</span>
                     </th>
                     <th>
                         <span class="data-user">{{ reparationClaim.reparation.client.email }}</span>

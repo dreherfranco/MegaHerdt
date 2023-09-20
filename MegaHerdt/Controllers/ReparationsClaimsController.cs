@@ -149,13 +149,13 @@ namespace MegaHerdt.API.Controllers
             {
                 Expression<Func<ReparationClaim, bool>> filter = x => x.Id == reparationClaimAnswerDTO.ReparationClaimId;
                 var reparationClaimDb = this.ReparationClaimService.GetBy(filter).FirstOrDefault();
-                var mailRequest = new MailRequest() 
-                { 
-                    ToEmail = reparationClaimDb.Client.Email, 
-                    Body = reparationClaimAnswerDTO.Answer, 
-                    Subject = "Respuesta a reclamo de reparacion" 
-                };
-                await this.MailService.SendEmailAsync(mailRequest);
+                //var mailRequest = new MailRequest() 
+                //{ 
+                //    ToEmail = reparationClaimDb.Client.Email, 
+                //    Body = reparationClaimAnswerDTO.Answer, 
+                //    Subject = "Respuesta a reclamo de reparacion" 
+                //};
+                //await this.MailService.SendEmailAsync(mailRequest);
 
                 reparationClaimDb.Answered = true;
                 var reparationClaimAnswer = Mapper.Map<ReparationClaimAnswer>(reparationClaimAnswerDTO);
