@@ -53,8 +53,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     
     const script = document.createElement('script');
 
-    window.pagoStatus = (_status: any)=>{
-      if(_status >=200 && _status <= 300){
+    window.pagoStatus = (response: any)=>{
+      if(response.status >=200 && response.status <= 300){
         Swal.fire({
           title: '¡La compra se realizó correctamente!',
           icon: 'success',
@@ -66,16 +66,24 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
           }
         }); 
       }else{
-        Swal.fire({
-          title: 'Hubo un error con tu compra',
-          icon: 'error',
-          confirmButtonText: 'OK',
-          backdrop: 'rgba(0, 0,125, 0.37)',
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = window.paymentFailedRedirect
-          }
-        }); 
+        // ESTE MÉTODO TRANSFORMA LA RESPONSE EN JSON ASI RECIBO LOS MENSAJES
+        // QUE ENVIO DESDE EL BACKEND
+        response.json().then((data: any) => {
+          console.error(data + "DATA"); 
+          Swal.fire({
+            title: 'Hubo un error con tu compra',
+            text: data.message,
+            icon: 'error',
+            confirmButtonText: 'OK',
+            backdrop: 'rgba(0, 0,125, 0.37)',
+          }).then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = window.paymentFailedRedirect
+            }
+          }); 
+          
+        });
+       
       }
     }
 
@@ -152,8 +160,9 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
                 })
                   .then((response) => {
                     console.log(response);
-                    
-                    window.pagoStatus(response.status)
+
+                    // EJECUTA EL DIALOGO CON EL MENSAJE DE SUCCESS O FAILED
+                    window.pagoStatus(response)
 
                     // recibir el resultado del pago
                     resolve();

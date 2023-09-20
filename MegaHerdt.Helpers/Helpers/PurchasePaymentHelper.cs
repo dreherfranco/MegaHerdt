@@ -19,41 +19,56 @@ namespace MegaHerdt.Helpers.Helpers
 
         public async Task<mercadopago.Payment> AddPaymentMP(PurchasePaymentMP purchasePaymentData)
         {
-            // Construyo la Request para mandar a la API de MercadoPago y crear el pago.
-            var paymentRequest = new PaymentCreateRequest
+            try
             {
-                TransactionAmount = purchasePaymentData.Transaction_Amount,
-                Token = purchasePaymentData.Token,
-                Description = purchasePaymentData.Description,
-                Installments = purchasePaymentData.Installments,
-                PaymentMethodId = purchasePaymentData.Payment_Method_Id,
-                Payer = new PaymentPayerRequest
+                // Construyo la Request para mandar a la API de MercadoPago y crear el pago.
+                var paymentRequest = new PaymentCreateRequest
                 {
-                    Email = purchasePaymentData?.Payer?.Email,
-                    Identification = new IdentificationRequest
+                    TransactionAmount = purchasePaymentData.Transaction_Amount,
+                    Token = purchasePaymentData.Token,
+                    Description = purchasePaymentData.Description,
+                    Installments = purchasePaymentData.Installments,
+                    PaymentMethodId = purchasePaymentData.Payment_Method_Id,
+                    Payer = new PaymentPayerRequest
                     {
-                        Type = purchasePaymentData?.Payer?.Identification?.Type,
-                        Number = purchasePaymentData?.Payer?.Identification?.Number,
-                    },
-                    //FirstName = "First Name"
+                        Email = purchasePaymentData?.Payer?.Email,
+                        Identification = new IdentificationRequest
+                        {
+                            Type = purchasePaymentData?.Payer?.Identification?.Type,
+                            Number = purchasePaymentData?.Payer?.Identification?.Number,
+                        },
+                        //FirstName = "First Name"
+                    }
+                };
+
+            
+                var client = new PaymentClient();
+                // Ejecuto la accion de pago.
+                mercadopago.Payment payment = await client.CreateAsync(paymentRequest);
+
+                // Si el pago fue aprobado se debe dejar constancia en la bdd de los productos que fueron comprados y actualizar el stock.
+                if (payment.Status == "approved")
+                {
+                    var purchase = await this.CreatePurchase(purchasePaymentData);
+                    await this.UpdateArticlesStock(purchasePaymentData.PurchaseArticles);
+                    return payment;
                 }
-            };
-
-            var client = new PaymentClient();
-            // Ejecuto la accion de pago.
-            mercadopago.Payment payment = await client.CreateAsync(paymentRequest);
-
-            // Si el pago fue aprobado se debe dejar constancia en la bdd de los productos que fueron comprados y actualizar el stock.
-            if (payment.Status == "approved")
-            {
-                var purchase = await this.CreatePurchase(purchasePaymentData);
-                await this.UpdateArticlesStock(purchasePaymentData.PurchaseArticles);
-                return payment;
+                else
+                {
+                    throw new Exception("The payment has failed");
+                }
             }
-            else
+            catch(Exception ex)
             {
-                throw new Exception("The payment has failed");
+                if (ex.Message.Contains("card_number_validation"))
+                {
+                    throw new Exception("Numero de tarjeta invalido");
+                }
+                
             }
+
+            // Este throw está por si ocurre un evento no esperado, y tambien porque el metodo espera a que se devuelva un valor.
+            throw new Exception("Error en el pago");
 
         }
 
