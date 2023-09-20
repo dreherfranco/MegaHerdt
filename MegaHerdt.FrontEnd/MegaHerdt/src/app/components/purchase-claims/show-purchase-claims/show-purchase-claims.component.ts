@@ -6,6 +6,7 @@ import { PurchaseClaim } from 'src/app/models/PurchaseClaim/PurchaseClaim';
 import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-show-purchase-claims',
@@ -15,7 +16,8 @@ import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-p
 export class ShowPurchaseClaimsComponent implements OnInit {
   purchaseClaims: Array<PurchaseClaim>;
   paginate: Paginate;
-  
+  sortedData: PurchaseClaim[] = [];
+
   constructor(private _purchaseClaimService: PurchaseClaimService, 
     private _storageService: StorageService, public dialog: MatDialog) {
     this.purchaseClaims = new Array<PurchaseClaim>();
@@ -41,6 +43,7 @@ export class ShowPurchaseClaimsComponent implements OnInit {
           console.log("error al obtener los reclamos");
         } else {
           this.purchaseClaims = response;
+          this.sortedData = this.purchaseClaims.slice();
         }
       },
       error: (err) => {
@@ -48,4 +51,31 @@ export class ShowPurchaseClaimsComponent implements OnInit {
       }
     });
   }
+  
+  sortData(sort: Sort) {
+    const data = this.purchaseClaims.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'description':
+          return compare(a.description, b.description, isAsc);
+        case 'date':
+          return compare(a.date, b.date, isAsc);
+        case 'answered':
+            return compare(a.answered, b.answered, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+}
+
+function compare(a: number | boolean | string | Date | string[], b: number | boolean | string | Date | string[], isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

@@ -4,17 +4,17 @@
 <div class="container-fluid">
     <p *ngIf="purchasesClaims.length == 0" class="alert alert-warning">No tiene reclamos para mostrar</p>
     <div class="table-responsive" *ngIf="purchasesClaims.length != 0">
-        <table class="table">
+        <table matSort (matSortChange)="sortData($event)" class="table">
             <thead>
                 <tr>
-                    <th scope="col">Descripcion reclamo</th>
-                    <th scope="col">Fecha emision</th>
-                    <th scope="col">Respondido</th>
+                    <th mat-sort-header="description" scope="col">Descripcion reclamo</th>
+                    <th mat-sort-header="date" scope="col">Fecha emision</th>
+                    <th mat-sort-header="answered" scope="col">Respondido</th>
                     <th scope="col">Ver compra</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let purchaseClaim of purchasesClaims 
+                <tr *ngFor="let purchaseClaim of sortedData 
                 | paginate: 
                 {
                     itemsPerPage: this.paginate.recordsPerPage, 
