@@ -37,7 +37,7 @@ namespace MegaHerdt.Services.Services
         public IEnumerable<Article> GetArticlesOnOffer()
         {
             var articles = this.helper.Get().ToList();
-            var articlesOnOffer = articles.Where(x => x.UnitValue != x.UnitValueWithOffer);
+            var articlesOnOffer = articles.Where(x => x.UnitValue != x.UnitValueWithOffer && x.Enabled);
            
             foreach (var article in articlesOnOffer)
             {

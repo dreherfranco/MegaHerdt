@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ArticleProviderCreation } from 'src/app/models/ArticleProvider/ArticleProviderCreation';
 import { Provider } from 'src/app/models/Provider/Provider';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ArticleProvisionService } from 'src/app/services/articles-provisions/article-provision.service';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
@@ -44,7 +45,13 @@ export class CreateArticleProvisionComponent implements OnInit {
     setTimeout(
       () => {
         this._articleProvisionService.updateArticleProviders();
-        form.reset();
+
+        AlertService.successAlert('¡Provisión creada correctamente!').then((result) => {
+          if (result.isConfirmed) {     
+              // Limpia el formulario.           
+              form.reset();
+          }
+        });
       }, 600)
   }
 

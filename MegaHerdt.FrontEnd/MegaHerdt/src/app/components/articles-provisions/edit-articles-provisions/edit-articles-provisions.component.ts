@@ -13,6 +13,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateArticleProvisionComponent } from './dialog-update-article-provision/dialog-update-article-provision.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-articles-provisions',
@@ -23,7 +24,6 @@ export class EditArticlesProvisionsComponent implements OnInit {
   providers: Array<Provider>;
   articles: Array<ArticleName>;
   articlesProviders: Array<ArticleProvider>;
-  updateSuccess: boolean;
   paginate: Paginate;
   searchText: string = "";
   @ViewChild('content', { static: true }) content!: ElementRef;
@@ -34,7 +34,6 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this.providers = new Array<Provider>();
     this.articles = new Array<ArticleName>();
     this.articlesProviders = new Array<ArticleProvider>();
-    this.updateSuccess = false;
     this.paginate = new Paginate(1,3);
    }
 
@@ -43,19 +42,14 @@ export class EditArticlesProvisionsComponent implements OnInit {
   }
 
   openDialogUpdate(articleProvider: ArticleProvider){     
-      const dialogRef = this.dialog.open(DialogUpdateArticleProvisionComponent,
-        {
-          disableClose:true,
-          data: articleProvider,
-          height: '175px',
-          width: '500px'
-        });
-  
-      dialogRef.afterClosed().subscribe((result: ArticleProvider) => {
-        if(result != undefined){
-          this.update(result);
-        }
-      });
+    AlertService.warningAlert(
+      '¿Estas seguro que quieres actualizar esta Provisión?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.update(articleProvider);
+      }
+    });
   }
 
   mapperArticleProvider(articleProvider: ArticleProvider){
@@ -69,44 +63,42 @@ export class EditArticlesProvisionsComponent implements OnInit {
     .subscribe({
       next: (response) => {
         if (response.error) {
-            console.log("no se pudieron cargar las marcas");
+          AlertService.errorAlert('¡Error al intentar actualizar la Provisión!');
         } else {
-          this.updateSuccess = true;
+          AlertService.successAlert('¡Actualizada!','Provisión actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Provisión!');
+
       }
     });
   }
 
   openDialogDelete(articleProviderId: number){     
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: articleProviderId,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteArticleProvider(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere eliminar esta Provisión?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.deleteArticleProvider(articleProviderId);
       }
     });
-}
+  } 
 
   deleteArticleProvider(id: number){
     this._articleProvisionService.delete(id, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-            console.log("no se pudo eliminar la provision");
+          AlertService.errorAlert('¡Error al intentar eliminar la Provisión!');
         } else {
-          console.log("provision eliminada correctamente")
           this._articleProvisionService.updateArticleProviders();
+          AlertService.successAlert('¡Eliminada!', 'Provisión eliminada correctamente');
         }
       },
       error: (err) => {
+        AlertService.errorAlert('¡Error al intentar eliminar la Provisión!');
         console.log(err)
       }
     });

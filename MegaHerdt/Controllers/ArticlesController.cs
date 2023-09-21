@@ -64,7 +64,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var articles = articleService.GetAll();
+                var articles = articleService.GetEnabledsArticles();
                 return this.Mapper.Map<List<ArticleNameDTO>>(articles);
             }
             catch (Exception ex)

@@ -9,6 +9,7 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 import { DialogUpdateOfferComponent } from './dialog-update-offer/dialog-update-offer.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-offers',
@@ -19,7 +20,6 @@ import { Paginate } from 'src/app/models/Paginate/Paginate';
 export class EditOffersComponent implements OnInit {
   offers: Array<ArticleOffer>;
   articles: Array<ArticleName>;
-  statusSubmit: string;
   paginate: Paginate;
   @ViewChild('content', { static: true }) content!: ElementRef;
 
@@ -27,7 +27,6 @@ export class EditOffersComponent implements OnInit {
     private _articleService: ArticleService,public dialog: MatDialog) {
     this.offers = new Array<ArticleOffer>();
     this.articles = new Array<ArticleName>();
-    this.statusSubmit = "";
     this.paginate = new Paginate(1,3);
   }
 
@@ -37,33 +36,23 @@ export class EditOffersComponent implements OnInit {
   }
 
   openDialogUpdate(offer: ArticleOffer){
-    const dialogRef = this.dialog.open(DialogUpdateOfferComponent,
-      {
-        disableClose:true,
-        data: offer,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: ArticleOffer) => {
-      if(result != undefined){
-        this.updateOffer(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere actualizar esta Oferta?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateOffer(offer);
       }
     });
   }
 
   openDialogDelete(offerId: number){
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: offerId,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteOffer(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere eliminar esta Oferta?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.deleteOffer(offerId);
       }
     });
   }
@@ -72,12 +61,14 @@ export class EditOffersComponent implements OnInit {
     this._offerService.delete(offerId, this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
-          console.log("error al eliminar oferta");
+          AlertService.errorAlert('¡Error al intentar eliminar la Oferta!');
         }else{
           this.loadOffers();
+          AlertService.successAlert('¡Eliminada!', 'Oferta eliminada correctamente');
         }
       },
       error: (err) => {
+        AlertService.errorAlert('¡Error al intentar eliminar la Oferta!');
         console.log(err)
       }
     })
@@ -87,14 +78,13 @@ export class EditOffersComponent implements OnInit {
     this._offerService.update(offer, this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
-          console.log("error al actualizar oferta");
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar actualizar la Oferta!');
         }else{
-          this.statusSubmit = "success";
+          AlertService.successAlert('¡Actualizada!','Oferta actualizada correctamente');
         }
       },
       error: (err) => {
-        this.statusSubmit = "failed";
+        AlertService.errorAlert('¡Error al intentar actualizar la Oferta!');
         console.log(err)
       }
     })

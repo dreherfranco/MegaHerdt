@@ -45,7 +45,6 @@ export class EditBrandsComponent implements OnInit {
   }
 
   openDialogDelete(brandId: number) {
-
     AlertService.warningAlert(
       '¿Estas seguro que quiere eliminar esta Marca?', 
       '¡No podrás revertir esto!')
@@ -55,7 +54,6 @@ export class EditBrandsComponent implements OnInit {
       }
     });
 
-    
   }
 
   deleteBrand(id: number){
