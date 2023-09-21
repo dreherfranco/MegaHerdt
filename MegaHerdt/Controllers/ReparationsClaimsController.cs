@@ -83,6 +83,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
+                
                 if (UserValidations.UserIdIsOk(reparationClaimDTO.ClientId, HttpContext))
                 {
                     var reparationClaim = Mapper.Map<ReparationClaim>(reparationClaimDTO);

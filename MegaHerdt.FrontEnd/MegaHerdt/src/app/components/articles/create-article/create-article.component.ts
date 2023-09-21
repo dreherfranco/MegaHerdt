@@ -12,8 +12,6 @@ import { DialogCreateCategoryComponent } from '../../categories/create-category/
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-
-
 @Component({
   selector: 'app-create-article',
   templateUrl: './create-article.component.html',
@@ -28,7 +26,6 @@ export class CreateArticleComponent implements OnInit {
   brandId: number;
   imageOk: boolean = false;
   
-
   constructor(private _storageService: StorageService, private _articleService: ArticleService, private _router: Router,
     private _categoryService: CategoryService, private _brandService: BrandService,public dialog: MatDialog) {
     this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0);

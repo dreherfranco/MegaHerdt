@@ -58,6 +58,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         Swal.fire({
           title: '¡La compra se realizó correctamente!',
           icon: 'success',
+          allowOutsideClick: false,
           confirmButtonText: 'OK',
           backdrop: 'rgba(0, 0,125, 0.37)',
         }).then((result) => {
@@ -74,6 +75,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
             title: 'Hubo un error con tu compra',
             text: data.message,
             icon: 'error',
+            allowOutsideClick: false,
             confirmButtonText: 'OK',
             backdrop: 'rgba(0, 0,125, 0.37)',
           }).then((result) => {

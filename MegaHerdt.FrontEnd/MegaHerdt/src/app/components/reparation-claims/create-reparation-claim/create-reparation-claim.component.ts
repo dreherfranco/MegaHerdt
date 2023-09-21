@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReparationClaimCreation } from 'src/app/models/ReparationClaims/ReparationClaimCreation';
 import { UserDetail } from 'src/app/models/User/UserDetail';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationClaimService } from 'src/app/services/reparation-claims/reparation-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-reparation-claim',
@@ -12,12 +14,10 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class CreateReparationClaimComponent implements OnInit {
   description: string;
-  statusSubmit: string;
 
   constructor(private _route: ActivatedRoute, private _reparationClaimService: ReparationClaimService,
     private _storageService: StorageService) {
       this.description = '';
-      this.statusSubmit = '';
    }
 
   ngOnInit(): void {
@@ -42,17 +42,27 @@ export class CreateReparationClaimComponent implements OnInit {
     this._reparationClaimService.create(reparationClaim,this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
-          console.log("error al guardar el reclamo");
-          this.statusSubmit = "failed";
-        }else{
+
+          AlertService.errorAlert('No se pudo efectuar el reclamo');
+
+        }
+        else
+        {
           console.log("el reclamo se creo correctamente");
-          this.statusSubmit = "success";
-          form.reset();
+
+          AlertService.successAlert('Reclamo efectuado correctamente').then((result) => {
+            if (result.isConfirmed) {     
+                // Limpia el formulario.           
+                form.reset();
+            }
+          });
+       
         }
       },
       error: (err) => {
-        this.statusSubmit = "failed";
         console.log(err)
+        AlertService.errorAlert('No se pudo efectuar el reclamo');
+
       }
     });
   }
