@@ -8,6 +8,7 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-categories',
@@ -32,17 +33,12 @@ export class EditCategoriesComponent implements OnInit {
   }
 
   openDialogUpdate(category: Category) {
-    const dialogRef = this.dialog.open(DialogUpdateCategoryComponent,
-      {
-        disableClose:true,
-        data: category,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: Category) => {
-      if(result != undefined){
-        this.updateCategory(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere actualizar esta Categoria?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateCategory(category);
       }
     });
   }
@@ -54,17 +50,12 @@ export class EditCategoriesComponent implements OnInit {
   }
 
   openDialogDelete(categoryId: number) {
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: categoryId,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteCategory(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere eliminar esta Categoria?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.deleteCategory(categoryId);
       }
     });
   }
@@ -73,13 +64,14 @@ export class EditCategoriesComponent implements OnInit {
     this._categoryService.delete(id, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+            AlertService.errorAlert('¡Error al intentar eliminar la Categoria!');
           } else {
             this._categoryService.updateCategories();
+            AlertService.successAlert('¡Eliminada!','Categoria eliminada correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar eliminar la Categoria!');
           console.log(err)
         }
     }
@@ -90,13 +82,13 @@ export class EditCategoriesComponent implements OnInit {
     this._categoryService.update(category, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+            AlertService.errorAlert('¡Error al intentar actualizar la Categoria!');
           } else {
-            this.statusSubmit = "success";
+            AlertService.successAlert('¡Actualizada!','Categoria actualizada correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar actualizar la Categoria!');
           console.log(err)
         }
     }

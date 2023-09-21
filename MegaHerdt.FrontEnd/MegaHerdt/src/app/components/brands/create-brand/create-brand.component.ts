@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BrandCreation } from 'src/app/models/ArticleBrand/BrandCreation';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -10,11 +11,9 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class CreateBrandComponent implements OnInit {
   brand: BrandCreation;
-  statusSubmit: string;
 
   constructor(private _storageService: StorageService, private _brandService: BrandService) {
     this.brand = new BrandCreation("");
-    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -25,15 +24,20 @@ export class CreateBrandComponent implements OnInit {
         {
           next: (response) => {
             if (response.error) {
-              this.statusSubmit = "failed";
+              AlertService.errorAlert('¡Error al intentar crear la Marca!');
             } else {
-              this.statusSubmit = "success";
              this._brandService.updateBrands();
-             form.reset();
+             
+              AlertService.successAlert('¡Marca creada correctamente!').then((result) => {
+                if (result.isConfirmed) {     
+                    // Limpia el formulario.           
+                    form.reset();
+                }
+              });
             }
           },
           error: (err) => {
-            this.statusSubmit = "failed";
+            AlertService.errorAlert('¡Error al intentar crear la Marca!');
             console.log(err)
           }
         }

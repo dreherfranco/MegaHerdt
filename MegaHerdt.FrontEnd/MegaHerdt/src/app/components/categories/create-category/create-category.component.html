@@ -7,7 +7,5 @@
    <p>
      <input type="submit" class="btn btn-primary mt-3" [disabled]="categoryForm.invalid" value="Crear"/>
    </p> 
-   <p *ngIf="statusSubmit == 'failed'" class="alert alert-danger">Error al crear la categoría, el nombre ya se encuentra en uso</p>
-   <p *ngIf="statusSubmit == 'success'" class="alert alert-success">La categoría se creó correctamente</p>
   </div>  
 </form>

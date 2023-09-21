@@ -7,6 +7,7 @@ import { DialogUpdateBrandComponent } from './dialog-update-brand/dialog-update-
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-brands',
@@ -15,13 +16,11 @@ import { Paginate } from 'src/app/models/Paginate/Paginate';
 })
 export class EditBrandsComponent implements OnInit {
   brands: Array<Brand>;
-  statusSubmit: string;
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
 
   constructor(private _storageService: StorageService, private _brandService: BrandService,public dialog: MatDialog) {
     this.brands = new Array<Brand>();
-    this.statusSubmit = "";
     this.paginate = new Paginate(1,6);
   }
 
@@ -31,17 +30,12 @@ export class EditBrandsComponent implements OnInit {
   }
 
   openDialogUpdate(brand: Brand) {
-    const dialogRef = this.dialog.open(DialogUpdateBrandComponent,
-      {
-        disableClose:true,
-        data: brand,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: Brand) => {
-      if(result != undefined){
-        this.updateBrand(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere actualizar esta Marca?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateBrand(brand);
       }
     });
   }
@@ -51,32 +45,31 @@ export class EditBrandsComponent implements OnInit {
   }
 
   openDialogDelete(brandId: number) {
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: brandId,
-        height: '175px',
-        width: '500px'
-      });
 
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteBrand(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere eliminar esta Marca?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.deleteBrand(brandId);
       }
     });
+
+    
   }
 
   deleteBrand(id: number){
     this._brandService.delete(id, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+              AlertService.errorAlert('¡Error al intentar eliminar la Marca!');
           } else {
             this._brandService.updateBrands();
+            AlertService.successAlert('¡Eliminada!', 'Marca eliminada correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar eliminar la Marca!');
           console.log(err)
         }
     }
@@ -87,13 +80,13 @@ export class EditBrandsComponent implements OnInit {
     this._brandService.update(brand, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+              AlertService.errorAlert('¡Error al intentar actualizar la Marca!');
           } else {
-            this.statusSubmit = "success";
+            AlertService.successAlert('¡Actualizada!','Marca actualizada correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar actualizar la Marca!');
           console.log(err)
         }
     }

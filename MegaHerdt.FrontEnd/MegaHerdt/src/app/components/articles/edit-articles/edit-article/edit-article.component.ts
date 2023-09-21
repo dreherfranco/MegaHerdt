@@ -13,6 +13,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogUpdateArticleComponent } from '../dialog-update-article/dialog-update-article.component';
 import Swal from 'sweetalert2';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-article',
@@ -24,7 +25,6 @@ export class EditArticleComponent implements OnInit {
   categories: Array<Category>;
   brands: Array<Brand>;
   image: File;
-  updateSuccess: boolean;
   constructor(
     private _categoryService: CategoryService,
     private _brandService: BrandService,
@@ -36,7 +36,6 @@ export class EditArticleComponent implements OnInit {
     this.categories = new Array<Category>();
     this.brands = new Array<Brand>();
     this.image = new File(new Array(), '');
-    this.updateSuccess = false;
   }
 
   ngOnInit(): void {
@@ -101,18 +100,15 @@ export class EditArticleComponent implements OnInit {
   }
 
   openDialogUpdate() {
-    const dialogRef = this.dialog.open(DialogUpdateArticleComponent, {
-      disableClose: true,
-      data: this.article,
-      height: '175px',
-      width: '500px'
-    });
+    
 
-    dialogRef.afterClosed().subscribe((result: Article) => {
-      if (result != undefined) {
+    AlertService.warningAlert('¿Estas por actualizar un artículo?', "¡No podrás revertir esto!")
+    .then((result) => {
+      if (result.isConfirmed) {
         this.update();
       }
-    });
+    })
+
   }
 
   update() {
@@ -120,13 +116,20 @@ export class EditArticleComponent implements OnInit {
     this._articleService.sendFormData(article, 'update').subscribe({
       next: (response) => {
         if (response.error) {
-          console.log('no se pudieron cargar las marcas');
+
+          AlertService.errorAlert('¡Error al querer actualizar el artículo!');
         } else {
-          this.updateSuccess = true;
+          AlertService.successAlert('¡Actualizado!',"El articulo ha sido actualizado.")
+            .then((result)=>
+            {
+              // Si fue exitoso se recarga la pagina
+              window.location.reload();
+            })
         }
       },
       error: (err) => {
         console.log(err);
+        AlertService.errorAlert('Error al querer actualizar el artículo!');
       },
     });
 
@@ -138,32 +141,13 @@ export class EditArticleComponent implements OnInit {
   }
 
   openDialogDelete() {
-    Swal.fire({
-      title: '¿Estas por borrar un artículo?',
-      text: "¡No podrás revertir esto!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
-      confirmButtonText: 'Eliminar',
-      backdrop: `rgba(0, 0,125, 0.37)`,
-    }).then((result) => {
+    AlertService.warningAlert('¿Estas por borrar un artículo?', "¡No podrás revertir esto!")
+    .then((result) => {
       if (result.isConfirmed) {
         this.delete();
-       
       }
     })
-    //  const dialogRef = this.dialog.open(DialogConfirmDeleteComponent, {
-    //    disableClose: true,
-    //    data: this.article,
-    //    height: '175px',
-    //    width: '500px'
-    //  })
-    //   dialogRef.afterClosed().subscribe((result: Article) => {
-    //     if (result != undefined) {
-    //       this.delete();
-    //     }
-    //   });
+
   }
 
   delete() {
@@ -173,30 +157,21 @@ export class EditArticleComponent implements OnInit {
       .subscribe({
         next: (response) => {
           if (response.error) {
-            console.log('no se pudieron cargar las marcas');
+
+            AlertService.errorAlert('Error al querer eliminar el artículo!')
+
           } else {
             //window.location.reload();
-            Swal.fire({
-              title: '¡Eliminado!',
-              text: "El articulo ha sido eliminado.",
-              icon: 'success',
-              backdrop: `rgba(0, 0,125, 0.37)`
-            }).then((result)=>
-                    {
-                      // Si fue exitoso se recarga la pagina
-                      window.location.reload();
-                    })
+            AlertService.successAlert('¡Eliminado!',"El articulo ha sido eliminado.")
+            .then((result)=>
+            {
+              // Si fue exitoso se recarga la pagina
+              window.location.reload();
+            })
           }
         },
         error: (err) => {
-          Swal.fire({
-            title: 'Error al querer eliminar el artículo!',
-            icon: 'warning',
-            backdrop: `rgba(0, 0,125, 0.37)`
-          }).then((result)=>
-                  {
-                    // Insertar acciones en caso de fallo
-                  })
+          AlertService.errorAlert('Error al querer eliminar el artículo!')
           console.log(err);
         },
       });
