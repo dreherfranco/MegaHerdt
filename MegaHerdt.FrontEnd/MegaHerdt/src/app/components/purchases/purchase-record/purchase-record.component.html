@@ -4,17 +4,17 @@
 <div class="container-fluid">
     <p *ngIf="purchases.length == 0" class="alert alert-warning">No tiene compras para mostrar</p>
     <div class="table-responsive">
-        <table class="table" *ngIf="purchases.length != 0">
+        <table matSort (matSortChange)="sortData($event)" class="table" *ngIf="purchases.length != 0">
             <thead>
                 <tr>
-                    <th scope="col">Fecha</th>
+                    <th mat-sort-header="date" scope="col">Fecha</th>
                     <th scope="col">Articulos</th>
                     <th scope="col">Envio</th>
                     <th scope="col">Reclamar</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let purchase of purchases | paginate: 
+                <tr *ngFor="let purchase of sortedData | paginate: 
                 {
                     itemsPerPage: this.paginate.recordsPerPage, 
                     currentPage:this.paginate.page

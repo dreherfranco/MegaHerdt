@@ -4,25 +4,25 @@
 <div class="container-fluid">
     <p *ngIf="reparations.length == 0" class="alert alert-warning">No tiene reparaciones para mostrar</p>
     <div class="table-responsive">
-        <table class="table" *ngIf="reparations.length != 0">
+        <table matSort (matSortChange)="sortData($event)" class="table" *ngIf="reparations.length != 0">
             <thead>
                 <tr>
                     <th scope="col">Articulos</th>
-                    <th scope="col">Empleado</th>
-                    <th scope="col">Email cliente</th>
-                    <th scope="col">Monto mano de obra</th>
-                    <th scope="col">Monto articulos</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Numero de factura</th>
-                    <th scope="col">Tipo de factura</th>
+                    <th mat-sort-header="employeeEmail" scope="col">Email Empleado</th>
+                    <th mat-sort-header="clientEmail" scope="col">Email cliente</th>
+                    <th mat-sort-header="amount" scope="col">Monto mano de obra</th>
+                    <th mat-sort-header="totalArticleAmount" scope="col">Monto articulos</th>
+                    <th mat-sort-header="total" scope="col">Total</th>
+                    <th mat-sort-header="date" scope="col">Fecha</th>
+                    <th mat-sort-header="reparationState" scope="col">Estado</th>
+                    <th mat-sort-header="billNumber" scope="col">Numero de factura</th>
+                    <th mat-sort-header="billType" scope="col">Tipo de factura</th>
                     <th scope="col">Reclamar</th>
                     <th scope="col">Pagar</th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let reparation of reparations | paginate: 
+                <tr *ngFor="let reparation of sortedData | paginate: 
                 {
                     itemsPerPage: this.paginate.recordsPerPage, 
                     currentPage:this.paginate.page
@@ -35,7 +35,7 @@
                         </span>
                     </th>
                     <th>
-                        <span class="data-user">{{ reparation.employee.name }} {{ reparation.employee.surname }}</span>
+                        <span class="data-user">{{ reparation.employee.email }}</span>
                     </th>
                     <th>
                         <span class="data-user">{{ reparation.client.email }}</span>
