@@ -94,7 +94,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                if (!this.providerService.Exist(providerDTO.Email))
+                if (!this.providerService.Exist(providerDTO.Email, providerDTO.Id))
                 {
                     Expression<Func<Provider, bool>> filter = x => x.Id == providerDTO.Id;
                     var providerDb = this.providerService.GetBy(filter).FirstOrDefault();

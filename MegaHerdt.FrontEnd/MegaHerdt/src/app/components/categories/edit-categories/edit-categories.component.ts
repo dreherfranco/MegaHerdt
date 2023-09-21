@@ -17,13 +17,11 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 })
 export class EditCategoriesComponent implements OnInit {
   categories: Array<Category>;
-  statusSubmit: string;
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
 
   constructor(private _storageService: StorageService, private _categoryService: CategoryService,public dialog: MatDialog) {
     this.categories = new Array<Category>();
-    this.statusSubmit = "";    
     this.paginate = new Paginate(1,6);
   }
 

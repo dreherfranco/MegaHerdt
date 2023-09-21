@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProviderCreation } from 'src/app/models/Provider/ProviderCreation';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -10,10 +11,9 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class CreateProviderComponent implements OnInit {
   provider: ProviderCreation;
-  statusSubmit: string;
+
   constructor(private _storageService: StorageService, private _providerService: ProviderService) {
     this.provider = new ProviderCreation("","","");
-    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -24,14 +24,20 @@ export class CreateProviderComponent implements OnInit {
         {
           next: (response) => {          
             if (response.error) {
-              this.statusSubmit = "failed";
+              AlertService.errorAlert('¡Error al intentar crear el Proveedor!');
             } else {
-              this.statusSubmit = "success";
-              window.location.reload();
+              
+              AlertService.successAlert('¡Proveedor creado correctamente!').then((result) => {
+                if (result.isConfirmed) {     
+                    // Limpia el formulario.           
+                 //   form.reset();
+                    window.location.reload();
+                }
+              });
             }
           },
           error: (err) => {
-            this.statusSubmit = "failed";
+            AlertService.errorAlert('¡Error al intentar crear el Proveedor!');
             console.log(err)
           }
         }

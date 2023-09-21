@@ -15,6 +15,16 @@ namespace MegaHerdt.Services.Services
         public bool Exist(string providerEmail)
         {
             var providerDb = this.helper.Get(x => x.Email.Equals(providerEmail)).FirstOrDefault();
+            if (providerDb == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool Exist(string providerEmail, int id)
+        {
+            var providerDb = this.helper.Get(x => x.Email.Equals(providerEmail) && x.Id != id).FirstOrDefault();
             if(providerDb == null)
             {
                 return false;

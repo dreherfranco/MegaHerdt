@@ -8,6 +8,7 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Sort } from '@angular/material/sort';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-providers',
@@ -17,13 +18,11 @@ import { Sort } from '@angular/material/sort';
 export class EditProvidersComponent implements OnInit {
   providers: Array<Provider>;
   sortedData: Provider[] = [];
-  statusSubmit: string;
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
 
   constructor(private _storageService: StorageService, private _providerService: ProviderService,public dialog: MatDialog) {
     this.providers = new Array<Provider>();
-    this.statusSubmit = "";
     this.paginate = new Paginate(1,3);
   }
 
@@ -33,17 +32,12 @@ export class EditProvidersComponent implements OnInit {
   }
 
   openDialogUpdate(provider: Provider) {
-    const dialogRef = this.dialog.open(DialogUpdateProviderComponent,
-      {
-        disableClose:true,
-        data: provider,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: Provider) => {
-      if(result != undefined){
-        this.updateProvider(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere actualizar este Proveedor?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateProvider(provider);
       }
     });
   }
@@ -59,24 +53,18 @@ export class EditProvidersComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
           console.log(err)
         }
     });
   }
 
   openDialogDelete(providerId: number) {
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: providerId,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteProvider(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere eliminar este Proveedor?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.deleteProvider(providerId);
       }
     });
   }
@@ -85,14 +73,15 @@ export class EditProvidersComponent implements OnInit {
     this._providerService.delete(id, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+            AlertService.errorAlert('¡Error al intentar eliminar el Proveedor!');
           } else {
             this.loadProviders();
+            AlertService.successAlert('¡Eliminado!','Proveedor eliminado correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
           console.log(err)
+          AlertService.errorAlert('¡Error al intentar eliminar el Proveedor!');
         }
     }
     );
@@ -102,13 +91,14 @@ export class EditProvidersComponent implements OnInit {
     this._providerService.update(provider, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+            AlertService.errorAlert('¡Error al intentar actualizar el Proveedor!');
           } else {
-            this.statusSubmit = "success";
+            AlertService.successAlert('¡Actualizado!','Proveedor actualizado correctamente');
+
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar actualizar el Proveedor!');
           console.log(err)
         }
     }

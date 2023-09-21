@@ -28,7 +28,7 @@ export class CreateCategoryComponent implements OnInit {
             AlertService.errorAlert('¡Error al intentar crear la Categoria!');
           } else {
             this._categoryService.updateCategories();
-            AlertService.successAlert('Categoria creada correctamente!').then((result) => {
+            AlertService.successAlert('¡Categoria creada correctamente!').then((result) => {
               if (result.isConfirmed) {     
                   // Limpia el formulario.           
                   form.reset();
