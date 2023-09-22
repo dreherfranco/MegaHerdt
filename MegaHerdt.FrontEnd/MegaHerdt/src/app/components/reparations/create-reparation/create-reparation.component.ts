@@ -16,6 +16,7 @@ import { BillTypeEnum } from 'src/app/utils/BillTypeEnum';
 import { DialogAdminCreateUserComponent } from '../../users/admin-create-user/dialog-admin-create-user/dialog-admin-create-user.component';
 import { jsPDF } from 'jspdf';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-create-reparation',
@@ -26,7 +27,6 @@ export class CreateReparationComponent implements OnInit {
   clients: Array<UserDetail>;
   reparation: ReparationCreation;
   reparationsStates: Array<ReparationState>;
-  statusSubmit: string;
 
   constructor(private _storageService: StorageService, private _userService: UserService,
     private _reparationStateService: ReparationStateService, private _reparationService: ReparationService,
@@ -35,7 +35,6 @@ export class CreateReparationComponent implements OnInit {
     this.reparation = new ReparationCreation(1, '', '', 0, new Date(),
       new Array<ReparationArticleCreation>(), new BillCreation('00001','00000000', ''));
     this.reparationsStates = new Array<ReparationState>();
-    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -49,14 +48,19 @@ export class CreateReparationComponent implements OnInit {
     this._reparationService.create(this.reparation, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al crear reparacion");
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar crear la Reparación!');
         } else {
-          this.statusSubmit = "success";
-          this.generatePDF(response);
+
+          AlertService.successAlert('¡Reparación creada correctamente!').then((result) => {
+            if (result.isConfirmed) {     
+              this.generatePDF(response);
+              form.reset();
+            }
+          });
         }
       },
       error: (err) => {
+        AlertService.errorAlert('¡Error al intentar crear la Reparación!');
         console.log(err)
       }
     });

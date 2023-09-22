@@ -6,6 +6,7 @@ import { TransportCompanyService } from 'src/app/services/transport-companies/tr
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateTransportCompanyComponent } from './dialog-update-transport-company/dialog-update-transport-company.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-edit-transport-companies',
@@ -14,7 +15,6 @@ import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 })
 export class EditTransportCompaniesComponent implements OnInit {
   transportCompanies: Array<TransportCompany> = new Array<TransportCompany>();
-  statusSubmit: string = '';
   @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _storageService: StorageService, private _transportCompanyService: TransportCompanyService,
@@ -27,17 +27,12 @@ export class EditTransportCompaniesComponent implements OnInit {
   }
 
   openDialogUpdate(transportCompany: TransportCompany) {
-    const dialogRef = this.dialog.open(DialogUpdateTransportCompanyComponent,
-      {
-        disableClose:true,
-        data: transportCompany,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: TransportCompany) => {
-      if(result != undefined){
-        this.updateTransportCompany(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere actualizar esta Compania de Transporte?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateTransportCompany(transportCompany);
       }
     });
   }
@@ -52,39 +47,34 @@ export class EditTransportCompaniesComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
           console.log(err)
         }
     });
   }
 
   openDialogDelete(transportCompanyId: number) {
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: transportCompanyId,
-        height: '175px',
-        width: '500px'
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteBrand(result);
+    AlertService.warningAlert(
+      '¿Estas seguro que quiere eliminar esta Compania de Transporte?', 
+      '¡No podrás revertir esto!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.deleteTransportCompany(transportCompanyId);
       }
     });
   }
 
-  deleteBrand(id: number){
+  deleteTransportCompany(id: number){
     this._transportCompanyService.delete(id, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las categorias");
+            AlertService.errorAlert('¡Error al intentar eliminar la Compania de Transporte!');
           } else {
             this.loadTransportCompanies();
+            AlertService.successAlert('¡Eliminada!','Compania de Transporte eliminada correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar eliminar la Compania de Transporte!');
           console.log(err)
         }
     }
@@ -95,14 +85,14 @@ export class EditTransportCompaniesComponent implements OnInit {
     this._transportCompanyService.update(transportCompany, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-              console.log("no se pudieron cargar las empresas de transporte");
+            AlertService.errorAlert('¡Error al intentar actualizar la Compania de Transporte!');
           } else {
-            this.statusSubmit = "success";
+            AlertService.successAlert('¡Actualizada!','Compania de Transporte actualizada correctamente');
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
           console.log(err)
+          AlertService.errorAlert('¡Error al intentar actualizar la Compania de Transporte!');
         }
     }
     );

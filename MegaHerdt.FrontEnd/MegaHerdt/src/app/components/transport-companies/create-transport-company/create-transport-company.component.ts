@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TransportCompany } from 'src/app/models/TransportCompany/TransportCompany';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { TransportCompanyService } from 'src/app/services/transport-companies/transport-company.service';
 
@@ -10,7 +11,6 @@ import { TransportCompanyService } from 'src/app/services/transport-companies/tr
 })
 export class CreateTransportCompanyComponent implements OnInit {
   transportCompany: TransportCompany = new TransportCompany();
-  statusSubmit: string = '';
   constructor(private _storageService: StorageService, private _transportCompanyService: TransportCompanyService) {
 
    }
@@ -23,14 +23,18 @@ export class CreateTransportCompanyComponent implements OnInit {
       {
         next: (response) => {
           if (response.error) {
-            this.statusSubmit = "failed";
+            AlertService.errorAlert('¡Error al intentar crear la Compania de Transporte!');
           } else {
-            this.statusSubmit = "success";
-            window.location.reload();
+            AlertService.successAlert('Compania de Transporte creada correctamente!').then((result) => {
+              if (result.isConfirmed) {     
+                  // Limpia el formulario.           
+                  window.location.reload();
+              }
+            });
           }
         },
         error: (err) => {
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar crear la Compania de Transporte!');
           console.log(err)
         }
       }
