@@ -8,6 +8,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStateENREVISIONComponent } from './update-reparation-state-en-revision/update-reparation-state-en-revision.component';
 import { Sort } from '@angular/material/sort';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-reparation-state-en-revision',
@@ -62,12 +63,14 @@ export class ReparationStateENREVISIONComponent implements OnInit {
     this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         console.log(err)
       }
     })

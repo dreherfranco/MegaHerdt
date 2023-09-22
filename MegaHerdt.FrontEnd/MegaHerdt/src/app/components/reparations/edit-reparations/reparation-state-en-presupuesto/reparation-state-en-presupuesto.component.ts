@@ -10,6 +10,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStateENPRESUPUESTOComponent } from './update-reparation-state-en-presupuesto/update-reparation-state-en-presupuesto.component';
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { Sort } from '@angular/material/sort';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-reparation-state-en-presupuesto',
@@ -43,46 +44,38 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
 
   openDialogUpdate(reparationId: number){
     let data = new ReparationUpdateBudget(reparationId, true, new Date());
-    const dialogRef = this.dialog.open(UpdateReparationStateENPRESUPUESTOComponent,
-      {
-        disableClose:true,
-        data: data
-      });
 
-    dialogRef.afterClosed().subscribe((result: ReparationUpdateBudget) => {
-      if(result != undefined){
-        this.updateBudget(result);
+    AlertService.warningAlert('¿Seguro que quieres pasar al estado EN REPARACIÓN?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateBudget(data);
       }
     });
+   
   }
 
   updateBudget(reparation: ReparationUpdateBudget){
     this._reparationService.updateBudget(reparation, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
   }
 
   openDialogBackToRevision(reparation: Reparation){
-
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: reparation
-      });
-    dialogRef.componentInstance.mensajeConfirmacion = "¿Seguro quieres volver al estado 'En Revisión'?";
-    
-      dialogRef.afterClosed().subscribe((result: Reparation) => {
-      if(result != undefined){
-        this.updateDecrementState(result);
+    AlertService.warningAlert('¿Seguro que quieres volver al estado EN REVISIÓN?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateDecrementState(reparation);
       }
     });
   }
@@ -92,13 +85,15 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
     this._reparationService.updateDecrementState(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
   }
@@ -113,16 +108,11 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
 
   openDialogRejectBudget(reparationId: number){
     let data = new ReparationUpdateBudget(reparationId, false, new Date());
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: data
-      });
-      dialogRef.componentInstance.mensajeConfirmacion = "¿Seguro quieres mover la reparación al estado 'Cancelado'?";
 
-    dialogRef.afterClosed().subscribe((result: ReparationUpdateBudget) => {
-      if(result != undefined){
-        this.updateBudget(result);
+    AlertService.warningAlert('¿Seguro que quieres cancelar el Presupuesto y enviar la reparación al estado CANCELADO?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateBudget(data);
       }
     });
   }

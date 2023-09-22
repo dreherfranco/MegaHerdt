@@ -8,6 +8,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStatePagadoComponent } from './update-reparation-state-pagado/update-reparation-state-pagado.component';
 import { Sort } from '@angular/material/sort';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-reparation-state-pagado',
@@ -76,13 +77,15 @@ export class ReparationStatePAGADOComponent implements OnInit {
     this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
   }
@@ -126,7 +129,9 @@ export class ReparationStatePAGADOComponent implements OnInit {
               return compare(a.totalArticleAmount, b.totalArticleAmount, isAsc);
         case 'total':
               return compare(a.totalArticleAmount + a.amount, b.totalArticleAmount + b.amount, isAsc);
-        default:
+        case 'facturada':
+            return compare(a.facturada, b.facturada, isAsc);
+         default:
           return 0;
       }
     });
@@ -134,7 +139,7 @@ export class ReparationStatePAGADOComponent implements OnInit {
 
 }
 
-function compare(a: number | string | Date | string[], b: number | string | Date | string[], isAsc: boolean) {
+function compare(a: number | string | boolean | Date | string[], b: number | string | boolean | Date | string[], isAsc: boolean) {
   
    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

@@ -8,6 +8,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStateREPARADOComponent } from './update-reparation-state-reparado/update-reparation-state-reparado.component';
 import { Sort } from '@angular/material/sort';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-reparation-state-reparado',
@@ -39,15 +40,10 @@ export class ReparationStateREPARADOComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation) {
-    const dialogRef = this.dialog.open(UpdateReparationStateREPARADOComponent,
-      {
-        disableClose: true,
-        data: reparation
-      });
-
-    dialogRef.afterClosed().subscribe((result: Reparation) => {
-      if (result != undefined) {
-        this.update(result);
+    AlertService.warningAlert('¿Seguro que quieres pasar al estado ENTREGADO?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.update(reparation);
       }
     });
   }
@@ -75,13 +71,15 @@ export class ReparationStateREPARADOComponent implements OnInit {
     this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
   }

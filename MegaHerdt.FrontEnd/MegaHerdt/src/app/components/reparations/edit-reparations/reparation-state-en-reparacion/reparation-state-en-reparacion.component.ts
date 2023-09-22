@@ -10,6 +10,7 @@ import { DialogUpdateReparationComponent } from '../dialog-update-reparation/dia
 import { UpdateReparationStateENREPARACIONComponent } from './update-reparation-state-en-reparacion/update-reparation-state-en-reparacion.component';
 import { DialogConfirmDeleteComponent } from 'src/app/components/general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { Sort } from '@angular/material/sort';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-reparation-state-en-reparacion',
@@ -42,17 +43,13 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation) {
-    const dialogRef = this.dialog.open(UpdateReparationStateENREPARACIONComponent,
-      {
-        disableClose: true,
-        data: reparation
-      });
-
-    dialogRef.afterClosed().subscribe((result: Reparation) => {
-      if (result != undefined) {
-        this.update(result);
+    AlertService.warningAlert('¿Seguro que quieres pasar al estado REPARADO?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.update(reparation);
       }
     });
+   
   }
 
   loadReparations() {
@@ -78,13 +75,15 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
     this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
   }
@@ -99,18 +98,13 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
   // Abrir el dialogo para volver la reparacion a presupuesto
   openDialogBackToBudget(reparation: Reparation){
 
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: reparation
-      });
-    dialogRef.componentInstance.mensajeConfirmacion = "¿Seguro quieres volver al estado 'En Presupuesto'?";
-    
-      dialogRef.afterClosed().subscribe((result: Reparation) => {
-      if(result != undefined){
-        this.updateDecrementState(result);
+    AlertService.warningAlert('¿Seguro que quieres volver al estado EN PRESUPUESTO?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateDecrementState(reparation);
       }
     });
+   
   }
 
   updateDecrementState(reparation: Reparation) {
@@ -118,13 +112,15 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
     this._reparationService.updateDecrementState(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          console.log("error al actualizar reparacion");
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
         }
       },
       error: (err) => {
         console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
   }
