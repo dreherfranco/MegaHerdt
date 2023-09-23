@@ -22,14 +22,14 @@
     </div>
 </div>
 <div class="table-responsive" #content>
-    <table class="table">
+    <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
                 <th scope="col">Artículo</th>
-                <th scope="col">Cantidad proveída</th>
-                <th scope="col">Proveedor</th>
-                <th scope="col">Fecha provisión</th>
-                <th scope="col">Operación</th>
+                <th mat-sort-header="articleQuantity" scope="col">Cantidad proveída</th>
+                <th mat-sort-header="providerEmail" scope="col">Proveedor</th>
+                <th mat-sort-header="provisionDate" scope="col">Fecha provisión</th>
+                <th mat-sort-header="operation" scope="col">Operación</th>
                 <th scope="col">Números de serie</th>
                 <th scope="col">Comprobante</th>
                 <th scope="col"></th>
@@ -37,7 +37,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let articleProvider of articlesProviders
+            <tr *ngFor="let articleProvider of sortedData
             | filter: searchText 
             | paginate: 
             {

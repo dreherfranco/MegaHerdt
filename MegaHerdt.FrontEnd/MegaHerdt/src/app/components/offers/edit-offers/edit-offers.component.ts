@@ -10,6 +10,7 @@ import { DialogUpdateOfferComponent } from './dialog-update-offer/dialog-update-
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-edit-offers',
@@ -22,6 +23,7 @@ export class EditOffersComponent implements OnInit {
   articles: Array<ArticleName>;
   paginate: Paginate;
   @ViewChild('content', { static: true }) content!: ElementRef;
+  sortedData: ArticleOffer[] = [];
 
   constructor(private _offerService: OfferService, private _storageService: StorageService,
     private _articleService: ArticleService,public dialog: MatDialog) {
@@ -97,6 +99,7 @@ export class EditOffersComponent implements OnInit {
           console.log("error al cargar ofertas");
         }else{
           this.offers = response;
+          this.sortedData = this.offers.slice();
         }
       },
       error: (err) => {
@@ -124,4 +127,32 @@ export class EditOffersComponent implements OnInit {
   generatePDF() {
     PDFGenerator.generatePDF(this.content);
   }
+
+  
+  sortData(sort: Sort) {
+    const data = this.offers.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'discountPercentage':
+          return compare(a.discountPercentage, b.discountPercentage, isAsc);
+        case 'startDate':
+          return compare(a.startDate, b.startDate, isAsc);
+        case 'endDate':
+          return compare(a.endDate, b.endDate, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+}
+
+function compare(a: number | string | Date | string[], b: number | string | Date | string[], isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

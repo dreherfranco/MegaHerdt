@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PurchaseClaimAnswerCreation } from 'src/app/models/PurchaseClaim/PurchaseClaimAnswerCreation';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -11,12 +12,10 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class AnswerPurchaseClaimsComponent implements OnInit {
   answer: string;
-  statusSubmit: string;
 
-  constructor(private _route: ActivatedRoute, private _purchaseClaimService: PurchaseClaimService,
+  constructor(private _route: ActivatedRoute, private _router: Router, private _purchaseClaimService: PurchaseClaimService,
     private _storageService: StorageService) {
     this.answer = '';
-    this.statusSubmit = '';
    }
 
   ngOnInit(): void {
@@ -41,14 +40,18 @@ export class AnswerPurchaseClaimsComponent implements OnInit {
     this._purchaseClaimService.answerClaim(purchaseClaimAnswer,this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar crear la respuesta de Reclamo!');
         }else{
-          this.statusSubmit = "success";
-          form.reset();
+          AlertService.successAlert('¡Respuesta de Reclamo efectuada correctamente!').then((result) => {
+            if (result.isConfirmed) {     
+              this._router.navigate(['/administrate/show-purchase-claims']);
+            }
+          });
+
         }
       },
       error: (err) => {
-        this.statusSubmit = "failed";
+        AlertService.errorAlert('¡Error al intentar crear la respuesta de Reclamo!');
         console.log(err)
       }
     });

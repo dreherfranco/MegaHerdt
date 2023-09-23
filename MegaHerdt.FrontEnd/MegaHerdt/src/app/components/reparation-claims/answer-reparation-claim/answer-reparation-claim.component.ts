@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReparationClaimAnswerCreation } from 'src/app/models/ReparationClaims/ReparationClaimAnswerCreation';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationClaimService } from 'src/app/services/reparation-claims/reparation-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -11,12 +12,10 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class AnswerReparationClaimComponent implements OnInit {
   answer: string;
-  statusSubmit: string;
 
-  constructor(private _route: ActivatedRoute, private _reparationClaimService: ReparationClaimService,
+  constructor(private _route: ActivatedRoute, private _router: Router, private _reparationClaimService: ReparationClaimService,
     private _storageService: StorageService) {
     this.answer = '';
-    this.statusSubmit = '';
    }
 
   ngOnInit(): void {
@@ -41,14 +40,18 @@ export class AnswerReparationClaimComponent implements OnInit {
     this._reparationClaimService.answerClaim(reparationClaimAnswer,this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar crear la respuesta de Reclamo!');
         }else{
-          this.statusSubmit = "success";
-          form.reset();
+          AlertService.successAlert('¡Respuesta de Reclamo efectuada correctamente!').then((result) => {
+            if (result.isConfirmed) {     
+              this._router.navigate(['/administrate/show-reparation-claims']);
+            }
+          });
+
         }
       },
       error: (err) => {
-        this.statusSubmit = "failed";
+        AlertService.errorAlert('¡Error al intentar crear la respuesta de Reclamo!');
         console.log(err)
       }
     });

@@ -49,7 +49,7 @@ export class CreateArticleProvisionComponent implements OnInit {
         AlertService.successAlert('¡Provisión creada correctamente!').then((result) => {
           if (result.isConfirmed) {     
               // Limpia el formulario.           
-              form.reset();
+              window.location.reload();
           }
         });
       }, 600)

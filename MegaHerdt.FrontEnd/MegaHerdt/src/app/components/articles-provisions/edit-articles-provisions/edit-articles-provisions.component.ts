@@ -14,6 +14,7 @@ import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delet
 import { DialogUpdateArticleProvisionComponent } from './dialog-update-article-provision/dialog-update-article-provision.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-edit-articles-provisions',
@@ -27,6 +28,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
   paginate: Paginate;
   searchText: string = "";
   @ViewChild('content', { static: true }) content!: ElementRef;
+  sortedData: ArticleProvider[] = [];
 
   constructor(private _articleProvisionService: ArticleProvisionService,
     private _storageService: StorageService,
@@ -105,11 +107,25 @@ export class EditArticlesProvisionsComponent implements OnInit {
   }
 
   loadArticlesProviders(){
-    this._articleProvisionService.articlesProviders.subscribe({
+    this._articleProvisionService.getAll().subscribe({
+      next: (response) => {
+        if (response.error) {
+            console.log("no se pudieron cargar los proveedores");
+        } else {
+          this.articlesProviders = response;
+          this.sortedData = this.articlesProviders.slice();
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+  });
+  /*  this._articleProvisionService.articlesProviders.subscribe({
       next: (res) =>{ 
         this.articlesProviders = res;
+        this.sortedData = this.articlesProviders.slice();
       }
-    });
+    });*/
   }
 
   onChange(fileInput: any, articleProvider: ArticleProvider){
@@ -122,4 +138,33 @@ export class EditArticlesProvisionsComponent implements OnInit {
   generatePDF() {
     PDFGenerator.generatePDF(this.content);
   }
+
+  sortData(sort: Sort) {
+    const data = this.articlesProviders.slice();
+    if (!sort.active || sort.direction === '') {
+      this.sortedData = data;
+      return;
+    }
+
+    this.sortedData = data.sort((a, b) => {
+      const isAsc = sort.direction === 'asc';
+      switch (sort.active) {
+        case 'articleQuantity':
+          return compare(a.articleQuantity, b.articleQuantity, isAsc);
+        case 'providerEmail':
+          return compare(a.provider.email, b.provider.email, isAsc);
+        case 'provisionDate':
+            return compare(a.provisionDate, b.provisionDate, isAsc);
+        case 'operation':
+            return compare(a.add, b.add, isAsc);
+        default:
+          return 0;
+      }
+    });
+  }
+
+}
+
+function compare(a: number | string | Date | boolean | string[], b: number | string | Date | boolean | string[], isAsc: boolean) {
+  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }

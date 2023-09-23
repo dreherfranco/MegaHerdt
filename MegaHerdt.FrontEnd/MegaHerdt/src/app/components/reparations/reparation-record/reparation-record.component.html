@@ -75,12 +75,12 @@
                         </div>
                     </th>
                     <th>
-                        <button *ngIf="reparation.bill.payments.length > 0" type="button" class="btn btn-warning w-100"
+                        <button *ngIf="reparation.bill != null && reparation.bill.payments.length > 0" type="button" class="btn btn-warning w-100"
                             matTooltip="Ya existen pagos de esta reparación"
                             matTooltipPosition="above">
                             <i class="bi bi-exclamation-diamond"></i>
                         </button>
-                        <a  *ngIf="reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')"
+                        <a  *ngIf="reparation.bill != null && reparation.bill.payments.length == 0 && reparation.reparationState.name.includes('ENTREGADO')"
                             class="btn btn-primary w-100"
                             href="http://localhost:4200/reparations/record/reparation/{{reparation.id}}/payment"> <i
                                 class="bi bi-credit-card"></i> 

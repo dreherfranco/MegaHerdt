@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 
 namespace MegaHerdt.API.Controllers
 {
+
     [Route("api/[controller]")]
     [ApiController]
     public class ArticlesBrandsController : ControllerBase
@@ -36,7 +37,6 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(ex);
             }
         }
-
 
         [HttpGet("{id}")]
         public ActionResult<ArticleBrandDTO> Get(int id)
