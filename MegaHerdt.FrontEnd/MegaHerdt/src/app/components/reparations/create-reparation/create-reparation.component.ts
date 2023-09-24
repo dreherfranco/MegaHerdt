@@ -58,7 +58,7 @@ export class CreateReparationComponent implements OnInit {
             if (result.isConfirmed) {     
               this.generatePDF(response);
               //form.reset();
-              this._router.navigate(['/administrate/administrate-reparations/edit']);
+              this._router.navigate(['/administrate/administrate-reparations/edit/INGRESO']);
             }
           });
         }
