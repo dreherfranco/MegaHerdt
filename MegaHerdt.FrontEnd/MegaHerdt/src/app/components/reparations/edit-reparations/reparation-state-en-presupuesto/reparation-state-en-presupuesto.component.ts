@@ -23,11 +23,12 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
   @Input() searchText: string;
+  quantityPageRecords: number = 5;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
-    this.paginate = new Paginate(1,2);
+    this.paginate = new Paginate(1, this.quantityPageRecords);
     this.searchText = '';
   }
 

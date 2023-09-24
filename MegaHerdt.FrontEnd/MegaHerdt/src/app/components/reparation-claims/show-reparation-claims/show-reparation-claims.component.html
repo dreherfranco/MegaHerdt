@@ -6,6 +6,7 @@
     </h2>
 
     <app-searcher [isVisible]="reparationClaims.length > 0" 
+        [secondaryContainerCssClass]="'col-md-5'"
         (searchTextChange)="onSearchTextChange($event)">
     </app-searcher>
 </div>

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-reparation-record',
@@ -15,6 +16,8 @@ export class ReparationRecordComponent implements OnInit {
   reparations: Array<Reparation>;
   paginate: Paginate;
   sortedData: Reparation[] = [];
+  @ViewChild('content', { static: true }) content!: ElementRef;
+  searchText: string = '';
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService) { 
@@ -45,6 +48,14 @@ export class ReparationRecordComponent implements OnInit {
     });
   }
 
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
+  
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+  }
+  
   sortData(sort: Sort) {
     const data = this.reparations.slice();
     if (!sort.active || sort.direction === '') {

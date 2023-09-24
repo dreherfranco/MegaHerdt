@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Purchase } from 'src/app/models/Purchase/Purchase';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -13,7 +15,9 @@ export class ShowAllPurchasesComponent implements OnInit {
   purchases: Purchase[] = [];
   paginate: Paginate;
 
-  constructor(private _purchaseService: PurchaseService, private _storageService: StorageService) {
+  constructor(private _purchaseService: PurchaseService, 
+    private _storageService: StorageService,
+    private _router: Router) {
     this.paginate = new Paginate(1,6);
    }
 
@@ -25,7 +29,15 @@ export class ShowAllPurchasesComponent implements OnInit {
     this._purchaseService.getAll(this._storageService.getTokenValue()).subscribe({
       next: (result) =>{
         this.purchases = result;
-        console.log(result)
+
+        // Si no hay compras con envios entonces redirige al inicio.
+        if(this.purchases.length === 0){
+         AlertService.warningAlertAdvice("¡No existen compras con envios a asignar!")
+         .then((result) => {
+            this._router.navigate(['/']);
+         });
+        }
+
       },
       error: (err) => {
         console.log(err);

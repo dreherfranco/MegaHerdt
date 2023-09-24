@@ -6,8 +6,11 @@
     </button>
   </h2>
 
-  <app-searcher [isVisible]="providers.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
+  <app-searcher [isVisible]="providers.length > 0" 
+    [secondaryContainerCssClass]="'col-md-8'"
+    (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>
+
 <div  class="table-responsive" #content>
   <table matSort (matSortChange)="sortData($event)" class="table">
     <thead>

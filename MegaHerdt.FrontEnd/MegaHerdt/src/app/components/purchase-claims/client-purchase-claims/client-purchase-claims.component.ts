@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Purchase } from 'src/app/models/Purchase/Purchase';
@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
 import { DialogShowPurchaseClaimAnswersComponent } from '../dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
 import { Sort } from '@angular/material/sort';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-client-purchase-claims',
@@ -19,7 +20,9 @@ export class ClientPurchaseClaimsComponent implements OnInit {
   purchasesClaims: Array<PurchaseClaim>;
   paginate: Paginate;
   sortedData: PurchaseClaim[] = [];
-
+  @ViewChild('content', { static: true }) content!: ElementRef;
+  searchText: string = '';
+  
   constructor(private _purchaseClaimService: PurchaseClaimService, 
     private _storageService: StorageService, public dialog: MatDialog) {
     this.purchasesClaims = new Array<PurchaseClaim>();
@@ -63,6 +66,14 @@ export class ClientPurchaseClaimsComponent implements OnInit {
         disableClose:true,
         data: reparationClaimId
       });
+  }
+  
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
+  
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
   }
   
   sortData(sort: Sort) {

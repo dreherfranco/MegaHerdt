@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Purchase } from 'src/app/models/Purchase/Purchase';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-purchase-record',
@@ -15,6 +16,7 @@ export class PurchaseRecordComponent implements OnInit {
   purchases: Purchase[] = [];
   paginate: Paginate;
   sortedData: Purchase[] = [];
+  @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _purchaseService: PurchaseService, private _storageService: StorageService) {
     this.paginate = new Paginate(1,4);
@@ -39,6 +41,10 @@ export class PurchaseRecordComponent implements OnInit {
     });
   }
 
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
+  
   sortData(sort: Sort) {
     const data = this.purchases.slice();
     if (!sort.active || sort.direction === '') {
