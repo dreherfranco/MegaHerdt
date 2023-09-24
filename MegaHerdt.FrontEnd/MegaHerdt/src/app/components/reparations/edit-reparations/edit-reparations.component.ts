@@ -17,6 +17,7 @@ import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
 import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
 import { DialogUpdateReparationComponent } from './dialog-update-reparation/dialog-update-reparation.component';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-reparations',
@@ -37,9 +38,14 @@ export class EditReparationsComponent implements OnInit {
   @ViewChild('content', { static: true }) content!: ElementRef;
 
   constructor(private _articleService: ArticleService,
-    private _storageService: StorageService, private _userService: UserService,
+    private _storageService: StorageService, 
+    private _userService: UserService,
     private _reparationStateService: ReparationStateService, 
-    private _reparationService: ReparationService, public dialog: MatDialog) { 
+    private _reparationService: ReparationService, 
+    public dialog: MatDialog,
+    private route: ActivatedRoute,
+    private _router: Router) 
+  { 
     this.reparations = new Array<Reparation>();
     this.articles = new Array<ArticleName>();
     this.clients = new Array<UserDetail>();
@@ -49,149 +55,25 @@ export class EditReparationsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadReparations();
-    this.loadArticles();
-    this.loadClients();
-    this.loadReparationsStates();
-  }
+    this.route.params.subscribe(params => {
+      const state = params['state']; // Aquí obtienes el valor del parámetro 'status'
+      console.log(state)
+      if(state !== null && state !== undefined){
 
-  openDialogUpdate(reparation: Reparation){
-    const dialogRef = this.dialog.open(DialogUpdateReparationComponent,
-      {
-        disableClose:true,
-        data: reparation
-      });
-
-    dialogRef.afterClosed().subscribe((result: Reparation) => {
-      if(result != undefined){
-        this.update(result);
+        // Seteo el estado actual seleccionado
+        this.reparationStateSelected = state;
       }
+
     });
+
   }
 
-  openDialogDelete(reparationId: number){
-    const dialogRef = this.dialog.open(DialogConfirmDeleteComponent,
-      {
-        disableClose:true,
-        data: reparationId
-      });
-
-    dialogRef.afterClosed().subscribe((result: number) => {
-      if(result != undefined){
-        this.deleteReparation(result);
-      }
-    });
+  onReparationStateChange() {
+    // Navegar a la URL con el estado seleccionado
+    this._router.navigate(['/administrate/administrate-reparations/edit', this.reparationStateSelected]);
   }
 
-  deleteReparation(reparationId: number){
-    this._reparationService.delete(reparationId, this._storageService.getTokenValue()).subscribe({
-      next: (response) =>{
-        if(response.error){
-          console.log("error al eliminar reparacion");
-        }else{
-          this.loadReparations();
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  update(reparation: Reparation){
-    var reparationUpdate = this.mapperReparation(reparation);
-    
-    this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al actualizar reparacion");
-        } else {
-          this.loadReparations();
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  mapperReparation(reparation: Reparation): ReparationUpdate{
-    let identity = this._storageService.getIdentity();
-    return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
-      reparation.amount,reparation.date,reparation.reparationsArticles,reparation.bill, reparation.clientDescription,
-      reparation.employeeObservation,reparation.approximateTime);
-  }
-
-  loadReparations(){
-    this._reparationService.getAllEnableds(this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener reparaciones");
-        } else {
-          this.reparations = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    });
-  }
-
-  loadArticles() {
-    this._articleService.getArticleNames().subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener articulos");
-        } else {
-          this.articles = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  loadReparationsStates() {
-    this._reparationStateService.getAll().subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener los estados de las reparaciones");
-        } else {
-          this.reparationsStates = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  loadClients() {
-    this._userService.getUsers(this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener los usuarios");
-        } else {
-          this.clients = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
-
-  addArticleReparation(reparation: Reparation) {
-    var articleName = "";
-    //buscar el articulo para extraer el nombre
-    for (let article of this.articles) {
-      if (article.id == this.reparationArticle.articleId)
-        articleName = article.name;
-    }
-    var reparationArticle = new ReparationArticle(this.reparationArticle.articleId, this.reparationArticle.articleQuantity,0,articleName);
-    reparation.reparationsArticles.push(reparationArticle);
-  }
+ 
 
   generatePDF() {
     PDFGenerator.generatePDF(this.content);
