@@ -1,0 +1,14 @@
+<div class="{{mainContainerCssClass}}">
+    <div class="{{secondaryContainerCssClass}}">
+        <div class="{{tertiaryContainerCssClass}}" *ngIf="isVisible">
+            <div class="input-group">
+                <div class="input-group-append">
+                    <div class="input-group-text bg-primary">
+                        <i class="bi bi-search text-white"></i>
+                    </div>
+                </div>
+                <input class="form-control w-75" (ngModelChange)="onSearchTextChange($event)" type="text" [(ngModel)]="searchText" placeholder="Buscar provisiones">
+            </div>
+        </div>
+    </div>
+</div>

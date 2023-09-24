@@ -1,9 +1,17 @@
 import Swal, { SweetAlertResult } from "sweetalert2";
 
 export class AlertService {
+
+  /**
+   * Alerta donde se debe decidir si se continua o no con la operación. 
+   * Dibuja el boton de 'Si' y el de 'No'
+   * @param title 
+   * @param text 
+   * @returns 
+   */
   static warningAlert(title: string | null, text: string | null = ''): Promise<SweetAlertResult> {
     return Swal.fire({
-      title: title || 'Seguro que deseas continuar con la operación',
+      title: title || '¿Estas seguro que deseas continuar con la operación?',
       text: text || '',
       icon: 'warning',
       allowOutsideClick: false,
@@ -13,6 +21,26 @@ export class AlertService {
       backdrop: 'rgba(0, 0, 125, 0.37)',
     });
   }
+
+  /**
+   * Se usa solo para los casos de Alerta de confirmación en donde aparece 
+   * el botón de 'OK' solamente
+   * @param title
+   * @param text 
+   * @returns 
+   */
+  static warningAlertAdvice(title: string | null, text: string | null = ''): Promise<SweetAlertResult> {
+    return Swal.fire({
+      title: title || '¿Estas seguro que deseas continuar con la operación?',
+      text: text || '',
+      icon: 'warning',
+      allowOutsideClick: false,
+      showCancelButton: false,
+      confirmButtonText: 'OK',
+      backdrop: 'rgba(0, 0, 125, 0.37)',
+    });
+  }
+
 
   static errorAlert(title: string | null, text: string | null = ''): Promise<SweetAlertResult> {
     return Swal.fire({

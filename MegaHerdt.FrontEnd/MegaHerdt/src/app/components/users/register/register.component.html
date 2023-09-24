@@ -56,13 +56,9 @@
         <app-address-creation [address]="user.addresses[0]" class="col-md-6">
         </app-address-creation>
       </div>
-
-      <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al crear el usuario: <span class="data-user">{{ error }}</span></p>
-      <p *ngIf="!addressOk" class="alert alert-danger m-1">Ingrese una direccion valida</p>
-      <p *ngIf="!phoneOk" class="alert alert-danger m-1">Ingrese un numero telefono</p>
       
       <b class="required">(*)Obligatorio</b>
-      <input class="btn btn-primary m-2 mt-0 align-center" type="submit" value="Enviar"
+      <input class="btn btn-primary m-2 mt-0 align-center" type="submit" value="Registro"
         [disabled]="!registerForm.form.valid" />
     </div>
   </form>

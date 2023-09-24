@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AddressCreation } from 'src/app/models/Address/AddressCreation';
 import { PhoneCreation } from 'src/app/models/Phone/PhoneCreation';
 import { UserCreate } from 'src/app/models/User/UserCreate';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import Swal from 'sweetalert2';
@@ -14,7 +15,6 @@ import Swal from 'sweetalert2';
 })
 export class AdminCreateUserComponent implements OnInit {
   user: UserCreate;
-  statusSubmit: String;
   phoneOk: boolean = true;
   error: string = '';
 
@@ -23,7 +23,6 @@ export class AdminCreateUserComponent implements OnInit {
     this.user = new UserCreate('', '', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
     this.user.phones.push(new PhoneCreation(''));
     this.user.addresses.push(new AddressCreation('name',5,'Diamante',3105,'Entre Rios','Diamante',''));
-    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -40,31 +39,21 @@ export class AdminCreateUserComponent implements OnInit {
         {
           next: (response) => {
             if (response.error) {
-              this.statusSubmit = "failed";
+              AlertService.errorAlert('¡Error al crear el usuario!');
             } else {
-              this.statusSubmit = "success";
-              Swal.fire({
-                title: 'Usuario creado correctamente',
-                icon: 'success',
-                confirmButtonText: 'OK',
-                backdrop: `rgba(0, 0,125, 0.37)`,
-              }).then((result) => {
+              AlertService.successAlert('¡Usuario creado correctamente!')
+              .then((result) => {
                 if (result.isConfirmed) {                
-                  this._router.navigate(['/administrate/show-users']);
+                  //this._router.navigate(['/administrate/show-users']);
+                 form.reset();
+
                 }
               });
-             // form.reset();
             }
           },
           error: (err) => {
-            this.statusSubmit = "failed";
             this.error = err.error.message;
-            Swal.fire({
-              icon: 'error',
-              title: 'Error al crear el usuario',
-              text: this.error,
-              backdrop: `rgba(0, 0,125, 0.37)`,
-            });
+            AlertService.errorAlert('¡Error al crear el usuario!', this.error);
             console.log(err)
           }
         }

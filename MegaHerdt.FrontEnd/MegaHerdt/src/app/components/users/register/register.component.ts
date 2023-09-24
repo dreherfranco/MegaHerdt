@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogRegisterSuccessComponent } from './dialog-register-success/dialog-register-success.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-register',
@@ -15,9 +16,6 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class RegisterComponent implements OnInit {
   user: UserCreate;
-  statusSubmit: String;
-  addressOk: boolean = true;
-  phoneOk: boolean = true;
   error: string = '';
 
   constructor(private _userService: UserService, private _router: Router,
@@ -25,7 +23,6 @@ export class RegisterComponent implements OnInit {
     this.user = new UserCreate('', '', '', '', '', new Array<PhoneCreation>(), new Array<AddressCreation>());
     this.user.addresses.push(new AddressCreation('', 0, '', 0, '', '', ''));
     this.user.phones.push(new PhoneCreation(''));
-    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -33,8 +30,11 @@ export class RegisterComponent implements OnInit {
 
   isValidAddress(): boolean {
     let address = this.user.addresses[0];
-    return address.department !== '' && address.postalCode !== 0 && address.streetName !== '' &&
-      address.streetNumber !== 0 && address.townName !== '';
+    return address.department !== '' 
+      && address.postalCode !== 0 && address.postalCode.toString() !== '' 
+      && address.streetName !== '' 
+      && address.streetNumber !== 0 && address.streetNumber.toString() !== '' 
+      && address.townName !== '';
   }
 
   isValidPhone(): boolean{
@@ -42,24 +42,39 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    this.addressOk = this.isValidAddress();
-    this.phoneOk = this.isValidPhone();
-    if (this.addressOk && this.phoneOk) {
+    let addressOk = this.isValidAddress();
+    let phoneOk = this.isValidPhone();
+    console.log(this.user.addresses[0])
+    if(!phoneOk){
+      AlertService.errorAlert('¡Telefono incorrecto!','Ingrese un telefono valido');
+    }
+
+    if(!addressOk){
+      AlertService.errorAlert('¡Direccion incorrecta!','Ingrese una direccion valida');
+    }
+
+    if (addressOk && phoneOk) {
       this.user.userName = this.user.email;
       this._userService.register(this.user).subscribe(
         {
           next: (response) => {
             if (response.error) {
-              this.statusSubmit = "failed";
+              AlertService.errorAlert('¡Error!','Error al intentar registrarse');
             } else {
-              this.statusSubmit = "success";
-              this.openDialogRegisterSuccess();
-              form.reset();
+              //this.openDialogRegisterSuccess();
+              
+              AlertService.successAlert('¡Registro exitoso!','Usted se ha registrado satisfactoriamente')
+              .then((result) => {
+                this._router.navigate(['/login']);
+              });
             }
           },
-          error: (err) => {
-            this.statusSubmit = "failed";
+          error: (err) => {           
             this.error = err.error.message;
+            if(this.error === '' || this.error === null) {
+              this.error = 'Controle los datos obligatorios correspondientes a la dirección';
+            }
+            AlertService.errorAlert('¡Error!', this.error);
             console.log(err)
           }
         }
@@ -67,14 +82,22 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  openDialogRegisterSuccess(){
+  /*openDialogRegisterSuccess(){
     const dialogRef = this.dialog.open(DialogRegisterSuccessComponent,
       {
         disableClose:true,
       });
-  }
+  }*/
 
   authenticated(): boolean {
     return this._storageService.isAuthenticated();
+  }
+
+  phoneAlert() {
+    AlertService.warningAlertAdvice('Ingrese al menos un telefono');
+  }
+
+  addressAlert() {
+    AlertService.warningAlertAdvice('Ingrese al menos una direccion');
   }
 }

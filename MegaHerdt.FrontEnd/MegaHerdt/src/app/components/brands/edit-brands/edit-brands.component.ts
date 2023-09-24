@@ -18,6 +18,7 @@ export class EditBrandsComponent implements OnInit {
   brands: Array<Brand>;
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
+  searchText: string = "";
 
   constructor(private _storageService: StorageService, private _brandService: BrandService,public dialog: MatDialog) {
     this.brands = new Array<Brand>();
@@ -90,7 +91,11 @@ export class EditBrandsComponent implements OnInit {
     }
     );
   }
-  
+
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+  }
+
   generatePDF() {
     PDFGenerator.generatePDF(this.content);
   }

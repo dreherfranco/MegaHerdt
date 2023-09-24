@@ -49,6 +49,10 @@ export class ShowDebtorsComponent implements OnInit {
     PDFGenerator.generatePDF(this.content);
   }
 
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+  }
+
   sortData(sort: Sort) {
     const data = this.debts.reparationDebts.slice();
     if (!sort.active || sort.direction === '') {

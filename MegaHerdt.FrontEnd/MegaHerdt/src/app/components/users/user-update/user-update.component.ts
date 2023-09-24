@@ -4,6 +4,7 @@ import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { PhoneCreation } from 'src/app/models/Phone/PhoneCreation';
 import { PhoneUpdate } from 'src/app/models/Phone/PhoneUpdate';
 import { UserUpdate } from 'src/app/models/User/UserUpdate';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 
@@ -15,10 +16,7 @@ import { UserService } from 'src/app/services/users/user.service';
 
 export class UserUpdateComponent implements OnInit {
   user: UserUpdate;
-  statusSubmit: String;
   phoneNumber: string;
-  addressOk: boolean = true;
-  phoneOk: boolean = true;
   newAddress = new AddressCreation('', 0, '', 0, '', '', '');
   newPhoneAdded: boolean = false;
   newAddressAdded: boolean = false;
@@ -27,7 +25,6 @@ export class UserUpdateComponent implements OnInit {
   constructor(private _userService: UserService,
     private _storageService: StorageService) {
     this.user = new UserUpdate('', '', '', '', '', new Array<PhoneUpdate>(), new Array<AddressUpdate>());
-    this.statusSubmit = "";
     this.phoneNumber = "";
 
   }
@@ -70,35 +67,36 @@ export class UserUpdateComponent implements OnInit {
       this.addNewPhone();
     }
 
-    this.addressOk = this.isValidAddress();
-    this.phoneOk = this.isValidPhone();
+    let addressOk = this.isValidAddress();
+    let phoneOk = this.isValidPhone();
 
-    if(!this.addressOk && this.user.addresses.length == 1){
+    if(!addressOk && this.user.addresses.length == 1){
       this.user.addresses = [];
+      AlertService.errorAlert('¡Direccion incorrecta!','Ingrese una direccion valida');
     }
 
-    if(!this.phoneOk && this.user.phones.length == 1){
+    if(!phoneOk && this.user.phones.length == 1){
       this.user.phones = [];
+      AlertService.errorAlert('¡Telefono incorrecto!','Ingrese un telefono valido');
     }
 
-    if (this.addressOk && this.phoneOk && this.user.addresses.length > 0 && this.user.phones.length > 0){
+    if (addressOk && phoneOk && this.user.addresses.length > 0 && this.user.phones.length > 0){
 
       this._userService.update(this.user, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
-            this.statusSubmit = "failed";
-            console.log("no se actualizo correctamente");
+            AlertService.errorAlert('¡Error!','Error al intentar actualizar sus datos');
           } else {
             this._storageService.setTokenCredentials(response.userToken);
             this._storageService.setIdentity(response);
-            this.statusSubmit = "success";
+            AlertService.successAlert('¡Actualizado!','Datos actualizados correctamente');
           }
 
         },
         error: (err) => {
           console.log(err);
           this.error = err.error.message;
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error!', this.error);
         }
       });
     }
@@ -141,4 +139,15 @@ export class UserUpdateComponent implements OnInit {
     this.user.addresses.splice(index, 1);
   }
 
+  phoneAlert() {
+    AlertService.warningAlertAdvice('Ingrese al menos un telefono');
+  }
+
+  addressAlert() {
+    AlertService.warningAlertAdvice('Ingrese al menos una direccion');
+  }
+
+  passwordAlert() {
+    AlertService.warningAlertAdvice('Ingrese su contraseña antes de actualizar');
+  }
 }
