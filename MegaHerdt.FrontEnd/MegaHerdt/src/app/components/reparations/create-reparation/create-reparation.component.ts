@@ -17,6 +17,7 @@ import { DialogAdminCreateUserComponent } from '../../users/admin-create-user/di
 import { jsPDF } from 'jspdf';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-reparation',
@@ -27,10 +28,12 @@ export class CreateReparationComponent implements OnInit {
   clients: Array<UserDetail>;
   reparation: ReparationCreation;
   reparationsStates: Array<ReparationState>;
+  
+  
 
   constructor(private _storageService: StorageService, private _userService: UserService,
     private _reparationStateService: ReparationStateService, private _reparationService: ReparationService,
-    public dialog: MatDialog) {
+    public dialog: MatDialog, private _router: Router) {
     this.clients = new Array<UserDetail>();
     this.reparation = new ReparationCreation(1, '', '', 0, new Date(),
       new Array<ReparationArticleCreation>(), new BillCreation('00001','00000000', ''));
@@ -54,7 +57,8 @@ export class CreateReparationComponent implements OnInit {
           AlertService.successAlert('¡Reparación creada correctamente!').then((result) => {
             if (result.isConfirmed) {     
               this.generatePDF(response);
-              form.reset();
+              //form.reset();
+              this._router.navigate(['/administrate/administrate-reparations/edit']);
             }
           });
         }
