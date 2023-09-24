@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
@@ -7,6 +7,7 @@ import { ReparationClaimService } from 'src/app/services/reparation-claims/repar
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowReparationDetailComponent } from '../../reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 import { Sort } from '@angular/material/sort';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-show-reparation-claims',
@@ -16,7 +17,9 @@ import { Sort } from '@angular/material/sort';
 export class ShowReparationClaimsComponent implements OnInit {
   reparationClaims: Array<ReparationClaim>;
   paginate: Paginate;
+  @ViewChild('content', { static: true }) content!: ElementRef;
   sortedData: ReparationClaim[] = [];
+  searchText: string = '';
 
   constructor(private _reparationClaimService: ReparationClaimService, 
     private _storageService: StorageService, public dialog: MatDialog) {
@@ -51,6 +54,14 @@ export class ShowReparationClaimsComponent implements OnInit {
         console.log(err)
       }
     });
+  }
+
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
+  
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
   }
 
   sortData(sort: Sort) {
