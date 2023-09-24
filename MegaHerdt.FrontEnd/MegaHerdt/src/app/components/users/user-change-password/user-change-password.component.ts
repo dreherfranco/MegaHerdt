@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserChangePassword } from 'src/app/models/User/UserChangePassword';
 import { UserDetail } from 'src/app/models/User/UserDetail';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 
@@ -13,7 +14,6 @@ import { UserService } from 'src/app/services/users/user.service';
 })
 export class UserChangePasswordComponent implements OnInit {
   changePasswordForm: FormGroup = new FormGroup({});
-  statusSubmit: string;
 
   constructor(
     private _userService: UserService, 
@@ -21,7 +21,6 @@ export class UserChangePasswordComponent implements OnInit {
     private _storageService: StorageService
     ) 
   {
-    this.statusSubmit = "";
   }
 
   ngOnInit(): void {
@@ -46,15 +45,20 @@ export class UserChangePasswordComponent implements OnInit {
     this._userService.changePassword(user, this._storageService.getTokenValue()).subscribe({
       next: (result) => {
         if(result.error){
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error!', 'Error al intentar actualizar su contraseña');
         }else{
-          this.statusSubmit = "success";
-          
-          form.reset();
+          AlertService.successAlert('¡Actualizada!', 'Contraseña actualizada con exito')   
+          .then((result) => {
+            form.reset();
+          });       
         }
         console.log(result)
       },
-      error: (err) => { console.log(err); }
+      error: (err) => 
+      { 
+        AlertService.errorAlert('¡Error!', 'Error al intentar actualizar su contraseña');
+        console.log(err); 
+      }
     });
   }
 }

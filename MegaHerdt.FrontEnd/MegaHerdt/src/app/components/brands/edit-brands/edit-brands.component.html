@@ -1,10 +1,14 @@
-<div class="d-flex bg-light">
-  <h2 class="mx-auto">LISTADO DE MARCAS
+<div class="bg-light">
+  <h2 class="d-flex mx-auto">LISTADO DE MARCAS
     <button class="btn btn-dark padding-custom" (click)="generatePDF()">
       <i class="bi bi-filetype-pdf"></i>
     </button>
   </h2>
+  
+  <app-searcher [isVisible]="brands.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>
+
+
 <div class="table-responsive" #content>
   <table class="table">
       <thead>
@@ -15,7 +19,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let brand of brands | paginate: 
+        <tr *ngFor="let brand of brands | filter: searchText 
+        | paginate: 
         {
             itemsPerPage: this.paginate.recordsPerPage, 
             currentPage:this.paginate.page

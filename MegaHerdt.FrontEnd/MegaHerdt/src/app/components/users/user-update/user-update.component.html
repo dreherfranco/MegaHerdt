@@ -45,9 +45,11 @@
             <h2 class="text-center">Agregar télefono</h2>
             <label for="phone"><b>(*)Teléfono:</b></label>
             <div class="d-flex flex-row">
-              <div role="alert" class="w-100 m-1">
-                <button type="button" style="position: initial;" class="btn btn-warning"
-                    popover="Ingrese al menos un telefono">
+              <div class="w-100 m-1">
+                <button type="button" 
+                        style="position: initial;" 
+                        class="btn btn-warning"
+                        (click)="phoneAlert()">
                     <i class="bi bi-exclamation-diamond"></i>
                 </button>
               </div>
@@ -79,12 +81,15 @@
          
           
           <h2 class="text-center d-flex flex-row justify-content-center">
-            <div role="alert">
-              <button type="button" style="position: initial;" class="btn btn-warning"
-                  popover="Ingrese al menos una direccion">
+            <div class="mx-1">
+              <button type="button" 
+                    (click)="addressAlert()" 
+                    style="position: initial;" 
+                    class="btn btn-warning">
                   <i class="bi bi-exclamation-diamond"></i>
               </button>
             </div>
+              
             Agregar dirección
           </h2>
        
@@ -102,12 +107,15 @@
         </div>
       </div>
 
+     
       <hr class="height-hr-3 mt-2">
       <div class="d-flex flex-row mb-2 w-50">
-        <div class="mt-1" role="alert">
+        <div class="mt-1">
           <button style="position: initial;"
-             type="button" class="btn btn-warning w-100"
-              popover="Ingrese su contraseña antes de actualizar">
+             type="button" 
+             class="btn btn-warning w-100"
+             (click)="passwordAlert()"
+              >
               <i class="bi bi-exclamation-diamond"></i>
           </button>
         </div>
@@ -122,12 +130,6 @@
       </div>
     </div>
 
-
-    <p *ngIf="statusSubmit === 'failed'" class="alert alert-danger m-1">Error al actualizar el usuario: <span
-        class="data-user">{{ error }}</span></p>
-    <p *ngIf="!addressOk" class="alert alert-danger m-3">Ingrese una dirección valida</p>
-    <p *ngIf="!phoneOk" class="alert alert-danger m-3">Ingrese un número teléfono</p>
-    <p *ngIf="statusSubmit == 'success'" class="alert alert-success mt-3">Se actualizó correctamente</p>
 
   </form>
 

@@ -1,11 +1,14 @@
 
-<div class="d-flex bg-light">
-  <h2 class="mx-auto">LISTADO DE COMPANIAS DE TRANSPORTE
+<div class="bg-light">
+  <h2 class="d-flex mx-auto">LISTADO DE COMPANIAS DE TRANSPORTE
     <button class="btn btn-dark padding-custom" (click)="generatePDF()">
       <i class="bi bi-filetype-pdf"></i>
     </button>
   </h2>
+
+  <app-searcher [isVisible]="transportCompanies.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>
+
 <div class="table-responsive" #content>
 <table class="table">
     <thead>
@@ -17,7 +20,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let transportCompany of transportCompanies; let i = index">
+      <tr *ngFor="let transportCompany of transportCompanies
+      | filter: searchText; 
+      let i = index">
         <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" [(ngModel)]="transportCompany.name" ></td>
         <td><input class="form-control data-user" [(ngModel)]="transportCompany.url" ></td>
         <td><button class="btn btn-primary col-sm-12"  (click)="openDialogUpdate(transportCompany)" title="Editar"> <i class="bi bi-pencil-square"></i> </button></td>

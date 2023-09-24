@@ -136,6 +136,7 @@ import { PurchaseFailedComponent } from './components/purchase-payments/purchase
 import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
 import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
 import { PaymentsComponent } from './components/mercado-pago/payments/payments.component';
+import { SearcherComponent } from './components/commons/searcher/searcher.component';
 
 @NgModule({
   declarations: [
@@ -252,7 +253,8 @@ import { PaymentsComponent } from './components/mercado-pago/payments/payments.c
     PurchaseFailedComponent,
     ReparationPaymentFailedComponent,
     ReparationPaymentSuccessComponent,
-    PaymentsComponent
+    PaymentsComponent,
+    SearcherComponent
   ],
   imports: [
     BrowserModule,

@@ -19,12 +19,18 @@ namespace MegaHerdt.Models.Models
         public string StreetName { get; set; }
         [Required]
         public int StreetNumber { get; set; }
+        /// <summary>
+        /// Departamento
+        /// </summary>
         [Required]
         public string Department { get; set; }
         [Required]
         public int PostalCode { get; set; }
         [Required]
         public string Province { get; set; }
+        /// <summary>
+        /// Localidad
+        /// </summary>
         [Required]
         public string TownName { get; set; }
         public string Floor { get; set; } 

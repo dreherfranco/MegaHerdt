@@ -139,6 +139,10 @@ export class EditArticlesProvisionsComponent implements OnInit {
     PDFGenerator.generatePDF(this.content);
   }
 
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+  }
+
   sortData(sort: Sort) {
     const data = this.articlesProviders.slice();
     if (!sort.active || sort.direction === '') {

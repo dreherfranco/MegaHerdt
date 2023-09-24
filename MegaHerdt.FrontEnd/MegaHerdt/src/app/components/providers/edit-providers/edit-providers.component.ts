@@ -20,7 +20,8 @@ export class EditProvidersComponent implements OnInit {
   sortedData: Provider[] = [];
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
-
+  searchText: string = '';
+  
   constructor(private _storageService: StorageService, private _providerService: ProviderService,public dialog: MatDialog) {
     this.providers = new Array<Provider>();
     this.paginate = new Paginate(1,3);
@@ -104,7 +105,11 @@ export class EditProvidersComponent implements OnInit {
     }
     );
   }
-  
+
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+  }
+
   generatePDF() {
     PDFGenerator.generatePDF(this.content);
   }

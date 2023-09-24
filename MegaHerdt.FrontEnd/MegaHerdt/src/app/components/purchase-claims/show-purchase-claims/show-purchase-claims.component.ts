@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Purchase } from 'src/app/models/Purchase/Purchase';
@@ -7,6 +7,7 @@ import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
 import { Sort } from '@angular/material/sort';
+import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 
 @Component({
   selector: 'app-show-purchase-claims',
@@ -15,9 +16,11 @@ import { Sort } from '@angular/material/sort';
 })
 export class ShowPurchaseClaimsComponent implements OnInit {
   purchaseClaims: Array<PurchaseClaim>;
+  @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
   sortedData: PurchaseClaim[] = [];
-
+  searchText: string = '';
+  
   constructor(private _purchaseClaimService: PurchaseClaimService, 
     private _storageService: StorageService, public dialog: MatDialog) {
     this.purchaseClaims = new Array<PurchaseClaim>();
@@ -50,6 +53,14 @@ export class ShowPurchaseClaimsComponent implements OnInit {
         console.log(err)
       }
     });
+  }
+  
+  generatePDF() {
+    PDFGenerator.generatePDF(this.content);
+  }
+  
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
   }
   
   sortData(sort: Sort) {

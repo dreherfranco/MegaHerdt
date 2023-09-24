@@ -1,26 +1,18 @@
-<div class="bg-light">
-  <div class="d-flex">
-    <h2 class="mx-auto">LISTADO DE DEUDORES
-      <button class="btn btn-dark padding-custom" (click)="generatePDF()">
-        <i class="bi bi-filetype-pdf"></i>
-      </button>
-    </h2>
-  </div>
-  <div class="d-flex row w-75 mx-auto">
-    <div class="col-md-10 pl-0" >
-        <div class="col-md-4" *ngIf="reparationDebtsSortedData.length > 0">
-            <div class="input-group">
-              <div class="input-group-append">
-                  <div class="input-group-text bg-primary">
-                    <i class="bi bi-search text-white"></i>
-                  </div>
-                </div>
-              <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar provisiones">
-            </div>
-        </div>
-    </div>
-  </div>
+<div class="bg-light w-75 mx-auto">
+  <h2 class="d-flex mx-auto">LISTADO DE DEUDORES
+    <button class="btn btn-dark padding-custom" (click)="generatePDF()">
+      <i class="bi bi-filetype-pdf"></i>
+    </button>
+  </h2>
+
+  <app-searcher 
+      [mainContainerCssClass]="'d-flex row w-75'" 
+      [tertiaryContainerCssClass]="'col-md-7'" 
+      [isVisible]="reparationDebtsSortedData.length > 0" 
+      (searchTextChange)="onSearchTextChange($event)">
+  </app-searcher>
 </div>
+
 <div class="table-responsive w-75 text-center mx-auto">
   <table matSort (matSortChange)="sortData($event)" class="table">
     <thead>

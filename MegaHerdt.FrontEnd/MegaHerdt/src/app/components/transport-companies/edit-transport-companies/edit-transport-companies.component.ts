@@ -16,7 +16,8 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 export class EditTransportCompaniesComponent implements OnInit {
   transportCompanies: Array<TransportCompany> = new Array<TransportCompany>();
   @ViewChild('content', { static: true }) content!: ElementRef;
-
+  searchText: string = '';
+  
   constructor(private _storageService: StorageService, private _transportCompanyService: TransportCompanyService,
     public dialog: MatDialog) {
   }
@@ -102,4 +103,7 @@ export class EditTransportCompaniesComponent implements OnInit {
     PDFGenerator.generatePDF(this.content);
   }
 
+  onSearchTextChange(searchText: string) {
+    this.searchText = searchText;
+  }
 }

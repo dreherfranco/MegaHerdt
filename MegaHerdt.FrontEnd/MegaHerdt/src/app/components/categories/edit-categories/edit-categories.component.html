@@ -1,12 +1,14 @@
 
-<div class="d-flex bg-light">
+<div class="bg-light">
   <h2 class="mx-auto">LISTADO DE CATEGORIAS 
     <button class="btn btn-dark padding-custom" (click)="generatePDF()">
       <i class="bi bi-filetype-pdf"></i>
     </button>
   </h2>
-  
+
+  <app-searcher [isVisible]="categories.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>
+
 <div class="table-responsive">
 <table class="table" #content>
     <thead>
@@ -17,7 +19,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let category of categories| paginate: 
+      <tr *ngFor="let category of categories 
+      | filter: searchText
+      | paginate: 
       {
           itemsPerPage: this.paginate.recordsPerPage, 
           currentPage:this.paginate.page
