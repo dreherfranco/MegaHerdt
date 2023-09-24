@@ -25,41 +25,24 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./edit-reparations.component.css']
 })
 export class EditReparationsComponent implements OnInit {
-  reparations: Array<Reparation>;
-  articles: Array<ArticleName>;
-  clients: Array<UserDetail>;
-  billTypes = BillTypeEnum;
-  reparationsStates: Array<ReparationState>;
-  reparationArticle: ReparationArticle;
   paginate: Paginate;
   reparationStatesEnum = ReparationStatesEnum;
   reparationStateSelected = ReparationStatesEnum.INGRESO;
   searchText: string = '';
   @ViewChild('content', { static: true }) content!: ElementRef;
 
-  constructor(private _articleService: ArticleService,
-    private _storageService: StorageService, 
-    private _userService: UserService,
-    private _reparationStateService: ReparationStateService, 
-    private _reparationService: ReparationService, 
-    public dialog: MatDialog,
+  constructor(public dialog: MatDialog,
     private route: ActivatedRoute,
     private _router: Router) 
   { 
-    this.reparations = new Array<Reparation>();
-    this.articles = new Array<ArticleName>();
-    this.clients = new Array<UserDetail>();
-    this.reparationsStates = new Array<ReparationState>();
-    this.reparationArticle = new ReparationArticle(0,0,0,"");
     this.paginate = new Paginate(1,2);
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       const state = params['state']; // Aquí obtienes el valor del parámetro 'status'
-      console.log(state)
+      
       if(state !== null && state !== undefined){
-
         // Seteo el estado actual seleccionado
         this.reparationStateSelected = state;
       }

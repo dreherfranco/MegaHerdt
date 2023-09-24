@@ -108,4 +108,18 @@ export class StorageService {
     return areExpecteds;
   }
 
+  /**
+   * Ocultar Mensaje de alerta de "No volver a mostrar este mensaje" en la edicion de reparaciones
+   */
+  hideReparationsAlert(): void{
+    localStorage.setItem('hideAlertReparations', 'true');
+  }
+
+  /**
+   * Obtener valor del mensaje de alerta de "No volver a mostrar este mensaje" en la edicion de reparaciones
+   */
+  getReparationsAlert(): boolean{
+    return localStorage.getItem('hideAlertReparations') === 'true';
+  }
+
 }

@@ -11,6 +11,8 @@ import { UpdateReparationStateENPRESUPUESTOComponent } from './update-reparation
 import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
 import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { Router } from '@angular/router';
+import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
 
 @Component({
   selector: 'app-reparation-state-en-presupuesto',
@@ -26,7 +28,9 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   quantityPageRecords: number = 5;
 
   constructor(private _storageService: StorageService,
-    private _reparationService: ReparationService, public dialog: MatDialog) { 
+    private _reparationService: ReparationService,
+    private _router: Router, 
+    public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1, this.quantityPageRecords);
     this.searchText = '';
@@ -62,7 +66,24 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
           AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
-          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente')
+          .then((result) => {
+            // Si el Presupuesto es aceptado entonces redirige al estado siguiente "En Reparacion"
+            if(reparation.isAccepted){
+              this._router.navigate([
+                '/administrate/administrate-reparations/edit', 
+                ReparationStatesEnum.EN_REPARACION
+              ]);
+            }
+            // Sino si el estado es rechazado redirige al estado "Cancelado"
+            else
+            {
+              this._router.navigate([
+                '/administrate/administrate-reparations/edit', 
+                ReparationStatesEnum.CANCELADO
+              ]);
+            }
+          });
         }
       },
       error: (err) => {
@@ -75,7 +96,8 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
   openDialogBackToRevision(reparation: Reparation){
     AlertService.warningAlert('¿Seguro que quieres volver al estado EN REVISIÓN?')
     .then((result) => {
-      if (result.isConfirmed) {     
+      if (result.isConfirmed) {
+        console.log(reparation)     
           this.updateDecrementState(reparation);
       }
     });
@@ -89,7 +111,13 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
           AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
-          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente')
+          .then((result) => {
+            this._router.navigate([
+              '/administrate/administrate-reparations/edit', 
+              ReparationStatesEnum.EN_REVISION
+            ]);
+          });
         }
       },
       error: (err) => {
