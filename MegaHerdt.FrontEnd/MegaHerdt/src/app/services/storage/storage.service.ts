@@ -109,17 +109,30 @@ export class StorageService {
   }
 
   /**
-   * Ocultar Mensaje de alerta de "No volver a mostrar este mensaje" en la edicion de reparaciones
+   * Ocultar Mensaje de alerta de "No volver a mostrar este mensaje" en el estado PAGADO
    */
-  hideReparationsAlert(): void{
-    localStorage.setItem('hideAlertReparations', 'true');
+  hidePagadoStateAlert(): void{
+    localStorage.setItem('pagadoAlert', 'true');
   }
 
   /**
-   * Obtener valor del mensaje de alerta de "No volver a mostrar este mensaje" en la edicion de reparaciones
+   * Obtener valor del mensaje de alerta de "No volver a mostrar este mensaje" en el estado PAGADO
    */
-  getReparationsAlert(): boolean{
-    return localStorage.getItem('hideAlertReparations') === 'true';
+  isHidePagadoStateAlert(): boolean{
+    return localStorage.getItem('pagadoAlert') === 'true';
   }
 
+   /**
+   * Ocultar Mensaje de alerta de "No volver a mostrar este mensaje"  en el estado ENTRADO
+   */
+   hideReparadoStateAlert(): void{
+    localStorage.setItem('entregadoAlert', 'true');
+  }
+
+  /**
+   * Obtener valor del mensaje de alerta de "No volver a mostrar este mensaje"  en el estado ENTRADO
+   */
+  isHideReparadoStateAlert(): boolean{
+    return localStorage.getItem('entregadoAlert') === 'true';
+  }
 }

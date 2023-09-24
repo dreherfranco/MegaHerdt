@@ -42,6 +42,24 @@ export class ReparationStateREPARADOComponent implements OnInit {
 
       }
     });
+
+      // Se muestra el dialogo de advertencia solo si no se ha seleccionado la opcion de "No volver a mostrar"
+    if(!this._storageService.isHideReparadoStateAlert()){
+
+      AlertService.warningAlert('¡Atención!', 
+      'Las reparaciones pasarán al siguiente estado (Pagado) cuando el cliente realize el pago.',
+      'De acuerdo', 
+      'No volver a mostrar este mensaje')
+      .then((result) => 
+      {
+        // Entra si se selecciona la opcion 'No volver a mostrar este mensaje' 
+        if(result.isDismissed){
+          this._storageService.hideReparadoStateAlert();
+        }
+      });
+      
+    }
+
   }
 
   openDialogUpdate(reparation: Reparation) {

@@ -41,7 +41,7 @@ export class ReparationStatePAGADOComponent implements OnInit {
     });
   
    // Se muestra el dialogo de advertencia solo si no se ha seleccionado la opcion de "No volver a mostrar"
-   if(!this._storageService.getReparationsAlert()){
+   if(!this._storageService.isHidePagadoStateAlert()){
 
       AlertService.warningAlert('¡Atención!', 
       'Los datos de facturación se muestran en esta pantalla',
@@ -51,7 +51,7 @@ export class ReparationStatePAGADOComponent implements OnInit {
       {
         // Entra si se selecciona la opcion 'No volver a mostrar este mensaje' 
         if(result.isDismissed){
-          this._storageService.hideReparationsAlert();
+          this._storageService.hidePagadoStateAlert();
         }
       });
       
