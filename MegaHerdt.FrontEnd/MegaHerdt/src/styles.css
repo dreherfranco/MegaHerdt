@@ -34,13 +34,13 @@
 
 /* DATA GENERAL */
 .data-user{
-    font-weight: bold !important;
-    font-size:medium !important;
+    /*font-weight: bold !important;*/
+    font-size: medium !important;
 }
 
 
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Roboto', "Helvetica Neue", sans-serif; }
+body { margin: 0; font-family: 'Roboto', "Helvetica Neue", sans-serif !important; } 
 
 table{
     border: 3px solid black !important;
@@ -48,11 +48,16 @@ table{
 
 tr, td,th, thead{
     border: 1px solid #465358eb !important;
+    font-weight: normal !important;
 }
 
 thead th{
     background-color: white !important;
     color: black !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+    font-weight: bold !important;
+    font-size: medium !important;
 }
 
 
@@ -114,7 +119,7 @@ thead th{
     padding: 3px !important;
 }
 
-/**FLECHA DE LA TABLA DE ORDENAMIENTO -ANGULAR MATERIAL- **/
+/**FLECHA DE LA TABLA DE ORDENAMIENTO - ANGULAR MATERIAL- **/
 .mat-sort-header-arrow {
     color: #1ed3e7;
     height: 15px !important;
