@@ -21,9 +21,6 @@
         <div class="d-flex justify-content-end mt-3">
             <button type="submit" class="btn btn-primary" [disabled]="articlePriceCategoryForm.invalid">Actualizar</button>
         </div>
-        <div class="mt-3">
-            <div class="alert alert-success" *ngIf="statusSubmit == 'success'">El precio del artículo se actualizó correctamente</div>
-            <div class="alert alert-danger" *ngIf="statusSubmit == 'failed'">Error al intentar actualizar el precio del artículo</div>
-        </div>
+ 
     </form>
 </div>
