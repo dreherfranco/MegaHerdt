@@ -108,4 +108,31 @@ export class StorageService {
     return areExpecteds;
   }
 
+  /**
+   * Ocultar Mensaje de alerta de "No volver a mostrar este mensaje" en el estado PAGADO
+   */
+  hidePagadoStateAlert(): void{
+    localStorage.setItem('pagadoAlert', 'true');
+  }
+
+  /**
+   * Obtener valor del mensaje de alerta de "No volver a mostrar este mensaje" en el estado PAGADO
+   */
+  isHidePagadoStateAlert(): boolean{
+    return localStorage.getItem('pagadoAlert') === 'true';
+  }
+
+   /**
+   * Ocultar Mensaje de alerta de "No volver a mostrar este mensaje"  en el estado ENTRADO
+   */
+   hideReparadoStateAlert(): void{
+    localStorage.setItem('entregadoAlert', 'true');
+  }
+
+  /**
+   * Obtener valor del mensaje de alerta de "No volver a mostrar este mensaje"  en el estado ENTRADO
+   */
+  isHideReparadoStateAlert(): boolean{
+    return localStorage.getItem('entregadoAlert') === 'true';
+  }
 }

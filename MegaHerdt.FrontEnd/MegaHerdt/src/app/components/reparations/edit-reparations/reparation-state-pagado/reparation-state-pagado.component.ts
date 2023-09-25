@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStatePagadoComponent } from './update-reparation-state-pagado/update-reparation-state-pagado.component';
 import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reparation-state-pagado',
@@ -21,11 +22,12 @@ export class ReparationStatePAGADOComponent implements OnInit {
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
   @Input() searchText: string;
-  
+  quantityPageRecords: number = 5;
+
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) {
     this.reparations = new Array<Reparation>();
-    this.paginate = new Paginate(1, 2);
+    this.paginate = new Paginate(1, this.quantityPageRecords);
     this.searchText = '';
   }
 
@@ -37,6 +39,23 @@ export class ReparationStatePAGADOComponent implements OnInit {
 
       }
     });
+  
+   // Se muestra el dialogo de advertencia solo si no se ha seleccionado la opcion de "No volver a mostrar"
+   if(!this._storageService.isHidePagadoStateAlert()){
+
+      AlertService.warningAlert('¡Atención!', 
+      'Los datos de facturación se muestran en esta pantalla',
+      'De acuerdo', 
+      'No volver a mostrar este mensaje')
+      .then((result) => 
+      {
+        // Entra si se selecciona la opcion 'No volver a mostrar este mensaje' 
+        if(result.isDismissed){
+          this._storageService.hidePagadoStateAlert();
+        }
+      });
+      
+    }
   }
 
   loadReparations() {

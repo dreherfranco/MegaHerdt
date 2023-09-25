@@ -16,11 +16,12 @@ export class ReparationStateENTREGADOComponent implements OnInit {
   sortedData: Reparation[] = [];
   paginate: Paginate;
   @Input() searchText: string;
+  quantityPageRecords: number = 5;
 
   constructor(private _storageService: StorageService,
     private _reparationService: ReparationService, public dialog: MatDialog) {
     this.reparations = new Array<Reparation>();
-    this.paginate = new Paginate(1, 2);
+    this.paginate = new Paginate(1, this.quantityPageRecords);
     this.searchText = '';
   }
 

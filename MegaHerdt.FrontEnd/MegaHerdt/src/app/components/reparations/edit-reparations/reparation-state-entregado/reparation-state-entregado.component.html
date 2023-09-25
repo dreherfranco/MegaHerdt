@@ -67,7 +67,7 @@
 
     </table>
     <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="sortedData.length > 2">
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="sortedData.length > quantityPageRecords">
     </pagination-controls>
 </div>
 <p class="alert alert-warning m-2 w-50 mx-auto" *ngIf="reparations.length === 0"><i class="bi bi-exclamation-circle-fill"></i> No existen reparaciones en este estado</p>

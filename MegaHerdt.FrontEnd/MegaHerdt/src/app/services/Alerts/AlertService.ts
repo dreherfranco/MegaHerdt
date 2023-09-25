@@ -9,15 +9,18 @@ export class AlertService {
    * @param text 
    * @returns 
    */
-  static warningAlert(title: string | null, text: string | null = ''): Promise<SweetAlertResult> {
+  static warningAlert(title: string | null, 
+    text: string | null = '', 
+    confirmButtonText: string | null = 'Si', 
+    cancelButtonText: string | null = 'No' ): Promise<SweetAlertResult> {
     return Swal.fire({
       title: title || '¿Estas seguro que deseas continuar con la operación?',
       text: text || '',
       icon: 'warning',
       allowOutsideClick: false,
       showCancelButton: true,
-      confirmButtonText: 'Si',
-      cancelButtonText: 'No',
+      confirmButtonText: confirmButtonText || 'Si',
+      cancelButtonText: cancelButtonText || 'No',
       backdrop: 'rgba(0, 0, 125, 0.37)',
     });
   }
@@ -40,7 +43,6 @@ export class AlertService {
       backdrop: 'rgba(0, 0, 125, 0.37)',
     });
   }
-
 
   static errorAlert(title: string | null, text: string | null = ''): Promise<SweetAlertResult> {
     return Swal.fire({

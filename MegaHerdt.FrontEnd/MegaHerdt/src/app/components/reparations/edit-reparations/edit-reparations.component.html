@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="d-flex">
+    <div class="d-flex bg-light">
       <h2 class="mx-auto">LISTADO DE REPARACIONES
         <button class="btn btn-dark padding-custom" (click)="generatePDF()">
           <i class="bi bi-filetype-pdf"></i>
@@ -11,8 +11,10 @@
   <div class="d-flex flex-row align-items-center bg-light">
     <div class="col-sm-4">
       <div class="data-user m-3 mb-0 p-1"><i class="bi bi-funnel-fill"></i>Filtrar por estado</div>
-      <select class="form-select data-user m-3 mt-1 w-75" name="selectReparationState"
-        [(ngModel)]="reparationStateSelected">
+      <select class="form-select data-user m-3 mt-1 w-75" 
+      name="selectReparationState"
+        [(ngModel)]="reparationStateSelected"
+        (change)="onReparationStateChange()">
         <option class="data-user" [ngValue]="this.reparationStatesEnum.INGRESO">
           Ingreso
         </option>

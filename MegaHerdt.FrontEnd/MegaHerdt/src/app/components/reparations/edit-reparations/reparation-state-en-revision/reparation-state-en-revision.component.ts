@@ -9,6 +9,8 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { UpdateReparationStateENREVISIONComponent } from './update-reparation-state-en-revision/update-reparation-state-en-revision.component';
 import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reparation-state-en-revision',
@@ -21,11 +23,14 @@ export class ReparationStateENREVISIONComponent implements OnInit {
   paginate: Paginate;
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
   @Input() searchText:string;
+  quantityPageRecords: number = 5;
 
   constructor(private _storageService: StorageService,
-    private _reparationService: ReparationService, public dialog: MatDialog) { 
+    private _reparationService: ReparationService, 
+    public dialog: MatDialog,
+    private _router: Router) { 
     this.reparations = new Array<Reparation>();
-    this.paginate = new Paginate(1,2);
+    this.paginate = new Paginate(1, this.quantityPageRecords);
     this.searchText = '';
   }
 
@@ -66,7 +71,13 @@ export class ReparationStateENREVISIONComponent implements OnInit {
           AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
         } else {
           this.loadReparations();
-          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente');
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente')
+          .then((result) => {
+            this._router.navigate([
+              '/administrate/administrate-reparations/edit', 
+              ReparationStatesEnum.EN_PRESUPUESTO
+            ]);
+          });
         }
       },
       error: (err) => {

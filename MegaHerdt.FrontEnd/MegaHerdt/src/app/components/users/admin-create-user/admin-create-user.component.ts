@@ -15,7 +15,6 @@ import Swal from 'sweetalert2';
 })
 export class AdminCreateUserComponent implements OnInit {
   user: UserCreate;
-  phoneOk: boolean = true;
   error: string = '';
 
   constructor(private _userService: UserService, private _router: Router,
@@ -33,8 +32,8 @@ export class AdminCreateUserComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    this.phoneOk = this.isValidPhone();
-    if (this.phoneOk) {
+    let isPhoneOk = this.isValidPhone();
+    if (isPhoneOk) {
       this._userService.register(this.user).subscribe(
         {
           next: (response) => {
@@ -59,6 +58,10 @@ export class AdminCreateUserComponent implements OnInit {
         }
       );
     }
+    else{
+      AlertService.errorAlert('¡Error!', 'Ingrese un número de telefono correcto.');
+    }
+
   }
 
 }
