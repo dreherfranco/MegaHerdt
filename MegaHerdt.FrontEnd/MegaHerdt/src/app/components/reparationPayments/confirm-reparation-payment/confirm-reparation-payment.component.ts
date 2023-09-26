@@ -7,6 +7,7 @@ import { ReparationService } from 'src/app/services/reparations/reparation.servi
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { Global } from 'src/app/utils/Global';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 
 
@@ -65,6 +66,30 @@ export class ConfirmReparationPaymentComponent implements OnInit {
   // VA AL BACKEND Y VUELVE CON UNA RESPUESTA
   activarScript() {
     const script = document.createElement('script');
+
+    window.pagoStatus = (response: any)=>{
+      if(response.status >=200 && response.status <= 300){
+        AlertService.successAlert('¡La compra se realizó correctamente!')
+        .then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = window.paymentSuccessRedirect;
+          }
+        }); 
+      }else{
+        // ESTE MÉTODO TRANSFORMA LA RESPONSE EN JSON ASI RECIBO LOS MENSAJES
+        // QUE ENVIO DESDE EL BACKEND
+        response.json().then((data: any) => {
+          console.error(data + "DATA"); 
+          AlertService.errorAlert('¡Hubo un error en tu compra!', data.message)
+            .then((result) => {
+            if (result.isConfirmed) {
+              window.location.href = window.paymentFailedRedirect
+            }
+          }); 
+          
+        });
+      }
+    }
 
     //URL DEL BACKEND
     window.apiConfirmPaymentUrl = `${Global.url}ReparationPayments/confirm-payment-mp`;
@@ -133,18 +158,9 @@ export class ConfirmReparationPaymentComponent implements OnInit {
                 })
                   .then((response) => {
                     console.log(response);
-                    
-                    //Si la response es existosa
-                    if(response.status >= 200 && response.status <= 300){
-                      //REDIRIGE AL COMPONENTE purchase-success.component
-                      window.location.href = window.paymentSuccessRedirect;
-                    }
-                    // En caso de error
-                    else
-                    {
-                      //REDIRIGE AL COMPONENTE purchase-failed.component
-                      window.location.href = window.paymentFailedRedirect;
-                    }
+
+                    // EJECUTA EL DIALOGO CON EL MENSAJE DE SUCCESS O FAILED
+                    window.pagoStatus(response)
 
                     // recibir el resultado del pago
                     resolve();

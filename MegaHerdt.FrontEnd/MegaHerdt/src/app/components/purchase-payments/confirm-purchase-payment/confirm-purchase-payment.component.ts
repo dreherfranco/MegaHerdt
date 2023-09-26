@@ -7,12 +7,12 @@ import { PurchasePaymentConfirm } from 'src/app/models/Payment/PurchasePaymentCo
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { UserAddresses } from 'src/app/models/User/UserAddresses';
 import { UserDetail } from 'src/app/models/User/UserDetail';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { PurchasePaymentService } from 'src/app/services/purchase-payments/purchase-payment.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { Global } from 'src/app/utils/Global';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-confirm-purchase-payment',
@@ -55,13 +55,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
     window.pagoStatus = (response: any)=>{
       if(response.status >=200 && response.status <= 300){
-        Swal.fire({
-          title: '¡La compra se realizó correctamente!',
-          icon: 'success',
-          allowOutsideClick: false,
-          confirmButtonText: 'OK',
-          backdrop: 'rgba(0, 0,125, 0.37)',
-        }).then((result) => {
+        AlertService.successAlert('¡La compra se realizó correctamente!')
+        .then((result) => {
           if (result.isConfirmed) {
             window.location.href = window.paymentSuccessRedirect;
           }
@@ -71,21 +66,14 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         // QUE ENVIO DESDE EL BACKEND
         response.json().then((data: any) => {
           console.error(data + "DATA"); 
-          Swal.fire({
-            title: 'Hubo un error con tu compra',
-            text: data.message,
-            icon: 'error',
-            allowOutsideClick: false,
-            confirmButtonText: 'OK',
-            backdrop: 'rgba(0, 0,125, 0.37)',
-          }).then((result) => {
+          AlertService.errorAlert('¡Hubo un error en tu compra!', data.message)
+            .then((result) => {
             if (result.isConfirmed) {
               window.location.href = window.paymentFailedRedirect
             }
           }); 
           
         });
-       
       }
     }
 
