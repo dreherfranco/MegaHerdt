@@ -44,7 +44,7 @@ export class ReparationStatePAGADOComponent implements OnInit {
    if(!this._storageService.isHidePagadoStateAlert()){
 
       AlertService.warningAlert('¡Atención!', 
-      'Los datos de facturación se muestran en esta pantalla',
+      'Los datos de facturación se cargan en esta pantalla',
       'De acuerdo', 
       'No volver a mostrar este mensaje')
       .then((result) => 

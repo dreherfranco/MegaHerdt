@@ -125,7 +125,34 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
-       
+        [HttpGet("articles-by-category/{categoryId}")]
+        public ActionResult<List<ArticleDTO>> GetArticlesByCategory(int categoryId)
+        {
+            try
+            {
+                var articles = articleService.GetArticlesByCategory(categoryId);
+                return this.Mapper.Map<List<ArticleDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("articles-by-brand/{brandId}")]
+        public ActionResult<List<ArticleDTO>> GetArticlesByBrand(int brandId)
+        {
+            try
+            {
+                var articles = articleService.GetArticlesByBrand(brandId);
+                return this.Mapper.Map<List<ArticleDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         [HttpPost("create")]
         // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
