@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Brand } from 'src/app/models/ArticleBrand/Brand';
+import { Category } from 'src/app/models/ArticleCategory/Category';
 import { UserDetail } from 'src/app/models/User/UserDetail';
+import { BrandService } from 'src/app/services/brand/brand.service';
+import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { RoleEnum as Role} from 'src/app/utils/RoleEnum';
 
@@ -10,8 +14,14 @@ import { RoleEnum as Role} from 'src/app/utils/RoleEnum';
 })
 export class HeaderComponent implements OnInit {
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
+  categories: Category[] = [];
+  brands: Brand[] = [];
 
-  constructor(private _storageService: StorageService) { 
+
+  constructor(private _storageService: StorageService, 
+    private _brandService: BrandService,
+    private _categoryService: CategoryService) 
+  { 
   }
 
   ngOnInit(): void {
@@ -21,7 +31,16 @@ export class HeaderComponent implements OnInit {
       }
     });
     
-    
+    this.loadCategories();
+    this.loadBrands();
+  }
+
+  loadCategories(){
+    this._categoryService.getAll().subscribe({next: response => this.categories = response});
+  }
+
+  loadBrands(){
+    this._brandService.getAll().subscribe({next: response => this.brands = response});
   }
 
   authenticated(): boolean{

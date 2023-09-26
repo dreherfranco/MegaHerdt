@@ -137,6 +137,9 @@ import { ReparationPaymentFailedComponent } from './components/reparationPayment
 import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
 import { PaymentsComponent } from './components/mercado-pago/payments/payments.component';
 import { SearcherComponent } from './components/commons/searcher/searcher.component';
+import { ArticlesByCategoryComponent } from './components/articles/articles-by-category/articles-by-category.component';
+import { ArticlesByBrandComponent } from './components/articles/articles-by-brand/articles-by-brand.component';
+import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
 
 @NgModule({
   declarations: [
@@ -254,7 +257,10 @@ import { SearcherComponent } from './components/commons/searcher/searcher.compon
     ReparationPaymentFailedComponent,
     ReparationPaymentSuccessComponent,
     PaymentsComponent,
-    SearcherComponent
+    SearcherComponent,
+    ArticlesByCategoryComponent,
+    ArticlesByBrandComponent,
+    ArticlesInOfferComponent
   ],
   imports: [
     BrowserModule,

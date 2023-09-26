@@ -47,6 +47,18 @@ namespace MegaHerdt.Services.Services
             return articlesOnOffer;
         }
 
+        public IEnumerable<Article> GetArticlesByCategory(int categoryId)
+        {
+            return this.helper.Get().Where(x => x.CategoryId == categoryId && x.Enabled).ToList();
+
+        }
+
+        public IEnumerable<Article> GetArticlesByBrand(int brandId)
+        {
+            return this.helper.Get().Where(x => x.BrandId == brandId && x.Enabled).ToList();
+
+        }
+
         public override async Task<Article> Create(Article article)
         {
             article.Code = GenerateCode(article);

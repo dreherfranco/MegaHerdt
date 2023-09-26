@@ -62,4 +62,12 @@ export class ArticleService {
     this.headers = this.headers.set('Authorization', token);
     return this._http.delete(this.url + "/" + id, { headers: this.headers });
   }
+
+  getArticlesByCategory(categoryId: number): Observable<any>{
+    return this._http.get(this.url+"/articles-by-category/" + categoryId,{headers: this.headers});
+  }
+
+  getArticlesByBrand(brandId: number): Observable<any>{
+    return this._http.get(this.url+"/articles-by-brand/" + brandId,{headers: this.headers});
+  }
 }

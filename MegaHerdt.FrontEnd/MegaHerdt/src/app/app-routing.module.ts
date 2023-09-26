@@ -44,11 +44,17 @@ import { PurchaseSuccessComponent } from './components/purchase-payments/purchas
 import { PurchaseFailedComponent } from './components/purchase-payments/purchase-failed/purchase-failed.component';
 import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
 import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
+import { ArticlesByCategoryComponent } from './components/articles/articles-by-category/articles-by-category.component';
+import { ArticlesByBrandComponent } from './components/articles/articles-by-brand/articles-by-brand.component';
+import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'articles/articles-by-category/:categoryId', component: ArticlesByCategoryComponent },
+  { path: 'articles/articles-by-brand/:brandId', component: ArticlesByBrandComponent },
+  { path: 'articles/articles-offers', component: ArticlesInOfferComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },

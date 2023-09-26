@@ -18,6 +18,62 @@
                     Inicio <span class="caret"></span>
                 </a>
             </div>
+
+            <div class="btn-group" dropdown>
+                <a id="button-basic" dropdownToggle type="button" 
+                  class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+                  aria-controls="dropdown-basic">
+                  Artículos <span class="caret"></span>
+                </a>
+                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
+                    <li role="menuitem">
+                        <a [routerLink]="['articles/articles-offers']" class="dropdown-item">
+                            Ofertas
+                        </a>
+                    </li>
+                    <li><hr class="dropdown-divider"></li>
+                <!-- Agrega un submenú -->
+                  <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body" class="btn-group dropend">
+                    <a id="button-nested" type="button" dropdownToggle
+                      class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+                      aria-controls="dropdown-nested">
+                      Categorías <span class="caret"></span>
+                    </a>
+                    <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-nested">
+                        <li *ngFor="let category of categories" role="menuitem">
+                            <a [routerLink]="['articles/articles-by-category', category.id]" class="dropdown-item">
+                              {{ category.name }}
+                            </a>
+                          </li>
+                      <!-- Agrega más opciones del submenú según sea necesario -->
+                    </ul>
+                  </li>
+                  <!-- Fin del submenú -->
+
+                  <li><hr class="dropdown-divider"></li>
+
+                  <!-- Agrega un submenú -->
+                  <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body" class="btn-group dropend">
+                    <a id="button-nested" type="button" dropdownToggle
+                      class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+                      aria-controls="dropdown-nested">
+                      Marcas <span class="caret"></span>
+                    </a>
+                    <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-nested">
+                        <li *ngFor="let brand of brands" role="menuitem">
+                            <a [routerLink]="['articles/articles-by-brand', brand.id]" class="dropdown-item">
+                              {{ brand.name }}
+                            </a>
+                          </li>
+                      <!-- Agrega más opciones del submenú según sea necesario -->
+                    </ul>
+                  </li>
+                  <!-- Fin del submenú -->
+
+                </ul>
+            </div>
+              
+
             <div class="btn-group" dropdown *ngIf="authenticated()">
                 <a id="button-basic" dropdownToggle type="button" 
                     class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
