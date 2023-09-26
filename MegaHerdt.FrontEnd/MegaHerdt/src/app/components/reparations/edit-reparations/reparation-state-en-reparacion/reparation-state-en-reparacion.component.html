@@ -73,8 +73,7 @@
                             class="bi bi-pencil-square"></i></button>
                 </td>
                 <td>
-                    <button class="btn btn-danger col-sm-12" title="Rechazar presupuesto" (click)="openDialogBackToBudget(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i
-                            class="bi bi-caret-left"></i></button>
+                    <button class="btn-return btn btn-danger col-sm-12" title="Volver a presupuestar" (click)="openDialogBackToBudget(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i class="bi bi-arrow-return-left"></i></button>
                 </td>
             </tr>
 

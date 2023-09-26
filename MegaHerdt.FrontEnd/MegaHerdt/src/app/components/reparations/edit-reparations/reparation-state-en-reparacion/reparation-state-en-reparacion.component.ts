@@ -110,7 +110,7 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
   // Abrir el dialogo para volver la reparacion a presupuesto
   openDialogBackToBudget(reparation: Reparation){
 
-    AlertService.warningAlert('¿Seguro que quieres volver al estado EN PRESUPUESTO?')
+    AlertService.warningAlert('¿Seguro que quieres volver a presupuestar?')
     .then((result) => {
       if (result.isConfirmed) {     
           this.updateDecrementState(reparation);
