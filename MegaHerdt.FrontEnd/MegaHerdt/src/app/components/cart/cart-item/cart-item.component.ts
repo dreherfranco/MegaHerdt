@@ -31,4 +31,8 @@ export class CartItemComponent implements OnInit {
   removeUnits(cartArticleDetail: CartArticleDetail) {
     this._cartService.removeUnitsFromCart(cartArticleDetail.article);
   }
+
+  formatoArgentino(precio: number): string {
+    return precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  }
 }

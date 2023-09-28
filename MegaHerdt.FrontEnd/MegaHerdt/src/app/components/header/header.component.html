@@ -135,13 +135,18 @@
                 </ul>
             </div>
         </nav>
+        <!--BOTON PARA EL offcanva-->
+        <button class="btn colours" title="Carrito" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class=" colours bi bi-cart-fill"></i></button>
+        <app-cart-offcanva></app-cart-offcanva>
 
         <div class="btn-group" dropdown *ngIf="authenticated()">
-            <a id="button-basic" dropdownToggle type="button" 
-                class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                aria-controls="dropdown-basic">
-                <i class="colours bi bi-person-circle"></i> &nbsp; {{userAuthenticated.name}} {{userAuthenticated.surname}}<span class="caret"></span>
-            </a>
+            <div class="colours-group-hover">
+                <a id="button-basic" dropdownToggle type="button" 
+                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+                    aria-controls="dropdown-basic">
+                    <i class="colours bi bi-person-circle"></i> &nbsp; {{userAuthenticated.name}} {{userAuthenticated.surname}}<span class="caret"></span>
+                </a>
+            </div>
             <ul id="dropdown-basic" *dropdownMenu  class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
                 <li role="menuitem">
                     <a [routerLink]="['logout']" *ngIf="authenticated()" class="dropdown-item">

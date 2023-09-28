@@ -1,0 +1,37 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header alert header-carrito text-center my-0">
+        <h1 class="cart-title offcanvas-title" id="offcanvasRightLabel"> Carrito </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <app-line-divider></app-line-divider>
+    <div class="offcanvas-body p-2">
+        <div class="tetx-center">
+            <ul class="list-group">
+                <li class="list-group-item"  *ngFor="let cartArticle of cartArticles; index as i">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <app-cart-item 
+                            [cartArticle]="cartArticle"        
+                            >
+                            </app-cart-item>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <app-line-divider></app-line-divider>
+    <div class="offcanvas-footer container-fluid bg-light">
+        <div class="row p-2 mx-auto align-content-center justify-content-between">
+            <button class="btn btn-outline-danger btn-block col-lg-5" (click)="emptyCart()">
+                <i class="bi bi-cart-x"></i> Vaciar carrito
+            </button>
+            <a href="http://localhost:4200/confirm-purchase" class="btn btn-outline-primary btn-block col-lg-5" >
+                <i class="bi bi-bag-fill"></i> Comprar
+            </a>
+        </div>
+        <div class="row p-2 mx-auto align-content-center justify-content-end">
+            <strong class="data-user p-2 mx-auto text-end align-self-end">Total: {{ formatoArgentino(total)}}</strong> 
+        </div>
+    </div>
+</div>

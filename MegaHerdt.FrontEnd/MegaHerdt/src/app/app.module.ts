@@ -140,6 +140,8 @@ import { SearcherComponent } from './components/commons/searcher/searcher.compon
 import { ArticlesByCategoryComponent } from './components/articles/articles-by-category/articles-by-category.component';
 import { ArticlesByBrandComponent } from './components/articles/articles-by-brand/articles-by-brand.component';
 import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
+import { LineDividerComponent } from './line-divider/line-divider.component';
+import { CartOffcanvaComponent } from './components/cart/cart-offcanva/cart-offcanva.component';
 
 @NgModule({
   declarations: [
@@ -260,7 +262,9 @@ import { ArticlesInOfferComponent } from './components/articles/articles-in-offe
     SearcherComponent,
     ArticlesByCategoryComponent,
     ArticlesByBrandComponent,
-    ArticlesInOfferComponent
+    ArticlesInOfferComponent,
+    LineDividerComponent,
+    CartOffcanvaComponent
   ],
   imports: [
     BrowserModule,

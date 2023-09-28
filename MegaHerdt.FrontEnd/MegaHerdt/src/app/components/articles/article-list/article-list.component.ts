@@ -19,7 +19,7 @@ export class ArticleListComponent implements OnInit {
 
   constructor(private _articleService: ArticleService, private _cartService: CartService) 
   { 
-    this.paginate = new Paginate(1,6);
+    this.paginate = new Paginate(1,8);
     this.searchText = "";
     this.cartArticles = this._cartService.getCart();
   }

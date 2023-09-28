@@ -3,22 +3,16 @@
 }
 .colours{
     color: #fff !important;
-}
-.border-color-custom{
- border-color: #007BC1 !important;
- border-width: 0.12rem !important;
-}
-
-.link-custom{
-    background-color: white!important;
-    font-weight: bold !important;
+    font-weight: bolder !important;
     font-size: larger !important;
-    box-shadow:inset 5px 5px 3px black !important;
+    transition: color .25s linear;
+    border: none !important;
 }
-
-
-.link-custom:hover{
-    background-color: #007BC1 !important;
-    color: white !important;
-    text-shadow: 1px 2px 2px black !important;
+.colours:hover{
+    color: #6528E0 !important;
+}
+.colours-group-hover:hover{
+    .colours{
+        color:#6528E0 !important;
+    }
 }

@@ -1,0 +1,23 @@
+.cart-title{
+    font-weight: bolder !important;
+    font-size: x-large !important;
+    padding: 8px !important;
+    margin: 0 !important;
+}
+
+.offcanvas-body{
+    margin-right: .15rem !important;
+}
+
+.offcanvas-body::-webkit-scrollbar {
+    width: .25rem; 
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb {
+    background-color: #6F2CF4;
+    border-radius: .5rem; 
+}
+
+.offcanvas-body::-webkit-scrollbar-thumb:hover {
+    background-color: #1a69d8; 
+}

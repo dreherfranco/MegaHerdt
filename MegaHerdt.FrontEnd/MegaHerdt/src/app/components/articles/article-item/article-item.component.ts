@@ -37,4 +37,8 @@ export class ArticleItemComponent implements OnInit {
     var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer, this.article.name);
     this._cartService.addToCart(this.article, purchaseArticle);
   }
+
+  formatoArgentino(precio: number): string {
+    return precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  }
 }
