@@ -33,7 +33,7 @@
       (pageChange)="this.paginate.page = $event" 
       previousLabel="Anterior" 
       nextLabel="Siguiente"
-      *ngIf="articles.length > 8">
+      *ngIf="articles.length > paginationRange">
       </pagination-controls>
 
   </div>

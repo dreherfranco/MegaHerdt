@@ -32,4 +32,9 @@ export class CartOffcanvaComponent implements OnInit {
   formatoArgentino(precio: number): string {
     return precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
   }
+
+  removeArticle(cartArticleDetail: CartArticleDetail) {
+    this._cartService.removeArticleFromCart(cartArticleDetail.article);
+  }
+
 }

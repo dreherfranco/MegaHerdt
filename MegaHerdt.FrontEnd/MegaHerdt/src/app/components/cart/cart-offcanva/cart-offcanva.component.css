@@ -21,3 +21,18 @@
 .offcanvas-body::-webkit-scrollbar-thumb:hover {
     background-color: #1a69d8; 
 }
+
+.list-cart-iten{
+    border: none !important;
+    padding-bottom: 0 !important ;
+}
+
+hr{ 
+    margin-top: .25rem !important;
+    background-color:  rgb(26, 105, 216) !important;
+    margin-left: -0.5%;
+    width: 105% !important;
+    border-bottom: 1px solid #101010 !important;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1) !important;
+}
+

@@ -1,7 +1,24 @@
-.img-article-cart{
-    width: 50% !important;
+.btn-agregar, .btn-sacar{
+    width: 23.3% !important;
+    padding: 0.13rem 0 !important;
+    font-size: large !important;
+    border: none !important;
+    transition: opacity 0.3s ease;
 }
-
-.h-btn{
-    height: 30px;
+.btn-agregar:hover, .btn-sacar:hover{
+    opacity: 0.7 !important;
+}
+.container-cant-article{
+    display: inline-block;
+    width: 36.3%;
+}
+.cant-article{
+    font-size: large !important;
+    white-space: nowrap !important; 
+}
+.btn-agregar{
+    color: #166DE7 !important;
+}
+.btn-sacar{
+    color: red !important;
 }

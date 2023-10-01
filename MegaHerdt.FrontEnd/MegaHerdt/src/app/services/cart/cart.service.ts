@@ -122,6 +122,19 @@ export class CartService {
     this.updateTotal();
   }
 
+  removeArticleFromCart(article: Article){
+    let cart = this.getCartFromStorage();
+    const articleIndiceRemove = cart.indexOf(cart.find((el: { id: any; }) => el.id === article.id));
+
+    cart.splice(articleIndiceRemove, 1);
+
+    localStorage.setItem('cart', JSON.stringify(cart));
+
+    this.updateCartArticlesDetails(cart);
+    this.loadArticlesStock();
+    this.updateTotal();
+  }
+
   verifyAndRemoveUnits(cartArticlesDetails: Array<CartArticleDetail>, index: number): Array<CartArticleDetail> {
     if (cartArticlesDetails[index].purchaseArticle.articleQuantity > 0) {
       --cartArticlesDetails[index].purchaseArticle.articleQuantity;

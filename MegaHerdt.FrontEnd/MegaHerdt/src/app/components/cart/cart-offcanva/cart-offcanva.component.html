@@ -6,15 +6,17 @@
     <app-line-divider></app-line-divider>
     <div class="offcanvas-body p-2">
         <div class="tetx-center">
-            <ul class="list-group">
-                <li class="list-group-item"  *ngFor="let cartArticle of cartArticles; index as i">
+            <ul class="list-group list-cart">
+                <li class="list-group-item list-cart-iten"  *ngFor="let cartArticle of cartArticles; index as i; let last = last">
                     <div class="row">
-                        <div class="col-md-10">
+                        <button type="button" title="Quitar articulo" class="col-1 btn-close px-2" (click)="removeArticle(cartArticle)"></button>
+                        <div class="col-11">
                             <app-cart-item 
                             [cartArticle]="cartArticle"        
                             >
-                            </app-cart-item>
+                            </app-cart-item>                     
                         </div>
+                        <hr *ngIf="!last"/>    
                     </div>
                 </li>
             </ul>

@@ -16,10 +16,11 @@ export class ArticleListComponent implements OnInit {
   searchText: string;
   cartArticles: Array<CartArticleDetail>;
   isLoading: boolean = true;
+  paginationRange: number = 8;
 
   constructor(private _articleService: ArticleService, private _cartService: CartService) 
   { 
-    this.paginate = new Paginate(1,8);
+    this.paginate = new Paginate(1,this.paginationRange);
     this.searchText = "";
     this.cartArticles = this._cartService.getCart();
   }

@@ -1,12 +1,21 @@
-<p>
-    <img src="{{cartArticle.article.image}}" class="img-thumbnail w-25 m-1" />
-    <strong class="m-1 data-user">{{cartArticle.article.name}} </strong>
-    <strong class="m-1 data-user">${{cartArticle.article.unitValueWithOffer}} </strong>
-</p>
-<p> 
-    <strong class="m-1 data-user">Unidades: {{cartArticle.purchaseArticle.articleQuantity}} 
-        <button class="btn btn-outline-danger m-1 p-1 h-btn" (click)="removeUnits(cartArticle)" ><i class="bi bi-dash-circle-fill text-center m-auto"></i></button>
-        <button class="btn btn-outline-primary p-1 h-btn" (click)="addToCart(cartArticle.article, cartArticle.purchaseArticle)"><i class="bi bi-plus-circle-fill"></i></button>
-    </strong>
-    <strong class="m-1 data-user">Total: {{ formatoArgentino(cartArticle.purchaseArticle.articleQuantity * cartArticle.article.unitValueWithOffer) }}</strong>
-</p>
+<div class="row align-content-center justify-content-center text-center">
+    <strong class="col-12 mx-auto data-user">{{cartArticle.article.name}} </strong>
+</div>
+<div class="row align-content-center justify-content-center">
+    <img src="{{cartArticle.article.image}}" class="col-4 img-thumbnail w-25 m-1" />
+    <div class="col-8 p-0">
+        <div class="row align-content-center justify-content-center p-2 mx-auto">
+            <div class="col-6">                
+                <button class="btn btn-sacar h-btn" title="Sacar" (click)="removeUnits(cartArticle)" ><i class="bi bi-dash-square-fill text-center m-auto"></i></button>
+                <div class="container-cant-article p-1 mx-auto text-center">
+                    <strong class="cant-article data-user">{{cartArticle.purchaseArticle.articleQuantity}} </strong>
+                </div> 
+                <button class="btn btn-agregar h-btn" title="Agregar" (click)="addToCart(cartArticle.article, cartArticle.purchaseArticle)"><i class="bi bi-plus-square-fill"></i></button>
+                <p class="p-1">{{cartArticle.article.stock}} Un. disp</p>
+            </div>
+            <div class="col-6 align-self-end text-end">
+                <strong class="m-1 data-user">{{ formatoArgentino(cartArticle.purchaseArticle.articleQuantity * cartArticle.article.unitValueWithOffer) }}</strong>
+            </div>
+        </div>
+    </div>
+</div>
