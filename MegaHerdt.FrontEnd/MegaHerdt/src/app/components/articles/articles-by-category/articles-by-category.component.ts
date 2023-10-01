@@ -5,6 +5,7 @@ import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
 
 @Component({
   selector: 'app-articles-by-category',
@@ -42,6 +43,13 @@ export class ArticlesByCategoryComponent implements OnInit {
       if (!isNaN(numero)) {
         this.categoryId = numero;
         this.loadProducts();
+        
+        /**  
+         * Determina como va a filtrar los articulos del carrito
+         * El parametro 'numero' representa el id de categoria 
+         * por el cual va a filtrar los articulos
+        */
+        this._cartService.setFilterBy(ArticlesFilterByEnum.CATEGORY, numero);
       }
     });
   }
@@ -67,6 +75,8 @@ export class ArticlesByCategoryComponent implements OnInit {
         next: (response) => 
         {
           this.articles = response;
+          /** Actualiza el stock en los articulos segun los articulos cargados en el carrito */
+          this._cartService.setArticles(this.articles);
         },
         error: (err) => console.log(err)
       }

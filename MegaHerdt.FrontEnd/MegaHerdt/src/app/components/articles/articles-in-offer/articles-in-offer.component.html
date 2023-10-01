@@ -1,1 +1,24 @@
-<p>articles-in-offer works!</p>
+<div class="row">    
+
+    <div class="col-md-4" *ngFor="let article of articles 
+    | filter: searchText
+    | paginate: 
+    {
+        itemsPerPage: this.paginate.recordsPerPage, 
+        currentPage:this.paginate.page
+    } 
+    ">
+
+    <app-article-item [article]="article" 
+    >
+    </app-article-item>
+
+    </div>
+    <pagination-controls class="text-center data-user"
+    (pageChange)="this.paginate.page = $event" 
+    previousLabel="Anterior" 
+    nextLabel="Siguiente"
+    *ngIf="articles.length > 6">
+    </pagination-controls>
+
+</div>

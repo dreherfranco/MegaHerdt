@@ -70,4 +70,8 @@ export class ArticleService {
   getArticlesByBrand(brandId: number): Observable<any>{
     return this._http.get(this.url+"/articles-by-brand/" + brandId,{headers: this.headers});
   }
+
+  getArticlesOnOffer(): Observable<any>{
+    return this._http.get(this.url+"/articles-on-offers",{headers: this.headers});
+  }
 }
