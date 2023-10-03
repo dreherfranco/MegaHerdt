@@ -2,7 +2,9 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
+import { ReparationUpdateBudget } from 'src/app/models/Reparation/ReparationUpdateBudget';
 import { UserDetail } from 'src/app/models/User/UserDetail';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
@@ -47,6 +49,52 @@ export class ReparationRecordComponent implements OnInit {
       }
     });
   }
+
+  acceptBudgetDialog(reparationId: number){
+    let data = new ReparationUpdateBudget(reparationId, true, new Date());
+
+    AlertService.warningAlert('¿Seguro que quieres aceptar el Presupuesto?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateBudget(data);
+      }
+    });
+   
+  }
+
+  openDialogRejectBudget(reparationId: number){
+    let data = new ReparationUpdateBudget(reparationId, false, new Date());
+
+    AlertService.warningAlert('¿Seguro que quieres rechazar el Presupuesto?', '¡No podrás revertirlo!')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.updateBudget(data);
+      }
+    });
+  }
+
+
+  updateBudget(reparation: ReparationUpdateBudget){
+    this._reparationService.updateBudget(reparation, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+        } else {
+          this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Presupuesto aceptado correctamente')
+          .then((result) => {
+           // Ver que hacer cuando se acepta el presupuesto
+          });
+        }
+      },
+      error: (err) => {
+        console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+      }
+    })
+  }
+
+
 
   generatePDF() {
     PDFGenerator.generatePDF(this.content);

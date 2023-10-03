@@ -28,6 +28,7 @@
                     <th mat-sort-header="billNumber" scope="col">Numero de factura</th>
                     <th mat-sort-header="billType" scope="col">Tipo de factura</th>
                     <th scope="col">Reclamar</th>
+                    <th scope="col">Presupuesto</th>
                     <th scope="col">Pagar</th>
                 </tr>
             </thead>
@@ -85,6 +86,15 @@
                                 <i class="bi bi-exclamation-diamond"></i>
                             </button>
                         </div>
+                    </th>
+                    <th>
+                        <button *ngIf="reparation.reparationState.name.includes('PRESUPUESTO')" class="btn btn-primary col-sm-12" title="Aceptar" (click)="acceptBudgetDialog(reparation.id)"> 
+                            <i class="bi bi-pencil-square"></i>
+                        </button>
+
+                        <button *ngIf="reparation.reparationState.name.includes('PRESUPUESTO')" class="btn btn-danger col-sm-12" title="Rechazar" (click)="openDialogRejectBudget(reparation.id)"> 
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
                     </th>
                     <th>
                         <button *ngIf="reparation.bill != null && reparation.bill.payments.length > 0" type="button" class="btn btn-warning w-100"
