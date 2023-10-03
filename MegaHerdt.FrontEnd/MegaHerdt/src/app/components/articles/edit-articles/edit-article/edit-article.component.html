@@ -2,12 +2,11 @@
     <div class="d-flex flex-row justify-content-center">
         <img [src]="article.image" class="border border-secondary card-img-top col-sm-3 m-1 rounded">
         <div class="m-1 ml-0">
-            <input id="image" name="image"  class="inputfile inputfile-1" (change)="onChange($event)" type="file">
-            <label for="file-1">
-                <i class="bi bi-upload iborrainputfile"></i>
-                <span class="iborrainputfile">Subir archivo</span>
+            <input id="image" name="image" class="inputfile" (change)="onChange($event)" type="file">
+            <label for="image" class="custom-file-upload">
+              <i class="bi bi-upload iborrainputfile"></i> Subir archivo
             </label>
-        </div>
+          </div>
     </div>
     <div class="card-body card-body-p-custom">
         <h5 class="card-title data-article">Nombre:<input class="form-control data-article" [(ngModel)]="article.name">
