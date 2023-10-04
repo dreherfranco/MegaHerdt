@@ -20,7 +20,7 @@
             <form *ngIf="hasShipment">
                 <hr>
                 <div id="plans" class="form-check">
-                    <h3 class="data-user"><b>Seleccione una dirección</b></h3>
+                    <h3 class="data-user"><b>Seleccione su dirección</b></h3>
                     <p class="data-user" *ngFor="let address of userAddresses.addresses"><input class="form-check-input"
                             id="immediate-plan" type="radio" name="installment_plan" (click)="selectAddress(address)" />
                         {{address.streetName}} {{address.streetNumber}} - {{address.townName}}, {{address.province}}

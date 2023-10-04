@@ -13,6 +13,7 @@
                 <th scope="col">Artículos a utilizar</th>
                 <th mat-sort-header="totalArticleAmount" scope="col">Monto total artículos</th>
                 <th mat-sort-header="total" scope="col">Total</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +61,12 @@
                 </th>
                 <th>
                     <span class="data-user">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
-                </th>    
+                </th> 
+                <td>
+                    <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)"> 
+                        <i class="bi bi-pencil-square"></i>
+                    </button>
+                </td>  
             </tr>
 
         </tbody>

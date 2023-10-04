@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Purchase } from 'src/app/models/Purchase/Purchase';
 import { TransportCompany } from 'src/app/models/TransportCompany/TransportCompany';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { TransportCompanyService } from 'src/app/services/transport-companies/transport-company.service';
@@ -16,8 +17,11 @@ export class AssignPurchaseShipmentComponent implements OnInit {
   transportCompanies: TransportCompany[] = [];
   statusSubmit: string = '';
 
-  constructor(private _route: ActivatedRoute,private _purchaseService: PurchaseService, 
-    private _storageService: StorageService, private _transportCompanyService: TransportCompanyService) {
+  constructor(private _route: ActivatedRoute,
+    private _purchaseService: PurchaseService, 
+    private _storageService: StorageService, 
+    private _transportCompanyService: TransportCompanyService,
+    private _router: Router) {
    }
 
   ngOnInit(): void {
@@ -64,14 +68,17 @@ export class AssignPurchaseShipmentComponent implements OnInit {
       next: (result) => {
         console.log(result)
         if(!result.error){
-          this.statusSubmit = "success";
-          form.reset();
+          AlertService.successAlert('¡Envio asignado correctamente!').then((result) => {
+            if (result.isConfirmed) {     
+              this._router.navigate(['/administrate/administrate-purchases-shipments']);
+            }
+          });
         }else{
-          this.statusSubmit = "failed";
+          AlertService.errorAlert('¡Error al intentar asignar el Envio a la compra!');
         }
       },
       error: (err) => {
-        this.statusSubmit = "failed";
+        AlertService.errorAlert('¡Error al intentar asignar el Envio a la compra!');
         console.log(err);
       }
     });

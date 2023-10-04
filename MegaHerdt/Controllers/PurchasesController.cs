@@ -67,8 +67,8 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                Expression<Func<Purchase, bool>> filter = x => x.Shipment != null && x.Shipment.TransportCompany == null;
-                var purchases = this.PurchaseService.GetBy(filter)
+                //Expression<Func<Purchase, bool>> filter = x => x.Shipment != null && x.Shipment.TransportCompany == null;
+                var purchases = this.PurchaseService.GetAll()
                     .OrderByDescending(x => x.Date);
                 return this.Mapper.Map<List<PurchaseDTO>>(purchases);
             }

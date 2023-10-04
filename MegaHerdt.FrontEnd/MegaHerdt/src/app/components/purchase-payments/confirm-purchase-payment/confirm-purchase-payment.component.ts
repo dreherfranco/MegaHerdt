@@ -56,6 +56,9 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
         AlertService.successAlert('¡La compra se realizó correctamente!')
         .then((result) => {
           if (result.isConfirmed) {
+            // Una vez terminada la compra se limpia el carrito.
+            this._cartService.emptyCart();
+            
             window.location.href = window.paymentSuccessRedirect;
           }
         }); 

@@ -1,10 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
+import { Router } from '@angular/router';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
+import { ReparationUpdate } from 'src/app/models/Reparation/ReparationUpdate';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
 
 @Component({
   selector: 'app-reparation-state-entregado',
@@ -19,7 +23,9 @@ export class ReparationStateENTREGADOComponent implements OnInit {
   quantityPageRecords: number = 5;
 
   constructor(private _storageService: StorageService,
-    private _reparationService: ReparationService, public dialog: MatDialog) {
+    private _reparationService: ReparationService, 
+    public dialog: MatDialog,
+    private _router: Router) {
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1, this.quantityPageRecords);
     this.searchText = '';
@@ -46,6 +52,47 @@ export class ReparationStateENTREGADOComponent implements OnInit {
     });
   }
 
+  openDialogUpdate(reparation: Reparation) {
+    AlertService.warningAlert('¿Seguro que quieres pasar al estado PAGADO?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.update(reparation);
+      }
+    });
+  }
+
+  update(reparation: Reparation) {
+    var reparationUpdate = this.mapperReparation(reparation);
+
+    this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+        } else {
+          this.loadReparations();
+          AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente')
+          .then((result) => {
+            this._router.navigate([
+              '/administrate/administrate-reparations/edit', 
+              ReparationStatesEnum.PAGADO
+            ]);
+          });
+        }
+      },
+      error: (err) => {
+        console.log(err)
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+      }
+    })
+  }
+  
+  mapperReparation(reparation: Reparation): ReparationUpdate {
+    let identity = this._storageService.getIdentity();
+    return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
+      reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
+      , reparation.employeeObservation, reparation.approximateTime);
+  }
+  
   sortData(sort: Sort) {
     const data = this.reparations.slice();
     if (!sort.active || sort.direction === '') {

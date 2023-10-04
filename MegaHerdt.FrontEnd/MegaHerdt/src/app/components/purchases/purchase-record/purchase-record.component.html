@@ -47,8 +47,8 @@
                             <p class="d-flex row">Direccion: {{purchase.shipment.address.streetName}}
                                 {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}},
                                 {{purchase.shipment.address.province}}</p>
-                            <a href="{{purchase.shipment.transportCompany.url}}/{{purchase.shipment.trackingNumber}}">
-                                <p class="row"> URL de seguimiento </p>
+                            <a  href="{{purchase.shipment.transportCompany.url}}/{{purchase.shipment.trackingNumber}}">
+                                <p class="row"> URL de seguimiento del envio N°: {{purchase.shipment.trackingNumber}}</p>
                             </a>
                         </div>
                     </th>

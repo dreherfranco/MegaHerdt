@@ -37,12 +37,30 @@
                             No se ha asignado un envío aún
                         </span>
                         <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
-                        direccion: {{purchase.shipment.address.streetName}}
-                        seguimiento: {{purchase.shipment.transportCompany.url}}
+                          <b> Dirección: </b> {{purchase.shipment.address.streetName}}
+                           {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}},
+                           {{purchase.shipment.address.province}}
+
+                           <hr>
+
+                           <b> Empresa de Transporte: </b> {{purchase.shipment.transportCompany.name}}
+                        
+                           <hr>
+
+                           <b> Monto: </b> {{ purchase.shipment.amount }}
                         </span>
                     </th>
                     <th>
-                        <button class="btn btn-primary" [routerLink]="['purchase', purchase.id, 'assign-shipment']" > <i class="bi bi-plus-circle"></i> </button>
+                        <button *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" 
+                             class="btn btn-primary" 
+                             [routerLink]="['purchase', purchase.id, 'assign-shipment']" > 
+                             <i class="bi bi-plus-circle"></i> 
+                        </button>
+                        <p class="font-weight-normal" *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null"> 
+                            Ya se encuentran definido el envío para esta compra
+                            <i class="bi bi-check-lg font-weight-bold text-success"></i>
+                        </p>
+                        <p class="text-secondary" *ngIf="purchase.shipment == null"> Esta compra no posee envío </p>
                     </th>
                 </tr>
             </tbody>
