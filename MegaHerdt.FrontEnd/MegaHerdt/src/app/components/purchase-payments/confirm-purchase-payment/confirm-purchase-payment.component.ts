@@ -1,15 +1,11 @@
-import { Component, EventEmitter, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { isBetween } from 'ngx-bootstrap/chronos/utils/date-compare';
+import { Component, OnInit } from '@angular/core';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
-import { PurchasePaymentConfirm } from 'src/app/models/Payment/PurchasePaymentConfirm';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { UserAddresses } from 'src/app/models/User/UserAddresses';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { CartService } from 'src/app/services/cart/cart.service';
-import { PurchasePaymentService } from 'src/app/services/purchase-payments/purchase-payment.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { Global } from 'src/app/utils/Global';
@@ -23,18 +19,18 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   isLoading: boolean = true;
   purchaseAmount: number = 0;
 
-  /*
+  // DATOS DEL ENVIO
   userAddresses: UserAddresses = new UserAddresses(new Array<AddressUpdate>());
   addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
   hasShipment: boolean = false;
+  showShipmentForm: boolean = true;
   isAddressSelected: boolean = false;
-  */
 
-  constructor(
-    private _storageService: StorageService,
-    private _purchasePaymentService: PurchasePaymentService, 
-    private _cartService: CartService, 
-    private _userService: UserService) {
+
+  constructor(private _storageService: StorageService,
+    private _cartService: CartService,
+    private _userService: UserService) 
+  {
    
   }
 
@@ -44,6 +40,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     setTimeout(() =>{
       this.isLoading = false;
     },1500);
+
+    this.getUserAddresses();
   }
 
  
@@ -81,7 +79,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     window.apiConfirmPaymentUrl = `${Global.url}PurchasePayments/confirm-payment-mp`;
 
     // URL's DE REDIRECCION
-    window.paymentSuccessRedirect = "http://localhost:4200/purchase-success";
+    window.paymentSuccessRedirect = "http://localhost:4200/purchases/record";
     window.paymentFailedRedirect = "http://localhost:4200/confirm-purchase";
 
     // SETEO EL MONTO DEL CARRITO
@@ -135,6 +133,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
               cardFormData.purchaseArticles = window.purchaseArticles;
               cardFormData.clientEmail = window.identity.email;
               cardFormData.clientId = window.identity.id;
+              cardFormData.hasShipment = window.hasShipment;
+              cardFormData.shipmentAddressId = window.shipmentAddressId;
 
               //  callback llamado cuando el usuario haga clic en el botón enviar los datos
               //  ejemplo de envío de los datos recolectados por el Brick a su servidor
@@ -188,7 +188,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     return purchasesArticles;
   }
 
-/*
+
+ /************ DATOS DE ENVIO ***************/
 
   selectIfHasShipment(hasShipment: boolean){
     this.hasShipment = hasShipment;
@@ -207,11 +208,13 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   selectAddress(address: AddressUpdate) {
     this.addressSelected = address;
     this.isAddressSelected = true;
+
+    window.hasShipment = this.hasShipment;
+    window.shipmentAddressId = this.addressSelected.id;
   }
 
   confirmShipment(){
     this.showShipmentForm = false;
-    this.showPlanSelectForm = true;
   }
 
   shipmentFormOk(): boolean{
@@ -223,68 +226,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
       return false;
     }
   }
-  test(): any{
-    console.log("prueba desde componente .ts");
-  }
+
   comeBackInShipmentForm(){
     this.showShipmentForm = false;
-    this.showCreateTokenForm = true;
   }
-
-  createPaymentMethod() {
-    this.stripeService.createPaymentMethod({
-      type: 'card',
-      card: this.card.element,
-      billing_details: { name: this.stripeTest.controls['name'].value }
-    }).subscribe({
-      next: (result) => {
-        if (result.error) {
-          console.log(result.error)
-        } else {
-          this.handleInstallmentPlans();
-        }
-      }
-    });
-  }
-
-  handleInstallmentPlans() {
-    this.availablePlans = availablePlans;
-  }
-
-  comeBackInPlanSelectForm(){
-    this.showPlanSelectForm = false;
-    this.showShipmentForm = true;
-    this.planSelected = new PaymentPlan(0, '', '');
-    this.hasShipment = false;
-  }
-
-  confirmPayment() {
-    var identity: UserDetail = this._storageService.getIdentity();
-    var purchasesArticles = this.getPurchasesArticles();
-    var purchasePaymentConfirm = new PurchasePaymentConfirm(this.planSelected.count, identity.email,
-    identity.id, this.stripeToken, this.hasShipment, this.addressSelected.id, purchasesArticles);
-    
-    this._purchasePaymentService.confirmPayment(purchasePaymentConfirm, this._storageService.getTokenValue()).subscribe({
-      next: (result) => {
-        if(result.subscription.status == "active"){
-          this.subscriptionActive = true;
-          this.showPlanSelectForm = false;
-          this._cartService.emptyCart();
-        }
-      }
-    });
-  }
-
-  getPurchasesArticles(): PurchaseArticleCreation[]{
-    var cartArticles: CartArticleDetail[] = this._cartService.getCartFromStorage();
-    var purchasesArticles: PurchaseArticleCreation[] = [];
-    for(var i=0; i<cartArticles.length; i++){
-       purchasesArticles.push(cartArticles[i].purchaseArticle);
-    }
-    return purchasesArticles;
-  }
-
-  confirmPaymentFormOk(): boolean{
-      return this.planSelected.count != 0;
-  }*/
 }

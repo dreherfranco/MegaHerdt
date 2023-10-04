@@ -64,7 +64,10 @@ namespace MegaHerdt.Helpers.Helpers
                 {
                     throw new Exception("Numero de tarjeta invalido");
                 }
-                
+                if (ex.Message.Contains("invalid_address"))
+                {
+                    throw new Exception("¡Dirección inválida! Revise los datos de envío.");
+                }
             }
 
             // Este throw está por si ocurre un evento no esperado, y tambien porque el metodo espera a que se devuelva un valor.
@@ -103,6 +106,7 @@ namespace MegaHerdt.Helpers.Helpers
             // Si la compra tiene Envio se debe asignar el correspondiente seleccionado.
             if (purchasePaymentData.HasShipment)
             {
+                if (purchasePaymentData.ShipmentAddressId is null || purchasePaymentData.ShipmentAddressId == 0) throw new Exception("invalid_address");
                 purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId.Value };
             }
             return await this.purchaseRepository.Add(purchase);

@@ -33,6 +33,12 @@ declare global {
       // Articulos en el carrito.
       purchaseArticles: Array<PurchaseArticleCreation>;
   
+      // Si la compra tiene envio
+      hasShipment: boolean;
+
+      // Id de la dirección a la que irá el envio
+      shipmentAddressId: number;
+
       // Identidad del usuario logueado.
       identity: UserDetail;
 
