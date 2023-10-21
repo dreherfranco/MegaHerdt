@@ -5,6 +5,7 @@ import { Article } from '../../../models/Article/Article';
 import { Brand } from '../../../models/ArticleBrand/Brand';
 import { Category } from '../../../models/ArticleCategory/Category';
 import { ArticleOfferDetail } from '../../../models/ArticleOffer/ArticleOfferDetail';
+import { color } from 'html2canvas/dist/types/css/types/color';
 
 @Component({
   selector: 'app-article-item',
@@ -40,5 +41,13 @@ export class ArticleItemComponent implements OnInit {
 
   formatoArgentino(precio: number): string {
     return precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  }
+
+  getStyle(){
+    return{
+      color: (this.article.stock>20) ? '#00A02F' :
+              (this.article.stock>5)  ? '#BE8C08' : 'red',
+      display: (this.article.stock<1) ? "none" : "block",
+    }
   }
 }

@@ -1,5 +1,8 @@
-<div class="card mb-3 article-card border-0 shadow-sm">
-  <img [src]="article.image" class="card-img-top">
+<div class="card mb-3 card-container d-flex">
+  <div class="container">
+    <img [src]="article.image" class="card-img-top">
+  </div>
+  <hr>
   <div class="card-body">
     <span *ngIf="isOnOffer(article)" class="bg-primary rounded text-white p-1">ARTICULO EN OFERTA</span>
     <p *ngIf="!isOnOffer(article)" class="card-text data-user m-1 text-dark font-weight-bold">{{ formatoArgentino(article.unitValue)}}</p>
@@ -8,11 +11,15 @@
       <i class="bi bi-arrow-left p-2"></i>
       <span class="card-text line-through text-danger">{{formatoArgentino(article.unitValue)}} </span>
     </div>
-    <p class="data-article mt-0 text-dark">{{article.name}} {{article.brand.name}} {{article.category.name}}
-      {{article.stock}} unidades</p>
-    <button class="btn btn-outline-primary mt-2" (click)="addToCart()" *ngIf="article.stock > 0">
+    <div [title]="article.name" class="card-article-container text-dark">
+      <span class="data-article"> {{article.name}}</span>
+    </div>
+    <div class="card-article-container text-dark">
+      <span class="data-article" [ngStyle]="getStyle()">{{article.stock}} unidades</span>
+    </div>
+    <button class="btn-pos btn btn-outline-primary" (click)="addToCart()" *ngIf="article.stock > 0">
       <i class="bi bi-cart-plus-fill"></i> Agregar al carrito</button>
-    <p class="btn btn-danger mt-2" *ngIf="article.stock == 0">
-      Stock no disponible</p>
+    <span class="btn-pos btn btn-danger" *ngIf="article.stock == 0">
+      Sin stock</span>
   </div>
 </div>

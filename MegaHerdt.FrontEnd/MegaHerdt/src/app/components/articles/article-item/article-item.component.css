@@ -1,23 +1,41 @@
 .card-img-top {
-    width: 140px;
-    height: 160px;
-    align-self: center;
-    padding-top: 10px;
+    padding-top: 1.1rem;
+    width: 10rem;
+    height: 10rem;
+}
+.container{
+    text-align: center;
+}
+.card-body{
+    padding: 0 1rem 1rem 1rem !important;
 }
 
-.article-card{
-    border-style: ridge;
-    border-color: #007BC1 !important;
-    box-shadow: 3px 3px 3px black !important;
+.card-article-container{
+    width: 100%; 
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-container{
+    height: 20.5rem !important;
+    width: 16rem !important;
 }
 
 .data-article{
-    color: #020202 !important;
-    font-size:small !important;
+    padding-top: .5rem !important;
+    font-size: medium !important;
 }
 
 .line-through{
     text-decoration: line-through;
+}
+
+.btn-pos{
+    margin: 0.5rem 0;
+    position: absolute;
+    bottom: 0;  
+    align-self: center !important; 
 }
 
 .data-user{
