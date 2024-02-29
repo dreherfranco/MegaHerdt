@@ -1,11 +1,10 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { Article } from '../../../models/Article/Article';
 import { Brand } from '../../../models/ArticleBrand/Brand';
 import { Category } from '../../../models/ArticleCategory/Category';
 import { ArticleOfferDetail } from '../../../models/ArticleOffer/ArticleOfferDetail';
-import { color } from 'html2canvas/dist/types/css/types/color';
 
 @Component({
   selector: 'app-article-item',
@@ -17,9 +16,6 @@ export class ArticleItemComponent implements OnInit {
 
   constructor(private _cartService: CartService) { 
     this.article = this.instanceArticle();
-  }
-
-  ngOnInit(): void {
   }
 
   private instanceArticle(): Article {
@@ -50,4 +46,6 @@ export class ArticleItemComponent implements OnInit {
       display: (this.article.stock<1) ? "none" : "block",
     }
   }
+
+  ngOnInit(): void {}
 }

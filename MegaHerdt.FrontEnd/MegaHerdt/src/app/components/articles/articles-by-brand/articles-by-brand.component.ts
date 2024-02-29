@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/models/Article/Article';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
@@ -13,12 +13,13 @@ import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
   styleUrls: ['./articles-by-brand.component.css']
 })
 export class ArticlesByBrandComponent implements OnInit {
-  articles: Article[] = [];
   paginate: Paginate;
-  searchText: string;
   cartArticles: Array<CartArticleDetail>;
-  isLoading: boolean = true;
   brandId: number = 0;
+  
+  @Input() searchText: string;
+  @Input() articles: Article[] = [];
+  @Output() uploadCompleted: EventEmitter<Article[]> = new EventEmitter<Article[]>();
 
   constructor(private _articleService: ArticleService, 
     private _cartService: CartService,
@@ -60,7 +61,6 @@ export class ArticlesByBrandComponent implements OnInit {
       next: result => 
       {
         this.cartArticles=result;
-        this.isLoading = false;
       }
     })
 
@@ -78,6 +78,8 @@ export class ArticlesByBrandComponent implements OnInit {
           this.articles = response;
           /** Actualiza el stock en los articulos segun los articulos cargados en el carrito */         
           this._cartService.setArticles(this.articles);
+
+          this.uploadCompleted.emit(this.articles);
         },
         error: (err) => console.log(err)
       }

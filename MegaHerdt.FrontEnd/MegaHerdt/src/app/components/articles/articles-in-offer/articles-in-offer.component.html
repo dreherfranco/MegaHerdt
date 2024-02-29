@@ -1,4 +1,4 @@
-<div class="row">    
+<div class="row justify-content-around align-content-center p-2 mx-auto"> 
 
     <div class="col-md-4" *ngFor="let article of articles 
     | filter: searchText
@@ -9,9 +9,7 @@
     } 
     ">
 
-    <app-article-item [article]="article" 
-    >
-    </app-article-item>
+    <app-article-item [article]="article"></app-article-item>
 
     </div>
     <pagination-controls class="text-center data-user"

@@ -14,7 +14,7 @@ export class CartService {
   articles: BehaviorSubject<Array<Article>> = new BehaviorSubject<Array<Article>>([]);
   total: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   // Define un diccionario que mapea los valores de ArticlesFilterByEnum a las funciones del servicio
- filtersResolver: Record<ArticlesFilterByEnum, () => void> = this.constructFiltersHandler();
+  filtersResolver: Record<ArticlesFilterByEnum, () => void> = this.constructFiltersHandler();
 
   /**
    * Variable para saber si filtrar por Categoria, Marca, Ofertas o traer todos los articulos.
@@ -112,13 +112,22 @@ export class CartService {
   setArticles(articles: Article[]) {
     let cartArticlesDetails = this.getCartFromStorage();
     if (cartArticlesDetails != null) {
-      for (var i = 0; i < articles.length; i++) {
-        for (var j = 0; j < cartArticlesDetails.length; j++) {
-          if (articles[i].id == cartArticlesDetails[j].article.id) {
-            articles[i].stock = (articles[i].stock - cartArticlesDetails[j].purchaseArticle.articleQuantity);
-          }
-        }
-      }
+
+      articles.find( (article : Article) => {
+        cartArticlesDetails.find( (byCart : any) => {
+          if(article.id == byCart.article.id)
+          article.stock -= byCart.purchaseArticle.articleQuantity;          
+        })
+      });
+
+      // for (var i = 0; i < articles.length; i++) {
+      //   for (var j = 0; j < cartArticlesDetails.length; j++) {
+      //     if (articles[i].id == cartArticlesDetails[j].article.id) {
+      //       articles[i].stock = (articles[i].stock - cartArticlesDetails[j].purchaseArticle.articleQuantity);
+      //     }
+      //   }
+      // }
+
       this.updateArticles(articles);
     }
   }
@@ -135,9 +144,10 @@ export class CartService {
     let cartArticles = this.getCartFromStorage();
     if (cartArticles != null) {
       var total = 0;
-      for (var i = 0; i < cartArticles.length; i++) {
-        total += (cartArticles[i].purchaseArticle.articleQuantity * cartArticles[i].purchaseArticle.articlePriceAtTheMoment);
-      }
+
+      for (const articleByCart of cartArticles) 
+        total += (articleByCart.purchaseArticle.articleQuantity * articleByCart.purchaseArticle.articlePriceAtTheMoment);
+      
       this.total.next(total);
     }
   }

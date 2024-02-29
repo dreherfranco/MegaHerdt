@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Article } from 'src/app/models/Article/Article';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
-import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { CartService } from 'src/app/services/cart/cart.service';
 import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
@@ -14,17 +12,16 @@ import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
   styleUrls: ['./articles-in-offer.component.css']
 })
 export class ArticlesInOfferComponent implements OnInit {
-
-  articles: Article[] = [];
   paginate: Paginate;
-  searchText: string;
   cartArticles: Array<CartArticleDetail>;
-  isLoading: boolean = true;
   brandId: number = 0;
 
+  @Input() searchText: string;
+  @Input() articles: Article[] = [];
+  @Output() uploadCompleted: EventEmitter<Article[]> = new EventEmitter<Article[]>();
+
   constructor(private _articleService: ArticleService, 
-    private _cartService: CartService,
-    private _router: Router) 
+    private _cartService: CartService) 
   { 
     this.paginate = new Paginate(1,6);
     this.searchText = "";
@@ -44,7 +41,6 @@ export class ArticlesInOfferComponent implements OnInit {
       next: result => 
       {
         this.cartArticles=result;
-        this.isLoading = false;
       }
     })
 
@@ -53,8 +49,7 @@ export class ArticlesInOfferComponent implements OnInit {
     })
   }
 
-  loadProducts(){
-    
+  loadProducts(){    
     this._articleService.getArticlesOnOffer().subscribe(
       {
         next: (response) => 
@@ -62,13 +57,7 @@ export class ArticlesInOfferComponent implements OnInit {
           this.articles = response;
           /** Actualiza el stock en los articulos segun los articulos cargados en el carrito */
           this._cartService.setArticles(this.articles);
-
-          if(this.articles.length === 0){
-            AlertService.warningAlertAdvice('¡No hay ofertas disponibles por el momento!')
-            .then((result) => {
-              this._router.navigate(['']);
-            });
-          }
+          this.uploadCompleted.emit(this.articles);
         },
         error: (err) => console.log(err)
       }

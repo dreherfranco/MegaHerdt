@@ -17,9 +17,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
-import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
+import { HomeComponent } from './components/shared/home/home.component';
+import { HeaderComponent } from './components/shared/header/header.component';
+import { FooterComponent } from './components/shared/footer/footer.component';
 import { ArticleListComponent } from './components/articles/article-list/article-list.component';
 import { ArticleItemComponent } from './components/articles/article-item/article-item.component';
 import { RegisterComponent } from './components/users/register/register.component';
@@ -142,6 +142,7 @@ import { ArticlesByBrandComponent } from './components/articles/articles-by-bran
 import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
 import { CartOffcanvaComponent } from './components/cart/cart-offcanva/cart-offcanva.component';
 import { LineDividerComponent } from './components/line-divider/line-divider.component';
+import { MainComponent } from './components/shared/main/main.component';
 
 @NgModule({
   declarations: [
@@ -264,7 +265,8 @@ import { LineDividerComponent } from './components/line-divider/line-divider.com
     ArticlesByBrandComponent,
     ArticlesInOfferComponent,
     CartOffcanvaComponent,
-    LineDividerComponent
+    LineDividerComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

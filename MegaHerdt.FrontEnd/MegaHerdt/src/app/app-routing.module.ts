@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent } from './components/shared/home/home.component';
 import { RegisterComponent } from './components/users/register/register.component';
 import { LoginComponent } from './components/users/login/login.component';
 import { AuthGuardService as AuthGuard } from './services/guard/auth-guard/auth-guard.service';
@@ -44,17 +44,17 @@ import { PurchaseSuccessComponent } from './components/purchase-payments/purchas
 import { PurchaseFailedComponent } from './components/purchase-payments/purchase-failed/purchase-failed.component';
 import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
 import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
-import { ArticlesByCategoryComponent } from './components/articles/articles-by-category/articles-by-category.component';
-import { ArticlesByBrandComponent } from './components/articles/articles-by-brand/articles-by-brand.component';
-import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
+// import { ArticlesByCategoryComponent } from './components/articles/articles-by-category/articles-by-category.component';
+// import { ArticlesByBrandComponent } from './components/articles/articles-by-brand/articles-by-brand.component';
+// import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, data: { type: 'default' } },
   { path: 'register', component: RegisterComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
-  { path: 'articles/articles-by-category/:categoryId', component: ArticlesByCategoryComponent },
-  { path: 'articles/articles-by-brand/:brandId', component: ArticlesByBrandComponent },
-  { path: 'articles/articles-offers', component: ArticlesInOfferComponent },
+  { path: 'articles/articles-by-category/:categoryId', component: HomeComponent, data: { type: 'category' }}, // Lo mando al home, para llamar al componente correspondiente
+  { path: 'articles/articles-by-brand/:brandId', component: HomeComponent, data: { type: 'brand' }},      // Lo mando al home, para llamar al componente correspondiente
+  { path: 'articles/articles-offers', component: HomeComponent, data: { type: 'offer' } },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },

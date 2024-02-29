@@ -1,0 +1,33 @@
+<div class="container" style="min-height: 84vh;">
+    <div *ngIf="isLoading" class="row align-content-center justify-content-center">
+        <mat-progress-spinner s-spinner mode="indeterminate" class="mt-5 mx-auto"></mat-progress-spinner>
+    </div>
+
+    <div *ngIf="!isLoading && bandArticles"  class="row align-content-center justify-content-start">
+        <div class="user-search-container p-2">
+            <div class="d-flex justify-content-between align-items-center">
+            <div class="input-group search-box w-50">
+                <div class="input-group-prepend">
+                <span class="input-group-text search-icon"><i class="bi bi-search"></i></span>
+                </div>
+                <input class="form-control form-control-sm search-input" type="text" [(ngModel)]="searchText" placeholder="Buscar artículos">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <ng-container [ngSwitch]="type" *ngIf="bandArticles">        
+        <app-articles-by-brand *ngSwitchCase="'brand'" (uploadCompleted)="uploadCompleted($event)" [articles]="articles" [searchText]="searchText"></app-articles-by-brand>
+        <app-articles-by-category *ngSwitchCase="'category'" (uploadCompleted)="uploadCompleted($event)" [articles]="articles" [searchText]="searchText"></app-articles-by-category>
+        <app-articles-in-offer *ngSwitchCase="'offer'" (uploadCompleted)="uploadCompleted($event)" [articles]="articles" [searchText]="searchText"></app-articles-in-offer>
+        <app-article-list *ngSwitchDefault (uploadCompleted)="uploadCompleted($event)" [articles]="articles" [searchText]="searchText"></app-article-list>
+    </ng-container>
+
+    <ng-container *ngIf="!bandArticles">
+        <div class="row align-content-center justify-content-center">
+            <div class="col">
+                <h2>No hay articulos.......</h2>
+            </div>
+        </div>
+    </ng-container>
+</div>

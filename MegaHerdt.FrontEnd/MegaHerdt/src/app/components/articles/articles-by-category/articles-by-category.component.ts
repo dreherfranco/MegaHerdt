@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/models/Article/Article';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
@@ -13,12 +13,13 @@ import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
   styleUrls: ['./articles-by-category.component.css']
 })
 export class ArticlesByCategoryComponent implements OnInit {
-  articles: Article[] = [];
   paginate: Paginate;
-  searchText: string;
   cartArticles: Array<CartArticleDetail>;
-  isLoading: boolean = true;
   categoryId: number = 0;
+  
+  @Input() searchText: string;
+  @Input() articles: Article[] = [];
+  @Output() uploadCompleted: EventEmitter<Article[]> = new EventEmitter<Article[]>();
 
   constructor(private _articleService: ArticleService, 
     private _cartService: CartService,
@@ -34,10 +35,10 @@ export class ArticlesByCategoryComponent implements OnInit {
     this.loadCartArticlesAndDetails();
   }
 
-   /**
+  /**
    * Se subscribe a params para escuchar cambios de brandId en la url
    */
-   subscribeParams(){
+  subscribeParams(){
     this._route.params.subscribe(params => {
       const numero = +params['categoryId']; // Convierte el valor en número
       if (!isNaN(numero)) {
@@ -59,7 +60,6 @@ export class ArticlesByCategoryComponent implements OnInit {
       next: result => 
       {
         this.cartArticles=result;
-        this.isLoading = false;
       }
     })
 
@@ -77,6 +77,7 @@ export class ArticlesByCategoryComponent implements OnInit {
           this.articles = response;
           /** Actualiza el stock en los articulos segun los articulos cargados en el carrito */
           this._cartService.setArticles(this.articles);
+          this.uploadCompleted.emit(this.articles);
         },
         error: (err) => console.log(err)
       }

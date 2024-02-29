@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ArticleService} from '../../../services/articles/article.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ArticleService } from '../../../services/articles/article.service';
 import { Article } from '../../../models/Article/Article';
 import { Paginate } from '../../../models/Paginate/Paginate';
 import { CartService } from 'src/app/services/cart/cart.service';
@@ -12,14 +12,16 @@ import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
   styleUrls: ['./article-list.component.css']
 })
 export class ArticleListComponent implements OnInit {
-  articles: Article[] = [];
   paginate: Paginate;
-  searchText: string;
   cartArticles: Array<CartArticleDetail>;
-  isLoading: boolean = true;
   paginationRange: number = 8;
 
-  constructor(private _articleService: ArticleService, private _cartService: CartService) 
+  @Input() articles: Article[] = [];
+  @Input() searchText: string;
+  @Output() uploadCompleted: EventEmitter<Article[]> = new EventEmitter<Article[]>();
+
+  constructor(private _articleService: ArticleService, 
+    private _cartService: CartService) 
   { 
     this.paginate = new Paginate(1,this.paginationRange);
     this.searchText = "";
@@ -36,8 +38,7 @@ export class ArticleListComponent implements OnInit {
     this._cartService.cartArticlesDetails.subscribe({
       next: result => 
       {
-        this.cartArticles=result;
-        this.isLoading = false;
+        this.cartArticles=result;               
       }
     })
     this._cartService.articles.subscribe({
@@ -53,6 +54,7 @@ export class ArticleListComponent implements OnInit {
           this.articles = response;
           /** Actualiza el stock en los articulos segun los articulos cargados en el carrito */
           this._cartService.setArticles(this.articles);
+          this.uploadCompleted.emit(this.articles);
         },
         error: (err) => console.log(err)
       }
