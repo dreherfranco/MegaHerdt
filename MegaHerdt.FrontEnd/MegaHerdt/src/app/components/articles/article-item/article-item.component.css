@@ -18,7 +18,7 @@
 }
 
 .card-container{
-    height: 20.5rem !important;
+    height: 22rem !important;
     width: 16rem !important;
 }
 
@@ -38,7 +38,19 @@
     align-self: center !important; 
 }
 
+.stock-pos{
+    margin: 0rem 0.5rem;
+    position: absolute;
+    bottom: 3rem;  
+    align-self: center !important; 
+}
+
 .data-user{
     font-weight: bold !important;
     font-size: x-large !important;
+}
+
+.data-offer{
+    font-weight: bold !important;
+    font-size: large !important;
 }

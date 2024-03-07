@@ -6,20 +6,23 @@
   <div class="card-body">
     <span *ngIf="isOnOffer(article)" class="bg-primary rounded text-white p-1">ARTICULO EN OFERTA</span>
     <p *ngIf="!isOnOffer(article)" class="card-text data-user m-1 text-dark font-weight-bold">{{ formatoArgentino(article.unitValue)}}</p>
-    <div *ngIf="isOnOffer(article)" class="m-2">
-      <span class="card-text data-user text-dark font-weight-bold">{{formatoArgentino(article.unitValueWithOffer)}}</span>
+    <div *ngIf="isOnOffer(article)" class="mx-1 my-2">
+      <span class="card-text data-offer text-dark font-weight-bold">{{formatoArgentino(article.unitValueWithOffer)}}</span>
       <i class="bi bi-arrow-left p-2"></i>
       <span class="card-text line-through text-danger">{{formatoArgentino(article.unitValue)}} </span>
     </div>
     <div [title]="article.name" class="card-article-container text-dark">
       <span class="data-article"> {{article.name}}</span>
     </div>
-    <div class="card-article-container text-dark">
+  
+    <div class="stock-pos card-article-container text-dark">
       <span class="data-article" [ngStyle]="getStyle()">{{article.stock}} unidades</span>
     </div>
     <button class="btn-pos btn btn-outline-primary" (click)="addToCart()" *ngIf="article.stock > 0">
       <i class="bi bi-cart-plus-fill"></i> Agregar al carrito</button>
     <span class="btn-pos btn btn-danger" *ngIf="article.stock == 0">
-      Sin stock</span>
+      Sin stock
+    </span>
+        
   </div>
 </div>

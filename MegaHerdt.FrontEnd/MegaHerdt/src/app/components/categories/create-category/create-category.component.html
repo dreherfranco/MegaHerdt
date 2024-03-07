@@ -1,11 +1,8 @@
 <h1 class="text-center">Crear categoría</h1>
 <form #categoryForm="ngForm" (ngSubmit)="onSubmit(categoryForm)" class="w-50 mx-auto">
-  <div class="form-group mb-3">
-    <label for="name"><b>Nombre: </b></label>
+  <div class="form-group mb-3 p-2 d-flex">
     <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre de la categoria" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="category.name" required minlength="3">
-    <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de categoría valido</span>
-   <p>
-     <input type="submit" class="btn btn-primary mt-3" [disabled]="categoryForm.invalid" value="Crear"/>
-   </p> 
+    <button type="submit" class="btn btn-primary ms-1" [disabled]="categoryForm.invalid">Crear</button>
   </div>  
+  <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre de categoría valido</span>
 </form>
