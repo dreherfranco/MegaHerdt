@@ -143,6 +143,8 @@ import { ArticlesInOfferComponent } from './components/articles/articles-in-offe
 import { CartOffcanvaComponent } from './components/cart/cart-offcanva/cart-offcanva.component';
 import { LineDividerComponent } from './components/line-divider/line-divider.component';
 import { MainComponent } from './components/shared/main/main.component';
+import { ProvisionStockDiscountComponent } from './components/articles-provisions/provision-stock-discount/provision-stock-discount.component';
+import { DialogAddProvisionItemComponent } from './components/articles-provisions/dialog-add-provision-item/dialog-add-provision-item.component';
 
 @NgModule({
   declarations: [
@@ -266,7 +268,9 @@ import { MainComponent } from './components/shared/main/main.component';
     ArticlesInOfferComponent,
     CartOffcanvaComponent,
     LineDividerComponent,
-    MainComponent
+    MainComponent,
+    ProvisionStockDiscountComponent,
+    DialogAddProvisionItemComponent
   ],
   imports: [
     BrowserModule,

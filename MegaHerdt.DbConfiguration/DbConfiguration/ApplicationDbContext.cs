@@ -24,6 +24,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         public DbSet<ArticleOffer> ArticlesOffers { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ArticleProvider> ArticlesProviders { get; set; }
+        public DbSet<ArticleProviderItem> ArticleProviderItems { get; set; }
         public DbSet<ArticleProviderSerialNumber> ArticlesProviderSerialNumbers { get; set; }
         public DbSet<Purchase> Purchases { get; set;}
         public DbSet<PurchaseClaim> PurchasesClaims { get; set; }

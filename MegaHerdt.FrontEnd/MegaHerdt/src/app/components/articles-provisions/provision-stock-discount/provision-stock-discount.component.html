@@ -1,0 +1,96 @@
+<h1 class="text-center">Agregar una provisión</h1>
+<form #provisionForm="ngForm" (ngSubmit)="onSubmit(provisionForm)" class="w-75 mx-auto">
+    <!-- <div class="form-group mb-3">
+        <label for="article"><b>(*)Artículo: </b></label>
+        <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProvider.articleId">
+            <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">
+                {{article.name}}
+            </option>
+        </select>
+    </div> -->
+
+    <div class="row">
+        <!-- <div class="form-group mb-3 col-sm-4 p-2">
+            <label for="articleQuantity" class="mb-1 data-user">(*)Cantidad:</label>
+            <input id="articleQuantity" name="articleQuantity" class="form-control" type="number" min="0"
+                #articleQuantity="ngModel" [(ngModel)]="articleProvider.articleQuantity" required>
+            <span *ngIf="articleQuantity.touched && !articleQuantity.valid" class="text-danger">Ingrese un numero
+                correcto</span>
+        </div> -->
+
+        <div class="form-group mb-3 col-sm-8 p-2">
+            <label class="mb-1 data-user">(*)Elija una opción:</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="true"
+                    checked (click)="addStock()">
+                <label class="form-check-label" for="exampleRadios1">
+                    Agregar stock
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" value="false" name="exampleRadios" id="exampleRadios2"
+                    (click)="discountStock()">
+                <label class="form-check-label" for="exampleRadios2">
+                    Descontar stock
+                </label>
+            </div>
+            <input [disabled]="articleProvider.add" [(ngModel)]="articleProvider.discountReason" id="discountReason"
+                name="discountReason" #discountReason="ngModel" class="form-control" placeholder="Motivo descuento"
+                type="text" />
+        </div>
+    </div>
+
+    <!-- <div class="form-group mb-3 row">
+        <label for="serialNumber"><b>Agregar número de serie: </b></label>
+        <div class="col">
+            <input [(ngModel)]="serialNumberToAdd" id="serialNumber" name="serialNumber" #serialNumber="ngModel"
+                class="form-control" placeholder="Ingrese un numero de serie" type="text" 
+                [disabled]="articleProvider.articleQuantity <= articleProvider.serialNumbers.length"/>
+        </div>
+        <a class="btn btn-primary col-sm-2" (click)="addSerialNumber()" title="Agregar">
+            <i class="bi bi-plus-circle-fill"></i>
+        </a>
+    </div> -->
+   
+    <!-- <div class="form-group mb-3">
+        <div class="btn-group" dropdown *ngIf="articleProvider.serialNumbers.length !== 0">
+            <button id="button-basic" dropdownToggle type="button"
+                class="btn p-2 border alert alert-primary text-center dropdown-toggle"
+                aria-controls="dropdown-basic">
+                Ver números de serie agregados <span class="caret"></span>
+            </button>
+            <ul id="dropdown-basic" *dropdownMenu class="serial-number-list dropdown-menu m-0 p-0" role="menu"
+                aria-labelledby="button-basic">
+                <li *ngFor="let serialNumber of articleProvider.serialNumbers" class="dropdown-item border border-dark alert alert-primary m-0"
+                    role="menuitem">
+                    <b>S/N: {{ serialNumber }}</b>
+                </li>
+            </ul>
+        </div>
+    </div> -->
+    
+    <div class="form-group mb-3">
+        <label for="provider"><b>(*)Proveedor: </b></label>
+        <select class="form-select data-user" name="selectProvider" [(ngModel)]="articleProvider.providerId">
+            <option class="data-user" name="provider" *ngFor="let provider of providers" [ngValue]="provider.id">
+                {{provider.email}}
+            </option>
+        </select>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="provisionDate"><b>(*)Fecha de provisión: </b></label>
+        <input id="provisionDate" name="provisionDate" class="form-control" type="date" #provisionDate="ngModel"
+            [(ngModel)]="articleProvider.provisionDate" required>
+        <span *ngIf="provisionDate.touched && !provisionDate.valid" class="text-danger">Ingrese una fecha válida</span>
+    </div>
+
+    <div class="form-group mb-3">
+        <label for="voucher"><b>(*)Comprobante: </b></label>
+        <input id="voucher" name="voucher" class="form-control" type="file" (change)="onChange($event)">
+    </div>
+
+    <p>
+        <input type="submit" class="btn btn-primary mt-3" [disabled]="provisionForm.invalid" value="Crear" />
+    </p>
+</form>

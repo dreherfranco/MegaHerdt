@@ -1,27 +1,23 @@
-import { ArticleName } from "../Article/ArticleName";
-import { ArticleProviderSerialNumber } from "../ArticleProviderSerialNumber/ArticleProviderSerialNumber";
 import { Provider } from "../Provider/Provider";
+import { ArticleProviderItem } from "./ArticleProviderItem";
 
-export class ArticleProvider{
+export class ArticleProvider
+{
     id: number;
     provider: Provider;
-    article: ArticleName;
     voucher: string;
     provisionDate: Date;
-    articleQuantity: number;
     add: boolean;
     discountReason: string;
-    serialNumbers: Array<ArticleProviderSerialNumber>;
-    constructor(id: number, provider: Provider, article: ArticleName, voucher: string,provisionDate: Date,articleQuantity: number)
+    articlesItems: Array<ArticleProviderItem>;
+    constructor(id: number, provider: Provider,  voucher: string,provisionDate: Date)
     {
         this.id = id;
         this.provider = provider;
-        this.article = article;
         this.voucher = voucher;
         this.provisionDate = provisionDate;
-        this.articleQuantity = articleQuantity;
         this.add = true;
         this.discountReason='';
-        this.serialNumbers = [];
+        this.articlesItems = [];
     }
 }

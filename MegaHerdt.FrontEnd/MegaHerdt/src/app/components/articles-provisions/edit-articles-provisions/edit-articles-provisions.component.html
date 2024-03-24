@@ -12,12 +12,9 @@
     <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
-                <th scope="col">Artículo</th>
-                <th mat-sort-header="articleQuantity" scope="col">Cantidad proveída</th>
                 <th mat-sort-header="providerEmail" scope="col">Proveedor</th>
                 <th mat-sort-header="provisionDate" scope="col">Fecha provisión</th>
                 <th mat-sort-header="operation" scope="col">Operación</th>
-                <th scope="col">Números de serie</th>
                 <th scope="col">Comprobante</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -32,16 +29,6 @@
                 currentPage:this.paginate.page
             };
             let i = index">
-                <th>
-                    <span class="data-user" disabled>
-                        {{articleProvider.article.name}}
-                    </span>
-                </th>
-                <td>
-                    <span class="data-user" disabled>
-                        {{articleProvider.articleQuantity}}
-                    </span>
-                </td>
                 <td>
                     <span class="data-user" disabled>
                         {{articleProvider.provider.email}}
@@ -62,11 +49,7 @@
                     </span>
 
                 </td>
-                <td>
-                    <span *ngFor="let serialNumber of articleProvider.serialNumbers" class="data-user alert-success">
-                        {{serialNumber.serialNumber}}
-                    </span>
-                </td>
+
                 <td>
                    
                     <a href="{{articleProvider.voucher}}" class="form-control voucher data-user" target="_blank">

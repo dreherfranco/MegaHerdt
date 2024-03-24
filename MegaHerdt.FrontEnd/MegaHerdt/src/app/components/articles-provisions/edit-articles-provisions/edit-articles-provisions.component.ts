@@ -55,8 +55,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
   }
 
   mapperArticleProvider(articleProvider: ArticleProvider){
-    return new ArticleProviderUpdate(articleProvider.id,articleProvider.provider.id,
-      articleProvider.article.id, articleProvider.provisionDate, articleProvider.articleQuantity);
+    return new ArticleProviderUpdate(articleProvider.id,articleProvider.provider.id,articleProvider.provisionDate);
   }
 
   update(articleProvider: ArticleProvider){
@@ -153,8 +152,6 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this.sortedData = data.sort((a, b) => {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
-        case 'articleQuantity':
-          return compare(a.articleQuantity, b.articleQuantity, isAsc);
         case 'providerEmail':
           return compare(a.provider.email, b.provider.email, isAsc);
         case 'provisionDate':

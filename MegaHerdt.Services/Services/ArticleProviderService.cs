@@ -35,14 +35,23 @@ namespace MegaHerdt.Services.Services
 
         public async Task AddProvision(ArticleProvider articleProvider)
         {
-            Expression<Func<Article, bool>> filter = x => x.Id == articleProvider.ArticleId;
-            await this._articleHelper.AddStock(filter, articleProvider.ArticleQuantity);
+            // MEJORAR ESTA LOGICA, QUE NO SE HAGA EL FOREACH EN ESTE TRAMO.
+            foreach (var item in articleProvider.ArticlesItems)
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == item.ArticleId;
+                await this._articleHelper.AddStock(filter, item.ArticleQuantity);
+            }
+           
         }
 
         public async Task DiscountProvision(ArticleProvider articleProvider)
         {
-            Expression<Func<Article, bool>> filter = x => x.Id == articleProvider.ArticleId;
-            await this._articleHelper.DiscountStock(filter, articleProvider.ArticleQuantity);
+            // MEJORAR ESTA LOGICA, QUE NO SE HAGA EL FOREACH EN ESTE TRAMO.
+            foreach (var item in articleProvider.ArticlesItems)
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == item.ArticleId;
+                await this._articleHelper.DiscountStock(filter, item.ArticleQuantity);
+            }
         }
     }
 }
