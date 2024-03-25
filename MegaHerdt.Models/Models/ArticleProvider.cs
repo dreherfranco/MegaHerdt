@@ -39,6 +39,10 @@ namespace MegaHerdt.Models.Models
                 //    ErrorMessages.Add("El comprobante es obligatorio.");
                 //}
 
+                if (!ArticlesItems.Any())
+                {
+                    ErrorMessages.Add("La provisión debe contener al menos un ítem.");
+                }
             }
 
             return ErrorMessages.Any();
