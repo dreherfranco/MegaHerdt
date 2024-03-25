@@ -32,19 +32,10 @@ export class CreateArticleProvisionComponent implements OnInit {
   {
     this.providers = new Array<Provider>();
     this.articleProvider = new ArticleProviderCreation(0, new File(new Array, ''), new Date(), true);
-    this.updateArticleProvidersInterval();
   }
 
   ngOnInit(): void {
     this.loadProviders();
-  }
-
-  updateArticleProvidersInterval(){
-    setInterval(
-      ()=>{
-        this._articleProvisionService.updateArticleProviders();
-      },1000
-    );
   }
 
   onSubmit(form: any) {
