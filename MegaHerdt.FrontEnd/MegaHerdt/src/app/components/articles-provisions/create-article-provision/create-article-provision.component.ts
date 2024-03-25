@@ -11,6 +11,8 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogAddProvisionItemComponent } from '../dialog-add-provision-item/dialog-add-provision-item.component';
 import { ArticleProviderItem } from 'src/app/models/ArticleProvider/ArticleProviderItem';
 import { ArticleProviderVoucherUpdate } from 'src/app/models/ArticleProvider/ArticleProviderVoucherUpdate';
+import { ArticleProviderSerialNumber } from 'src/app/models/ArticleProviderSerialNumber/ArticleProviderSerialNumber';
+import { DialogShowSerialNumbersComponent } from '../dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 
 @Component({
   selector: 'app-create-article-provision',
@@ -48,7 +50,12 @@ export class CreateArticleProvisionComponent implements OnInit {
   onSubmit(form: any) {
     if(this.articleProvider.add){ this.articleProvider.discountReason = '#'; }
 
-    this._articleProvisionService.create(this.articleProvider, this._storageService.getTokenValue()).subscribe({
+    var newArticleProvider = this.articleProvider;
+    for (var element of newArticleProvider.articlesItems) {
+      element.article = null;
+    }
+
+    this._articleProvisionService.create(newArticleProvider, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           AlertService.errorAlert('¡Error al intentar crear la Provisión!');
@@ -72,17 +79,7 @@ export class CreateArticleProvisionComponent implements OnInit {
         console.log(err)
       }
     });
-    // setTimeout(
-    //   () => {
-    //     this._articleProvisionService.updateArticleProviders();
 
-    //     AlertService.successAlert('¡Provisión creada correctamente!').then((result) => {
-    //       if (result.isConfirmed) {     
-    //           // Limpia el formulario.           
-    //           window.location.reload();
-    //       }
-    //     });
-    //   }, 600)
   }
 
   loadProviders() {
@@ -118,11 +115,22 @@ export class CreateArticleProvisionComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: ArticleProviderItem) => {
       if(result != undefined){
-        console.log(result);
-        console.log(result.articleQuantity*result.articleQuantity);
         this.articleProvider.articlesItems.push(result);
       }
     });
   }
   
+
+  showSerialNumbers(serialNumbers: ArticleProviderSerialNumber[]){     
+    const dialogRef = this.dialog.open(DialogShowSerialNumbersComponent,
+      {
+        data: serialNumbers,
+        height: '300px',
+        width: '300px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      /**logica para aplicar luego de cerrar el dialogo */
+    });
+  }
 }

@@ -5,6 +5,7 @@ import { ArticleProvider } from "./ArticleProvider";
 export class ArticleProviderItem
 {
     id: number;
+    article: ArticleName | null;
     articleId: number;
     purchasePrice: number;
     articleQuantity: number;
@@ -13,6 +14,7 @@ export class ArticleProviderItem
     {
         this.id = 0;
         this.purchasePrice = 0;
+        this.article = null;
         this.articleQuantity = 0;
         this.serialNumbers = [];
         this.articleId = 0;

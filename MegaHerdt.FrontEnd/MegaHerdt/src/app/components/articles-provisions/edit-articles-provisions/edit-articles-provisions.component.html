@@ -15,6 +15,7 @@
                 <th mat-sort-header="providerEmail" scope="col">Proveedor</th>
                 <th mat-sort-header="provisionDate" scope="col">Fecha provisión</th>
                 <th mat-sort-header="operation" scope="col">Operación</th>
+                <th scope="col">Articulos</th>
                 <th scope="col">Comprobante</th>
                 <th scope="col"></th>
                 <th scope="col"></th>
@@ -50,8 +51,15 @@
 
                 </td>
 
+                <th>
+                    <span *ngIf="articleProvider.articlesItems.length == 0" class="text-secondary"> No contiene
+                        articulos</span>
+                    <p *ngFor="let item of articleProvider.articlesItems" class="data-user">
+                        {{ item.article.name }}
+                    </p>
+                </th>
+
                 <td>
-                   
                     <a href="{{articleProvider.voucher}}" class="form-control voucher data-user" target="_blank">
                         <i class="bi bi-card-image"></i> Ver comprobante
                      </a>

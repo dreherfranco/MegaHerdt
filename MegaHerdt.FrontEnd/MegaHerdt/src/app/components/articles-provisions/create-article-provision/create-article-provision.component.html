@@ -35,7 +35,7 @@
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">Id articulo (testing)</th>
+              <th scope="col">Artículo</th>
               <th scope="col">Cantidad</th>
               <th scope="col">Precio de Compra</th>
               <th scope="col">Total</th>
@@ -46,7 +46,7 @@
             <tr *ngFor="let item of articleProvider.articlesItems; 
                 let i = index">
               <td>
-                <span class="data-user">{{ item.articleId }}</span>
+                <span class="data-user">{{ item.article?.name }}</span>
               </td>
               <td>
                 <span class="data-user">{{ item.articleQuantity }}</span>
@@ -58,7 +58,9 @@
                 <span class="data-user">{{ item.articleQuantity * item.purchasePrice }}</span>
               </td>
               <td>
-                <span class="data-user">Boton para mostrar todos los nros de serie</span>
+                <button type="button" class="btn btn-primary col-sm-12" (click)="showSerialNumbers(item.serialNumbers)" title="Editar">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
               </td>
             </tr>
           </tbody>

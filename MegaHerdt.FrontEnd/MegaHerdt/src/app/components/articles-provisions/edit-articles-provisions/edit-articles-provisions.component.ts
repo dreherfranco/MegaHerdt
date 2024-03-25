@@ -118,13 +118,8 @@ export class EditArticlesProvisionsComponent implements OnInit {
       error: (err) => {
         console.log(err)
       }
-  });
-  /*  this._articleProvisionService.articlesProviders.subscribe({
-      next: (res) =>{ 
-        this.articlesProviders = res;
-        this.sortedData = this.articlesProviders.slice();
-      }
-    });*/
+    });
+ 
   }
 
   onChange(fileInput: any, articleProvider: ArticleProvider){

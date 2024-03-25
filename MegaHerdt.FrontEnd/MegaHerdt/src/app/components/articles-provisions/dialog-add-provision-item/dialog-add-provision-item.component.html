@@ -7,7 +7,7 @@
 
         <div class="form-group mb-3">
             <label for="article"><b>(*)Artículo: </b></label>
-            <select class="form-select data-user" name="selectArticle" [(ngModel)]="articleProviderItem.articleId">
+            <select (change)="setSelectedArticle($event)" class="form-select data-user" name="selectArticle" [(ngModel)]="articleProviderItem.articleId">
                 <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">
                     {{article.name}}
                 </option>
@@ -57,7 +57,7 @@
                     aria-labelledby="button-basic">
                     <li *ngFor="let serialNumber of articleProviderItem.serialNumbers" class="dropdown-item border border-dark alert alert-primary m-0"
                         role="menuitem">
-                        <b>S/N: {{ serialNumber }}</b>
+                        <b>S/N: {{ serialNumber.serialNumber }}</b>
                     </li>
                 </ul>
             </div>

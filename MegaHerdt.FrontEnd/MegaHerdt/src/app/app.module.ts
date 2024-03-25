@@ -145,6 +145,7 @@ import { LineDividerComponent } from './components/line-divider/line-divider.com
 import { MainComponent } from './components/shared/main/main.component';
 import { ProvisionStockDiscountComponent } from './components/articles-provisions/provision-stock-discount/provision-stock-discount.component';
 import { DialogAddProvisionItemComponent } from './components/articles-provisions/dialog-add-provision-item/dialog-add-provision-item.component';
+import { DialogShowSerialNumbersComponent } from './components/articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 
 @NgModule({
   declarations: [
@@ -270,7 +271,8 @@ import { DialogAddProvisionItemComponent } from './components/articles-provision
     LineDividerComponent,
     MainComponent,
     ProvisionStockDiscountComponent,
-    DialogAddProvisionItemComponent
+    DialogAddProvisionItemComponent,
+    DialogShowSerialNumbersComponent
   ],
   imports: [
     BrowserModule,

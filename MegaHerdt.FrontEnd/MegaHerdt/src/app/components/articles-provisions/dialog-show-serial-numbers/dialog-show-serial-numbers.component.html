@@ -1,0 +1,7 @@
+<div class="modal-header d-flex justify-content-end">
+    <button type="button" class="btn-close" (click)="closeModal()" title="Cerrar"></button>
+</div>
+
+<p *ngFor="let item of data" class="data-user">
+    {{ item.serialNumber }}
+</p>
