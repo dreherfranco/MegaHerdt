@@ -5,16 +5,10 @@ namespace MegaHerdt.API.DTOs.ArticleProvider
 {
     public class ArticleProviderCreationDTO
     {
-        [Required]
-        public int ProviderId { get; set; }
-        //[Required]
-        //public int ArticleId { get; set; }
-       // public IFormFile Voucher { get; set; }
-        public DateTime ProvisionDate { get; set; }
-        //public int ArticleQuantity { get; set; }
+        public int? ProviderId { get; set; }
+        public DateTime ProvisionDate { get; set; } = DateTime.UtcNow;
         public bool Add { get; set; }
-        public string DiscountReason { get; set; }
+        public string DiscountReason { get; set; } = string.Empty;
         public List<ArticleProviderItemDTO> ArticlesItems { get; set; } = null!;
-        // public List<string> ?SerialNumbers { get; set; }
     }
 }

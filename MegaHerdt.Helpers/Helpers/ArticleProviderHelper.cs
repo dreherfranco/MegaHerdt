@@ -23,6 +23,19 @@ namespace MegaHerdt.Helpers.Helpers
                     .ThenInclude(x => x.Article)
                 .OrderByDescending(x => x.ProvisionDate);
         }
-     
+
+        public override Task<ArticleProvider> Create(ArticleProvider entity)
+        {
+            if (!entity.IsBroken())
+            {
+                return base.Create(entity);
+            }
+            else
+            {
+                var errorMessage = string.Join("\n", entity.ErrorMessages);
+                throw new Exception(errorMessage);
+            }
+        }
+
     }
 }

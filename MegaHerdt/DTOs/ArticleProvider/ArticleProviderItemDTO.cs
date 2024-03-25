@@ -16,7 +16,6 @@ namespace MegaHerdt.API.DTOs.ArticleProvider
         /// </summary>
         public float PurchasePrice { get; set; }
 
-        //public ArticleProviderDTO? Provision { get; set; }
         //  REVISAR:
         //  ¿Tiene que ser string o del tipo ArticleProviderSerialNumberDTO? 
         public List<ArticleProviderSerialNumberDTO> SerialNumbers { get; set; } = new();

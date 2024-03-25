@@ -11,5 +11,10 @@ namespace MegaHerdt.Models.Models
         public string? SerialNumber { get; set; }
         [ForeignKey("ArticleProviderItem")]
         public int ArticleProviderItemId { get; set; }
+
+        /// <summary>
+        /// Indica si el numero de serie se encuentra en stock.
+        /// </summary>
+        public bool EnStock { get; set; } = true;
     }
 }

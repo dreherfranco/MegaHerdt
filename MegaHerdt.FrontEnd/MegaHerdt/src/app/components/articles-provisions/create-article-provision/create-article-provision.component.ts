@@ -49,7 +49,7 @@ export class CreateArticleProvisionComponent implements OnInit {
     this._articleProvisionService.create(newArticleProvider, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          AlertService.errorAlert('¡Error al intentar crear la Provisión!');
+          AlertService.errorAlert('¡Error al intentar crear la Provisión!', response.error);
         } else {
           this._articleProvisionService.updateArticleProviders();
 
@@ -66,7 +66,7 @@ export class CreateArticleProvisionComponent implements OnInit {
         }
       },
       error: (err) => {
-        AlertService.errorAlert('¡Error al intentar crear la Provisión!');
+        AlertService.errorAlert('¡Error al intentar crear la Provisión!', err.error.message);
         console.log(err)
       }
     });

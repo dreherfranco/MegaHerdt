@@ -85,7 +85,7 @@ namespace MegaHerdt.API.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message, status = 400 });
             }
         }
 
