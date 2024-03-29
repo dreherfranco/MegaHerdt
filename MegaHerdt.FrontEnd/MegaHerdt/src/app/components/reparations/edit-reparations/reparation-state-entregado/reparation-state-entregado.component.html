@@ -13,6 +13,7 @@
                 <th scope="col">Artículos a utilizar</th>
                 <th mat-sort-header="totalArticleAmount" scope="col">Monto total artículos</th>
                 <th mat-sort-header="total" scope="col">Total</th>
+                <th mat-sort-header="facturada" scope="col">Facturada</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -61,6 +62,10 @@
                 </th>
                 <th>
                     <span class="data-user">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
+                </th> 
+                <th>
+                    <span class="data-user" *ngIf="reparation.facturada">Si</span>
+                    <span class="data-user" *ngIf="!reparation.facturada">No</span>
                 </th> 
                 <td>
                     <button class="btn btn-primary col-sm-12" title="Editar" (click)="openDialogUpdate(reparation)"> 

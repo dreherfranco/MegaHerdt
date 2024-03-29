@@ -63,7 +63,7 @@ export class ReparationStateREPARADOComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation) {
-    AlertService.warningAlert('¿Seguro que quieres pasar al estado ENTREGADO?')
+    AlertService.warningAlert('¿Seguro que quieres pasar al estado PAGADO?')
     .then((result) => {
       if (result.isConfirmed) {     
           this.update(reparation);
@@ -101,7 +101,7 @@ export class ReparationStateREPARADOComponent implements OnInit {
           .then((result) => {
             this._router.navigate([
               '/administrate/administrate-reparations/edit', 
-              ReparationStatesEnum.ENTREGADO
+              ReparationStatesEnum.PAGADO
             ]);
           });
         }

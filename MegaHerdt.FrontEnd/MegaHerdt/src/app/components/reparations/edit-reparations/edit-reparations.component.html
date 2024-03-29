@@ -30,11 +30,11 @@
         <option class="data-user" [ngValue]="this.reparationStatesEnum.REPARADO">
           Reparado
         </option>
-        <option class="data-user" [ngValue]="this.reparationStatesEnum.ENTREGADO">
-          Entregado
-        </option>
         <option class="data-user" [ngValue]="this.reparationStatesEnum.PAGADO">
           Pagado
+        </option>
+        <option class="data-user" [ngValue]="this.reparationStatesEnum.ENTREGADO">
+          Entregado
         </option>
         <option class="data-user" [ngValue]="this.reparationStatesEnum.CANCELADO">
           Cancelado
@@ -65,10 +65,10 @@
   </app-reparation-state-en-reparacion>
   <app-reparation-state-reparado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.REPARADO">
   </app-reparation-state-reparado>
-  <app-reparation-state-entregado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.ENTREGADO">
-  </app-reparation-state-entregado>
   <app-reparation-state-pagado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.PAGADO">
   </app-reparation-state-pagado>
+  <app-reparation-state-entregado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.ENTREGADO">
+  </app-reparation-state-entregado>
   <app-reparation-state-cancelado [searchText]="searchText" *ngIf="this.reparationStateSelected === this.reparationStatesEnum.CANCELADO">
   </app-reparation-state-cancelado>
 </div>
