@@ -21,10 +21,13 @@ namespace MegaHerdt.Helpers.Helpers
         {
             try
             {
+                // Redondear el monto, porque sino falla la transacción.
+                var amountNormalized = decimal.Round(purchasePaymentData.Transaction_Amount.GetValueOrDefault(0));
+
                 // Construyo la Request para mandar a la API de MercadoPago y crear el pago.
                 var paymentRequest = new PaymentCreateRequest
                 {
-                    TransactionAmount = purchasePaymentData.Transaction_Amount,
+                    TransactionAmount = amountNormalized,
                     Token = purchasePaymentData.Token,
                     Description = purchasePaymentData.Description,
                     Installments = purchasePaymentData.Installments,
