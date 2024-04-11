@@ -14,7 +14,8 @@
                 <tr>
                     <th mat-sort-header="date" scope="col">Fecha</th>
                     <th scope="col">Articulos</th>
-                    <th scope="col">Envio</th>
+                    <th scope="col">Estado</th>
+                    <!-- <th scope="col">Envio</th> -->
                     <th scope="col">Reclamar</th>
                 </tr>
             </thead>
@@ -41,7 +42,11 @@
                             </button>
                         </p>
                     </th>
+
                     <th>
+                        <span class="data-user">{{getPurchaseState(purchase.state)}} </span>
+                    </th>
+                    <!-- <th>
                         <span *ngIf="purchase.shipment == null" class="text-secondary">
                             Esta compra no posee envío
                         </span>
@@ -58,7 +63,7 @@
                                 <p class="row"> URL de seguimiento del envio N°: {{purchase.shipment.trackingNumber}}</p>
                             </a>
                         </div>
-                    </th>
+                    </th> -->
                     <th>
                         <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']">
                             <i class="bi bi-exclamation-circle-fill"></i>

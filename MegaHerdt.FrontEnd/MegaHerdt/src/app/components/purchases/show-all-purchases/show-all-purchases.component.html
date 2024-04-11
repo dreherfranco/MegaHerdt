@@ -6,7 +6,8 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Email cliente</th>
                     <th scope="col">Articulos</th>
-                    <th scope="col">Envio</th>
+                    <th scope="col">Estado</th>
+                    <!-- <th scope="col">Envio</th> -->
                     <th scope="col">Agregar Envio</th>
                 </tr>
             </thead>
@@ -26,10 +27,20 @@
                         <span *ngIf="purchase.purchasesArticles.length == 0" class="text-secondary"> No contiene
                             articulos</span>
                         <p *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
-                            {{ purchaseArticle.article.name }}
-                        </p>
+                            {{ purchaseArticle.article.name }} x {{ purchaseArticle.articleQuantity }}
+                             <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
+                         <button type="button" class="btn btn-primary col-sm-2" 
+                                (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
+                                title="Ver numeros de serie">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        </p> 
                     </th>
+
                     <th>
+                        <span class="data-user">{{getPurchaseState(purchase.state)}} </span>
+                    </th>
+                    <!-- <th>
                         <span *ngIf="purchase.shipment == null" class="text-secondary">
                             Esta compra no posee envío
                         </span>
@@ -49,7 +60,7 @@
 
                            <b> Monto: </b> {{ purchase.shipment.amount }}
                         </span>
-                    </th>
+                    </th> -->
                     <th>
                         <button *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" 
                              class="btn btn-primary" 

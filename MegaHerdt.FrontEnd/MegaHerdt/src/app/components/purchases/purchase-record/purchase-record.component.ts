@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
-import { Purchase } from 'src/app/models/Purchase/Purchase';
+import { Purchase, PurchaseState } from 'src/app/models/Purchase/Purchase';
 import { PurchaseArticleSerialNumber } from 'src/app/models/PurchaseArticleSerialNumber/PurchaseArticleSerialNumber';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
@@ -60,6 +60,10 @@ export class PurchaseRecordComponent implements OnInit {
     });
   }
 
+  getPurchaseState(state: number): string {
+    return Purchase.getPurchaseStateName(state);
+ }
+  
   generatePDF() {
     PDFGenerator.generatePDF(this.content);
   }

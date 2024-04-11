@@ -9,7 +9,7 @@ export enum PurchaseState {
     Paid = 2,
     Delivered = 3
   }
-
+  
 export class Purchase{
     id: number;
     date: Date;
@@ -19,6 +19,7 @@ export class Purchase{
     state: PurchaseState;
     purchasesArticles: Array<PurchaseArticle>;
     purchasesClaims: Array<PurchaseClaimDetail>;
+
     constructor()
     {
         this.id = 0;
@@ -29,5 +30,30 @@ export class Purchase{
         this.state = PurchaseState.Reserved;
         this.purchasesArticles = [];
         this.purchasesClaims = [];
+    }
+
+    static getPurchaseStateName(state: number): string {
+        let resultState: PurchaseState;
+        
+        // Verifica si el estado pasado como argumento es válido
+        if (state in PurchaseState) {
+            resultState = state;
+        } else {
+            return "Estado Desconocido";
+        }
+    
+        // Usa un switch para obtener el nombre del estado en español
+        switch(resultState){
+          case PurchaseState.Reserved:
+            return "Reservado";
+          case PurchaseState.CancelledReservation:
+            return "Reserva Cancelada";
+          case PurchaseState.Paid:
+            return "Pagado";
+          case PurchaseState.Delivered:
+            return "Entregado";
+          default:
+            return "Estado Desconocido";
+        }
     }
 }

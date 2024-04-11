@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
-import { Purchase } from 'src/app/models/Purchase/Purchase';
+import { Purchase, PurchaseState } from 'src/app/models/Purchase/Purchase';
+import { PurchaseArticleSerialNumber } from 'src/app/models/PurchaseArticleSerialNumber/PurchaseArticleSerialNumber';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogShowSerialNumbersComponent } from '../../articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-show-all-purchases',
@@ -17,7 +20,8 @@ export class ShowAllPurchasesComponent implements OnInit {
 
   constructor(private _purchaseService: PurchaseService, 
     private _storageService: StorageService,
-    private _router: Router) {
+    private _router: Router,
+    public dialog: MatDialog) {
     this.paginate = new Paginate(1,6);
    }
 
@@ -45,4 +49,20 @@ export class ShowAllPurchasesComponent implements OnInit {
     });
   }
 
+  showSerialNumbers(serialNumbers: PurchaseArticleSerialNumber[]){     
+    const dialogRef = this.dialog.open(DialogShowSerialNumbersComponent,
+      {
+        data: serialNumbers,
+        height: '300px',
+        width: '300px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      /**logica para aplicar luego de cerrar el dialogo */
+    });
+  }
+
+  getPurchaseState(state: number): string {
+     return Purchase.getPurchaseStateName(state);
+  }
 }
