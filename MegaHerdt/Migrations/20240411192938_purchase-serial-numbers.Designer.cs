@@ -4,6 +4,7 @@ using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411192938_purchase-serial-numbers")]
+    partial class purchaseserialnumbers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -195,6 +197,9 @@ namespace MegaHerdt.API.Migrations
                     b.Property<bool>("Add")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("ArticleId")
+                        .HasColumnType("int");
+
                     b.Property<string>("DiscountReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -213,6 +218,8 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
 
                     b.HasIndex("ProviderId");
 
@@ -413,8 +420,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "541ffa5f-4dc4-4c73-ac0b-d7bd3088ab90",
-                            CreatedDate = new DateTime(2024, 4, 11, 21, 16, 37, 696, DateTimeKind.Utc).AddTicks(6851),
+                            ConcurrencyStamp = "faad6a63-4045-46ed-b40e-8bce522c4ab6",
+                            CreatedDate = new DateTime(2024, 4, 11, 19, 29, 37, 607, DateTimeKind.Utc).AddTicks(8649),
                             Dni = "42464099",
                             Email = "megaherdt.electronica@hotmail.com",
                             EmailConfirmed = false,
@@ -428,7 +435,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2c077507-d8dc-438d-9b3f-23f3d3481efa",
+                            SecurityStamp = "8dc64a0c-4d12-4a56-8728-6beda85393f7",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "megaherdt.electronica@hotmail.com"
@@ -437,8 +444,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48d-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f0bf4db8-2f8e-40f6-bdd3-4429c7a8140b",
-                            CreatedDate = new DateTime(2024, 4, 11, 21, 16, 37, 696, DateTimeKind.Utc).AddTicks(6861),
+                            ConcurrencyStamp = "fff7082e-2be8-4bc6-b7d3-4b57653183bd",
+                            CreatedDate = new DateTime(2024, 4, 11, 19, 29, 37, 607, DateTimeKind.Utc).AddTicks(8663),
                             Dni = "45698746",
                             Email = "conefecto77@gmail.com",
                             EmailConfirmed = false,
@@ -452,7 +459,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "bc513dca-d36d-4877-bce3-8ce5db173f8d",
+                            SecurityStamp = "0fd031c2-6576-40b1-9df6-65b0d1a1ef70",
                             Surname = "Zappa",
                             TwoFactorEnabled = false,
                             UserName = "conefecto77@gmail.com"
@@ -1023,14 +1030,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "4c889af6-7d2b-4348-9339-b430cb679cb8",
+                            ConcurrencyStamp = "aeb71fb4-8b30-4b64-b95a-91cff225a440",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "a428068a-cf22-4d1b-8f53-21720670fe68",
+                            ConcurrencyStamp = "1754c22d-ee2f-4dad-8370-b6fb7724cbb0",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
@@ -1192,6 +1199,10 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
                 {
+                    b.HasOne("MegaHerdt.Models.Models.Article", null)
+                        .WithMany("ArticlesProviders")
+                        .HasForeignKey("ArticleId");
+
                     b.HasOne("MegaHerdt.Models.Models.Provider", "Provider")
                         .WithMany("ArticlesProviders")
                         .HasForeignKey("ProviderId");
@@ -1495,6 +1506,8 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Article", b =>
                 {
+                    b.Navigation("ArticlesProviders");
+
                     b.Navigation("Offers");
 
                     b.Navigation("PurchaseArticles");

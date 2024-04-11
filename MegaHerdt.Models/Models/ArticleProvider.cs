@@ -34,14 +34,21 @@ namespace MegaHerdt.Models.Models
                     ErrorMessages.Add("El proveedor es obligatorio.");
                 }
 
-                //if (string.IsNullOrEmpty(Voucher))
-                //{
-                //    ErrorMessages.Add("El comprobante es obligatorio.");
-                //}
-
                 if (!ArticlesItems.Any())
                 {
                     ErrorMessages.Add("La provisión debe contener al menos un ítem.");
+                }
+                else
+                {
+                    foreach (var item in ArticlesItems) 
+                    {
+                        // Si se rompe una regla de negocio de ArticleProviderItem se agrega
+                        // a los mensajes de error de la entidad padre.
+                        if (item.IsBroken())
+                        {
+                            ErrorMessages.AddRange(item.ErrorMessages);
+                        }
+                    }
                 }
             }
 

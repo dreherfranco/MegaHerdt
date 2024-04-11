@@ -29,6 +29,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         public DbSet<Purchase> Purchases { get; set;}
         public DbSet<PurchaseClaim> PurchasesClaims { get; set; }
         public DbSet<PurchaseArticle> PurchasesArticles { get; set; }
+        public DbSet<PurchaseArticleSerialNumber> PurchasesArticlesSerialNumbers { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<TransportCompany> TransportCompanies { get; set; }
 

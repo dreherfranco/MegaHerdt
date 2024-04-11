@@ -39,9 +39,9 @@ namespace MegaHerdt.Helpers.Helpers
             return repository.Get(filter)
                 .Include(x => x.Brand)
                 .Include(x => x.Category)
-                .Include(x => x.Offers)
-                .Include(x => x.ArticlesProviders)
-                .ThenInclude(x => x.Provider);
+                .Include(x => x.Offers);
+             //   .Include(x => x.ArticlesPro;viders)
+              //  .ThenInclude(x => x.Provider);
         }
 
         private string GenerateCode(Article article)

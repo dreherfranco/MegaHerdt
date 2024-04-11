@@ -99,12 +99,12 @@ namespace MegaHerdt.API.Controllers
                 var articleProviderDb = this.articleProviderService.GetBy(filter).FirstOrDefault();
 
                 articleProviderDb = this.Mapper.Map(articleProviderDTO, articleProviderDb);
-                await articleProviderService.Update(articleProviderDb);
+                await articleProviderService.Update(articleProviderDb!);
                 return true;
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message, status = 400 });
             }
         }
 

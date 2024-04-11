@@ -21,16 +21,25 @@ namespace MegaHerdt.Services.Services
 
         public override async Task<ArticleProvider> Create(ArticleProvider articleProvider)
         {
-            if (articleProvider.Add)
+            if (!articleProvider.IsBroken())
             {
-                await this.AddProvision(articleProvider);
+
+                if (articleProvider.Add)
+                {
+                    await this.AddProvision(articleProvider);
+                }
+                else
+                {
+                    await this.DiscountProvision(articleProvider);
+                }
+                return await this.helper.Create(articleProvider);
+
             }
             else
             {
-                await this.DiscountProvision(articleProvider);
+                var errorMessage = string.Join("\n", articleProvider.ErrorMessages);
+                throw new Exception(errorMessage);
             }
-            return await this.helper.Create(articleProvider);
-
         }
 
         public async Task AddProvision(ArticleProvider articleProvider)
