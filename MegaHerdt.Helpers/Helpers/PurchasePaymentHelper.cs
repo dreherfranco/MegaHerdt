@@ -3,6 +3,8 @@ using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Repository.Base;
 using MercadoPago.Client.Common;
 using MercadoPago.Client.Payment;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using mercadopago = MercadoPago.Resource.Payment;
 
 namespace MegaHerdt.Helpers.Helpers
@@ -11,10 +13,18 @@ namespace MegaHerdt.Helpers.Helpers
     {
         private readonly Repository<Purchase> purchaseRepository;
         private readonly Repository<Article> articleRepository;
-        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository, Repository<Article> articleRepository)
+        private readonly Repository<ArticleProviderItem> articleProviderItemRepository;
+        private readonly Repository<ArticleProviderSerialNumber> articleProviderSerialNumberRepository;
+     
+        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository, 
+                                     Repository<Article> articleRepository,
+                                     Repository<ArticleProviderItem> articleProviderItemRepository,
+                                     Repository<ArticleProviderSerialNumber> articleProviderSerialNumberRepository)
         {
             this.purchaseRepository = purchaseRepository;
             this.articleRepository = articleRepository;
+            this.articleProviderItemRepository = articleProviderItemRepository;
+            this.articleProviderSerialNumberRepository = articleProviderSerialNumberRepository;
         }
 
         public async Task<Purchase> PurchaseReserved(PurchasePaymentMP purchasePaymentData)
@@ -139,6 +149,8 @@ namespace MegaHerdt.Helpers.Helpers
                     ArticlePriceAtTheMoment = purchaseArticle.ArticlePriceAtTheMoment,
                     ArticleQuantity = purchaseArticle.ArticleQuantity
                 };
+
+                await AssignSerialNumbers(newPurchaseArticle);
                 purchasesArticles.Add(newPurchaseArticle);
             }
             purchase.PurchasesArticles = purchasesArticles;
@@ -167,8 +179,7 @@ namespace MegaHerdt.Helpers.Helpers
                 await this.articleRepository.Update(article);
             }
         }
-  
-    
+
         /// <summary>
         /// Crea los pagos que se van a efectuar para almacenarlos en la BDD
         /// Se tiene en cuenta las cuotas y los precios de los articulos en el momento de efectuar el pago.
@@ -201,6 +212,40 @@ namespace MegaHerdt.Helpers.Helpers
 
         #endregion
 
+
+        #region Asignar numeros de serie
+        /// <summary>
+        /// Asignar numeros de serie a la compra 
+        /// y actualizar ArticleProviderSerialNumber.EnStock = false
+        /// </summary>
+        /// <param name="purchaseArticle"></param>
+        /// <returns></returns>
+        private async Task AssignSerialNumbers(PurchaseArticle purchaseArticle)
+        {
+
+            // Items de donde voy a obtener los numeros de serie
+            // Obtengo los numeros de serie que estan en stock solamente.
+            var articleProviderItemsSerialNumbers = articleProviderItemRepository.Get(i => i.ArticleId == purchaseArticle.ArticleId)
+                                            .Include(i => i.SerialNumbers)
+                                            .SelectMany(i => i.SerialNumbers)
+                                            .Where(i => i.EnStock)
+                                            // Si tiene 3 articulos la compra solo tomo 3 numeros de serie
+                                            .Take(purchaseArticle.ArticleQuantity)
+                                            .ToList();
+
+            foreach (var serialNumberData in articleProviderItemsSerialNumbers)
+            {
+                var purchaseSerialNumber = new PurchaseArticleSerialNumber(serialNumberData.SerialNumber);
+                // Agregar el numero de seria a los articulos de la compra
+                purchaseArticle.SerialNumbers.Add(purchaseSerialNumber);
+
+                // Actualizar el numero de serie correspondiente a la tabla ArticleProviderSerialNumber
+                serialNumberData.EnStock = false;
+                await articleProviderSerialNumberRepository.Update(serialNumberData);
+            }
+
+        }
+        #endregion
 
     }
 }

@@ -155,6 +155,8 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<Repository<Purchase>>();
             builder.Services.AddTransient<Repository<PurchaseClaim>>();
             builder.Services.AddTransient<Repository<TransportCompany>>();
+            builder.Services.AddTransient<Repository<ArticleProviderItem>>();
+            builder.Services.AddTransient<Repository<ArticleProviderSerialNumber>>();
             return builder;
         }
     }
