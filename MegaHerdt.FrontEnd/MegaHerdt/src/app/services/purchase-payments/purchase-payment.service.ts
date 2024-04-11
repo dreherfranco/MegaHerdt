@@ -16,9 +16,10 @@ export class PurchasePaymentService {
     this.url = Global.url + "PurchasePayments";
   }
 
-  confirmPayment(paymentConfirm: PurchasePaymentConfirm , token: string): Observable<any>{
+
+  purchaseReserved(paymentConfirm: PurchasePaymentConfirm , token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(paymentConfirm);
-    return this._http.post(this.url + "/confirm-payment", params, { headers: this.headers });
+    return this._http.post(this.url + "/purchase-reserved", params, { headers: this.headers });
   }
 }

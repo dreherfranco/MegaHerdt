@@ -1,20 +1,20 @@
 <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" class=" mt-5 mx-auto"></mat-progress-spinner>
 <div class="container-fluid d-flex row items-align-center">
     
-    <div *ngIf="!isLoading" class="w-25">
+    <!-- <div *ngIf="!isLoading" class="w-25">
         <div *ngIf="showShipmentForm">
             <form>
-                <p class="data-user"><b>¿Desea que enviemos su producto?:</b> </p>
+                <p class="data-user"><b>¿Desea pagar su compra en este momento o al momento de retirarla?:</b> </p>
                 <p class="data-user">
                     <input class="form-check-input" id="immediate-plan" type="radio" name="installment_plan"
-                        (click)="selectIfHasShipment(true)" /> Si
+                        (click)="payInPersonSelect(false)" /> Pagar ahora
                 </p>
                 <p class="data-user">
                     <input class="form-check-input" id="immediate-plan" type="radio" name="installment_plan"
-                        (click)="selectIfHasShipment(false)" /> No
+                        (click)="payInPersonSelect(true)" /> Pagar en el local
                 </p>
-            </form>
-            <form *ngIf="hasShipment">
+            </form> -->
+            <!-- <form *ngIf="hasShipment">
                 <hr>
                 <div id="plans" class="form-check">
                     <h3 class="data-user"><b>Seleccione su dirección</b></h3>
@@ -24,12 +24,12 @@
                     </p>
                 </div>
             </form>
-            <h3 class="data-user"><b>¡Los envíos se coordinan con los empleados!</b></h3>
+            <h3 class="data-user"><b>¡Los envíos se coordinan con los empleados!</b></h3> -->
 
-        </div>
-    </div>
+        <!-- </div>
+    </div> -->
 
-    <div class="w-50 ml-auto mt-0 p-2">
+    <div class="w-50 mx-auto mt-0 p-2">
        
         <script>
             import Swal from 'sweetalert2';

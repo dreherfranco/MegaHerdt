@@ -1,7 +1,4 @@
-﻿using MegaHerdt.API.DTOs.PurchaseArticle;
-using Org.BouncyCastle.Asn1.Ocsp;
-
-namespace MegaHerdt.API.DTOs.PurchasePayment
+﻿namespace MegaHerdt.API.DTOs.PurchasePayment
 {
     public class PurchasePaymentDTO
     {

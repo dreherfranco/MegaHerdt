@@ -4,6 +4,7 @@ using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240410231937_shipment-amounts")]
+    partial class shipmentamounts
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -418,8 +420,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "aab76f62-fb35-42c8-8298-bc5a6c0669b8",
-                            CreatedDate = new DateTime(2024, 4, 10, 23, 50, 38, 917, DateTimeKind.Utc).AddTicks(6799),
+                            ConcurrencyStamp = "3eca0294-cf01-4ba6-84ba-de7242f1475c",
+                            CreatedDate = new DateTime(2024, 4, 10, 23, 19, 36, 520, DateTimeKind.Utc).AddTicks(8986),
                             Dni = "42464099",
                             Email = "megaherdt.electronica@hotmail.com",
                             EmailConfirmed = false,
@@ -433,7 +435,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ccfbfa6e-247d-47f6-b07b-ddbce67d8266",
+                            SecurityStamp = "d962e8a5-5380-436b-ade5-6ef0c7415b14",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "megaherdt.electronica@hotmail.com"
@@ -442,8 +444,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48d-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "01d96b8c-590e-4527-a09f-dc55b1715c94",
-                            CreatedDate = new DateTime(2024, 4, 10, 23, 50, 38, 917, DateTimeKind.Utc).AddTicks(6809),
+                            ConcurrencyStamp = "6683f1da-a4ff-43b2-9509-a53a6f6d1b15",
+                            CreatedDate = new DateTime(2024, 4, 10, 23, 19, 36, 520, DateTimeKind.Utc).AddTicks(9000),
                             Dni = "45698746",
                             Email = "conefecto77@gmail.com",
                             EmailConfirmed = false,
@@ -457,7 +459,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3f9afb3c-a910-4962-8a0e-07a5903643a4",
+                            SecurityStamp = "eb00c885-9af0-4459-a70d-6ae5093c132b",
                             Surname = "Zappa",
                             TwoFactorEnabled = false,
                             UserName = "conefecto77@gmail.com"
@@ -604,12 +606,6 @@ namespace MegaHerdt.API.Migrations
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
-
-                    b.Property<bool>("PayInPerson")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("State")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -947,6 +943,36 @@ namespace MegaHerdt.API.Migrations
                     b.ToTable("Shipments");
                 });
 
+            modelBuilder.Entity("MegaHerdt.Models.Models.ShipmentAmount", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("PostalCode")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Province")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TownName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Province", "Department", "TownName");
+
+                    b.ToTable("ShipmentAmounts");
+                });
+
             modelBuilder.Entity("MegaHerdt.Models.Models.TransportCompany", b =>
                 {
                     b.Property<int>("Id")
@@ -1001,14 +1027,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "af57a6ea-2fee-41bf-9bbc-c86efc9c105f",
+                            ConcurrencyStamp = "a7520d94-45d9-48ba-bd49-2ec0814c5b85",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "adf26a86-80d8-4cdb-ae8d-517ac247228b",
+                            ConcurrencyStamp = "4ec0031e-38a8-4ffa-9218-9466dafe6e4d",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });

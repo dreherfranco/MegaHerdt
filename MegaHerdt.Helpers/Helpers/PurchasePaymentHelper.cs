@@ -17,6 +17,36 @@ namespace MegaHerdt.Helpers.Helpers
             this.articleRepository = articleRepository;
         }
 
+        public async Task<Purchase> PurchaseReserved(PurchasePaymentMP purchasePaymentData)
+        {
+            var purchase = new Purchase()
+            {
+                ClientId = purchasePaymentData.ClientId,
+                // Para el estado reservado se utiliza otro flujo (otro metodo del controlador).
+                State = PurchaseState.Reserved,
+                PayInPerson = true,
+                Date = DateTime.Now
+            };
+            var payments = this.InstancePayments(purchasePaymentData);
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "00000000", SaleNumber = "00001", Payments = payments };
+            purchase.Bill = bill;
+
+            var purchasesArticles = new List<PurchaseArticle>();
+            foreach (var purchaseArticle in purchasePaymentData.PurchaseArticles)
+            {
+                var newPurchaseArticle = new PurchaseArticle()
+                {
+                    ArticleId = purchaseArticle.ArticleId,
+                    ArticlePriceAtTheMoment = purchaseArticle.ArticlePriceAtTheMoment,
+                    ArticleQuantity = purchaseArticle.ArticleQuantity
+                };
+                purchasesArticles.Add(newPurchaseArticle);
+            }
+            purchase.PurchasesArticles = purchasesArticles;
+
+            return await this.purchaseRepository.Add(purchase);
+        }
+
         public async Task<mercadopago.Payment> AddPaymentMP(PurchasePaymentMP purchasePaymentData)
         {
             try
@@ -88,9 +118,16 @@ namespace MegaHerdt.Helpers.Helpers
         private async Task<Purchase> CreatePurchase(PurchasePaymentMP purchasePaymentData)
         {
 
-            var purchase = new Purchase() { ClientId = purchasePaymentData.ClientId, Date = DateTime.Now };
+            var purchase = new Purchase() 
+            {
+                ClientId = purchasePaymentData.ClientId,
+                // Para el estado reservado se utiliza otro flujo (otro metodo del controlador).
+                State = PurchaseState.Paid,
+                PayInPerson = false,
+                Date = DateTime.Now 
+            };
             var payments = this.InstancePayments(purchasePaymentData);
-            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "12333555", SaleNumber = "00001", Payments = payments };
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "00000000", SaleNumber = "00001", Payments = payments };
             purchase.Bill = bill;
 
             var purchasesArticles = new List<PurchaseArticle>();
@@ -106,12 +143,13 @@ namespace MegaHerdt.Helpers.Helpers
             }
             purchase.PurchasesArticles = purchasesArticles;
 
-            // Si la compra tiene Envio se debe asignar el correspondiente seleccionado.
-            if (purchasePaymentData.HasShipment)
-            {
-                if (purchasePaymentData.ShipmentAddressId is null || purchasePaymentData.ShipmentAddressId == 0) throw new Exception("invalid_address");
-                purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId.Value };
-            }
+
+            //// Si la compra tiene Envio se debe asignar el correspondiente seleccionado.
+            //if (purchasePaymentData.HasShipment)
+            //{
+            //    if (purchasePaymentData.ShipmentAddressId is null || purchasePaymentData.ShipmentAddressId == 0) throw new Exception("invalid_address");
+            //    purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId.Value };
+            //}
             return await this.purchaseRepository.Add(purchase);
         }
 

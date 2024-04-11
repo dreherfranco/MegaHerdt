@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { AddressUpdate } from 'src/app/models/Address/AddressUpdate';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
+import { PurchasePaymentConfirm } from 'src/app/models/Payment/PurchasePaymentConfirm';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { UserAddresses } from 'src/app/models/User/UserAddresses';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { PurchasePaymentService } from 'src/app/services/purchase-payments/purchase-payment.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { UserService } from 'src/app/services/users/user.service';
 import { Global } from 'src/app/utils/Global';
@@ -18,7 +20,8 @@ import { Global } from 'src/app/utils/Global';
 export class ConfirmPurchasePaymentComponent implements OnInit {
   isLoading: boolean = true;
   purchaseAmount: number = 0;
-
+  payInPerson: boolean = false;
+  
   // DATOS DEL ENVIO
   userAddresses: UserAddresses = new UserAddresses(new Array<AddressUpdate>());
   addressSelected: AddressUpdate = new AddressUpdate(0,'',0,'',0,'','','');
@@ -29,7 +32,8 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
 
   constructor(private _storageService: StorageService,
     private _cartService: CartService,
-    private _userService: UserService) 
+    private _userService: UserService,
+    private _PurchasePaymentService: PurchasePaymentService) 
   {
    
   }
@@ -44,6 +48,28 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this.getUserAddresses();
   }
 
+  reservedPurchase(){
+    console.log("Reservar la compra");
+    var identity = this._storageService.getIdentity();
+    let purchaseReserved = new PurchasePaymentConfirm();
+    purchaseReserved.clientEmail = identity.email;
+    purchaseReserved.clientId = identity.id;
+    purchaseReserved.payInPerson = this.payInPerson;
+
+    this._PurchasePaymentService.purchaseReserved(purchaseReserved, this._storageService.getTokenValue()).subscribe({
+      next: (response) =>{
+        if(response.error){
+          AlertService.errorAlert('¡Error al intentar reservar la compra!');
+        }else{
+          AlertService.successAlert('¡Reservada!','Los articulos fueron reservados para su compra');
+        }
+      },
+      error: (err) => {
+        AlertService.errorAlert('¡Error al intentar reservar la compra!');
+        console.log(err)
+      }
+    })
+  }
  
   // EJECUTA EL SCRIPT DE MERCADO PAGO Y AL DARLE CLICK AL BOTON DE PAGAR 
   // VA AL BACKEND Y VUELVE CON UNA RESPUESTA
@@ -91,6 +117,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     window.purchaseArticles = this.getPurchasesArticles();
     // Dejo la identidad de usuario logueado seteada globalmente.
     window.identity = this._storageService.getIdentity();
+    window.payInPerson = this.payInPerson;
 
     script.textContent = `
     setTimeout(function() {
@@ -136,7 +163,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
               cardFormData.purchaseArticles = window.purchaseArticles;
               cardFormData.clientEmail = window.identity.email;
               cardFormData.clientId = window.identity.id;
-              cardFormData.hasShipment = window.hasShipment;
+              cardFormData.payInPerson = window.payInPerson;
               cardFormData.shipmentAddressId = window.shipmentAddressId;
 
               //  callback llamado cuando el usuario haga clic en el botón enviar los datos
@@ -192,6 +219,10 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
   }
 
 
+  payInPersonSelect(payInPerson: boolean){
+    this.payInPerson = payInPerson;
+  }
+
  /************ DATOS DE ENVIO ***************/
 
   selectIfHasShipment(hasShipment: boolean){
@@ -212,7 +243,7 @@ export class ConfirmPurchasePaymentComponent implements OnInit {
     this.addressSelected = address;
     this.isAddressSelected = true;
 
-    window.hasShipment = this.hasShipment;
+    //window.hasShipment = this.hasShipment;
     window.shipmentAddressId = this.addressSelected.id;
   }
 
