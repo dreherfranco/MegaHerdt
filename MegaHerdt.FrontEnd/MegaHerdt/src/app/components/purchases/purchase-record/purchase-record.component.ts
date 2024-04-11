@@ -2,10 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Sort } from '@angular/material/sort';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Purchase } from 'src/app/models/Purchase/Purchase';
+import { PurchaseArticleSerialNumber } from 'src/app/models/PurchaseArticleSerialNumber/PurchaseArticleSerialNumber';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { PurchaseService } from 'src/app/services/purchase/purchase.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { DialogShowSerialNumbersComponent } from '../../articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-purchase-record',
@@ -18,9 +21,12 @@ export class PurchaseRecordComponent implements OnInit {
   sortedData: Purchase[] = [];
   @ViewChild('content', { static: true }) content!: ElementRef;
 
-  constructor(private _purchaseService: PurchaseService, private _storageService: StorageService) {
+  constructor(private _purchaseService: PurchaseService, 
+              private _storageService: StorageService,
+              public dialog: MatDialog) 
+  {
     this.paginate = new Paginate(1,4);
-   }
+  }
 
   ngOnInit(): void {
     this.loadClientPurchases();
@@ -38,6 +44,19 @@ export class PurchaseRecordComponent implements OnInit {
       error: (err) => {
         console.log(err);
       }
+    });
+  }
+
+  showSerialNumbers(serialNumbers: PurchaseArticleSerialNumber[]){     
+    const dialogRef = this.dialog.open(DialogShowSerialNumbersComponent,
+      {
+        data: serialNumbers,
+        height: '300px',
+        width: '300px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      /**logica para aplicar luego de cerrar el dialogo */
     });
   }
 

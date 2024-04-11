@@ -20,13 +20,15 @@ namespace MegaHerdt.Helpers.Helpers
                 .Include(x => x.Client)
                 .Include(x=> x.PurchasesClaims)
                 .Include(x => x.PurchasesArticles)
-                .ThenInclude(x => x.Article)
+                    .ThenInclude(x => x.Article)
+                .Include(x => x.PurchasesArticles)
+                    .ThenInclude(x => x.SerialNumbers)
                 .Include(x => x.Shipment)
-                .ThenInclude(x => x.Address)
+                    .ThenInclude(x => x.Address)
                 .Include(x => x.Shipment)
-                .ThenInclude(x => x.TransportCompany)
+                    .ThenInclude(x => x.TransportCompany)
                 .Include(x => x.Bill)
-                .ThenInclude(x => x.Payments)
+                    .ThenInclude(x => x.Payments)
                 .OrderByDescending(x => x.Date);
         }
 

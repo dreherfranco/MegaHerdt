@@ -10,7 +10,7 @@ import { ArticleProviderSerialNumber } from 'src/app/models/ArticleProviderSeria
 export class DialogShowSerialNumbersComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogShowSerialNumbersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: ArticleProviderSerialNumber[]) { }
+    @Inject(MAT_DIALOG_DATA) public data: any[]) { }
 
   ngOnInit(): void {
   }

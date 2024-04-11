@@ -211,6 +211,7 @@ namespace MegaHerdt.API.Mapper
             CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();
 
             CreateMap<PurchaseArticle, PurchaseArticleDTO>();
+            CreateMap<PurchaseArticleSerialNumber, PurchaseArticleSerialNumberDTO>();
             #endregion PurchaseArticle
 
             #region PurchasePayment
