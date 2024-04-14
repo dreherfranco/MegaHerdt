@@ -4,6 +4,7 @@ using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240414214103_payment-method")]
+    partial class paymentmethod
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -413,8 +415,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b104d31c-b482-42d1-8380-9534f70b19a8",
-                            CreatedDate = new DateTime(2024, 4, 14, 21, 43, 55, 228, DateTimeKind.Utc).AddTicks(1450),
+                            ConcurrencyStamp = "c1a51332-43b2-4432-ae5a-7b81e01e4125",
+                            CreatedDate = new DateTime(2024, 4, 14, 21, 41, 3, 164, DateTimeKind.Utc).AddTicks(4550),
                             Dni = "42464099",
                             Email = "megaherdt.electronica@hotmail.com",
                             EmailConfirmed = false,
@@ -428,7 +430,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eb2444b4-e0bf-4023-9f62-f969d95e6e3e",
+                            SecurityStamp = "d1109d90-fd01-41b2-9fd3-4eb4b69d6533",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "megaherdt.electronica@hotmail.com"
@@ -437,8 +439,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48d-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "fcaf63f0-1357-45ce-90d0-558b72dc2013",
-                            CreatedDate = new DateTime(2024, 4, 14, 21, 43, 55, 228, DateTimeKind.Utc).AddTicks(1460),
+                            ConcurrencyStamp = "6442c60c-320b-449f-8db6-856ef4f7e436",
+                            CreatedDate = new DateTime(2024, 4, 14, 21, 41, 3, 164, DateTimeKind.Utc).AddTicks(4564),
                             Dni = "45698746",
                             Email = "conefecto77@gmail.com",
                             EmailConfirmed = false,
@@ -452,7 +454,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b30daef0-2f0a-4247-9410-28ec63f70d45",
+                            SecurityStamp = "ab27f9bd-be06-44ca-bc3f-9200c67552e4",
                             Surname = "Zappa",
                             TwoFactorEnabled = false,
                             UserName = "conefecto77@gmail.com"
@@ -1023,14 +1025,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "1d519295-af9f-43ac-8143-68c7878a0f7d",
+                            ConcurrencyStamp = "890a7ea8-3db1-4031-8405-6f2f326cc709",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "4d89ce03-0c90-46b2-9eb5-c3324e6e0a3e",
+                            ConcurrencyStamp = "05c0f707-ac63-4411-84ce-46ff57428804",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
@@ -1253,7 +1255,7 @@ namespace MegaHerdt.API.Migrations
                     b.HasOne("MegaHerdt.Models.Models.PaymentMethod", "PaymentMethod")
                         .WithMany("Payments")
                         .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Bill");

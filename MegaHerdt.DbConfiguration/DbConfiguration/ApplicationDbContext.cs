@@ -110,6 +110,16 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                 .HasKey(x => new { x.ArticleId, x.PurchaseId });
             #endregion
 
+            #region Payments
+            modelBuilder.Entity<Payment>()
+                .HasOne(r => r.PaymentMethod)
+                .WithMany(u => u.Payments)
+                .HasForeignKey(r => r.PaymentMethodId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<Payment>().Navigation(p => p.PaymentMethod).AutoInclude();
+            #endregion
+
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }

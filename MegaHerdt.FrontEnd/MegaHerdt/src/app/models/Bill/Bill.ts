@@ -6,7 +6,7 @@ export class Bill{
     saleNumber: string;
     type: string;
     payments: Array<Payment>;
-    constructor(id:number, saleNumber: string,number: string, type: string){
+    constructor(id:number = 0, saleNumber: string = '',number: string = '', type: string = ''){
         this.id=id;
         this.saleNumber=saleNumber;
         this.number=number;

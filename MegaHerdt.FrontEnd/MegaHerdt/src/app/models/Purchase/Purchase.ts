@@ -1,3 +1,5 @@
+import { isNull } from "lodash";
+import { Bill } from "../Bill/Bill";
 import { PurchaseArticle } from "../PurchaseArticle/PurchaseArticle";
 import { PurchaseClaimDetail } from "../PurchaseClaim/PurchaseClaimDetail";
 import { Shipment } from "../Shipment/Shipment";
@@ -17,6 +19,8 @@ export class Purchase{
     shipment: Shipment;
     payInPerson: Boolean;
     state: PurchaseState;
+    bill: Bill;
+    paymentsQuantity: number | null = null;
     purchasesArticles: Array<PurchaseArticle>;
     purchasesClaims: Array<PurchaseClaimDetail>;
 
@@ -30,6 +34,7 @@ export class Purchase{
         this.state = PurchaseState.Reserved;
         this.purchasesArticles = [];
         this.purchasesClaims = [];
+        this.bill = new Bill();
     }
 
     static getPurchaseStateName(state: number): string {

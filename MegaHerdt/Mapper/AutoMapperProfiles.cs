@@ -185,7 +185,10 @@ namespace MegaHerdt.API.Mapper
 
             #region Purchase
             CreateMap<Purchase, PurchaseDTO>()
+               .ForMember(dest => dest.PaymentsQuantity, opt => opt.Ignore())
                .ReverseMap();
+           
+
             CreateMap<Purchase, PurchaseDebtDTO>()
                .ForMember(dest => dest.Total, opt=>opt.MapFrom(src => src.TotalArticleAmount))
                .ForMember(dest => dest.ClientUserName, opt => opt.MapFrom(src => src.Client.UserName))
@@ -210,8 +213,11 @@ namespace MegaHerdt.API.Mapper
             #region PurchaseArticle
             CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();
 
-            CreateMap<PurchaseArticle, PurchaseArticleDTO>();
-            CreateMap<PurchaseArticleSerialNumber, PurchaseArticleSerialNumberDTO>();
+            CreateMap<PurchaseArticle, PurchaseArticleDTO>()
+                .ReverseMap();
+
+            CreateMap<PurchaseArticleSerialNumber, PurchaseArticleSerialNumberDTO>()
+                .ReverseMap();
             #endregion PurchaseArticle
 
             #region PurchasePayment
@@ -226,6 +232,9 @@ namespace MegaHerdt.API.Mapper
                 .ReverseMap();
             CreateMap<Payment, PurchasePaymentDTO>()
                 .ReverseMap();
+
+            CreateMap<PaymentMethod, PaymentMethodDTO>()
+              .ReverseMap();
             #endregion PurchasePayment
 
             #region TransportCompany

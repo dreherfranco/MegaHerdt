@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using MegaHerdt.API.DTOs.Provider;
 using MegaHerdt.API.DTOs.Purchase;
+using MegaHerdt.API.DTOs.PurchasePayment;
 using MegaHerdt.API.DTOs.Shipment;
 using MegaHerdt.API.Filters;
 using MegaHerdt.API.Utils;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Services.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -78,6 +81,22 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("get-by-state/{state}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public ActionResult<List<PurchaseDTO>> GetByState(PurchaseState state)
+        {
+            try
+            {
+                var purchases = this.PurchaseService.GetByState(state);
+                return this.Mapper.Map<List<PurchaseDTO>>(purchases);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         [HttpPost("shipment/update")]
         public async Task<ActionResult<bool>> Put([FromBody] ShipmentUpdateDTO shipmentUpdateDTO)
         {
@@ -95,6 +114,59 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(ex);
             }
         }
+
+
+        #region Update States
+        /// <summary>
+        /// Pasar del estado Reserved al estado Paid
+        /// </summary>
+        /// <param name="purchaseDTO"></param>
+        /// <returns></returns>
+        [HttpPost("from-reserved-to-paid")]
+        public async Task<ActionResult<PurchaseDTO>> FromReservedToPaid([FromBody] PurchaseDTO purchaseDTO)
+        {
+            try
+            {
+                Expression<Func<Purchase, bool>> filter = x => x.Id == purchaseDTO.Id;
+                var purchaseDb = this.PurchaseService.GetBy(filter).ToList().FirstOrDefault();
+
+                var purchase = this.Mapper.Map(purchaseDTO, purchaseDb);
+                var result = await this.PurchaseService.FromReservedToPaid(purchase!, purchaseDTO.PaymentsQuantity ?? 1);
+
+                var dtoResult = this.Mapper.Map<PurchaseDTO>(result);
+                return dtoResult;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message, status = 400 });
+            }
+        }
+
+        /// <summary>
+        /// Pasar del estado Paid al estado Delivered
+        /// </summary>
+        /// <param name="purchaseDTO"></param>
+        /// <returns></returns>
+        [HttpPost("from-paid-to-delivered")]
+        public async Task<ActionResult<PurchaseDTO>> FromPaidToDelivered([FromBody] PurchaseDTO purchaseDTO)
+        {
+            try
+            {
+                Expression<Func<Purchase, bool>> filter = x => x.Id == purchaseDTO.Id;
+                var purchaseDb = this.PurchaseService.GetBy(filter).ToList().FirstOrDefault();
+
+                var purchase = this.Mapper.Map(purchaseDTO, purchaseDb);
+                var result = await this.PurchaseService.FromPaidToDelivered(purchase!);
+
+                var dtoResult = this.Mapper.Map<PurchaseDTO>(result);
+                return dtoResult;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message, status = 400 });
+            }
+        }
+        #endregion
 
     }
 }
