@@ -63,7 +63,34 @@ namespace MegaHerdt.Helpers.Helpers
             return purchase;
         }
 
+        public async Task<Purchase> FromReservedToCancelledReservation(Purchase purchase)
+        {
+            purchase.State = PurchaseState.CancelledReservation;
+
+            // Nulleo todos los articulos por problema en el change tracker, de todos modos, 
+            // la entidad PurchaseArticle hace referencia al articulo con la propiedad ArticleId (FK de articulo),
+            // por lo cual no se pierde la referencia al mismo.
+            purchase.PurchasesArticles.ForEach(i => i.Article = null);
+
+            await this.repository.Update(purchase);
+            return purchase;
+        } 
+        
         public async Task<Purchase> FromPaidToDelivered(Purchase purchase)
+        {
+            purchase.State = PurchaseState.Delivered;
+
+            // Nulleo todos los articulos por problema en el change tracker, de todos modos, 
+            // la entidad PurchaseArticle hace referencia al articulo con la propiedad ArticleId (FK de articulo),
+            // por lo cual no se pierde la referencia al mismo.
+            purchase.PurchasesArticles.ForEach(i => i.Article = null);
+            purchase.Bill.Payments.ForEach(i => i.PaymentMethod = null);
+
+            await this.repository.Update(purchase);
+            return purchase;
+        }
+        
+        public async Task<Purchase> FromDeliveredToDelivered(Purchase purchase)
         {
             purchase.State = PurchaseState.Delivered;
 

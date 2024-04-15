@@ -31,9 +31,19 @@ namespace MegaHerdt.Services.Services
             return await this.purchaseHelper.FromReservedToPaid(purchase, paymentsQuantity);
         }
 
+        public async Task<Purchase> FromReservedToCancelledReservation(Purchase purchase)
+        {
+            return await this.purchaseHelper.FromReservedToCancelledReservation(purchase);
+        } 
+        
         public async Task<Purchase> FromPaidToDelivered(Purchase purchase)
         {
             return await this.purchaseHelper.FromPaidToDelivered(purchase);
+        } 
+        
+        public async Task<Purchase> FromDeliveredToDelivered(Purchase purchase)
+        {
+            return await this.purchaseHelper.FromDeliveredToDelivered(purchase);
         }
     }
 }

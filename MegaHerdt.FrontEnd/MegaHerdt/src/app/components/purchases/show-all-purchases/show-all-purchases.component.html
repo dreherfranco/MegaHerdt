@@ -46,7 +46,8 @@
                     <th *ngIf="purchaseStateSelected == purchaseStatesEnum.Paid || purchaseStateSelected == purchaseStatesEnum.Delivered" scope="col">
                         Monto Total
                     </th>
-                    <th scope="col"></th>
+                    <th scope="col" *ngIf="purchaseStateSelected !== purchaseStatesEnum.CancelledReservation"></th>
+                    <th scope="col" *ngIf="purchaseStateSelected == purchaseStatesEnum.Reserved"></th>
                     <!-- <th scope="col">Envio</th> -->
                     <!-- <th scope="col">Agregar Envio</th> -->
                 </tr>
@@ -89,10 +90,16 @@
                         <span class="data-user"> {{ getTotal(purchase) }} </span>
                     </th>
 
-                    <td>
+                    <td *ngIf="purchaseStateSelected !== purchaseStatesEnum.CancelledReservation">
                         <button class="btn btn-primary col-sm-12" title="Editar" 
                                 (click)="openUpdateDialog(purchase)"> 
                                    <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                    <td  *ngIf="purchaseStateSelected == purchaseStatesEnum.Reserved">
+                        <button class="btn btn-danger col-sm-12" title="Cancelar" 
+                                (click)="openCancelReservationDialog(purchase)"> 
+                                   <i class="bi bi-x-circle-fill"></i>
                         </button>
                     </td>
                 </tr>

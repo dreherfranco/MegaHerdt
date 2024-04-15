@@ -143,6 +143,32 @@ namespace MegaHerdt.API.Controllers
         }
 
         /// <summary>
+        /// Pasar del estado Reserved al estado CancelledReservation
+        /// </summary>
+        /// <param name="purchaseDTO"></param>
+        /// <returns></returns>
+        [HttpPost("from-reserved-to-cancelled-reservation")]
+        public async Task<ActionResult<PurchaseDTO>> FromReservedToCancelledReservation([FromBody] PurchaseDTO purchaseDTO)
+        {
+            try
+            {
+                Expression<Func<Purchase, bool>> filter = x => x.Id == purchaseDTO.Id;
+                var purchaseDb = this.PurchaseService.GetBy(filter).ToList().FirstOrDefault();
+
+                var purchase = this.Mapper.Map(purchaseDTO, purchaseDb);
+                var result = await this.PurchaseService.FromReservedToCancelledReservation(purchase!);
+
+                var dtoResult = this.Mapper.Map<PurchaseDTO>(result);
+                return dtoResult;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message, status = 400 });
+            }
+        }
+
+
+        /// <summary>
         /// Pasar del estado Paid al estado Delivered
         /// </summary>
         /// <param name="purchaseDTO"></param>
@@ -157,6 +183,31 @@ namespace MegaHerdt.API.Controllers
 
                 var purchase = this.Mapper.Map(purchaseDTO, purchaseDb);
                 var result = await this.PurchaseService.FromPaidToDelivered(purchase!);
+
+                var dtoResult = this.Mapper.Map<PurchaseDTO>(result);
+                return dtoResult;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message, status = 400 });
+            }
+        }
+
+        /// <summary>
+        /// Loop en el estado Delivered
+        /// </summary>
+        /// <param name="purchaseDTO"></param>
+        /// <returns></returns>
+        [HttpPost("from-delivered-to-delivered")]
+        public async Task<ActionResult<PurchaseDTO>> FromDeliveredToDelivered([FromBody] PurchaseDTO purchaseDTO)
+        {
+            try
+            {
+                Expression<Func<Purchase, bool>> filter = x => x.Id == purchaseDTO.Id;
+                var purchaseDb = this.PurchaseService.GetBy(filter).ToList().FirstOrDefault();
+
+                var purchase = this.Mapper.Map(purchaseDTO, purchaseDb);
+                var result = await this.PurchaseService.FromDeliveredToDelivered(purchase!);
 
                 var dtoResult = this.Mapper.Map<PurchaseDTO>(result);
                 return dtoResult;

@@ -147,6 +147,7 @@ import { ProvisionStockDiscountComponent } from './components/articles-provision
 import { DialogAddProvisionItemComponent } from './components/articles-provisions/dialog-add-provision-item/dialog-add-provision-item.component';
 import { DialogShowSerialNumbersComponent } from './components/articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 import { ReservedStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/reserved-state-dialog/reserved-state-dialog.component';
+import { DeliveredStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/delivered-state-dialog/delivered-state-dialog.component';
 
 @NgModule({
   declarations: [
@@ -274,7 +275,8 @@ import { ReservedStateDialogComponent } from './components/purchases/show-all-pu
     ProvisionStockDiscountComponent,
     DialogAddProvisionItemComponent,
     DialogShowSerialNumbersComponent,
-    ReservedStateDialogComponent
+    ReservedStateDialogComponent,
+    DeliveredStateDialogComponent
   ],
   imports: [
     BrowserModule,

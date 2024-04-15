@@ -10,6 +10,7 @@ import { DialogShowSerialNumbersComponent } from '../../articles-provisions/dial
 import { MatDialog } from '@angular/material/dialog';
 import { isNumber } from 'lodash';
 import { ReservedStateDialogComponent } from './dialogs/reserved-state-dialog/reserved-state-dialog.component';
+import { DeliveredStateDialogComponent } from './dialogs/delivered-state-dialog/delivered-state-dialog.component';
 
 @Component({
   selector: 'app-show-all-purchases',
@@ -103,7 +104,53 @@ export class ShowAllPurchasesComponent implements OnInit {
     {
       this.openPaidDialog(purchase);
     }
+    else if(this.purchaseStateSelected == this.purchaseStatesEnum.Delivered)
+    {
+      this.openDeliveredDialog(purchase);
+    }
   }
+
+  /**
+   * Pasar del estado Reserved al estado CancelledReservation
+   * @param purchase 
+   */
+  openCancelReservationDialog(purchase: Purchase)
+  {
+    AlertService.warningAlert('¿Seguro que quieres cancelar esta reserva?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+          this.fromReservedToCancelledReservation(purchase);
+      }
+      else{
+        this.reloadPage();
+      }
+    });
+  }
+
+    /**
+   * Pasar del estado Reserved al estado CancelledReservation
+   */
+    fromReservedToCancelledReservation(purchase: Purchase){
+      this._purchaseService.fromReservedToCancelledReservation(purchase, this._storageService.getTokenValue()).subscribe({
+        next: (response) => {
+          if (response.error) {
+            AlertService.errorAlert('¡Error al intentar actualizar esta venta!');
+          } else {
+            
+            AlertService.successAlert('¡Actualizada!','Actualización concretada correctamente')
+            .then((result) => {
+              // Seteo el proximo estado para que se refresque la grilla de compras.
+              this.purchaseStateSelected = PurchaseState.Paid;
+              this.reloadPage();
+            });
+          }
+        },
+        error: (err) => {
+          AlertService.errorAlert('¡Error al intentar actualizar esta venta!');
+          console.log(err)
+        }
+      })
+    }
 
   openReservedDialog(purchase: Purchase){
     const dialogRef = this.dialog.open(ReservedStateDialogComponent,
@@ -169,6 +216,51 @@ export class ShowAllPurchasesComponent implements OnInit {
    */
   fromPaidToDelivered(purchase: Purchase){
     this._purchaseService.fromPaidToDelivered(purchase, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          AlertService.errorAlert('¡Error al intentar actualizar esta venta!');
+        } else {
+          
+          AlertService.successAlert('¡Actualizada!','Actualización concretada correctamente')
+          .then((result) => {
+            // Seteo el proximo estado para que se refresque la grilla de compras.
+            this.purchaseStateSelected = PurchaseState.Delivered;
+            this.reloadPage();
+          });
+        }
+      },
+      error: (err) => {
+        AlertService.errorAlert('¡Error al intentar actualizar esta venta!');
+        console.log(err)
+      }
+    })
+  }
+
+  openDeliveredDialog(purchase: Purchase){
+    const dialogRef = this.dialog.open(DeliveredStateDialogComponent,
+      {
+        disableClose:true,
+        data: purchase,
+        maxHeight: '90vh'
+      });
+
+    dialogRef.afterClosed().subscribe((result: Purchase) => {
+      if(result != undefined){
+        // EJECUTAR UPDATE PARA PASAR DE ESTADO
+         this.fromDeliveredToDelivered(result);
+      }else{
+        // VER SI CARGO LAS COMPRAS O NO
+        this.reloadPage();
+      }
+    });
+  }
+
+  /**
+   * Pasar del estado Paid al estado Delivered
+   * @param purchase 
+   */
+  fromDeliveredToDelivered(purchase: Purchase){
+    this._purchaseService.fromDeliveredToDelivered(purchase, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
           AlertService.errorAlert('¡Error al intentar actualizar esta venta!');

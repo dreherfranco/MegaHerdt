@@ -53,9 +53,21 @@ export class PurchaseService {
     return this._http.post(this.url + "/from-reserved-to-paid", params, { headers: this.headers });
   }
 
+  fromReservedToCancelledReservation(purchase: Purchase, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(purchase);
+    return this._http.post(this.url + "/from-reserved-to-cancelled-reservation", params, { headers: this.headers });
+  }
+
   fromPaidToDelivered(purchase: Purchase, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(purchase);
     return this._http.post(this.url + "/from-paid-to-delivered", params, { headers: this.headers });
+  }
+
+  fromDeliveredToDelivered(purchase: Purchase, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(purchase);
+    return this._http.post(this.url + "/from-delivered-to-delivered", params, { headers: this.headers });
   }
 }
