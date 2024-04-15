@@ -143,6 +143,7 @@ import { ArticlesInOfferComponent } from './components/articles/articles-in-offe
 import { CartOffcanvaComponent } from './components/cart/cart-offcanva/cart-offcanva.component';
 import { LineDividerComponent } from './components/line-divider/line-divider.component';
 import { MainComponent } from './components/shared/main/main.component';
+import { ArgentineFormatPipe } from './pipes/argentine-format.pipe';
 
 @NgModule({
   declarations: [
@@ -266,7 +267,8 @@ import { MainComponent } from './components/shared/main/main.component';
     ArticlesInOfferComponent,
     CartOffcanvaComponent,
     LineDividerComponent,
-    MainComponent
+    MainComponent,
+    ArgentineFormatPipe
   ],
   imports: [
     BrowserModule,

@@ -1,57 +1,57 @@
 .card-img-top {
-    width: 50px;
-    height: 50px;
-    align-self: center;
-    padding-top: 10px;
+  width: 50px;
+  height: 50px;
+  align-self: center;
+  padding-top: 10px;
 }
 
 .article-card{
-    border-style: ridge;
-    border-color: #007BC1 !important;
-    box-shadow: 3px 3px 3px black !important;
+  border-style: ridge;
+  border-color: #007BC1 !important;
+  box-shadow: 3px 3px 3px black !important;
 }
 
 .data-article{
-    font-weight: bold !important;
-    font-size:small !important;
+  font-weight: bold !important;
+  font-size:small !important;
 }
 
 .card-body-p-custom{
-    padding: 0.5rem 0.5rem !important;
+  padding: 0.5rem 0.5rem !important;
 }
 
 
 /* Estilos para ocultar el input */
 .inputfile {
-    display: none;
-  }
-  
-  /* Estilos para el label personalizado */
-  .custom-file-upload {
-    cursor: pointer;
-    display: inline-block;
-    padding: 0.625rem 1rem;
-    background-color: #0d6efd; /* Cambiar el color de fondo a violeta */
-    color: white; /* Cambiar el color del texto a blanco */
-    font-size: 0.7rem;
-    font-weight: 300;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    max-width: 100%;
-  }
-  
-  .custom-file-upload i {
-    width: 1em;
-    height: 1em;
-    vertical-align: middle;
-    fill: currentColor;
-    margin-top: -0.25em;
-    margin-right: 0.25em;
-  }
-  
-  .iborrainputfile {
-    font-size: 16px;
-    font-weight: normal;
-    font-family: 'Lato';
-  }
+  display: none;
+}
+
+/* Estilos para el label personalizado */
+.custom-file-upload {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.625rem 1rem;
+  background-color: #0d6efd; /* Cambiar el color de fondo a violeta */
+  color: white; /* Cambiar el color del texto a blanco */
+  font-size: 0.7rem;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.custom-file-upload i {
+  width: 1em;
+  height: 1em;
+  vertical-align: middle;
+  fill: currentColor;
+  margin-top: -0.25em;
+  margin-right: 0.25em;
+}
+
+.iborrainputfile {
+  font-size: 16px;
+  font-weight: normal;
+  font-family: 'Lato';
+}

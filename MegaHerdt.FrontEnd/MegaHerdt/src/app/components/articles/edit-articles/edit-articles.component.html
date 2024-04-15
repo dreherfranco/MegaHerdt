@@ -1,41 +1,93 @@
-<h1 class="text-center m-1 bg-light">Editar artículos
+<h1 class="text-center text-uppercase m-1 bg-light">Editar artículos
   <button class="btn btn-dark padding-custom" (click)="generatePDF()">
     <i class="bi bi-filetype-pdf"></i>
   </button>
 </h1>
-<div class="d-flex flex-row justify-content-between bg-custom-light">
-  <button class="btn btn-primary h-searcher searcher m-1 ml-btn" (click)="openDialogUpdatePriceByCategory()">
-    Actualizar artículos por categoría
-  </button>
-  <div class="mt-1 col-md-5">
-    <div class="input-group mb-3">
-      <div class="input-group-append">
-          <div class="input-group-text bg-primary">
-            <i class="bi bi-search text-white"></i>
+<div class="container-fluid">
+  <div class="row align-items-center justify-content-between">
+    <div class="col-3">
+      <button class="btn btn-primary h-searcher searcher m-1 ml-btn" (click)="openDialogUpdatePriceByCategory()">
+        Actualizar artículos por categoría
+      </button>
+    </div>    
+    <div class="col-6">
+      <div class="input-group" style="width: 75%;">
+        <div class="input-group-append">
+            <div class="input-group-text bg-primary">
+              <i class="bi bi-search text-white"></i>
+            </div>
           </div>
-        </div>
-      <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar reparaciones">
+        <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar reparaciones">
+      </div>
     </div>
-  </div>
-  <div class="col-sm-4 m-1 ml-2">
-    <div class="form-check data-user">
-      <input class="form-check-input" type="checkbox" [(ngModel)]="filterByStock" id="filterCheck" (click)="filter()">
-      <label class="form-check-label" for="filterCheck">
-        Mostrar solo productos con stock mayor a 0
-      </label>
+    <div class="col-3">
+      <div class="form-check form-switch ">
+        <input class="form-check-input switch-input-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked"
+                [(ngModel)]="filterByStock" (click)="filter(false)">
+        <label class="form-check-label text-uppercase fs-5 ms-2 mt-1" for="flexSwitchCheckChecked">{{!this.filterByStock ? 'Con stock' : 'Sin stock'}}</label>
+      </div>
     </div>
   </div>
 </div>
-<div class="d-flex flex-row justify-content-center" #content>
-  <div class="col-md-3 col-custom align-items-center" *ngFor="let article of articles 
-    | filter: searchText
-    | paginate: 
-    {
-        itemsPerPage: this.paginate.recordsPerPage, 
-        currentPage:this.paginate.page
-    }
-    ">
-    <app-edit-article [article]="article"></app-edit-article>
+<hr>
+<table class="table table-striped table-hover">
+  <thead>
+    <tr class="text-center text-uppercase">
+      <th>Imgagen</th>
+      <th>Nombre</th>
+      <th>Precio venta</th>
+      <th>Codigo</th>
+      <th>Stock</th>
+      <th>Marca</th>
+      <th>Categoria</th>
+      <th>Editar</th>
+      <th>Eliminar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="text-center text-uppercase"
+        *ngFor="let article of articles | filter: searchText |
+                                          paginate: { itemsPerPage: this.paginate.recordsPerPage, currentPage:this.paginate.page }">
+      <td>
+        <div class="imgContainer">
+          <img class="imgCard"
+                src="{{article.image}}" 
+                alt="image"
+                (error)="changeImage($event)"
+          />
+        </div>
+      </td>
+      <td>{{article.name}}</td>
+      <td>{{article.unitValue | argentineFormat}}</td>
+      <td>{{article.code}}</td>
+      <td>{{article.stock}}</td>
+      <td>{{article.brand.name}}</td>
+      <td>{{article.category.name}}</td>
+      <td>
+        <button class="btn btn-primary" title="Editar" (click)="openModal(article)"
+          type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+          >
+          <i class="bi bi-pencil-square"></i>
+        </button>
+      </td>
+      <td>
+          <button class="btn btn-danger" (click)="openDialogDelete(article)"  title="Eliminar"><i class="bi bi-trash-fill"></i></button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<!-- Modal -->
+<div #myModal class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <app-edit-article [article]="selectedArticle" ></app-edit-article>
+      </div>
+    </div>
   </div>
 </div>
 <pagination-controls class="text-center" (pageChange)="this.paginate.page = $event" previousLabel="Anterior"

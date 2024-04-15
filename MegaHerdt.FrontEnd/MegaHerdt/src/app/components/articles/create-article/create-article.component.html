@@ -13,12 +13,11 @@
             </div>
 
             <div class="form-group mb-3 col-sm-6">
-                <label for="unitValue"><b>(*)Valor unitario: </b></label>
+                <label for="unitValue"><b>(*)Valor de venta: </b></label>
                 <input id="unitValue" required pattern="^(\d*|\d+(\.\d+)?)$"
-                placeholder="Valor unitario" name="unitValue" class="form-control"
+                placeholder="Valor de venta" name="unitValue" class="form-control"
                     type="text" #unitValue="ngModel" [(ngModel)]="article.unitValue">
-                <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor unitario
-                    válido</span>
+                <span *ngIf="unitValue.touched && !unitValue.valid" class="text-danger">Ingrese un valor de venta válido</span>
             </div>
         </div>
 

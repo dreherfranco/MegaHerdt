@@ -45,7 +45,14 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', "Helvetica Neue", sans-serif !important; } 
 
-table{
+table td,
+table th {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}     
+
+/* table{
     border: 3px solid black !important;
 }
 
@@ -61,7 +68,7 @@ thead th{
     text-transform: uppercase !important;
     font-weight: bold !important;
     font-size: medium !important;
-}
+} */
 
 
 /* BUTTONS  */

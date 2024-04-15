@@ -1,17 +1,21 @@
 <div class="card text-center m-1 mb-2 article-card ml-0">
     <div class="d-flex flex-row justify-content-center">
-        <img [src]="article.image" class="border border-secondary card-img-top col-sm-3 m-1 rounded">
+        <img class="border border-secondary card-img-top col-sm-3 m-1 rounded"
+                src="{{article.image}}" 
+                alt="image"
+                (error)="changeImage($event)"
+        />        
         <div class="m-1 ml-0">
             <input id="image" name="image" class="inputfile" (change)="onChange($event)" type="file">
             <label for="image" class="custom-file-upload">
-              <i class="bi bi-upload iborrainputfile"></i> Subir archivo
+            <i class="bi bi-upload iborrainputfile"></i> Subir archivo
             </label>
-          </div>
+        </div>
     </div>
     <div class="card-body card-body-p-custom">
         <h5 class="card-title data-article">Nombre:<input class="form-control data-article" [(ngModel)]="article.name">
         </h5>
-        <p class="card-text data-article">Valor unitario: <input class="form-control data-article"
+        <p class="card-text data-article">Precio de venta: <input class="form-control data-article"
                 [(ngModel)]="article.unitValue"></p>
 
 
@@ -39,7 +43,6 @@
                 </select>
             </div>
         </div>
-        <button class="btn btn-primary m-2 col-sm-3" (click)="openDialogUpdate()" title="Editar"><i class="bi bi-pencil-square"></i></button>
-        <button class="btn btn-danger m-2 col-sm-3" (click)="openDialogDelete()" title="Eliminar"><i class="bi bi-trash-fill"></i></button>
+        <button #buttonX id="buttonX" class="btn btn-primary m-2 col-sm-3" (click)="openDialogUpdate()" title="Editar"><i class="bi bi-pencil-square"></i></button>
     </div>
 </div>

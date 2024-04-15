@@ -1,16 +1,16 @@
-
-.col-custom{
-    width: 19% !important;
+.imgContainer{
+    width: 100%;
+    height: 3.5rem;
+    overflow: hidden;
+    border-radius: 5px;
 }
 
-.h-searcher{
-    height: 7% !important;
+.imgCard{
+    width: 65%;
+    height: 100%;
 }
 
-.p-searcher{
-    --bs-gutter-x: 0rem !important;
-}
-
-.ml-btn{
-    margin-left: 2.5rem !important;
+.switch-input-lg {
+    width: 3rem;
+    height: 1.5rem;
 }
