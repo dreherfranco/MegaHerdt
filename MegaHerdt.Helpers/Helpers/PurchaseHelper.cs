@@ -10,9 +10,11 @@ namespace MegaHerdt.Helpers.Helpers
 {
     public class PurchaseHelper: BaseHelper<Purchase>
     {
-        public PurchaseHelper(Repository<Purchase> repository):
+        private readonly Repository<Article> articleRepository;
+        public PurchaseHelper(Repository<Purchase> repository, Repository<Article> articleRepository) :
             base(repository)
         {
+            this.articleRepository = articleRepository;
         }
 
         public override IQueryable<Purchase> Get(Expression<Func<Purchase, bool>> filter = null)
@@ -58,6 +60,10 @@ namespace MegaHerdt.Helpers.Helpers
 
             var payments = InstancePayments(purchase, paymentsQuantity);
             purchase.Bill.Payments = payments;
+
+            // Actualizar el stock de los articulos. Ya que en la reserva de la compra
+            // no se actualiza el stock porque todavia no se vendieron los articulos.
+            await this.UpdateArticlesStock(purchase.PurchasesArticles);
 
             await this.repository.Update(purchase);
             return purchase;
@@ -105,6 +111,21 @@ namespace MegaHerdt.Helpers.Helpers
         }
 
         #region Auxiliars Methods
+        /// <summary>
+        /// Actualiza el stock de los articulos involucrados en la compra.
+        /// </summary>
+        /// <param name="purchaseArticles"></param>
+        /// <returns></returns>
+        private async Task UpdateArticlesStock(List<PurchaseArticle> purchaseArticles)
+        {
+            foreach (var purchaseArticle in purchaseArticles)
+            {
+                var article = this.articleRepository.Get(x => x.Id == purchaseArticle.ArticleId).FirstOrDefault();
+                article.DiscountStock(purchaseArticle.ArticleQuantity);
+                await this.articleRepository.Update(article);
+            }
+        }
+
         /// <summary>
         /// Crea los pagos que se van a efectuar para almacenarlos en la BDD
         /// Se tiene en cuenta las cuotas y los precios de los articulos en el momento de efectuar el pago.
