@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ArticleProviderCreation } from 'src/app/models/ArticleProvider/ArticleProviderCreation';
 import { Provider } from 'src/app/models/Provider/Provider';
@@ -7,6 +8,11 @@ import { ArticleProvisionService } from 'src/app/services/articles-provisions/ar
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { DialogAddProvisionItemComponent } from '../dialog-add-provision-item/dialog-add-provision-item.component';
+import { ArticleProviderItem } from 'src/app/models/ArticleProvider/ArticleProviderItem';
+import { ArticleProviderVoucherUpdate } from 'src/app/models/ArticleProvider/ArticleProviderVoucherUpdate';
+import { ArticleProviderSerialNumber } from 'src/app/models/ArticleProviderSerialNumber/ArticleProviderSerialNumber';
+import { DialogShowSerialNumbersComponent } from '../dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 
 @Component({
   selector: 'app-create-article-provision',
@@ -15,44 +21,56 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class CreateArticleProvisionComponent implements OnInit {
   providers: Array<Provider>;
-  articles: Array<ArticleName>;
-  articleProvider: ArticleProviderCreation;
-  serialNumberToAdd: string = '';
+  // articles: Array<ArticleName>;
+   articleProvider: ArticleProviderCreation;
+  // serialNumberToAdd: string = '';
 
-  constructor(private _articleProvisionService: ArticleProvisionService, private _providerService: ProviderService, private _storageService: StorageService,
-    private _articleService: ArticleService) {
+  constructor(private _articleProvisionService: ArticleProvisionService, 
+              private _providerService: ProviderService,
+             private _storageService: StorageService,
+              public dialog: MatDialog) 
+  {
     this.providers = new Array<Provider>();
-    this.articles = new Array<ArticleName>();
-    this.articleProvider = new ArticleProviderCreation(0, 0, new File(new Array, ''), new Date(), 0, true);
-    this.updateArticleProvidersInterval();
+    this.articleProvider = new ArticleProviderCreation(0, new File(new Array, ''), new Date(), true);
   }
 
   ngOnInit(): void {
     this.loadProviders();
-    this.loadArticles();
   }
 
-  updateArticleProvidersInterval(){
-    setInterval(
-      ()=>{
-        this._articleProvisionService.updateArticleProviders();
-      },1000
-    );
-  }
   onSubmit(form: any) {
     if(this.articleProvider.add){ this.articleProvider.discountReason = '#'; }
-    this._articleProvisionService.sendFormData(this.articleProvider, "create");
-    setTimeout(
-      () => {
-        this._articleProvisionService.updateArticleProviders();
 
-        AlertService.successAlert('¡Provisión creada correctamente!').then((result) => {
-          if (result.isConfirmed) {     
-              // Limpia el formulario.           
+    var newArticleProvider = this.articleProvider;
+    for (var element of newArticleProvider.articlesItems) {
+      element.article = null;
+    }
+
+    this._articleProvisionService.create(newArticleProvider, this._storageService.getTokenValue()).subscribe({
+      next: (response) => {
+        if (response.error) {
+          AlertService.errorAlert('¡Error al intentar crear la Provisión!', response.error);
+        } else {
+          this._articleProvisionService.updateArticleProviders();
+
+          var articleProviderVoucherUpdate = new ArticleProviderVoucherUpdate(response.id, this.articleProvider.voucher);
+          this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher")
+          
+          AlertService.successAlert('!Provisión creada!', 'Provisión creada correctamente')
+          .then((result) => {
+            if (result.isConfirmed) {                
               window.location.reload();
-          }
-        });
-      }, 600)
+            }
+          });;
+
+        }
+      },
+      error: (err) => {
+        AlertService.errorAlert('¡Error al intentar crear la Provisión!', err.error.message);
+        console.log(err)
+      }
+    });
+
   }
 
   loadProviders() {
@@ -70,37 +88,40 @@ export class CreateArticleProvisionComponent implements OnInit {
     });
   }
 
-  loadArticles() {
-    this._articleService.getArticleNames().subscribe({
-      next: (response) => {
-        if (response.error) {
-          console.log("error al obtener articulos");
-        } else {
-          this.articles = response;
-        }
-      },
-      error: (err) => {
-        console.log(err)
-      }
-    })
-  }
+  
 
   onChange(fileInput: any) {
     this.articleProvider.voucher = <File>fileInput.target.files[0]
   }
 
-  discountStock(){
-    this.articleProvider.add = false;
-  }
-  addStock(){
-    this.articleProvider.add = true;
-  }
+  agregarItemProvision()
+  {
 
-  addSerialNumber(){
-    let newSerialNumber = this.serialNumberToAdd;
-    if(newSerialNumber !== "" && this.articleProvider.articleQuantity >= this.articleProvider.serialNumbers.length){
-      this.articleProvider.serialNumbers.push(newSerialNumber);
-      this.serialNumberToAdd = '';
-    }
+    const dialogRef = this.dialog.open(DialogAddProvisionItemComponent,
+      {
+        data: null,
+        height: '700px',
+        width: '700px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: ArticleProviderItem) => {
+      if(result != undefined){
+        this.articleProvider.articlesItems.push(result);
+      }
+    });
+  }
+  
+
+  showSerialNumbers(serialNumbers: ArticleProviderSerialNumber[]){     
+    const dialogRef = this.dialog.open(DialogShowSerialNumbersComponent,
+      {
+        data: serialNumbers,
+        height: '300px',
+        width: '300px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      /**logica para aplicar luego de cerrar el dialogo */
+    });
   }
 }

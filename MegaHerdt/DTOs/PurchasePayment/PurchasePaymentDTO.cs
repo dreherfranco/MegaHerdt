@@ -1,7 +1,4 @@
-﻿using MegaHerdt.API.DTOs.PurchaseArticle;
-using Org.BouncyCastle.Asn1.Ocsp;
-
-namespace MegaHerdt.API.DTOs.PurchasePayment
+﻿namespace MegaHerdt.API.DTOs.PurchasePayment
 {
     public class PurchasePaymentDTO
     {
@@ -9,6 +6,7 @@ namespace MegaHerdt.API.DTOs.PurchasePayment
         public float Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public int Tax { get; set; }
+        public PaymentMethodDTO? PaymentMethod { get; set; }
     }
 
   

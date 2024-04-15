@@ -33,8 +33,8 @@ declare global {
       // Articulos en el carrito.
       purchaseArticles: Array<PurchaseArticleCreation>;
   
-      // Si la compra tiene envio
-      hasShipment: boolean;
+      // Si la compra se paga en el local o online
+      payInPerson: boolean;
 
       // Id de la dirección a la que irá el envio
       shipmentAddressId: number;

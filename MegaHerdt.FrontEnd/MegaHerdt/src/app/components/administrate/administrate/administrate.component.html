@@ -46,7 +46,12 @@
             </li>
             <li role="menuitem">
                 <a [routerLink]="['administrate/administrate-provisions']" class="dropdown-item">
-                    Provisiones
+                    Ver o descontar provisiones
+                </a>
+            </li>
+            <li role="menuitem">
+                <a [routerLink]="['administrate/create-provisions']" class="dropdown-item">
+                    Crear Provisiones
                 </a>
             </li>
         </ul>
@@ -94,12 +99,13 @@
     <a id="button-nested" type="button" dropdownToggle
             class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
             aria-controls="dropdown-basic">
-            Compras <span class="caret"></span>
+            Ventas <span class="caret"></span>
         </a>
         <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
             <li role="menuitem" >
-                <a [routerLink]="['administrate/administrate-purchases-shipments']" class="dropdown-item">
-                    Compras y Envíos 
+                <a [routerLink]="['administrate/administrate-purchases-shipments/0']" class="dropdown-item">
+                    <!-- Compras y Envíos  -->
+                    Administrar Ventas
                 </a>
             </li>
             

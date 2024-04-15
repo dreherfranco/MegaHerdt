@@ -149,11 +149,13 @@ namespace MegaHerdt.API.Mapper
             #endregion Article
 
             #region ArticleProvider
-            CreateMap<ArticleProviderCreationDTO, ArticleProvider>()
-                .ForMember(x=>x.SerialNumbers, x=>x.MapFrom(this.MapArticleProviderSerialNumber));
+            CreateMap<ArticleProviderCreationDTO, ArticleProvider>();
             CreateMap<ArticleProviderUpdateDTO, ArticleProvider>();
             CreateMap<ArticleProvider, ArticleProviderDetailDTO>();
             CreateMap<ArticleProvider, ArticleProviderDTO>();
+
+            CreateMap<ArticleProviderItemDTO, ArticleProviderItem>().ReverseMap();
+            //  .ForMember(x => x.SerialNumbers, x => x.MapFrom(this.MapArticleProviderSerialNumber));
             #endregion ArticleProvider
 
             #region ArticleProviderSerialNumber
@@ -183,7 +185,10 @@ namespace MegaHerdt.API.Mapper
 
             #region Purchase
             CreateMap<Purchase, PurchaseDTO>()
+               .ForMember(dest => dest.PaymentsQuantity, opt => opt.Ignore())
                .ReverseMap();
+           
+
             CreateMap<Purchase, PurchaseDebtDTO>()
                .ForMember(dest => dest.Total, opt=>opt.MapFrom(src => src.TotalArticleAmount))
                .ForMember(dest => dest.ClientUserName, opt => opt.MapFrom(src => src.Client.UserName))
@@ -208,7 +213,11 @@ namespace MegaHerdt.API.Mapper
             #region PurchaseArticle
             CreateMap<PurchaseArticleDetailDTO, PurchaseArticleData>();
 
-            CreateMap<PurchaseArticle, PurchaseArticleDTO>();
+            CreateMap<PurchaseArticle, PurchaseArticleDTO>()
+                .ReverseMap();
+
+            CreateMap<PurchaseArticleSerialNumber, PurchaseArticleSerialNumberDTO>()
+                .ReverseMap();
             #endregion PurchaseArticle
 
             #region PurchasePayment
@@ -223,6 +232,9 @@ namespace MegaHerdt.API.Mapper
                 .ReverseMap();
             CreateMap<Payment, PurchasePaymentDTO>()
                 .ReverseMap();
+
+            CreateMap<PaymentMethod, PaymentMethodDTO>()
+              .ReverseMap();
             #endregion PurchasePayment
 
             #region TransportCompany
@@ -247,23 +259,23 @@ namespace MegaHerdt.API.Mapper
 
 
         #region ArticleProvider
-        public List<ArticleProviderSerialNumber> MapArticleProviderSerialNumber(ArticleProviderCreationDTO ArticleProviderCreationDTO, ArticleProvider ArticleProvider)
-        {
-            var result = new List<ArticleProviderSerialNumber>();
-            if (ArticleProviderCreationDTO.SerialNumbers == null) { return result; }
-            if (ArticleProviderCreationDTO.SerialNumbers != null && ArticleProviderCreationDTO.SerialNumbers[0] == null) { return result; }
+        //public List<ArticleProviderSerialNumber> MapArticleProviderSerialNumber(ArticleProviderItemDTO ArticleProviderCreationDTO, ArticleProviderItem ArticleProvider)
+        //{
+        //    var result = new List<ArticleProviderSerialNumber>();
+        //    if (ArticleProviderCreationDTO.SerialNumbers == null) { return result; }
+        //    if (ArticleProviderCreationDTO.SerialNumbers != null && ArticleProviderCreationDTO.SerialNumbers[0] == null) { return result; }
 
-            foreach (var serialNumber in ArticleProviderCreationDTO.SerialNumbers)
-            {
-                result.Add(
-                    new ArticleProviderSerialNumber()
-                    {
-                        SerialNumber = serialNumber,
-                        ArticleProviderId = ArticleProvider.Id
-                    });
-            }
-            return result;
-        }
+        //    foreach (var serialNumber in ArticleProviderCreationDTO.SerialNumbers)
+        //    {
+        //        result.Add(
+        //            new ArticleProviderSerialNumber()
+        //            {
+        //                SerialNumber = serialNumber,
+        //                ArticleProviderItemId = ArticleProvider.Id
+        //            });
+        //    }
+        //    return result;
+        //}
         #endregion ArticleProvider
 
         #region UserUtilsMethods

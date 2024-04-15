@@ -14,7 +14,8 @@
                 <tr>
                     <th mat-sort-header="date" scope="col">Fecha</th>
                     <th scope="col">Articulos</th>
-                    <th scope="col">Envio</th>
+                    <th scope="col">Estado</th>
+                    <!-- <th scope="col">Envio</th> -->
                     <th scope="col">Reclamar</th>
                 </tr>
             </thead>
@@ -28,13 +29,24 @@
                         <span class="data-user">{{purchase.date | date: 'dd/MM/yyyy'}} </span>
                     </th>
                     <th>
+                        <!-- VER ARTICULOS -->
                         <span *ngIf="purchase.purchasesArticles.length == 0" class="text-secondary"> No contiene
                             articulos</span>
                         <p *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
                             {{ purchaseArticle.article.name }} x {{ purchaseArticle.articleQuantity }}
+                            <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
+                             <button type="button" class="btn btn-primary col-sm-1" 
+                                     (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
+                                     title="Ver numeros de serie">
+                                <i class="bi bi-eye"></i>
+                            </button>
                         </p>
                     </th>
+
                     <th>
+                        <span class="data-user">{{getPurchaseState(purchase.state)}} </span>
+                    </th>
+                    <!-- <th>
                         <span *ngIf="purchase.shipment == null" class="text-secondary">
                             Esta compra no posee envío
                         </span>
@@ -51,7 +63,7 @@
                                 <p class="row"> URL de seguimiento del envio N°: {{purchase.shipment.trackingNumber}}</p>
                             </a>
                         </div>
-                    </th>
+                    </th> -->
                     <th>
                         <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']">
                             <i class="bi bi-exclamation-circle-fill"></i>

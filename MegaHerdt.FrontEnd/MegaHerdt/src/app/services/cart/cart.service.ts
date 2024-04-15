@@ -150,6 +150,10 @@ export class CartService {
       
       this.total.next(total);
     }
+    else{
+      // Valor inicial
+      this.total.next(0);
+    }
   }
 
   getCartFromStorage() {
@@ -257,5 +261,6 @@ export class CartService {
     localStorage.removeItem("cart");
     this.loadArticlesStock();
     this.updateCartArticlesDetails([]);
+    this.updateTotal();
   }
 }

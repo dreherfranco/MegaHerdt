@@ -13,6 +13,6 @@ namespace MegaHerdt.API.DTOs.User
         public DateTime CreatedDate { get; set; }
         public DateTime LastLogin { get; set; }
         public bool IsActive { get; set; }
-        public List<string> Roles { get; set; }
+        public List<string>? Roles { get; set; }
     }
 }

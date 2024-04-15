@@ -24,10 +24,12 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
         public DbSet<ArticleOffer> ArticlesOffers { get; set; }
         public DbSet<Provider> Providers { get; set; }
         public DbSet<ArticleProvider> ArticlesProviders { get; set; }
+        public DbSet<ArticleProviderItem> ArticleProviderItems { get; set; }
         public DbSet<ArticleProviderSerialNumber> ArticlesProviderSerialNumbers { get; set; }
         public DbSet<Purchase> Purchases { get; set;}
         public DbSet<PurchaseClaim> PurchasesClaims { get; set; }
         public DbSet<PurchaseArticle> PurchasesArticles { get; set; }
+        public DbSet<PurchaseArticleSerialNumber> PurchasesArticlesSerialNumbers { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
         public DbSet<TransportCompany> TransportCompanies { get; set; }
 
@@ -108,6 +110,16 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
                 .HasKey(x => new { x.ArticleId, x.PurchaseId });
             #endregion
 
+            #region Payments
+            modelBuilder.Entity<Payment>()
+                .HasOne(r => r.PaymentMethod)
+                .WithMany(u => u.Payments)
+                .HasForeignKey(r => r.PaymentMethodId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            //modelBuilder.Entity<Payment>().Navigation(p => p.PaymentMethod).AutoInclude();
+            #endregion
+
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
@@ -159,12 +171,12 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             var reparationState6 = new ReparationState()
             {
                 Id = 6,
-                Name = "ENTREGADO"
+                Name = "PAGADO"
             };
             var reparationState7 = new ReparationState()
             {
                 Id = 7,
-                Name = "PAGADO"
+                Name = "ENTREGADO"
             };
             var reparationState8 = new ReparationState()
             {

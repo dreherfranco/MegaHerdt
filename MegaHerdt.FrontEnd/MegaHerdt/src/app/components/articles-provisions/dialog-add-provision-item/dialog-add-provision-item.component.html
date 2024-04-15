@@ -1,0 +1,70 @@
+<div class="modal-header d-flex justify-content-end">
+    <button type="button" class="btn-close" (click)="closeModal()" title="Cerrar"></button>
+</div>
+
+<div class="container-fluid">
+    <p class="alert bg-custom-light d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center">¿Seguro que queres agregar este ítem a la provisión?</p>
+
+        <div class="form-group mb-3">
+            <label for="article"><b>(*)Artículo: </b></label>
+            <select (change)="setSelectedArticle($event)" class="form-select data-user" name="selectArticle" [(ngModel)]="articleProviderItem.articleId">
+                <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">
+                    {{article.name}}
+                </option>
+            </select>
+        </div>
+
+        <div class="row">
+            <div class="form-group mb-3 col-sm-4 p-2">
+                <label for="articleQuantity" class="mb-1 data-user">(*)Cantidad:</label>
+                <input id="articleQuantity" name="articleQuantity" class="form-control" type="number" min="0"
+                    #articleQuantity="ngModel" [(ngModel)]="articleProviderItem.articleQuantity" required>
+                <span *ngIf="articleQuantity.touched && !articleQuantity.valid" class="text-danger">Ingrese un numero
+                    correcto</span>
+            </div> 
+        </div>
+    
+        <div class="row">
+            <div class="form-group mb-3 col-sm-4 p-2">
+                <label for="purchasePrice" class="mb-1 data-user">(*)Precio de Compra:</label>
+                <input id="purchasePrice" name="purchasePrice" class="form-control" type="number" min="0"
+                    #purchasePrice="ngModel" [(ngModel)]="articleProviderItem.purchasePrice" required>
+                <span *ngIf="purchasePrice.touched && !purchasePrice.valid" class="text-danger">Ingrese un monto
+                    correcto</span>
+            </div> 
+        </div>
+
+         <div class="form-group mb-3 row">
+            <label for="serialNumber"><b>Agregar número de serie: </b></label>
+            <div class="col">
+                <input [(ngModel)]="serialNumberToAdd" id="serialNumber" name="serialNumber" #serialNumber="ngModel"
+                    class="form-control" placeholder="Ingrese un numero de serie" type="text" 
+                    [disabled]="articleProviderItem.articleQuantity <= articleProviderItem.serialNumbers.length"/>
+            </div>
+            <a class="btn btn-primary col-sm-2" (click)="addSerialNumber()" title="Agregar">
+                <i class="bi bi-plus-circle-fill"></i>
+            </a>
+        </div> 
+       
+         <div class="form-group mb-3">
+            <div class="btn-group" dropdown *ngIf="articleProviderItem.serialNumbers.length !== 0">
+                <button id="button-basic" dropdownToggle type="button"
+                    class="btn p-2 border alert alert-primary text-center dropdown-toggle"
+                    aria-controls="dropdown-basic">
+                    Ver números de serie agregados <span class="caret"></span>
+                </button>
+                <ul id="dropdown-basic" *dropdownMenu class="serial-number-list dropdown-menu m-0 p-0" role="menu"
+                    aria-labelledby="button-basic">
+                    <li *ngFor="let serialNumber of articleProviderItem.serialNumbers" class="dropdown-item border border-dark alert alert-primary m-0"
+                        role="menuitem">
+                        <b>S/N: {{ serialNumber.serialNumber }}</b>
+                    </li>
+                </ul>
+            </div>
+        </div> 
+
+        <div class=" d-flex justify-content-end flex-md-row flex-wrap">
+            <button class="btn btn-primary d-flex p-2 m-2 " (click)="confirm()">Aceptar</button>
+            <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
+        </div>
+</div>

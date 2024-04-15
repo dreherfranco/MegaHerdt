@@ -4,22 +4,55 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MegaHerdt.Models.Models
 {
-    public class ArticleProvider
+    public partial class ArticleProvider
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Provider")]
-        public int ProviderId { get; set; }
-        [ForeignKey("Article")]
-        public int ArticleId { get; set; }
-        public string Voucher { get; set; }
+
+        [ForeignKey(nameof(Provider))]
+        public int? ProviderId { get; set; }
+
+        public string Voucher { get; set; } = string.Empty;
         public DateTime ProvisionDate { get; set; }
-        public int ArticleQuantity { get; set; }
         public bool Add { get; set; } = true;
-        public string DiscountReason { get; set; }
-        public List<ArticleProviderSerialNumber> ?SerialNumbers { get; set; }
+        public string DiscountReason { get; set; } = string.Empty;
+        public List<ArticleProviderItem> ArticlesItems { get; set; } = new();
         public bool Enabled { get; set; } = true;
-        public Provider Provider { get; set; }
-        public Article Article { get; set; }
+        public Provider? Provider { get; set; } 
+    }
+
+    public partial class ArticleProvider
+    {
+        [NotMapped]
+        public List<string> ErrorMessages { get; set; } = new();
+        public bool IsBroken()
+        {
+            if (Add)
+            {
+                if(ProviderId == 0 || ProviderId is null)
+                {
+                    ErrorMessages.Add("El proveedor es obligatorio.");
+                }
+
+                if (!ArticlesItems.Any())
+                {
+                    ErrorMessages.Add("La provisión debe contener al menos un ítem.");
+                }
+                else
+                {
+                    foreach (var item in ArticlesItems) 
+                    {
+                        // Si se rompe una regla de negocio de ArticleProviderItem se agrega
+                        // a los mensajes de error de la entidad padre.
+                        if (item.IsBroken())
+                        {
+                            ErrorMessages.AddRange(item.ErrorMessages);
+                        }
+                    }
+                }
+            }
+
+            return ErrorMessages.Any();
+        }
     }
 }

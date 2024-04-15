@@ -3,6 +3,8 @@ using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Repository.Base;
 using MercadoPago.Client.Common;
 using MercadoPago.Client.Payment;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using mercadopago = MercadoPago.Resource.Payment;
 
 namespace MegaHerdt.Helpers.Helpers
@@ -11,20 +13,61 @@ namespace MegaHerdt.Helpers.Helpers
     {
         private readonly Repository<Purchase> purchaseRepository;
         private readonly Repository<Article> articleRepository;
-        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository, Repository<Article> articleRepository)
+        private readonly Repository<ArticleProviderItem> articleProviderItemRepository;
+        private readonly Repository<ArticleProviderSerialNumber> articleProviderSerialNumberRepository;
+     
+        public PurchasePaymentHelper(Repository<Purchase> purchaseRepository, 
+                                     Repository<Article> articleRepository,
+                                     Repository<ArticleProviderItem> articleProviderItemRepository,
+                                     Repository<ArticleProviderSerialNumber> articleProviderSerialNumberRepository)
         {
             this.purchaseRepository = purchaseRepository;
             this.articleRepository = articleRepository;
+            this.articleProviderItemRepository = articleProviderItemRepository;
+            this.articleProviderSerialNumberRepository = articleProviderSerialNumberRepository;
+        }
+
+        public async Task<Purchase> PurchaseReserved(PurchasePaymentMP purchasePaymentData)
+        {
+            var purchase = new Purchase()
+            {
+                ClientId = purchasePaymentData.ClientId,
+                // Para el estado reservado se utiliza otro flujo (otro metodo del controlador).
+                State = PurchaseState.Reserved,
+                PayInPerson = true,
+                Date = DateTime.Now
+            };
+            var payments = this.InstancePayments(purchasePaymentData);
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "00000000", SaleNumber = "00001", Payments = payments };
+            purchase.Bill = bill;
+
+            var purchasesArticles = new List<PurchaseArticle>();
+            foreach (var purchaseArticle in purchasePaymentData.PurchaseArticles)
+            {
+                var newPurchaseArticle = new PurchaseArticle()
+                {
+                    ArticleId = purchaseArticle.ArticleId,
+                    ArticlePriceAtTheMoment = purchaseArticle.ArticlePriceAtTheMoment,
+                    ArticleQuantity = purchaseArticle.ArticleQuantity
+                };
+                purchasesArticles.Add(newPurchaseArticle);
+            }
+            purchase.PurchasesArticles = purchasesArticles;
+
+            return await this.purchaseRepository.Add(purchase);
         }
 
         public async Task<mercadopago.Payment> AddPaymentMP(PurchasePaymentMP purchasePaymentData)
         {
             try
             {
+                // Redondear el monto, porque sino falla la transacción.
+                var amountNormalized = decimal.Round(purchasePaymentData.Transaction_Amount.GetValueOrDefault(0));
+
                 // Construyo la Request para mandar a la API de MercadoPago y crear el pago.
                 var paymentRequest = new PaymentCreateRequest
                 {
-                    TransactionAmount = purchasePaymentData.Transaction_Amount,
+                    TransactionAmount = amountNormalized,
                     Token = purchasePaymentData.Token,
                     Description = purchasePaymentData.Description,
                     Installments = purchasePaymentData.Installments,
@@ -85,9 +128,16 @@ namespace MegaHerdt.Helpers.Helpers
         private async Task<Purchase> CreatePurchase(PurchasePaymentMP purchasePaymentData)
         {
 
-            var purchase = new Purchase() { ClientId = purchasePaymentData.ClientId, Date = DateTime.Now };
+            var purchase = new Purchase() 
+            {
+                ClientId = purchasePaymentData.ClientId,
+                // Para el estado reservado se utiliza otro flujo (otro metodo del controlador).
+                State = PurchaseState.Paid,
+                PayInPerson = false,
+                Date = DateTime.Now 
+            };
             var payments = this.InstancePayments(purchasePaymentData);
-            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "12333555", SaleNumber = "00001", Payments = payments };
+            var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "00000000", SaleNumber = "00001", Payments = payments };
             purchase.Bill = bill;
 
             var purchasesArticles = new List<PurchaseArticle>();
@@ -99,16 +149,19 @@ namespace MegaHerdt.Helpers.Helpers
                     ArticlePriceAtTheMoment = purchaseArticle.ArticlePriceAtTheMoment,
                     ArticleQuantity = purchaseArticle.ArticleQuantity
                 };
+
+                await AssignSerialNumbers(newPurchaseArticle);
                 purchasesArticles.Add(newPurchaseArticle);
             }
             purchase.PurchasesArticles = purchasesArticles;
 
-            // Si la compra tiene Envio se debe asignar el correspondiente seleccionado.
-            if (purchasePaymentData.HasShipment)
-            {
-                if (purchasePaymentData.ShipmentAddressId is null || purchasePaymentData.ShipmentAddressId == 0) throw new Exception("invalid_address");
-                purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId.Value };
-            }
+
+            //// Si la compra tiene Envio se debe asignar el correspondiente seleccionado.
+            //if (purchasePaymentData.HasShipment)
+            //{
+            //    if (purchasePaymentData.ShipmentAddressId is null || purchasePaymentData.ShipmentAddressId == 0) throw new Exception("invalid_address");
+            //    purchase.Shipment = new Shipment() { AddressId = purchasePaymentData.ShipmentAddressId.Value };
+            //}
             return await this.purchaseRepository.Add(purchase);
         }
 
@@ -126,8 +179,7 @@ namespace MegaHerdt.Helpers.Helpers
                 await this.articleRepository.Update(article);
             }
         }
-  
-    
+
         /// <summary>
         /// Crea los pagos que se van a efectuar para almacenarlos en la BDD
         /// Se tiene en cuenta las cuotas y los precios de los articulos en el momento de efectuar el pago.
@@ -160,6 +212,40 @@ namespace MegaHerdt.Helpers.Helpers
 
         #endregion
 
+
+        #region Asignar numeros de serie
+        /// <summary>
+        /// Asignar numeros de serie a la compra 
+        /// y actualizar ArticleProviderSerialNumber.EnStock = false
+        /// </summary>
+        /// <param name="purchaseArticle"></param>
+        /// <returns></returns>
+        private async Task AssignSerialNumbers(PurchaseArticle purchaseArticle)
+        {
+
+            // Items de donde voy a obtener los numeros de serie
+            // Obtengo los numeros de serie que estan en stock solamente.
+            var articleProviderItemsSerialNumbers = articleProviderItemRepository.Get(i => i.ArticleId == purchaseArticle.ArticleId)
+                                            .Include(i => i.SerialNumbers)
+                                            .SelectMany(i => i.SerialNumbers)
+                                            .Where(i => i.EnStock)
+                                            // Si tiene 3 articulos la compra solo tomo 3 numeros de serie
+                                            .Take(purchaseArticle.ArticleQuantity)
+                                            .ToList();
+
+            foreach (var serialNumberData in articleProviderItemsSerialNumbers)
+            {
+                var purchaseSerialNumber = new PurchaseArticleSerialNumber(serialNumberData.SerialNumber);
+                // Agregar el numero de seria a los articulos de la compra
+                purchaseArticle.SerialNumbers.Add(purchaseSerialNumber);
+
+                // Actualizar el numero de serie correspondiente a la tabla ArticleProviderSerialNumber
+                serialNumberData.EnStock = false;
+                await articleProviderSerialNumberRepository.Update(serialNumberData);
+            }
+
+        }
+        #endregion
 
     }
 }

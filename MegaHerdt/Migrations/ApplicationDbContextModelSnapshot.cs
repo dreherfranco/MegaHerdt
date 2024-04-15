@@ -195,12 +195,6 @@ namespace MegaHerdt.API.Migrations
                     b.Property<bool>("Add")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ArticleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ArticleQuantity")
-                        .HasColumnType("int");
-
                     b.Property<string>("DiscountReason")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -208,7 +202,7 @@ namespace MegaHerdt.API.Migrations
                     b.Property<bool>("Enabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("ProviderId")
+                    b.Property<int?>("ProviderId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ProvisionDate")
@@ -220,11 +214,38 @@ namespace MegaHerdt.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
-
                     b.HasIndex("ProviderId");
 
                     b.ToTable("ArticlesProviders");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProviderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("ArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ArticleQuantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProvisionId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("PurchasePrice")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArticleId");
+
+                    b.HasIndex("ProvisionId");
+
+                    b.ToTable("ArticleProviderItems");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProviderSerialNumber", b =>
@@ -235,15 +256,18 @@ namespace MegaHerdt.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ArticleProviderId")
+                    b.Property<int>("ArticleProviderItemId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("EnStock")
+                        .HasColumnType("bit");
 
                     b.Property<string>("SerialNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleProviderId");
+                    b.HasIndex("ArticleProviderItemId");
 
                     b.ToTable("ArticlesProviderSerialNumbers");
                 });
@@ -389,8 +413,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "15b0d673-3c84-403c-a7d4-ce645139faa5",
-                            CreatedDate = new DateTime(2023, 7, 10, 21, 52, 9, 863, DateTimeKind.Utc).AddTicks(5282),
+                            ConcurrencyStamp = "b104d31c-b482-42d1-8380-9534f70b19a8",
+                            CreatedDate = new DateTime(2024, 4, 14, 21, 43, 55, 228, DateTimeKind.Utc).AddTicks(1450),
                             Dni = "42464099",
                             Email = "megaherdt.electronica@hotmail.com",
                             EmailConfirmed = false,
@@ -404,7 +428,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "41077192-6b01-4efc-a49f-f0deb4fedb08",
+                            SecurityStamp = "eb2444b4-e0bf-4023-9f62-f969d95e6e3e",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "megaherdt.electronica@hotmail.com"
@@ -413,8 +437,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48d-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "55c82325-70d6-45ef-9421-84f310438600",
-                            CreatedDate = new DateTime(2023, 7, 10, 21, 52, 9, 863, DateTimeKind.Utc).AddTicks(5295),
+                            ConcurrencyStamp = "fcaf63f0-1357-45ce-90d0-558b72dc2013",
+                            CreatedDate = new DateTime(2024, 4, 14, 21, 43, 55, 228, DateTimeKind.Utc).AddTicks(1460),
                             Dni = "45698746",
                             Email = "conefecto77@gmail.com",
                             EmailConfirmed = false,
@@ -428,7 +452,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "217b3aaa-15f8-4c8f-9b22-afa9a4d7c78a",
+                            SecurityStamp = "b30daef0-2f0a-4247-9410-28ec63f70d45",
                             Surname = "Zappa",
                             TwoFactorEnabled = false,
                             UserName = "conefecto77@gmail.com"
@@ -576,6 +600,12 @@ namespace MegaHerdt.API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("PayInPerson")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("State")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
@@ -602,6 +632,33 @@ namespace MegaHerdt.API.Migrations
                     b.HasIndex("PurchaseId");
 
                     b.ToTable("PurchasesArticles");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseArticleSerialNumber", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("PurchaseArticleArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseArticleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchaseArticlePurchaseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SerialNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseArticleArticleId", "PurchaseArticlePurchaseId");
+
+                    b.ToTable("PurchasesArticlesSerialNumbers");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseClaim", b =>
@@ -858,13 +915,13 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = 6,
                             Enabled = true,
-                            Name = "ENTREGADO"
+                            Name = "PAGADO"
                         },
                         new
                         {
                             Id = 7,
                             Enabled = true,
-                            Name = "PAGADO"
+                            Name = "ENTREGADO"
                         },
                         new
                         {
@@ -966,14 +1023,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "e7416a23-7328-4472-a6c0-686e3f5684e0",
+                            ConcurrencyStamp = "1d519295-af9f-43ac-8143-68c7878a0f7d",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "6b3daea4-0801-4b3b-9700-05b342177aba",
+                            ConcurrencyStamp = "4d89ce03-0c90-46b2-9eb5-c3324e6e0a3e",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
@@ -1135,28 +1192,37 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
                 {
-                    b.HasOne("MegaHerdt.Models.Models.Article", "Article")
+                    b.HasOne("MegaHerdt.Models.Models.Provider", "Provider")
                         .WithMany("ArticlesProviders")
+                        .HasForeignKey("ProviderId");
+
+                    b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProviderItem", b =>
+                {
+                    b.HasOne("MegaHerdt.Models.Models.Article", "Article")
+                        .WithMany()
                         .HasForeignKey("ArticleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MegaHerdt.Models.Models.Provider", "Provider")
-                        .WithMany("ArticlesProviders")
-                        .HasForeignKey("ProviderId")
+                    b.HasOne("MegaHerdt.Models.Models.ArticleProvider", "Provision")
+                        .WithMany("ArticlesItems")
+                        .HasForeignKey("ProvisionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Article");
 
-                    b.Navigation("Provider");
+                    b.Navigation("Provision");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProviderSerialNumber", b =>
                 {
-                    b.HasOne("MegaHerdt.Models.Models.ArticleProvider", null)
+                    b.HasOne("MegaHerdt.Models.Models.ArticleProviderItem", null)
                         .WithMany("SerialNumbers")
-                        .HasForeignKey("ArticleProviderId")
+                        .HasForeignKey("ArticleProviderItemId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1187,7 +1253,7 @@ namespace MegaHerdt.API.Migrations
                     b.HasOne("MegaHerdt.Models.Models.PaymentMethod", "PaymentMethod")
                         .WithMany("Payments")
                         .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Bill");
@@ -1234,6 +1300,15 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("Article");
 
                     b.Navigation("Purchase");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseArticleSerialNumber", b =>
+                {
+                    b.HasOne("MegaHerdt.Models.Models.PurchaseArticle", null)
+                        .WithMany("SerialNumbers")
+                        .HasForeignKey("PurchaseArticleArticleId", "PurchaseArticlePurchaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseClaim", b =>
@@ -1420,8 +1495,6 @@ namespace MegaHerdt.API.Migrations
 
             modelBuilder.Entity("MegaHerdt.Models.Models.Article", b =>
                 {
-                    b.Navigation("ArticlesProviders");
-
                     b.Navigation("Offers");
 
                     b.Navigation("PurchaseArticles");
@@ -1440,6 +1513,11 @@ namespace MegaHerdt.API.Migrations
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProvider", b =>
+                {
+                    b.Navigation("ArticlesItems");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.ArticleProviderItem", b =>
                 {
                     b.Navigation("SerialNumbers");
                 });
@@ -1482,6 +1560,11 @@ namespace MegaHerdt.API.Migrations
                     b.Navigation("PurchasesClaims");
 
                     b.Navigation("Shipment");
+                });
+
+            modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseArticle", b =>
+                {
+                    b.Navigation("SerialNumbers");
                 });
 
             modelBuilder.Entity("MegaHerdt.Models.Models.PurchaseClaim", b =>

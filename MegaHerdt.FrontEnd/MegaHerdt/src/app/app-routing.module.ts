@@ -44,6 +44,8 @@ import { PurchaseSuccessComponent } from './components/purchase-payments/purchas
 import { PurchaseFailedComponent } from './components/purchase-payments/purchase-failed/purchase-failed.component';
 import { ReparationPaymentSuccessComponent } from './components/reparationPayments/reparation-payment-success/reparation-payment-success.component';
 import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
+import { CreateProviderComponent } from './components/providers/create-provider/create-provider.component';
+import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
 // import { ArticlesByCategoryComponent } from './components/articles/articles-by-category/articles-by-category.component';
 // import { ArticlesByBrandComponent } from './components/articles/articles-by-brand/articles-by-brand.component';
 // import { ArticlesInOfferComponent } from './components/articles/articles-in-offer/articles-in-offer.component';
@@ -102,6 +104,10 @@ const routes: Routes = [
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 
+    path: 'administrate/create-provisions', component: CreateArticleProvisionComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
     path: 'administrate/administrate-reparation-states', component: AdministrateReparationStatesComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
@@ -113,11 +119,7 @@ const routes: Routes = [
     path: 'administrate/administrate-reparations/edit/:state', 
       component: EditReparationsComponent, 
       canActivate: [AuthGuard, RoleGuard], 
-      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] },
-    /*  children: [
-        { path: '', redirectTo: 'INGRESO', pathMatch: 'full' }, // Ruta por defecto
-        { path: ':state', component: EditReparationsComponent } // Ruta con parámetro
-      ]*/
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }
   },
   { 
     path: 'administrate/show-reparation-claims', component: ShowReparationClaimsComponent, canActivate: [AuthGuard, RoleGuard], 
@@ -140,8 +142,10 @@ const routes: Routes = [
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 
-    path: 'administrate/administrate-purchases-shipments', component: AdministratePurchasesShipmentsComponent, canActivate: [AuthGuard, RoleGuard], 
-      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+    path: 'administrate/administrate-purchases-shipments/:state',
+    component: AdministratePurchasesShipmentsComponent, 
+    canActivate: [AuthGuard, RoleGuard], 
+    data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 
     path: 'administrate/administrate-purchases-shipments/purchase/:purchaseId/assign-shipment', component: AssignPurchaseShipmentComponent, canActivate: [AuthGuard, RoleGuard], 

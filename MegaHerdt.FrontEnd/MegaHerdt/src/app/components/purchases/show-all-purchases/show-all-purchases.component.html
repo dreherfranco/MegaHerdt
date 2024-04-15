@@ -1,4 +1,38 @@
 <div class="container-fluid">
+    <div class="d-flex flex-row align-items-center bg-light">
+        <div class="col-sm-4">
+          <div class="data-user m-3 mb-0 p-1"><i class="bi bi-funnel-fill"></i>Filtrar por estado</div>
+          <select class="form-select data-user m-3 mt-1 w-75" 
+          name="selectPurchaseState"
+            [(ngModel)]="purchaseStateSelected"
+            (change)="onPurchaseStateChange()">
+            <option class="data-user" [ngValue]="this.purchaseStatesEnum.Reserved">
+              Reservada
+            </option>
+            <option class="data-user" [ngValue]="this.purchaseStatesEnum.Paid">
+              Pagada
+            </option>
+            <option class="data-user" [ngValue]="this.purchaseStatesEnum.Delivered">
+              Entregada
+            </option>
+            <option class="data-user" [ngValue]="this.purchaseStatesEnum.CancelledReservation">
+              Reserva Cancelada
+            </option>
+          </select>
+        </div>
+      
+        <!-- <div class="mt-5 col-md-6">
+          <div class="input-group mb-3">
+            <div class="input-group-append">
+                <div class="input-group-text bg-primary">
+                  <i class="bi bi-search text-white"></i>
+                </div>
+              </div>
+            <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar reparaciones">
+          </div>
+        </div> -->
+      </div>
+
     <div class="table-responsive">
         <table class="table" *ngIf="purchases.length != 0">
             <thead>
@@ -6,8 +40,16 @@
                     <th scope="col">Fecha</th>
                     <th scope="col">Email cliente</th>
                     <th scope="col">Articulos</th>
-                    <th scope="col">Envio</th>
-                    <th scope="col">Agregar Envio</th>
+                    <th *ngIf="purchaseStateSelected == purchaseStatesEnum.Paid || purchaseStateSelected == purchaseStatesEnum.Delivered" scope="col">
+                        Cantidad de Pagos
+                    </th>
+                    <th *ngIf="purchaseStateSelected == purchaseStatesEnum.Paid || purchaseStateSelected == purchaseStatesEnum.Delivered" scope="col">
+                        Monto Total
+                    </th>
+                    <th scope="col" *ngIf="purchaseStateSelected !== purchaseStatesEnum.CancelledReservation"></th>
+                    <th scope="col" *ngIf="purchaseStateSelected == purchaseStatesEnum.Reserved"></th>
+                    <!-- <th scope="col">Envio</th> -->
+                    <!-- <th scope="col">Agregar Envio</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -26,42 +68,40 @@
                         <span *ngIf="purchase.purchasesArticles.length == 0" class="text-secondary"> No contiene
                             articulos</span>
                         <p *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
-                            {{ purchaseArticle.article.name }}
-                        </p>
-                    </th>
-                    <th>
-                        <span *ngIf="purchase.shipment == null" class="text-secondary">
-                            Esta compra no posee envío
-                        </span>
-                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" class="text-secondary">
-                            No se ha asignado un envío aún
-                        </span>
-                        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
-                          <b> Dirección: </b> {{purchase.shipment.address.streetName}}
-                           {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}},
-                           {{purchase.shipment.address.province}}
-
-                           <hr>
-
-                           <b> Empresa de Transporte: </b> {{purchase.shipment.transportCompany.name}}
-                        
-                           <hr>
-
-                           <b> Monto: </b> {{ purchase.shipment.amount }}
-                        </span>
-                    </th>
-                    <th>
-                        <button *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" 
-                             class="btn btn-primary" 
-                             [routerLink]="['purchase', purchase.id, 'assign-shipment']" > 
-                             <i class="bi bi-plus-circle"></i> 
+                            {{ purchaseArticle.article.name }} x {{ purchaseArticle.articleQuantity }}
+                             <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
+                         <button type="button" class="btn btn-primary col-sm-2" 
+                                (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
+                                title="Ver numeros de serie">
+                            <i class="bi bi-eye"></i>
                         </button>
-                        <p class="font-weight-normal" *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null"> 
-                            Ya se encuentran definido el envío para esta compra
-                            <i class="bi bi-check-lg font-weight-bold text-success"></i>
-                        </p>
-                        <p class="text-secondary" *ngIf="purchase.shipment == null"> Esta compra no posee envío </p>
+                        </p> 
                     </th>
+
+                    <!-- <th>
+                        <span class="data-user">{{getPurchaseStateName(purchase.state)}} </span>
+                    </th> -->
+
+                    <th *ngIf="purchaseStateSelected == purchaseStatesEnum.Paid || purchaseStateSelected == purchaseStatesEnum.Delivered">
+                        <span class="data-user"> {{purchase.bill.payments.length}} </span>
+                    </th>
+
+                    <th *ngIf="purchaseStateSelected == purchaseStatesEnum.Paid || purchaseStateSelected == purchaseStatesEnum.Delivered">
+                        <span class="data-user"> {{ getTotal(purchase) }} </span>
+                    </th>
+
+                    <td *ngIf="purchaseStateSelected !== purchaseStatesEnum.CancelledReservation">
+                        <button class="btn btn-primary col-sm-12" title="Editar" 
+                                (click)="openUpdateDialog(purchase)"> 
+                                   <i class="bi bi-pencil-square"></i>
+                        </button>
+                    </td>
+                    <td  *ngIf="purchaseStateSelected == purchaseStatesEnum.Reserved">
+                        <button class="btn btn-danger col-sm-12" title="Cancelar" 
+                                (click)="openCancelReservationDialog(purchase)"> 
+                                   <i class="bi bi-x-circle-fill"></i>
+                        </button>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -73,3 +113,40 @@
         </pagination-controls>
     </div>
 </div>
+
+
+    <!-- FILAS DE LA TABLA PARA LOS ENVIOS -->
+
+        <!-- <th>
+        <span *ngIf="purchase.shipment == null" class="text-secondary">
+            Esta compra no posee envío
+        </span>
+        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" class="text-secondary">
+            No se ha asignado un envío aún
+        </span>
+        <span *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null" class="data-user">
+            <b> Dirección: </b> {{purchase.shipment.address.streetName}}
+            {{purchase.shipment.address.streetNumber}} - {{purchase.shipment.address.townName}},
+            {{purchase.shipment.address.province}}
+
+            <hr>
+
+            <b> Empresa de Transporte: </b> {{purchase.shipment.transportCompany.name}}
+        
+            <hr>
+
+            <b> Monto: </b> {{ purchase.shipment.amount }}
+        </span>
+    </th> -->
+    <!-- <th>
+        <button *ngIf="purchase.shipment != null && purchase.shipment.transportCompany == null" 
+                class="btn btn-primary" 
+                [routerLink]="['purchase', purchase.id, 'assign-shipment']" > 
+                <i class="bi bi-plus-circle"></i> 
+        </button>
+        <p class="font-weight-normal" *ngIf="purchase.shipment != null && purchase.shipment.transportCompany != null"> 
+            Ya se encuentran definido el envío para esta compra
+            <i class="bi bi-check-lg font-weight-bold text-success"></i>
+        </p>
+        <p class="text-secondary" *ngIf="purchase.shipment == null"> Esta compra no posee envío </p>
+    </th> -->

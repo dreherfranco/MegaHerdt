@@ -50,13 +50,15 @@ namespace MegaHerdt.Helpers.Helpers
             if (!isFinalState(entity))
             {
                 entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
-                // Si el estado es distinto de reparado
+                // Si el estado es distinto de entregado
                 if (entity.ReparationStateId != 7)
                 {
                     
                     ++entity.ReparationStateId;
                 }
-                else
+                
+                
+                if(billIsValid(entity.Bill))
                 {
                     entity.Facturada = true;
                 }
@@ -66,6 +68,11 @@ namespace MegaHerdt.Helpers.Helpers
             {
                 throw new Exception("Reparation: couldn't update," + entity.ReparationStateId + "is final state");
             }
+        }
+
+        private bool billIsValid(Bill? bill)
+        {
+            return bill is not null && bill.Number != "00000000";
         }
 
         public async Task UpdateBudget(Reparation entity, bool isAccepted/*, DateTime approximateTime*/)

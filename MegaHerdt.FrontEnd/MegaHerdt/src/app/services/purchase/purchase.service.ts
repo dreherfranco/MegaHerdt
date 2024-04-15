@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Purchase } from 'src/app/models/Purchase/Purchase';
 import { Shipment } from 'src/app/models/Shipment/Shipment';
 import { Global } from 'src/app/utils/Global';
 
@@ -26,6 +27,15 @@ export class PurchaseService {
     return this._http.get(this.url, { headers: this.headers });
   }
 
+  /**
+   * Filtrar por PurchaseState.
+   * Obtiene todas las compras de todos los usuarios (solo visible para empleado y admin)
+   */
+  getByState(state: number, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url+ "/get-by-state/" + state, { headers: this.headers });
+  }
+
   getPurchaseById(purchaseId: number, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     return this._http.get(this.url + "/" + purchaseId, { headers: this.headers });
@@ -35,5 +45,29 @@ export class PurchaseService {
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(shipment);
     return this._http.post(this.url + "/shipment/update", params , { headers: this.headers });
+  }
+
+  fromReservedToPaid(purchase: Purchase, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(purchase);
+    return this._http.post(this.url + "/from-reserved-to-paid", params, { headers: this.headers });
+  }
+
+  fromReservedToCancelledReservation(purchase: Purchase, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(purchase);
+    return this._http.post(this.url + "/from-reserved-to-cancelled-reservation", params, { headers: this.headers });
+  }
+
+  fromPaidToDelivered(purchase: Purchase, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(purchase);
+    return this._http.post(this.url + "/from-paid-to-delivered", params, { headers: this.headers });
+  }
+
+  fromDeliveredToDelivered(purchase: Purchase, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(purchase);
+    return this._http.post(this.url + "/from-delivered-to-delivered", params, { headers: this.headers });
   }
 }

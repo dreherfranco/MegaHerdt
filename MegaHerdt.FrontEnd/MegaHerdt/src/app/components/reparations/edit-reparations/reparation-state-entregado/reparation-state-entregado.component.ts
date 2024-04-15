@@ -9,6 +9,7 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
+import { UpdateReparationStateENTREGADOComponent } from './update-reparation-state-entregado/update-reparation-state-entregado.component';
 
 @Component({
   selector: 'app-reparation-state-entregado',
@@ -36,7 +37,7 @@ export class ReparationStateENTREGADOComponent implements OnInit {
   }
 
   loadReparations() {
-    let stateId = 6;
+    let stateId = 7;
     this._reparationService.getByStateId(stateId, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
@@ -53,10 +54,15 @@ export class ReparationStateENTREGADOComponent implements OnInit {
   }
 
   openDialogUpdate(reparation: Reparation) {
-    AlertService.warningAlert('¿Seguro que quieres pasar al estado PAGADO?')
-    .then((result) => {
-      if (result.isConfirmed) {     
-          this.update(reparation);
+    const dialogRef = this.dialog.open(UpdateReparationStateENTREGADOComponent,
+      {
+        disableClose: true,
+        data: reparation
+      });
+
+    dialogRef.afterClosed().subscribe((result: Reparation) => {
+      if (result != undefined) {
+        this.update(result);
       }
     });
   }
@@ -74,7 +80,7 @@ export class ReparationStateENTREGADOComponent implements OnInit {
           .then((result) => {
             this._router.navigate([
               '/administrate/administrate-reparations/edit', 
-              ReparationStatesEnum.PAGADO
+              ReparationStatesEnum.ENTREGADO
             ]);
           });
         }

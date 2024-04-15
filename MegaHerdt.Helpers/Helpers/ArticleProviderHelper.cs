@@ -2,12 +2,7 @@
 using MegaHerdt.Models.Models;
 using MegaHerdt.Repository.Base;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MegaHerdt.Helpers.Helpers
 {
@@ -22,10 +17,13 @@ namespace MegaHerdt.Helpers.Helpers
         {
             return repository.Get(filter)
                 .Include(x => x.Provider)
-                .Include(x => x.Article)
-                .Include(x => x.SerialNumbers)
+                .Include(x => x.ArticlesItems)
+                    .ThenInclude(x => x.SerialNumbers)
+                .Include(x => x.ArticlesItems)
+                    .ThenInclude(x => x.Article)
                 .OrderByDescending(x => x.ProvisionDate);
         }
-     
+
+
     }
 }

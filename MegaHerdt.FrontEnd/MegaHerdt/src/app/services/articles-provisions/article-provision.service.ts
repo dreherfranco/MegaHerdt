@@ -24,7 +24,6 @@ export class ArticleProvisionService {
     })
   }
 
-
   sendFormData(articleProvider: any, urlAction:string){
     const formData: FormData = new FormData();
       var xhr = new XMLHttpRequest();
@@ -36,6 +35,14 @@ export class ArticleProvisionService {
       //  xhr.setRequestHeader('Authorization',token);
         xhr.open('POST', Global.url + "ArticlesProviders/"+ urlAction, true );  
         xhr.send(formData);
+  }
+  
+  create(articleProvider: any, token:string): Observable<any>
+  {
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(articleProvider);
+    return this._http.post(this.url+"/create", params, { headers: this.headers });
+  
   }
 
   update(article: any, token: string): Observable<any>{

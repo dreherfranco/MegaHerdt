@@ -1,23 +1,19 @@
-import { ArticleProviderSerialNumberCreation } from "../ArticleProviderSerialNumber/ArticleProviderSerialNumberCreation";
+import { ArticleProviderItem } from "./ArticleProviderItem";
 
 export class ArticleProviderCreation{
     providerId: number;
-    articleId: number;
     voucher: File;
     provisionDate: Date;
-    articleQuantity: number;
     add: boolean;
     discountReason: string;
-    serialNumbers: Array<string>;
-    constructor(providerId: number, articleId: number, voucher: File,provisionDate: Date,articleQuantity: number, add: boolean)
+    articlesItems: Array<ArticleProviderItem>;
+    constructor(providerId: number,  voucher: File,provisionDate: Date, add: boolean)
     {
         this.providerId = providerId;
-        this.articleId = articleId;
         this.voucher = voucher;
         this.provisionDate = provisionDate;
-        this.articleQuantity = articleQuantity;
         this.add = add;
         this.discountReason='';
-        this.serialNumbers = [];
+        this.articlesItems = [];
     }
 }

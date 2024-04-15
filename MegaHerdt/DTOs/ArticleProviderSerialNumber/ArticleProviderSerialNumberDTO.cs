@@ -4,5 +4,6 @@
     {
         public int Id { get; set; }
         public string ?SerialNumber { get; set; }
+        public bool EnStock { get; set; } = true;
     }
 }

@@ -21,28 +21,46 @@ namespace MegaHerdt.Services.Services
 
         public override async Task<ArticleProvider> Create(ArticleProvider articleProvider)
         {
-            if (articleProvider.Add)
+            if (!articleProvider.IsBroken())
             {
-                await this.AddProvision(articleProvider);
+
+                if (articleProvider.Add)
+                {
+                    await this.AddProvision(articleProvider);
+                }
+                else
+                {
+                    await this.DiscountProvision(articleProvider);
+                }
+                return await this.helper.Create(articleProvider);
+
             }
             else
             {
-                await this.DiscountProvision(articleProvider);
+                var errorMessage = string.Join("\n", articleProvider.ErrorMessages);
+                throw new Exception(errorMessage);
             }
-            return await this.helper.Create(articleProvider);
-
         }
 
         public async Task AddProvision(ArticleProvider articleProvider)
         {
-            Expression<Func<Article, bool>> filter = x => x.Id == articleProvider.ArticleId;
-            await this._articleHelper.AddStock(filter, articleProvider.ArticleQuantity);
+            // MEJORAR ESTA LOGICA, QUE NO SE HAGA EL FOREACH EN ESTE TRAMO.
+            foreach (var item in articleProvider.ArticlesItems)
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == item.ArticleId;
+                await this._articleHelper.AddStock(filter, item.ArticleQuantity);
+            }
+           
         }
 
         public async Task DiscountProvision(ArticleProvider articleProvider)
         {
-            Expression<Func<Article, bool>> filter = x => x.Id == articleProvider.ArticleId;
-            await this._articleHelper.DiscountStock(filter, articleProvider.ArticleQuantity);
+            // MEJORAR ESTA LOGICA, QUE NO SE HAGA EL FOREACH EN ESTE TRAMO.
+            foreach (var item in articleProvider.ArticlesItems)
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == item.ArticleId;
+                await this._articleHelper.DiscountStock(filter, item.ArticleQuantity);
+            }
         }
     }
 }

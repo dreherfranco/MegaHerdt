@@ -127,13 +127,16 @@ namespace MegaHerdt.API.Controllers
 
             foreach (var articleProvider in articleProvidersDb)
             {
-                var articleProviderVoucherName = articleProvider.Voucher.Split("/").LastOrDefault();
-                var articlePath = Path.Combine(env.WebRootPath, containerArticlesProviders, articleProviderVoucherName);
-                var articleBackupPath = Path.Combine(folder, articleProviderVoucherName);
-
-                if (!System.IO.File.Exists(articleBackupPath))
+                if (!string.IsNullOrEmpty(articleProvider.Voucher))
                 {
-                    System.IO.File.Copy(articlePath, articleBackupPath);
+                    var articleProviderVoucherName = articleProvider.Voucher.Split("/").LastOrDefault();
+                    var articlePath = Path.Combine(env.WebRootPath, containerArticlesProviders, articleProviderVoucherName);
+                    var articleBackupPath = Path.Combine(folder, articleProviderVoucherName);
+
+                    if (!System.IO.File.Exists(articleBackupPath))
+                    {
+                        System.IO.File.Copy(articlePath, articleBackupPath);
+                    }
                 }
 
             }

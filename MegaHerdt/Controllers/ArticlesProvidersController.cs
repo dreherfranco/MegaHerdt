@@ -63,29 +63,29 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpPost("create")]     
-        public async Task<ActionResult<bool>> Post([FromForm] ArticleProviderCreationDTO articleProviderDTO)
+        public async Task<ActionResult<ArticleProviderDTO>> Post([FromBody] ArticleProviderCreationDTO articleProviderDTO)
         {
             try
             {
                 var articleProvider = Mapper.Map<ArticleProvider>(articleProviderDTO);
 
-                if (articleProviderDTO.Voucher != null)
-                {
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await articleProviderDTO.Voucher.CopyToAsync(memoryStream);
-                        var content = memoryStream.ToArray();
-                        var extension = Path.GetExtension(articleProviderDTO.Voucher.FileName);
-                        articleProvider.Voucher = await fileManager.SaveFile(content, extension, container,
-                        articleProviderDTO.Voucher.ContentType);
-                    }
-                }
+                //if (articleProviderDTO.Voucher != null)
+                //{
+                //    using (var memoryStream = new MemoryStream())
+                //    {
+                //        await articleProviderDTO.Voucher.CopyToAsync(memoryStream);
+                //        var content = memoryStream.ToArray();
+                //        var extension = Path.GetExtension(articleProviderDTO.Voucher.FileName);
+                //        articleProvider.Voucher = await fileManager.SaveFile(content, extension, container,
+                //        articleProviderDTO.Voucher.ContentType);
+                //    }
+                //}
                 await articleProviderService.Create(articleProvider);
-                return true;
+                return Mapper.Map<ArticleProviderDTO>(articleProvider);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message, status = 400 });
             }
         }
 
@@ -99,12 +99,12 @@ namespace MegaHerdt.API.Controllers
                 var articleProviderDb = this.articleProviderService.GetBy(filter).FirstOrDefault();
 
                 articleProviderDb = this.Mapper.Map(articleProviderDTO, articleProviderDb);
-                await articleProviderService.Update(articleProviderDb);
+                await articleProviderService.Update(articleProviderDb!);
                 return true;
             }
             catch (Exception ex)
             {
-                return BadRequest(ex);
+                return BadRequest(new { message = ex.Message, status = 400 });
             }
         }
 
