@@ -148,6 +148,7 @@ import { DialogAddProvisionItemComponent } from './components/articles-provision
 import { DialogShowSerialNumbersComponent } from './components/articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 import { ReservedStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/reserved-state-dialog/reserved-state-dialog.component';
 import { DeliveredStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/delivered-state-dialog/delivered-state-dialog.component';
+import { ArgentineFormatPipe } from './pipes/argentine-format.pipe';
 
 @NgModule({
   declarations: [
@@ -276,7 +277,8 @@ import { DeliveredStateDialogComponent } from './components/purchases/show-all-p
     DialogAddProvisionItemComponent,
     DialogShowSerialNumbersComponent,
     ReservedStateDialogComponent,
-    DeliveredStateDialogComponent
+    DeliveredStateDialogComponent,
+    ArgentineFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -304,7 +306,7 @@ import { DeliveredStateDialogComponent } from './components/purchases/show-all-p
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
     BsDatepickerModule.forRoot()
   ],
-  providers: [],
+  providers: [ ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
