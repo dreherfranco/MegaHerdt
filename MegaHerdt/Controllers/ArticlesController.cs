@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MegaHerdt.API.DTOs.Article;
 using MegaHerdt.API.DTOs.ArticleProvider;
+using MegaHerdt.API.DTOs.ArticleProviderSerialNumber;
 using MegaHerdt.API.DTOs.Pagination;
 using MegaHerdt.API.ExtensionMethods;
 using MegaHerdt.API.FileManager.Interface;
@@ -315,6 +316,26 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+
+        [HttpGet("article-with-serial-numbers/{id}")]
+        public ActionResult<ArticleWithSerialNumbersDTO> GetArticlesWithSerialNumbers(int id)
+        {
+            try
+            {
+                var serialNumbers = articleService.GetSerialNumbersByArticleId(id, enStock: true);
+            
+                Expression<Func<Article, bool>> filter = x => x.Id == id;
+                var article = articleService.GetBy(filter).FirstOrDefault();
+                var articleDTO = this.Mapper.Map<ArticleDTO>(article);
+
+                var response = new ArticleWithSerialNumbersDTO(articleDTO, serialNumbers);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
     }
 }

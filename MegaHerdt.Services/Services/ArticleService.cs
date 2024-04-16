@@ -12,13 +12,16 @@ namespace MegaHerdt.Services.Services
     {
         private readonly ArticleHelper _helper;
         private readonly ArticleCategoryHelper _articleCategoryHelper;
+        private readonly ArticleProviderItemHelper _articleProviderItemHelper;
         private readonly ArticleBrandHelper _articleBrandHelper;
-        public ArticleService(ArticleHelper helper, ArticleCategoryHelper articleCategoryHelper, ArticleBrandHelper articleBrandHelper) :
+        public ArticleService(ArticleHelper helper, ArticleCategoryHelper articleCategoryHelper, 
+            ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper) :
             base(helper)
         {
             this._helper = helper;
             this._articleCategoryHelper = articleCategoryHelper;
             this._articleBrandHelper = articleBrandHelper;
+            this._articleProviderItemHelper = articleProviderItemHelper;
         }
 
         public async Task AddStock(int articleId, int value)
@@ -105,6 +108,20 @@ namespace MegaHerdt.Services.Services
         public IEnumerable<Article> GetEnabledsArticles()
         {
             return this.helper.Get().Where(x => x.Enabled);
+        }
+        
+        /// <summary>
+        /// Obtener los Numeros de serie como string
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="enStock"></param>
+        /// <returns></returns>
+        public List<string> GetSerialNumbersByArticleId(int id, bool? enStock = null)
+        {
+            return _articleProviderItemHelper.GetSerialNumbersByArticleId(id, enStock)
+                                            // Solo obtengo el string de los numeros de serie
+                                             .Select(sn => sn.SerialNumber!)
+                                             .ToList();
         }
     }
 }

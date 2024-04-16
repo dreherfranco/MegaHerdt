@@ -1,4 +1,5 @@
-﻿using MegaHerdt.DbConfiguration.DbConfiguration;
+﻿using MegaHerdt.API.Migrations;
+using MegaHerdt.DbConfiguration.DbConfiguration;
 using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Helpers.Helpers.Base;
 using MegaHerdt.Models.Models;
@@ -110,6 +111,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<TransportCompanyHelper>();
             builder.Services.AddTransient<DebtorsHelper>();
             builder.Services.AddTransient<IncomeExpensesHelper>();
+            builder.Services.AddTransient<ArticleProviderItemHelper>();
             return builder;
         }
 

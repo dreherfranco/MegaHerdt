@@ -74,4 +74,8 @@ export class ArticleService {
   getArticlesOnOffer(): Observable<any>{
     return this._http.get(this.url+"/articles-on-offers",{headers: this.headers});
   }
+
+  getArticleWithSerialNumbers(articleId: number): Observable<any>{
+    return this._http.get(this.url+"/article-with-serial-numbers/" + articleId, {headers: this.headers});
+  }
 }

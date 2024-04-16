@@ -15,9 +15,9 @@ export class Article {
     currentsOffers: ArticleOfferDetail[];
     futureOffers: ArticleOfferDetail[];
     
-    constructor(id: number, name: string, code: string, stock: number, image:string, 
-        unitValue:number, unitValueWithOffer: number, brand: Brand, category: Category, 
-        currentsOffers:ArticleOfferDetail[], futureOffers: ArticleOfferDetail[] ) 
+    constructor(id: number=0, name: string='', code: string='', stock: number=0, image:string='', 
+        unitValue:number=0, unitValueWithOffer: number=0, brand: Brand=new Brand(), category: Category=new Category(), 
+        currentsOffers:ArticleOfferDetail[] = [], futureOffers: ArticleOfferDetail[] = []) 
     {       
         this.id = id;
         this.name = name;

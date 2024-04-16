@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Article } from 'src/app/models/Article/Article';
 import { ArticleUpdateImage } from 'src/app/models/Article/ArticleUpdateImage';
@@ -11,6 +11,7 @@ import { CategoryService } from 'src/app/services/category/category.service';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { changeImage } from 'src/app/utils/errorImage';
 import { instanceArticle } from 'src/app/utils/instanceArticle';
+import { ArticleWithSerialNumbers } from 'src/app/models/Article/ArticleWithSerialNumbers';
 
 @Component({
   selector: 'app-edit-article',
@@ -24,6 +25,10 @@ export class EditArticleComponent implements OnInit {
   brands: Array<Brand>;
   image: File;
   changeImage = changeImage;
+  @Output() onAccept = new EventEmitter();
+  @Output() onCancel = new EventEmitter();
+
+  articleWithSerialNumbers: ArticleWithSerialNumbers = new ArticleWithSerialNumbers();
 
   constructor(
     private _categoryService: CategoryService,
@@ -112,5 +117,24 @@ export class EditArticleComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
     this.loadBrands();
+
+    this._articleService.getArticleWithSerialNumbers(this.article.id).subscribe({
+      next: (response) => {
+        if (response.error) {
+
+          AlertService.errorAlert('¡Error al querer actualizar el artículo!');
+        } else
+         {
+          /** ACA ESTA LA RESPUESTA DEL BACKEND QUE TENES QUE VER */
+           console.log('response: ', response);
+           this.articleWithSerialNumbers = response;
+           console.log('articleWithSerialNumbers: ', this.articleWithSerialNumbers);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        AlertService.errorAlert('Error al querer actualizar el artículo!');
+      }
+    });
   }
 }
