@@ -88,8 +88,13 @@ namespace MegaHerdt.Services.Services
 
         private string GenerateCode(Article article)
         {
-            var brand = this._articleBrandHelper.Get(x => x.Id == article.BrandId).FirstOrDefault();
-            var category = this._articleCategoryHelper.Get(x => x.Id == article.CategoryId).FirstOrDefault();
+            // Marca
+            var brandId = article.BrandId != 0 ? article.BrandId : article.Brand.Id;           
+            var brand = this._articleBrandHelper.Get(x => x.Id == brandId).FirstOrDefault();
+
+            // Categoria
+            var categoryId = article.CategoryId != 0 ? article.CategoryId : article.Category.Id;
+            var category = this._articleCategoryHelper.Get(x => x.Id == categoryId).FirstOrDefault();
 
             var brandSubtract = brand.Name.Substring(0, 3);
             var categorySubtract = category.Name.Substring(0, 3);
