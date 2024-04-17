@@ -1,48 +1,89 @@
-<div class="card text-center m-1 mb-2 article-card ml-0">
-    <div class="d-flex flex-row justify-content-center">
-        <img class="border border-secondary card-img-top col-sm-3 m-1 rounded"
-                src="{{article.image}}" 
+<!-- <div class="card text-center m-1 mb-2 article-card ml-0"> -->
+<div class="container-fluid">
+    <div class="row justify-content-center align-content-center">
+        <div class="col-3">
+            <img class="card-img-top rounded"
+                src="{{articleAux.image}}" 
                 alt="image"
-                (error)="changeImage($event)"
-        />        
-        <div class="m-1 ml-0">
+                (error)="changeImage($event)"                
+            /> 
+        </div>
+        <div class="col-9 mt-4">
             <input id="image" name="image" class="inputfile" (change)="onChange($event)" type="file">
-            <label for="image" class="custom-file-upload">
-            <i class="bi bi-upload iborrainputfile"></i> Subir archivo
+            <label style="height: 60%; width: 100%;" for="image" class="btn custom-file-upload">
+                <i class="bi bi-upload iborrainputfile"></i> Cambiar imagen
             </label>
         </div>
     </div>
-    <div class="card-body card-body-p-custom">
-        <h5 class="card-title data-article">Nombre:<input class="form-control data-article" [(ngModel)]="article.name">
-        </h5>
-        <p class="card-text data-article">Precio de venta: <input class="form-control data-article"
-                [(ngModel)]="article.unitValue"></p>
-
-
-        <p class="card-text data-article">Código: <input class="form-control data-article" [(ngModel)]="article.code"
-                disabled>
-        </p>
-        <p class="card-text data-article">Stock: <input class="form-control data-article" [(ngModel)]="article.stock"
-                disabled>
-        </p>
-
-        <div class="row">
-            <div class="card-text data-article mb-1 col-sm-6">Marca:
-                <select class="form-select data-article" name="selectBrand" [(ngModel)]="article.brand.id">
+    <hr>
+    <div class="row justify-content-center align-content-center mt-2">
+        <div class="col">
+            <div class=" form-floating">
+                <input class="form-control form-control-sm form-control data-article"
+                name="name" [(ngModel)]="articleAux.name" type="text" placeholder="" />
+                <label>Nombre:</label>                 
+            </div>       
+        </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-2">
+        <div class="col">
+            <div class=" form-floating">
+                <input class="form-control form-control-sm form-control data-article"
+                name="unitValue" [(ngModel)]="articleAux.unitValue" type="number" min="0" placeholder="" />
+                <label>Precio de venta:</label>                 
+            </div>       
+        </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-2">
+        <div class="col-6">
+            <div class=" form-floating">
+                <input disabled class="form-control form-control-sm form-control data-article"
+                name="code" [(ngModel)]="articleAux.code" type="text" placeholder="" />
+                <label>Código:</label>                 
+            </div>       
+        </div>
+        <div class="col-6">
+            <div class=" form-floating">
+                <input disabled class="form-control form-control-sm form-control data-article"
+                name="code" [(ngModel)]="articleAux.stock" type="text" placeholder="" />
+                <label>Stock:</label>                 
+            </div>       
+        </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-2">
+        <div class="col-6">
+            <div class="form-floating">                                                 
+                <select required class="form-select form-select-sm data-article" name="selectBrand" [(ngModel)]="articleAux.brand.id">
                     <option class="data-user" name="brand" *ngFor="let brand of brands" [ngValue]="brand.id">
                         {{brand.name}}
                     </option>
                 </select>
-            </div>
-            <div class="card-text data-article col-sm-6">Categoría:
-                <select class="form-select data-article" name="selectCategory" [(ngModel)]="article.category.id"
-                    required>
-                    <option class="data-user" name="category" *ngFor="let category of categories"
-                        [ngValue]="category.id">
-                        {{category.name}}</option>
-                </select>
+                <label>Marca:</label>                
             </div>
         </div>
-        <button #buttonX id="buttonX" class="btn btn-primary m-2 col-sm-3" (click)="openDialogUpdate()" title="Editar"><i class="bi bi-pencil-square"></i></button>
+        <div class="col-6">
+            <div class="form-floating">                                                 
+                <select required class="form-select form-select-sm data-article" name="selectCategory" [(ngModel)]="articleAux.category.id">
+                    <option class="data-user" name="category" *ngFor="let category of categories" [ngValue]="category.id">
+                        {{category.name}}
+                    </option>
+                </select>
+                <label>Categoría:</label>                
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center align-content-center mt-2">
+        <div class="col-6">
+            <button style="width: 100%; height: 100%;" #buttonX id="buttonX" class="btn btn-success col-6 px-3" (click)="openDialogUpdate()" title="Aceptar">
+                <i class="bi bi-check-circle-fill"></i>
+            </button>
+        </div>
+        <div class="col-6">
+            <button style="width: 100%; height: 100%;" #buttonCancel id="buttonCancel" class="btn btn-danger col-6 px-3" data-bs-dismiss="modal" title="Cancelar">
+                <i class="bi bi-x-circle-fill"></i>
+            </button>
+        </div>
+        
+        
     </div>
 </div>

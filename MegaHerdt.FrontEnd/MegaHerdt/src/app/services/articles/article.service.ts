@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { interval, Observable, timeInterval } from 'rxjs';
 import { Global } from '../../utils/Global';
 import { ArticlePriceUpdateByCategory } from 'src/app/models/Article/ArticlePriceUpdateByCategory';
+import { Article } from 'src/app/models/Article/Article';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,7 @@ export class ArticleService {
       for(var key in article){
         formData.append(key, article[key]);
       }
-      
+    
       //  xhr.setRequestHeader('Authorization',token);
         xhr.open('POST', Global.url + "Articles/"+ urlAction, true );  
         xhr.send(formData);
