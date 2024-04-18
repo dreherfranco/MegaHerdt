@@ -39,39 +39,46 @@ export class CreateArticleProvisionComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    if(this.articleProvider.add){ this.articleProvider.discountReason = '#'; }
-
-    var newArticleProvider = this.articleProvider;
-    for (var element of newArticleProvider.articlesItems) {
-      element.article = null;
+    if (this.articleProvider.add) { 
+        this.articleProvider.discountReason = '#'; 
     }
 
-    this._articleProvisionService.create(newArticleProvider, this._storageService.getTokenValue()).subscribe({
-      next: (response) => {
-        if (response.error) {
-          AlertService.errorAlert('¡Error al intentar crear la Provisión!', response.error);
-        } else {
-          this._articleProvisionService.updateArticleProviders();
+    // Hacer una copia profunda de articleProvider
+    const originalArticleProvider = JSON.parse(JSON.stringify(this.articleProvider));
 
-          var articleProviderVoucherUpdate = new ArticleProviderVoucherUpdate(response.id, this.articleProvider.voucher);
-          this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher")
-          
-          AlertService.successAlert('!Provisión creada!', 'Provisión creada correctamente')
-          .then((result) => {
-            if (result.isConfirmed) {                
-              window.location.reload();
+    // Nullear los objetos article
+    for (const element of this.articleProvider.articlesItems) {
+        element.article = null;
+    }
+
+    this._articleProvisionService.create(this.articleProvider, this._storageService.getTokenValue()).subscribe({
+        next: (response) => {
+            if (response.error) {
+                AlertService.errorAlert('¡Error al intentar crear la Provisión!', response.error);
+                // Si hay un error, restaurar los datos originales
+                this.articleProvider = originalArticleProvider;
+            } else {
+                this._articleProvisionService.updateArticleProviders();
+
+                const articleProviderVoucherUpdate = new ArticleProviderVoucherUpdate(response.id, this.articleProvider.voucher);
+                this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher");
+
+                AlertService.successAlert('¡Provisión creada!', 'Provisión creada correctamente').then((result) => {
+                    if (result.isConfirmed) {                
+                        window.location.reload();
+                    }
+                });
             }
-          });;
-
+        },
+        error: (err) => {
+            AlertService.errorAlert('¡Error al intentar crear la Provisión!', err.error.message);
+            console.log(err);
+            // Si hay un error, restaurar los datos originales
+            this.articleProvider = originalArticleProvider;
         }
-      },
-      error: (err) => {
-        AlertService.errorAlert('¡Error al intentar crear la Provisión!', err.error.message);
-        console.log(err)
-      }
     });
+  } 
 
-  }
 
   loadProviders() {
     this._providerService.getAllEnableds(this._storageService.getTokenValue()).subscribe({
@@ -124,4 +131,29 @@ export class CreateArticleProvisionComponent implements OnInit {
       /**logica para aplicar luego de cerrar el dialogo */
     });
   }
+
+  editItem(item: ArticleProviderItem){     
+    // Crear una copia del objeto antes de abrir el diálogo
+    const itemCopy = { ...item };
+
+    const dialogRef = this.dialog.open(DialogAddProvisionItemComponent,
+      {
+        data: itemCopy, // Pasar la copia del objeto al diálogo
+        height: '700px',
+        width: '700px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: ArticleProviderItem) => {
+      if(result != undefined){
+        // Buscar el ítem existente y actualizarlo
+        const index = this.articleProvider.articlesItems.findIndex(x => x.id === result.id);
+        if (index !== -1) {
+          this.articleProvider.articlesItems[index] = result;
+        }
+      }
+    });
+}
+
+
+
 }

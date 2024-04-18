@@ -1,0 +1,13 @@
+.serial-number-list {
+    list-style-type: none; /* Quita los marcadores de lista */
+    padding-left: 0; /* Elimina el espacio izquierdo predeterminado de la lista */
+}
+
+.serial-number-item {
+    padding: 5px 10px; /* Añade espaciado interno a cada elemento de la lista */
+    border-bottom: 1px solid #ddd; /* Agrega una línea divisoria entre los elementos */
+}
+
+.serial-number-item:last-child {
+    border-bottom: none; /* Elimina la línea divisoria en el último elemento */
+}

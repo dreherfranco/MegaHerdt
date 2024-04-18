@@ -3,6 +3,8 @@
 </div>
 
 <h3><b>Numeros de Serie:</b></h3>
-<p *ngFor="let item of data" class="data-user">
-    {{ item.serialNumber }}
-</p>
+<ul class="serial-number-list">
+    <li *ngFor="let item of data" class="serial-number-item">
+        {{ item.serialNumber }}
+    </li>
+</ul>

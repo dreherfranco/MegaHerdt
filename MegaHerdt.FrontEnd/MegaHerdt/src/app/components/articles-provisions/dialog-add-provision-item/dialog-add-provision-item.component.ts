@@ -14,17 +14,46 @@ export class DialogAddProvisionItemComponent implements OnInit {
   articles: Array<ArticleName>;
   articleProviderItem: ArticleProviderItem;
   serialNumberToAdd: string = '';
-  
+  serialNumberRepeted: boolean = false;
+  isNewItem: boolean;
+
   constructor(public dialogRef: MatDialogRef<DialogAddProvisionItemComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any,
+              @Inject(MAT_DIALOG_DATA) public data: ArticleProviderItem | null,
               private _articleService: ArticleService) 
     {
       this.articles = new Array<ArticleName>();
       this.articleProviderItem = new ArticleProviderItem();
+      this.isNewItem = data == null; // Determina si es un nuevo ítem
+
+      //console.log(data);
+      //console.log(data.item);
+      if (!this.isNewItem) {
+        this.articleProviderItem = data as ArticleProviderItem; // Si no es nuevo, carga el ítem existente
+      }
     }
 
   ngOnInit(): void {
     this.loadArticles();
+  }
+
+  disableAcceptButton(){
+    if(this.articleProviderItem.articleId == 0 
+      || this.articleProviderItem.articleQuantity == 0 
+      || this.articleProviderItem.articleQuantity < 0
+      || this.articleProviderItem.purchasePrice <= 0)
+    {
+      return true;
+    }
+    
+    if(this.articleProviderItem.articleQuantity > 0)
+    {
+      if(this.articleProviderItem.serialNumbers.length != this.articleProviderItem.articleQuantity)
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   confirm(){
@@ -70,12 +99,23 @@ export class DialogAddProvisionItemComponent implements OnInit {
     })
   }
 
-  addSerialNumber(){
-    let newSerialNumber = this.serialNumberToAdd;
-    if(newSerialNumber !== "" && this.articleProviderItem.articleQuantity >= this.articleProviderItem.serialNumbers.length){
-      this.articleProviderItem.serialNumbers.push(new ArticleProviderSerialNumber(newSerialNumber));
-      this.serialNumberToAdd = '';
+  addSerialNumber() {
+    let newSerialNumber = this.serialNumberToAdd.trim(); // Eliminar espacios en blanco al principio y al final
+    if (newSerialNumber !== "" && this.articleProviderItem.articleQuantity >= this.articleProviderItem.serialNumbers.length) {
+        // Verificar si el número de serie ya existe en la lista
+        const isDuplicate = this.articleProviderItem.serialNumbers.some(serial => serial.serialNumber === newSerialNumber);
+        
+        this.serialNumberRepeted = false;
+        if (!isDuplicate) {
+            this.articleProviderItem.serialNumbers.push(new ArticleProviderSerialNumber(newSerialNumber));
+            this.serialNumberToAdd = '';
+        } else {
+            // Mostrar un mensaje de error o realizar otra acción para indicar que el número de serie ya existe
+            console.log("El número de serie ya existe en la lista.");
+            this.serialNumberRepeted = true;
+        }
     }
-  }
+}
+
 
 }
