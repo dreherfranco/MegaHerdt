@@ -149,6 +149,7 @@ import { DialogShowSerialNumbersComponent } from './components/articles-provisio
 import { ReservedStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/reserved-state-dialog/reserved-state-dialog.component';
 import { DeliveredStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/delivered-state-dialog/delivered-state-dialog.component';
 import { ArgentineFormatPipe } from './pipes/argentine-format.pipe';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -281,6 +282,7 @@ import { ArgentineFormatPipe } from './pipes/argentine-format.pipe';
     ArgentineFormatPipe
   ],
   imports: [
+    MatSnackBarModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,

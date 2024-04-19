@@ -135,3 +135,28 @@ thead th{
     height: 15px !important;
     width: 14px !important;
 }
+
+/*** ALERTAS TOAST ******/
+
+/* Estilo para el mensaje de toast de éxito */
+.success-toast {
+  background-color: green;
+  color: white;
+}
+
+ /* Estilo para el mensaje de toast de advertencia */
+.warning-toast {
+  background-color: yellow;
+  color: white;
+}
+
+ /* Estilo para el mensaje de toast de error */
+.error-toast {
+  background-color: red;
+  color: white;
+}
+
+ /* Cambiar el color del texto del botón "Cerrar" en todos los toasts */
+.mat-simple-snackbar-action {
+   color: white;  /*Cambia el color del texto del botón "Cerrar" a blanco */
+}

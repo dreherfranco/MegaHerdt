@@ -5,6 +5,7 @@ import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { ArticleService } from '../articles/article.service';
 import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
+import { ToastService } from '../Alerts/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +27,7 @@ export class CartService {
    */
   filterValue: any;
 
-  constructor(private _articleService: ArticleService) {
+  constructor(private _articleService: ArticleService, private toastService: ToastService) {
     this.updateTotal();
   }
 
@@ -192,6 +193,8 @@ export class CartService {
       this.updateCartArticlesDetails(cart);
       this.loadArticlesStock();
       this.updateTotal();
+
+      this.toastService.showSuccess('Unidad agregada al carrito con exito');
     }
   }
 
@@ -207,6 +210,8 @@ export class CartService {
     this.updateCartArticlesDetails(cart);
     this.loadArticlesStock();
     this.updateTotal();
+
+    this.toastService.showSuccess('Unidad removida del carrito con exito');
   }
 
   removeArticleFromCart(article: Article){
@@ -220,6 +225,8 @@ export class CartService {
     this.updateCartArticlesDetails(cart);
     this.loadArticlesStock();
     this.updateTotal();
+
+    this.toastService.showSuccess('Articulo removido del carrito con exito');
   }
 
   verifyAndRemoveUnits(cartArticlesDetails: Array<CartArticleDetail>, index: number): Array<CartArticleDetail> {
@@ -262,5 +269,7 @@ export class CartService {
     this.loadArticlesStock();
     this.updateCartArticlesDetails([]);
     this.updateTotal();
+
+    this.toastService.showSuccess('Carrito vaciado con exito');
   }
 }
