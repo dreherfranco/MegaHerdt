@@ -116,10 +116,6 @@ export class EditArticlesComponent implements OnInit {
         this.loadProducts();
       });
   }
-  
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
 
   ngOnInit(): void {
     this.loadProducts();

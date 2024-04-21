@@ -64,10 +64,6 @@ export class PurchaseRecordComponent implements OnInit {
     return Purchase.getPurchaseStateName(state);
  }
   
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
-  
   sortData(sort: Sort) {
     const data = this.purchases.slice();
     if (!sort.active || sort.direction === '') {

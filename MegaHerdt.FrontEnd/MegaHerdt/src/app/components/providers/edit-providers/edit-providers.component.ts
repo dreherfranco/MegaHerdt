@@ -110,9 +110,6 @@ export class EditProvidersComponent implements OnInit {
     this.searchText = searchText;
   }
 
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
 
   sortData(sort: Sort) {
     const data = this.providers.slice();

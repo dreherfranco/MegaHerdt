@@ -98,7 +98,4 @@ export class EditCategoriesComponent implements OnInit {
     this.searchText = searchText;
   }
 
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
 }

@@ -6,12 +6,12 @@
       <div class="col-md-6 user-credentials">
         <div class="row">
           <div class="form-group mb-3 col">
-            <label for="username"><b>Username:</b></label>
+            <label for="username"><b>Usuario:</b></label>
             <input disabled class="form-control" type="text" value="{{ getUserName() }}" />
           </div>
 
           <div class="form-group mb-3 col">
-            <label for="email"><b>Email:</b></label>
+            <label for="email"><b>Correo Electrónico:</b></label>
             <input class="form-control" type="email" name="email" [email]="true" #email="ngModel"
               [(ngModel)]="user.email" />
             <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
@@ -62,7 +62,7 @@
           </div>
           <div class="col-md-6">
             <div *ngIf="user.phones.length > 0">
-              <h2 class="text-center bg-light">Mis Teléfonos</h2>
+              <h2 class="text-center bg-light">Mi Teléfono</h2>
               <div *ngFor="let phone of user.phones; let i = index;">
                 <p>
                   <app-phone-update [phone]="phone"></app-phone-update>
@@ -97,7 +97,7 @@
           </app-address-creation>
         </div>
         <div *ngIf="user.addresses.length > 0">
-          <h2 class="text-center bg-light">Mis Direcciones</h2>
+          <h2 class="text-center bg-light">Mi Dirección</h2>
           <div *ngFor="let address of user.addresses; let i = index;">
             <app-address-update [address]="address"></app-address-update>
             <button (click)="removeAddress(i)" class="btn bg-light mt-3 mb-3" title="Remover dirección">
@@ -119,7 +119,7 @@
               <i class="bi bi-exclamation-diamond"></i>
           </button>
         </div>
-        <label for="password" class="text-center m-2"><b>(*)Password:</b></label>
+        <label for="password" class="text-center m-2"><b>(*)Contraseña:</b></label>
         <div class="col-sm-6 m-1">
           <input class="form-control" type="password" name="password" #password="ngModel" [(ngModel)]="user.password"
             required minlength="5" placeholder="Ingrese su contraseña" />

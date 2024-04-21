@@ -1,9 +1,5 @@
 <div class="bg-light">
-    <h2 class="mx-auto">LISTADO DE PROVISIONES
-        <button class="btn btn-dark padding-custom" (click)="generatePDF()">
-            <i class="bi bi-filetype-pdf"></i>
-        </button>
-    </h2>
+    <h2 class="mx-auto">LISTADO DE PROVISIONES </h2>
 
     <app-searcher [isVisible]="articlesProviders.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>

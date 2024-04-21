@@ -150,6 +150,7 @@ import { ReservedStateDialogComponent } from './components/purchases/show-all-pu
 import { DeliveredStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/delivered-state-dialog/delivered-state-dialog.component';
 import { ArgentineFormatPipe } from './pipes/argentine-format.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ShowStatisticsComponent } from './components/statistics/show-statistics/show-statistics.component';
 
 @NgModule({
   declarations: [
@@ -279,7 +280,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     DialogShowSerialNumbersComponent,
     ReservedStateDialogComponent,
     DeliveredStateDialogComponent,
-    ArgentineFormatPipe
+    ArgentineFormatPipe,
+    ShowStatisticsComponent
   ],
   imports: [
     MatSnackBarModule,

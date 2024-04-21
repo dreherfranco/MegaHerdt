@@ -129,10 +129,6 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher")
   }
 
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
-
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
   }

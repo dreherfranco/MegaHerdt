@@ -1,10 +1,6 @@
 
 <div class="bg-light">
-  <h2 class="d-flex mx-auto">LISTADO DE COMPANIAS DE TRANSPORTE
-    <button class="btn btn-dark padding-custom" (click)="generatePDF()">
-      <i class="bi bi-filetype-pdf"></i>
-    </button>
-  </h2>
+  <h2 class="d-flex mx-auto">LISTADO DE COMPANIAS DE TRANSPORTE</h2>
 
   <app-searcher [isVisible]="transportCompanies.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>

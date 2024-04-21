@@ -1,10 +1,6 @@
 
 <div class="bg-light">
-  <h2 class="mx-auto">LISTADO DE PROVEEDORES
-    <button class="btn btn-dark padding-custom" (click)="generatePDF()">
-      <i class="bi bi-filetype-pdf"></i>
-    </button>
-  </h2>
+  <h2 class="mx-auto">LISTADO DE PROVEEDORES</h2>
 
   <app-searcher [isVisible]="providers.length > 0" 
     [secondaryContainerCssClass]="'col-md-8'"
@@ -36,9 +32,9 @@
             [(ngModel)]="provider.phone"></td>
         <td><input class="form-control data-user" required email type="email" value="{{provider.email}}"
             [(ngModel)]="provider.email"></td>
-        <td><button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(provider)" title="Editar"> <i class="bi bi-pencil-square"></i>
+        <td><button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(provider)" title="Editar"> <i class="bi bi-check-lg"></i>
           </button></td>
-        <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(provider.id)" title="Eliminar"> <i class="bi bi-trash-fill"></i>
+        <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(provider.id)" title="Eliminar"> <i class="bi bi-x-lg"></i>
           </button></td>
       </tr>
     </tbody>

@@ -13,10 +13,9 @@
       </button>
     </div>
   </div>
-  <div class="table-responsive m-1 mb-0 w-75 mx-auto">
+  <div class="table-responsive m-1 mb-0 mx-auto">
     <table matSort (matSortChange)="sortData($event)" class="table">
       <tr>
-        <th class="data-user font-weight-bold text-center">ORDENAR POR:</th>
         <th mat-sort-header="name" class="font-weight-normal text-center">NOMBRE</th>
         <th mat-sort-header="surname" class="font-weight-normal text-center">APELLIDO</th>
         <th mat-sort-header="dni" class="font-weight-normal text-center">DNI</th>
@@ -25,18 +24,55 @@
         <th mat-sort-header="createdDate" class="font-weight-normal text-center">FECHA CREACIÓN</th>
         <th mat-sort-header="lastLogin" class="font-weight-normal text-center">ÚLTIMO ACCESO</th>
         <th mat-sort-header="roles" class="font-weight-normal text-center">ROLES</th>
+        <th mat-sort-header="roles" class="font-weight-normal text-center">MODIFICAR ROLES</th>
       </tr>
+      <tbody>
+        <tr *ngFor="let user of users | filter: searchText 
+        | paginate: 
+        {
+            itemsPerPage: this.paginate.recordsPerPage, 
+            currentPage:this.paginate.page
+        }; let i = index">
+          <td>
+            <span class="data-user">{{user.name}} </span>
+          </td>
+          <td>
+            <span class="data-user">{{user.surname}}</span>
+          </td>
+          <td>
+            <span class="data-user">{{user.dni}}</span>
+          </td>
+          <td>
+            <span class="data-user">{{user.email}}</span>
+          </td>
+          <td>
+            <span class="data-user">{{user.userName ?? user.email}}</span>
+          </td>
+          <td>
+            <span class="data-user">{{user.lastLogin | date: 'dd/MM/yyyy'}}</span>
+          </td>
+          <td>
+            <span class="data-user">{{user.createdDate | date: 'dd/MM/yyyy'}}</span>
+          </td>
+          <td>
+            <span class="data-user">{{user.roles.join(', ')}}</span>
+          </td>
+          <td>
+            <a class="btn link-custom" [routerLink]="['edit-role-user', user.userName]"><i class="bi bi-pencil-square"></i> </a>
+          </td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
-  <div class="row mt-0">
+  <!-- <div class="row mt-0">
     <div class="col-md-4" *ngFor="let user of sortedData | filter: searchText | paginate: { itemsPerPage: paginate.recordsPerPage, currentPage:paginate.page }">
       <app-user-detail-administrate [user]="user"></app-user-detail-administrate>
-    </div>
+    </div> -->
 
     <pagination-controls class="text-center" (pageChange)="this.paginate.page = $event" previousLabel="Anterior" nextLabel="Siguiente">
     </pagination-controls>
 
-  </div>
+  <!-- </div> -->
 
 </div>

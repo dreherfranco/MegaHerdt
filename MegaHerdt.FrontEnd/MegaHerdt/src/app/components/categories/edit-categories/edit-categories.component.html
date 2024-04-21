@@ -1,10 +1,6 @@
 
 <div class="bg-light">
-  <h2 class="mx-auto">LISTADO DE CATEGORIAS 
-    <button class="btn btn-dark padding-custom" (click)="generatePDF()">
-      <i class="bi bi-filetype-pdf"></i>
-    </button>
-  </h2>
+  <h2 class="mx-auto">LISTADO DE CATEGORIAS</h2>
 
   <app-searcher [isVisible]="categories.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
 </div>
@@ -27,8 +23,8 @@
           currentPage:this.paginate.page
       }; let i = index">
         <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{category.name}}" [(ngModel)]="category.name" ></td>
-        <td><button class="btn btn-primary col-sm-12"  (click)="openDialogUpdate(category)" title="Editar"> <i class="bi bi-pencil-square"></i> </button></td>
-        <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(category.id)" title="Eliminar"> <i class="bi bi-trash-fill"></i> </button></td>
+        <td><button class="btn btn-primary col-sm-12"  (click)="openDialogUpdate(category)" title="Editar"> <i class="bi bi bi-check-lg"></i> </button></td>
+        <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(category.id)" title="Eliminar"> <i class="bi bi-x-lg"></i> </button></td>
       </tr>
     </tbody>
   </table>

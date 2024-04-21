@@ -124,11 +124,6 @@ export class EditOffersComponent implements OnInit {
     })
   }
 
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
-
-
   sortData(sort: Sort) {
     const data = this.offers.slice();
     if (!sort.active || sort.direction === '') {

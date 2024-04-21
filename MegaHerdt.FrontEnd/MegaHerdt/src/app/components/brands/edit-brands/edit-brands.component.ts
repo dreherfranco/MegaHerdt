@@ -96,7 +96,5 @@ export class EditBrandsComponent implements OnInit {
     this.searchText = searchText;
   }
 
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
+
 }

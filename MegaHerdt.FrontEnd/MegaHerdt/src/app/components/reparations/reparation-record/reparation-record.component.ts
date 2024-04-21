@@ -94,12 +94,6 @@ export class ReparationRecordComponent implements OnInit {
     })
   }
 
-
-
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
-  
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
   }

@@ -57,8 +57,4 @@ export class EditReparationsComponent implements OnInit {
   }
 
  
-
-  generatePDF() {
-    PDFGenerator.generatePDF(this.content);
-  }
 }
