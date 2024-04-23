@@ -56,9 +56,6 @@ import { EditArticlesComponent } from './components/articles/edit-articles/edit-
 import { EditArticleComponent } from './components/articles/edit-articles/edit-article/edit-article.component';
 import { DialogUpdateArticleComponent } from './components/articles/edit-articles/dialog-update-article/dialog-update-article.component';
 import { AdministrateOffersComponent } from './components/offers/administrate-offers/administrate-offers.component';
-import { CreateOfferComponent } from './components/offers/create-offer/create-offer.component';
-import { EditOffersComponent } from './components/offers/edit-offers/edit-offers.component';
-import { DialogUpdateOfferComponent } from './components/offers/edit-offers/dialog-update-offer/dialog-update-offer.component';
 import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
 import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
 import { EditArticlesProvisionsComponent } from './components/articles-provisions/edit-articles-provisions/edit-articles-provisions.component';
@@ -151,6 +148,8 @@ import { DeliveredStateDialogComponent } from './components/purchases/show-all-p
 import { ArgentineFormatPipe } from './pipes/argentine-format.pipe';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShowStatisticsComponent } from './components/statistics/show-statistics/show-statistics.component';
+import { OffersFormComponent } from './components/offers/offers-form/offers-form.component';
+import { OffersGridComponent } from './components/offers/offers-grid/offers-grid.component';
 
 @NgModule({
   declarations: [
@@ -191,9 +190,6 @@ import { ShowStatisticsComponent } from './components/statistics/show-statistics
     EditArticleComponent,
     DialogUpdateArticleComponent,
     AdministrateOffersComponent,
-    CreateOfferComponent,
-    EditOffersComponent,
-    DialogUpdateOfferComponent,
     AdministrateArticlesProvisionsComponent,
     CreateArticleProvisionComponent,
     EditArticlesProvisionsComponent,
@@ -281,7 +277,9 @@ import { ShowStatisticsComponent } from './components/statistics/show-statistics
     ReservedStateDialogComponent,
     DeliveredStateDialogComponent,
     ArgentineFormatPipe,
-    ShowStatisticsComponent
+    ShowStatisticsComponent,
+    OffersFormComponent,
+    OffersGridComponent
   ],
   imports: [
     MatSnackBarModule,

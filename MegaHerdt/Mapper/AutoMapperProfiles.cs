@@ -140,6 +140,10 @@ namespace MegaHerdt.API.Mapper
                 .ForMember(x=>x.CurrentsOffers, x=>x.MapFrom(this.CurrentsOffersMap))
                 .ForMember(x => x.FutureOffers, x => x.MapFrom(this.FutureOffersMap))
                .ReverseMap();
+
+            CreateMap<Article, ArticleMinimizedDTO>()
+              .ReverseMap();
+
             CreateMap<ArticleCreationDTO, Article>()
                 .ForMember(opt=>opt.Image, opt=> opt.Ignore());
             CreateMap<ArticleUpdateDTO, Article>()

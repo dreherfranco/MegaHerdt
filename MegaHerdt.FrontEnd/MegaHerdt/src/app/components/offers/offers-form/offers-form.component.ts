@@ -1,31 +1,53 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
-import { ArticleOfferCreation } from 'src/app/models/ArticleOffer/ArticleOfferCreation';
+import { ArticleOffer } from 'src/app/models/ArticleOffer/ArticleOffer';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { OfferService } from 'src/app/services/offers/offer.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
-  selector: 'app-create-offer',
-  templateUrl: './create-offer.component.html',
-  styleUrls: ['./create-offer.component.css']
+  selector: 'app-offers-form',
+  templateUrl: './offers-form.component.html',
+  styleUrls: ['./offers-form.component.css']
 })
-export class CreateOfferComponent implements OnInit {
-  offer: ArticleOfferCreation;
+export class OffersFormComponent implements OnInit {
+  offer: ArticleOffer;
   articles: Array<ArticleName>;
 
-  constructor(private _articleService: ArticleService, private _offerService: OfferService,
+  constructor( @Optional() public dialogRef: MatDialogRef<OffersFormComponent>,
+  @Optional() @Inject(MAT_DIALOG_DATA) public data: ArticleOffer, private _articleService: ArticleService, private _offerService: OfferService,
     private _storageService: StorageService) { 
-    this.offer = new ArticleOfferCreation(0,new Date(), new Date(),0);
+    this.offer = new ArticleOffer();
     this.articles = new Array<ArticleName>();
   }
 
   ngOnInit(): void {
     this.loadArticles();
+    if(this.dialogRef)
+    {
+      this.offer = { ...this.data };
+    }
   }
 
-  onSubmit(form:any){
+  confirm(){
+    if(this.dialogRef)
+    {
+      // Caso Update, se usa como dialogo
+      this.dialogRef.close(this.offer);
+    }else
+    {
+      this.onCreate();
+    }
+  }
+
+  closeModal(){
+    this.dialogRef.close();
+  }
+
+  onCreate(form:any = undefined){
+    
     this._offerService.create(this.offer, this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){

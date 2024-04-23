@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogUpdateOfferComponent } from './dialog-update-offer.component';
+import { OffersGridComponent } from './offers-grid.component';
 
-describe('DialogUpdateOfferComponent', () => {
-  let component: DialogUpdateOfferComponent;
-  let fixture: ComponentFixture<DialogUpdateOfferComponent>;
+describe('OffersGridComponent', () => {
+  let component: OffersGridComponent;
+  let fixture: ComponentFixture<OffersGridComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogUpdateOfferComponent ]
+      declarations: [ OffersGridComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DialogUpdateOfferComponent);
+    fixture = TestBed.createComponent(OffersGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MegaHerdt.API.DTOs.Article;
+using System.ComponentModel.DataAnnotations;
 
 namespace MegaHerdt.API.DTOs.ArticleOffer
 {
@@ -12,5 +13,6 @@ namespace MegaHerdt.API.DTOs.ArticleOffer
         public DateTime StartDate { get; set; }
         [Required]
         public DateTime EndDate { get; set; }
+        public ArticleMinimizedDTO? Article { get; set; }
     }
 }

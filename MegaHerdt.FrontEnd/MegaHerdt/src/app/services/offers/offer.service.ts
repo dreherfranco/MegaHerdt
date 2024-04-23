@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ArticleOffer } from 'src/app/models/ArticleOffer/ArticleOffer';
-import { ArticleOfferCreation } from 'src/app/models/ArticleOffer/ArticleOfferCreation';
 import { Global } from 'src/app/utils/Global';
 
 @Injectable({
@@ -17,7 +16,7 @@ export class OfferService {
     this.url = Global.url + "ArticlesOffers";
   }
 
-  create(offer: ArticleOfferCreation, token: string): Observable<any>{
+  create(offer: ArticleOffer, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(offer);
     return this._http.post(this.url + "/create", params, { headers: this.headers } )

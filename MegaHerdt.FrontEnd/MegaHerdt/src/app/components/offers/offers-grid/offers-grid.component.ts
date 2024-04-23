@@ -5,20 +5,17 @@ import { ArticleOffer } from 'src/app/models/ArticleOffer/ArticleOffer';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { OfferService } from 'src/app/services/offers/offer.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { DialogUpdateOfferComponent } from './dialog-update-offer/dialog-update-offer.component';
-import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { Sort } from '@angular/material/sort';
+import { OffersFormComponent } from '../offers-form/offers-form.component';
 
 @Component({
-  selector: 'app-edit-offers',
-  templateUrl: './edit-offers.component.html',
-  styleUrls: ['./edit-offers.component.css'],
-
+  selector: 'app-offers-grid',
+  templateUrl: './offers-grid.component.html',
+  styleUrls: ['./offers-grid.component.css']
 })
-export class EditOffersComponent implements OnInit {
+export class OffersGridComponent implements OnInit {
   offers: Array<ArticleOffer>;
   articles: Array<ArticleName>;
   paginate: Paginate;
@@ -38,14 +35,28 @@ export class EditOffersComponent implements OnInit {
   }
 
   openDialogUpdate(offer: ArticleOffer){
-    AlertService.warningAlert(
-      '¿Estas seguro que quiere actualizar esta Oferta?', 
-      '¡No podrás revertir esto!')
-    .then((result) => {
-      if (result.isConfirmed) {     
-          this.updateOffer(offer);
+
+    const dialogRef = this.dialog.open(OffersFormComponent,
+      {
+        data: offer,
+        height: '700px',
+        width: '700px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: ArticleOffer) => {
+      if(result != undefined){
+        this.updateOffer(result);
       }
     });
+
+    // AlertService.warningAlert(
+    //   '¿Estas seguro que quiere actualizar esta Oferta?', 
+    //   '¡No podrás revertir esto!')
+    // .then((result) => {
+    //   if (result.isConfirmed) {     
+    //       this.updateOffer(offer);
+    //   }
+    // });
   }
 
   openDialogDelete(offerId: number){
@@ -82,7 +93,10 @@ export class EditOffersComponent implements OnInit {
         if(response.error){
           AlertService.errorAlert('¡Error al intentar actualizar la Oferta!');
         }else{
-          AlertService.successAlert('¡Actualizada!','Oferta actualizada correctamente');
+          AlertService.successAlert('¡Actualizada!','Oferta actualizada correctamente').then(() =>{
+             // Recarga la pagina
+             window.location.reload();
+          });
         }
       },
       error: (err) => {
