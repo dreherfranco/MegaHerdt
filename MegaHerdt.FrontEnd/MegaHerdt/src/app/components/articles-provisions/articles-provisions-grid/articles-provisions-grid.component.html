@@ -8,13 +8,12 @@
     <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
-                <th mat-sort-header="providerEmail" scope="col">Proveedor</th>
-                <th mat-sort-header="provisionDate" scope="col">Fecha provisión</th>
-                <th mat-sort-header="operation" scope="col">Operación</th>
-                <th scope="col">Articulos</th>
-                <th scope="col">Comprobante</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th mat-sort-header="providerEmail" scope="col">PROVEEDOR</th>
+                <th mat-sort-header="provisionDate" scope="col">FECHA PROVISIÓN</th>
+                <th mat-sort-header="operation" scope="col">OPERACIÓN</th>
+                <th scope="col">ARTICULOS</th>
+                <th scope="col">COMPROBANTE</th>
+                <th scope="col">CARGAR COMPROBANTE</th>
             </tr>
         </thead>
         <tbody>
@@ -47,35 +46,36 @@
 
                 </td>
 
-                <th>
+                <td>
                     <span *ngIf="articleProvider.articlesItems.length == 0" class="text-secondary"> No contiene
                         articulos</span>
                     <p *ngFor="let item of articleProvider.articlesItems" class="data-user">
                         {{ item.article.name }}
                     </p>
-                </th>
+                </td>
 
                 <td>
-                    <a href="{{articleProvider.voucher}}" class="form-control voucher data-user" target="_blank">
+                    <a *ngIf="articleProvider.voucher" href="{{articleProvider.voucher}}" class="form-control voucher data-user" target="_blank">
                         <i class="bi bi-card-image"></i> Ver comprobante
                      </a>
-                
+                     <span *ngIf="!articleProvider.voucher">No existe un comprobante cargado para esta provisión.</span>
+                </td>
+                <td>
                     <input id="voucher" name="voucher" class="form-control" type="file" (change)="onChange($event, articleProvider)">
-                </td>
-                <td>
-                    <button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(articleProvider)" title="Editar">
+                    
+                    <!-- <button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(articleProvider)" title="Editar">
                         <i class="bi bi-pencil-square"></i>
-                    </button>
+                    </button> -->
                 </td>
-                <td>
+                <!-- <td>
                     <button class="btn btn-danger col-sm-12" (click)="openDialogDelete(articleProvider.id)" title="Eliminar">
                         <i class="bi bi-trash-fill"></i>
                     </button>
-                </td>
+                </td> -->
             </tr>
         </tbody>
     </table>
     <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="articlesProviders.length > 3">
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="articlesProviders.length > 6">
     </pagination-controls>
 </div>

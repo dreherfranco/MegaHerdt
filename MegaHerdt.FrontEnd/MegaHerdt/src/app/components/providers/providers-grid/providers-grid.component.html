@@ -1,0 +1,48 @@
+
+<div class="bg-light">
+    <h2 class="mx-auto">LISTADO DE PROVEEDORES</h2>
+  
+    <app-searcher [isVisible]="providers.length > 0" 
+      [secondaryContainerCssClass]="'col-md-8'"
+      (searchTextChange)="onSearchTextChange($event)"></app-searcher>
+  </div>
+  
+  <div  class="table-responsive" #content>
+    <table matSort (matSortChange)="sortData($event)" class="table">
+      <thead>
+        <tr>
+          <th mat-sort-header="name" scope="col">NOMBRE</th>
+          <th mat-sort-header="phone" scope="col">TELEFONO</th>
+          <th mat-sort-header="email" scope="col">CORREO ELECTRONICO</th>
+          <th scope="col">EDITAR</th>
+          <th scope="col">ELIMINAR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let provider of sortedData 
+        | filter: searchText
+        | paginate: 
+        {
+            itemsPerPage: this.paginate.recordsPerPage, 
+            currentPage:this.paginate.page
+        }; let i = index">
+          <td>{{provider.name}}</td>
+          <td>{{provider.phone}}</td>
+          <td>{{provider.email}}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openDialogUpdate(provider)" title="Editar"> 
+                <i class="bi-pencil-square"></i>
+            </button>
+          </td>
+          <td><button class="btn btn-danger" (click)="openDialogDelete(provider.id)" title="Eliminar">
+                 <i class="bi bi-trash3"></i>
+              </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+          previousLabel="Anterior" nextLabel="Siguiente" *ngIf="providers.length > 6">
+      </pagination-controls>
+  </div>
+  

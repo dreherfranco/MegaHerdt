@@ -48,9 +48,6 @@ import { AdministrateBrandsComponent } from './components/brands/administrate-br
 import { EditBrandsComponent } from './components/brands/edit-brands/edit-brands.component';
 import { DialogUpdateBrandComponent } from './components/brands/edit-brands/dialog-update-brand/dialog-update-brand.component';
 import { AdministrateProvidersComponent } from './components/providers/administrate-providers/administrate-providers.component';
-import { CreateProviderComponent } from './components/providers/create-provider/create-provider.component';
-import { EditProvidersComponent } from './components/providers/edit-providers/edit-providers.component';
-import { DialogUpdateProviderComponent } from './components/providers/edit-providers/dialog-update-provider/dialog-update-provider.component';
 import { CreateArticleComponent } from './components/articles/create-article/create-article.component';
 import { EditArticlesComponent } from './components/articles/edit-articles/edit-articles.component';
 import { EditArticleComponent } from './components/articles/edit-articles/edit-article/edit-article.component';
@@ -58,8 +55,6 @@ import { DialogUpdateArticleComponent } from './components/articles/edit-article
 import { AdministrateOffersComponent } from './components/offers/administrate-offers/administrate-offers.component';
 import { AdministrateArticlesProvisionsComponent } from './components/articles-provisions/administrate-articles-provisions/administrate-articles-provisions.component';
 import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
-import { EditArticlesProvisionsComponent } from './components/articles-provisions/edit-articles-provisions/edit-articles-provisions.component';
-import { DialogUpdateArticleProvisionComponent } from './components/articles-provisions/edit-articles-provisions/dialog-update-article-provision/dialog-update-article-provision.component';
 import { AdministrateReparationStatesComponent } from './components/reparation-states/administrate-reparation-states/administrate-reparation-states.component';
 import { CreateReparationStatesComponent } from './components/reparation-states/create-reparation-states/create-reparation-states.component';
 import { EditReparationStatesComponent } from './components/reparation-states/edit-reparation-states/edit-reparation-states.component';
@@ -150,6 +145,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ShowStatisticsComponent } from './components/statistics/show-statistics/show-statistics.component';
 import { OffersFormComponent } from './components/offers/offers-form/offers-form.component';
 import { OffersGridComponent } from './components/offers/offers-grid/offers-grid.component';
+import { ProvidersGridComponent } from './components/providers/providers-grid/providers-grid.component';
+import { ProvidersFormComponent } from './components/providers/providers-form/providers-form.component';
+import { ArticlesProvisionsGridComponent } from './components/articles-provisions/articles-provisions-grid/articles-provisions-grid.component';
 
 @NgModule({
   declarations: [
@@ -182,9 +180,6 @@ import { OffersGridComponent } from './components/offers/offers-grid/offers-grid
     EditBrandsComponent,
     DialogUpdateBrandComponent,
     AdministrateProvidersComponent,
-    CreateProviderComponent,
-    EditProvidersComponent,
-    DialogUpdateProviderComponent,
     CreateArticleComponent,
     EditArticlesComponent,
     EditArticleComponent,
@@ -192,8 +187,6 @@ import { OffersGridComponent } from './components/offers/offers-grid/offers-grid
     AdministrateOffersComponent,
     AdministrateArticlesProvisionsComponent,
     CreateArticleProvisionComponent,
-    EditArticlesProvisionsComponent,
-    DialogUpdateArticleProvisionComponent,
     AdministrateReparationStatesComponent,
     CreateReparationStatesComponent,
     EditReparationStatesComponent,
@@ -279,7 +272,10 @@ import { OffersGridComponent } from './components/offers/offers-grid/offers-grid
     ArgentineFormatPipe,
     ShowStatisticsComponent,
     OffersFormComponent,
-    OffersGridComponent
+    OffersGridComponent,
+    ProvidersGridComponent,
+    ProvidersFormComponent,
+    ArticlesProvisionsGridComponent
   ],
   imports: [
     MatSnackBarModule,

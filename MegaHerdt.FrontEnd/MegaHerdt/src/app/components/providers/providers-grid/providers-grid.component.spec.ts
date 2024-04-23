@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditProvidersComponent } from './edit-providers.component';
+import { ProvidersGridComponent } from './providers-grid.component';
 
-describe('EditProvidersComponent', () => {
-  let component: EditProvidersComponent;
-  let fixture: ComponentFixture<EditProvidersComponent>;
+describe('ProvidersGridComponent', () => {
+  let component: ProvidersGridComponent;
+  let fixture: ComponentFixture<ProvidersGridComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EditProvidersComponent ]
+      declarations: [ ProvidersGridComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditProvidersComponent);
+    fixture = TestBed.createComponent(ProvidersGridComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

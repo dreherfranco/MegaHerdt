@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Provider } from 'src/app/models/Provider/Provider';
-import { ProviderCreation } from 'src/app/models/Provider/ProviderCreation';
 import { Global } from 'src/app/utils/Global';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class ProviderService {
     this.url = Global.url + 'Providers';
   }
 
-  create(provider: ProviderCreation, token: string): Observable<any> {
+  create(provider: Provider, token: string): Observable<any> {
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(provider);
     return this._http.post(this.url + '/create', params, {

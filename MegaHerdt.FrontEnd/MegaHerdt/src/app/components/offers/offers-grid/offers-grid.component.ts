@@ -26,7 +26,7 @@ export class OffersGridComponent implements OnInit {
     private _articleService: ArticleService,public dialog: MatDialog) {
     this.offers = new Array<ArticleOffer>();
     this.articles = new Array<ArticleName>();
-    this.paginate = new Paginate(1,3);
+    this.paginate = new Paginate(1,6);
   }
 
   ngOnInit(): void {
@@ -49,14 +49,6 @@ export class OffersGridComponent implements OnInit {
       }
     });
 
-    // AlertService.warningAlert(
-    //   '¿Estas seguro que quiere actualizar esta Oferta?', 
-    //   '¡No podrás revertir esto!')
-    // .then((result) => {
-    //   if (result.isConfirmed) {     
-    //       this.updateOffer(offer);
-    //   }
-    // });
   }
 
   openDialogDelete(offerId: number){
@@ -77,7 +69,10 @@ export class OffersGridComponent implements OnInit {
           AlertService.errorAlert('¡Error al intentar eliminar la Oferta!');
         }else{
           this.loadOffers();
-          AlertService.successAlert('¡Eliminada!', 'Oferta eliminada correctamente');
+          AlertService.successAlert('¡Eliminada!', 'Oferta eliminada correctamente').then(() =>
+          {
+            window.location.reload();
+          });
         }
       },
       error: (err) => {

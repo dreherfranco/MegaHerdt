@@ -3,28 +3,29 @@ import { Provider } from 'src/app/models/Provider/Provider';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogUpdateProviderComponent } from './dialog-update-provider/dialog-update-provider.component';
-import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { ProvidersFormComponent } from '../providers-form/providers-form.component';
 
 @Component({
-  selector: 'app-edit-providers',
-  templateUrl: './edit-providers.component.html',
-  styleUrls: ['./edit-providers.component.css']
+  selector: 'app-providers-grid',
+  templateUrl: './providers-grid.component.html',
+  styleUrls: ['./providers-grid.component.css']
 })
-export class EditProvidersComponent implements OnInit {
+export class ProvidersGridComponent implements OnInit {
   providers: Array<Provider>;
   sortedData: Provider[] = [];
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
   searchText: string = '';
   
-  constructor(private _storageService: StorageService, private _providerService: ProviderService,public dialog: MatDialog) {
+  constructor(private _storageService: StorageService, 
+              private _providerService: ProviderService,
+              public dialog: MatDialog) 
+  {
     this.providers = new Array<Provider>();
-    this.paginate = new Paginate(1,3);
+    this.paginate = new Paginate(1,6);
   }
 
 
@@ -32,13 +33,18 @@ export class EditProvidersComponent implements OnInit {
     this.loadProviders();
   }
 
-  openDialogUpdate(provider: Provider) {
-    AlertService.warningAlert(
-      '¿Estas seguro que quiere actualizar este Proveedor?', 
-      '¡No podrás revertir esto!')
-    .then((result) => {
-      if (result.isConfirmed) {     
-          this.updateProvider(provider);
+  openDialogUpdate(provider: Provider) 
+  {
+    const dialogRef = this.dialog.open(ProvidersFormComponent,
+      {
+        data: provider,
+        height: '700px',
+        width: '700px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: Provider) => {
+      if(result != undefined){
+        this.updateProvider(result);
       }
     });
   }
@@ -77,7 +83,10 @@ export class EditProvidersComponent implements OnInit {
             AlertService.errorAlert('¡Error al intentar eliminar el Proveedor!');
           } else {
             this.loadProviders();
-            AlertService.successAlert('¡Eliminado!','Proveedor eliminado correctamente');
+            AlertService.successAlert('¡Eliminado!','Proveedor eliminado correctamente').then(()=>
+            {
+              window.location.reload();
+            });
           }
         },
         error: (err) => {
@@ -94,7 +103,10 @@ export class EditProvidersComponent implements OnInit {
           if (response.error) {
             AlertService.errorAlert('¡Error al intentar actualizar el Proveedor!');
           } else {
-            AlertService.successAlert('¡Actualizado!','Proveedor actualizado correctamente');
+            AlertService.successAlert('¡Actualizado!','Proveedor actualizado correctamente').then(() =>
+            {
+                window.location.reload();
+            });
 
           }
         },

@@ -5,12 +5,12 @@
     <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
-                <th scope="col">Articulo</th>
-                <th mat-sort-header="discountPercentage" scope="col">Porcentaje Descuento</th>
-                <th mat-sort-header="startDate" scope="col">Inicio</th>
-                <th mat-sort-header="endDate" scope="col">Fin</th>
-                <th scope="col"></th>
-                <th scope="col"></th>
+                <th scope="col">ARTICULO</th>
+                <th mat-sort-header="discountPercentage" scope="col">PORCENTAJE DESCUENTO</th>
+                <th mat-sort-header="startDate" scope="col">INICIO</th>
+                <th mat-sort-header="endDate" scope="col">FIN</th>
+                <th scope="col">EDITAR</th>
+                <th scope="col">ELIMINAR</th>
             </tr>
         </thead>
         <tbody>
@@ -20,17 +20,17 @@
                 itemsPerPage: this.paginate.recordsPerPage, 
                 currentPage:this.paginate.page
             }; let i = index">
-                <th> {{ offer.article.name }}</th>
+                <td> {{ offer.article.name }}</td>
                 <td>{{ offer.discountPercentage }}</td>
                 <td>{{offer.startDate | date: 'dd/MM/yyyy' }}</td>
                 <td>{{offer.endDate | date: 'dd/MM/yyyy' }}</td>
                 <td>
-                    <button class="btn btn-primary col-sm-12" (click)="openDialogUpdate(offer)" title="Editar"> 
-                        <i class="bi bi-pencil-square"></i>
+                    <button class="btn btn-primary" (click)="openDialogUpdate(offer)" title="Editar"> 
+                        <i class="bi-pencil-square"></i>
                     </button>
                 </td>
-                <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(offer.id)" title="Eliminar"> 
-                        <i class="bi bi-trash-fill"></i>
+                <td><button class="btn btn-danger" (click)="openDialogDelete(offer.id)" title="Eliminar"> 
+                        <i class="bi bi-trash3"></i>
                     </button>
                 </td>
                 
@@ -38,6 +38,6 @@
         </tbody>
     </table>
     <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="offers.length > 3">
+        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="offers.length > 6">
     </pagination-controls>
 </div>

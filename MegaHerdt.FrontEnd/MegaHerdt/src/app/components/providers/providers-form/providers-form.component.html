@@ -1,8 +1,8 @@
-<h1 class="text-center">Crear proveedor</h1>
-<form #providerForm="ngForm" (ngSubmit)="onSubmit(providerForm)" class="w-50 mx-auto">
+<h1 class="text-center">{{this.dialogRef ? 'Editar proveedor' : 'Crear proveedor'}}</h1>
+<form #providerForm="ngForm" class="w-50 mx-auto">
   <div class="form-group mb-3">
     <label for="name"><b>(*)Nombre: </b></label>
-    <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" placeholder="Nombre del proveedor" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="provider.name" required>
+    <input id="name"  placeholder="Nombre del proveedor" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="provider.name" required>
     <span *ngIf="name.touched && !name.valid" class="text-danger">Ingrese un nombre valido</span>
   </div>  
   <div class="form-group mb-3">
@@ -15,7 +15,10 @@
     <input id="email" required email placeholder="Email del proveedor" name="email" class="form-control" type="email" #email="ngModel" [(ngModel)]="provider.email" minlength="3">
     <span *ngIf="email.touched && !email.valid" class="text-danger">Ingrese un email valido</span>
   </div>  
-  <p>
-    <input type="submit" class="btn btn-primary mt-3" [disabled]="providerForm.invalid" value="Crear"/>
-  </p> 
+
+  <div class="d-flex justify-content-end flex-md-row flex-wrap">
+    <button class="btn btn-primary d-flex p-2 m-2" (click)="confirm()" [disabled]="providerForm.invalid">{{this.dialogRef ? 'Editar' : 'Crear'}}</button>
+    <button *ngIf="this.dialogRef" class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
+  </div>
+
 </form>

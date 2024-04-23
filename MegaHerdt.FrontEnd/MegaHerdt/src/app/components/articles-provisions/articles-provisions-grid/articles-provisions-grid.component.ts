@@ -7,21 +7,16 @@ import { ArticleProviderVoucherUpdate } from 'src/app/models/ArticleProvider/Art
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Provider } from 'src/app/models/Provider/Provider';
 import { ArticleProvisionService } from 'src/app/services/articles-provisions/article-provision.service';
-import { ArticleService } from 'src/app/services/articles/article.service';
-import { ProviderService } from 'src/app/services/provider/provider.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { DialogUpdateArticleProvisionComponent } from './dialog-update-article-provision/dialog-update-article-provision.component';
-import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { Sort } from '@angular/material/sort';
 
 @Component({
-  selector: 'app-edit-articles-provisions',
-  templateUrl: './edit-articles-provisions.component.html',
-  styleUrls: ['./edit-articles-provisions.component.css']
+  selector: 'app-articles-provisions-grid',
+  templateUrl: './articles-provisions-grid.component.html',
+  styleUrls: ['./articles-provisions-grid.component.css']
 })
-export class EditArticlesProvisionsComponent implements OnInit {
+export class ArticlesProvisionsGridComponent implements OnInit {
   providers: Array<Provider>;
   articles: Array<ArticleName>;
   articlesProviders: Array<ArticleProvider>;
@@ -36,7 +31,7 @@ export class EditArticlesProvisionsComponent implements OnInit {
     this.providers = new Array<Provider>();
     this.articles = new Array<ArticleName>();
     this.articlesProviders = new Array<ArticleProvider>();
-    this.paginate = new Paginate(1,3);
+    this.paginate = new Paginate(1,6);
    }
 
   ngOnInit(): void {
@@ -126,7 +121,8 @@ export class EditArticlesProvisionsComponent implements OnInit {
     var voucher = new File(new Array,'')
     voucher = <File>fileInput.target.files[0];
     var articleProviderVoucherUpdate = new ArticleProviderVoucherUpdate(articleProvider.id, voucher);
-    this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher")
+    this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher");
+    window.location.reload();
   }
 
   onSearchTextChange(searchText: string) {

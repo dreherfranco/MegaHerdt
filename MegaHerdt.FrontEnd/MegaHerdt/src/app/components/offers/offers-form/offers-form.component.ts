@@ -17,8 +17,11 @@ export class OffersFormComponent implements OnInit {
   articles: Array<ArticleName>;
 
   constructor( @Optional() public dialogRef: MatDialogRef<OffersFormComponent>,
-  @Optional() @Inject(MAT_DIALOG_DATA) public data: ArticleOffer, private _articleService: ArticleService, private _offerService: OfferService,
-    private _storageService: StorageService) { 
+              @Optional() @Inject(MAT_DIALOG_DATA) public data: ArticleOffer, 
+              private _articleService: ArticleService, 
+              private _offerService: OfferService,
+              private _storageService: StorageService) 
+  { 
     this.offer = new ArticleOffer();
     this.articles = new Array<ArticleName>();
   }
@@ -36,7 +39,9 @@ export class OffersFormComponent implements OnInit {
     {
       // Caso Update, se usa como dialogo
       this.dialogRef.close(this.offer);
-    }else
+    }
+    // Caso de Creación
+    else
     {
       this.onCreate();
     }
