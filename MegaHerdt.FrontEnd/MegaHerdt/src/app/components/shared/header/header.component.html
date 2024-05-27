@@ -1,172 +1,315 @@
 <header class="p-3 mb-3 border-bottom bg-image">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-     
-        <a class="my-2 my-md-0 mr-md-3 d-flex align-content-center w-15 flex-column m-1" *ngIf="!authenticated(); else loggedIn">
-            <img src="../../../assets/images/megaherdt.jpg" class=" img-fluid rounded" alt="Responsive image">
-        </a> 
-        <ng-template #loggedIn>
-            <a class="my-2 my-md-0 mr-md-3 d-flex align-content-center w-15 flex-column m-1" [routerLink]="['']">
-                <img src="../../../assets/images/megaherdt.jpg" class="img-fluid rounded" alt="Responsive image">
-            </a>   
-        </ng-template>
-        
-        <nav class="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-            <div class="btn-group" >
-                <a type="button" 
-                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none" [routerLink]="['']">
-                    Inicio <span class="caret"></span>
-                </a>
-            </div>
+  <div class="container">
+    <div
+      class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+    >
+      <a
+        class="my-2 my-md-0 mr-md-3 d-flex align-content-center w-15 flex-column m-1"
+        *ngIf="!authenticated(); else loggedIn"
+      >
+        <img
+          src="../../../assets/images/megaherdt.jpg"
+          class="img-fluid rounded"
+          alt="Responsive image"
+        />
+      </a>
+      <ng-template #loggedIn>
+        <a
+          class="my-2 my-md-0 mr-md-3 d-flex align-content-center w-15 flex-column m-1"
+          [routerLink]="['']"
+        >
+          <img
+            src="../../../assets/images/megaherdt.jpg"
+            class="img-fluid rounded"
+            alt="Responsive image"
+          />
+        </a>
+      </ng-template>
 
-            <div class="btn-group" dropdown>
-                <a id="button-basic" dropdownToggle type="button" 
-                  class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                  aria-controls="dropdown-basic">
-                  Artículos <span class="caret"></span>
-                </a>
-                <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
-                    <li role="menuitem">
-                        <a [routerLink]="['articles/articles-offers']" class="dropdown-item">
-                            Ofertas
-                        </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                <!-- Agrega un submenú -->
-                  <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body" class="btn-group dropend">
-                    <a id="button-nested" type="button" dropdownToggle
-                      class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                      aria-controls="dropdown-nested">
-                      Categorías <span class="caret"></span>
-                    </a>
-                    <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-nested">
-                        <li *ngFor="let category of categories" role="menuitem">
-                            <a [routerLink]="['articles/articles-by-category', category.id]" class="dropdown-item">
-                              {{ category.name }}
-                            </a>
-                          </li>
-                      <!-- Agrega más opciones del submenú según sea necesario -->
-                    </ul>
-                  </li>
-                  <!-- Fin del submenú -->
+      <nav
+        class="nav col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+      >
+        <div class="btn-group">
+          <a
+            type="button"
+            class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none"
+            [routerLink]="['']"
+          >
+            Inicio <span class="caret"></span>
+          </a>
+        </div>
 
-                  <li><hr class="dropdown-divider"></li>
+        <div class="btn-group" dropdown>
+          <a
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            Artículos <span class="caret"></span>
+          </a>
+          <ul
+            id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu text-small shadow"
+            role="menu"
+            aria-labelledby="button-basic"
+          >
+            <li role="menuitem">
+              <a
+                [routerLink]="['articles/articles-offers']"
+                class="dropdown-item"
+              >
+                Ofertas
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <!-- Agrega un submenú -->
+            <li
+              role="menuitem"
+              dropdown
+              triggers="mouseover"
+              placement="right"
+              container="body"
+              class="btn-group dropend"
+            >
+              <a
+                id="button-nested"
+                type="button"
+                dropdownToggle
+                class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+                aria-controls="dropdown-nested"
+              >
+                Categorías <span class="caret"></span>
+              </a>
+              <ul
+                *dropdownMenu
+                class="dropdown-menu text-small shadow"
+                role="menu"
+                aria-labelledby="button-nested"
+              >
+                <li *ngFor="let category of categories" role="menuitem">
+                  <a
+                    [routerLink]="[
+                      'articles/articles-by-category',
+                      category.id
+                    ]"
+                    class="dropdown-item"
+                  >
+                    {{ category.name }}
+                  </a>
+                </li>
+                <!-- Agrega más opciones del submenú según sea necesario -->
+              </ul>
+            </li>
+            <!-- Fin del submenú -->
 
-                  <!-- Agrega un submenú -->
-                  <li role="menuitem" dropdown triggers="mouseover" placement="right" container="body" class="btn-group dropend">
-                    <a id="button-nested" type="button" dropdownToggle
-                      class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                      aria-controls="dropdown-nested">
-                      Marcas <span class="caret"></span>
-                    </a>
-                    <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-nested">
-                        <li *ngFor="let brand of brands" role="menuitem">
-                            <a [routerLink]="['articles/articles-by-brand', brand.id]" class="dropdown-item">
-                              {{ brand.name }}
-                            </a>
-                          </li>
-                      <!-- Agrega más opciones del submenú según sea necesario -->
-                    </ul>
-                  </li>
-                  <!-- Fin del submenú -->
+            <li><hr class="dropdown-divider" /></li>
 
-                </ul>
-            </div>
-              
-
-            <div class="btn-group" dropdown *ngIf="authenticated()">
-                <a id="button-basic" dropdownToggle type="button" 
-                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                    aria-controls="dropdown-basic">
-                    Reparaciones <span class="caret"></span>
-                </a>
-                <ul id="dropdown-basic" *dropdownMenu  class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
-                    <li role="menuitem">
-                        <a [routerLink]="['reparations/record']" class="dropdown-item">
-                            <i class="bi bi-clock-history "></i> Historial
-                        </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li role="menuitem">
-                        <a [routerLink]="['client-reparation-claims']" class="dropdown-item">
-                            <i class="bi bi-envelope-exclamation-fill"></i> Reclamos
-                        </a>
-                    </li>
-                </ul>
-              </div>
-              <div class="btn-group" dropdown *ngIf="authenticated()">
-                <a id="button-basic" dropdownToggle type="button" 
-                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                    aria-controls="dropdown-basic">
-                    Compras <span class="caret"></span>
-                </a>
-                <ul id="dropdown-basic" *dropdownMenu  class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
-                    <li role="menuitem">
-                        <a [routerLink]="['purchases/record']" class="dropdown-item">
-                            <i class="bi bi-clock-history"></i> Historial
-                        </a>
-                    </li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li role="menuitem">
-                        <a [routerLink]="['client-purchase-claims']" class="dropdown-item">
-                            <i class="bi bi-envelope-exclamation-fill"></i> Reclamos
-                        </a>
-                    </li>
-                </ul>
-              </div>
-              <div class="btn-group" dropdown *ngIf="authenticated()">
-                <a id="button-basic" dropdownToggle type="button" 
-                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                    aria-controls="dropdown-basic">
-                    Ajustes de usuario <span class="caret"></span>
-                </a>
-                <ul id="dropdown-basic" *dropdownMenu  class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
-                    <app-user-settings></app-user-settings>
-                </ul>
-              </div>
-              <div class="btn-group" dropdown *ngIf="authenticated() && isAdmin()" >
-                <a id="button-basic" dropdownToggle type="button" 
-                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                    aria-controls="dropdown-basic">
-                    Administrar <span class="caret"></span>
-                </a>
-                <ul id="dropdown-basic" *dropdownMenu  class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
-                    <app-administrate></app-administrate>
-                </ul>
-            </div>
-        </nav>
-        <!--BOTON PARA EL offcanva-->
-        <button class="btn colours" title="Carrito" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class=" colours bi bi-cart-fill"></i></button>
-        <app-cart-offcanva></app-cart-offcanva>
+            <!-- Agrega un submenú -->
+            <li
+              role="menuitem"
+              dropdown
+              triggers="mouseover"
+              placement="right"
+              container="body"
+              class="btn-group dropend"
+            >
+              <a
+                id="button-nested"
+                type="button"
+                dropdownToggle
+                class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+                aria-controls="dropdown-nested"
+              >
+                Marcas <span class="caret"></span>
+              </a>
+              <ul
+                *dropdownMenu
+                class="dropdown-menu text-small shadow"
+                role="menu"
+                aria-labelledby="button-nested"
+              >
+                <li *ngFor="let brand of brands" role="menuitem">
+                  <a
+                    [routerLink]="['articles/articles-by-brand', brand.id]"
+                    class="dropdown-item"
+                  >
+                    {{ brand.name }}
+                  </a>
+                </li>
+                <!-- Agrega más opciones del submenú según sea necesario -->
+              </ul>
+            </li>
+            <!-- Fin del submenú -->
+          </ul>
+        </div>
 
         <div class="btn-group" dropdown *ngIf="authenticated()">
-            <div class="colours-group-hover">
-                <a id="button-basic" dropdownToggle type="button" 
-                    class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-                    aria-controls="dropdown-basic">
-                    <i class="colours bi bi-person-circle"></i> &nbsp; {{userAuthenticated.name}} {{userAuthenticated.surname}}<span class="caret"></span>
-                </a>
-            </div>
-            <ul id="dropdown-basic" *dropdownMenu  class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
-                <li role="menuitem">
-                    <a [routerLink]="['logout']" *ngIf="authenticated()" class="dropdown-item">
-                        <i class="bi bi-box-arrow-left"></i> &nbsp; Cerrar sesión
-                    </a>
-                </li>
-            </ul>
-          </div>
-            <a *ngIf="!authenticated()" type="button" [routerLink]="['register']"
-                class="colours btn d-flex align-items-center link-dark text-decoration-none"
-                aria-controls="dropdown-basic">
-                Registro &nbsp; <i class="colours bi bi-person-plus"></i>
+          <a
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            Reparaciones <span class="caret"></span>
+          </a>
+          <ul
+            id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu text-small shadow"
+            role="menu"
+            aria-labelledby="button-basic"
+          >
+            <li role="menuitem">
+              <a [routerLink]="['reparations/record']" class="dropdown-item">
+                <i class="bi bi-clock-history"></i> Historial
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li role="menuitem">
+              <a
+                [routerLink]="['client-reparation-claims']"
+                class="dropdown-item"
+              >
+                <i class="bi bi-envelope-exclamation-fill"></i> Reclamos
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="btn-group" dropdown *ngIf="authenticated()">
+          <a
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            Compras <span class="caret"></span>
+          </a>
+          <ul
+            id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu text-small shadow"
+            role="menu"
+            aria-labelledby="button-basic"
+          >
+            <li role="menuitem">
+              <a [routerLink]="['purchases/record']" class="dropdown-item">
+                <i class="bi bi-clock-history"></i> Historial
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li role="menuitem">
+              <a
+                [routerLink]="['client-purchase-claims']"
+                class="dropdown-item"
+              >
+                <i class="bi bi-envelope-exclamation-fill"></i> Reclamos
+              </a>
+            </li>
+          </ul>
+        </div>
+        
+        <div class="btn-group" dropdown *ngIf="authenticated() && isAdmin()">
+          <a
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            Administrar <span class="caret"></span>
+          </a>
+          <ul
+            id="dropdown-basic"
+            *dropdownMenu
+            class="dropdown-menu text-small shadow"
+            role="menu"
+            aria-labelledby="button-basic"
+          >
+            <app-administrate></app-administrate>
+          </ul>
+        </div>
+      </nav>
+      <!--BOTON PARA EL offcanva-->
+      <button
+        class="btn colours"
+        title="Carrito"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight"
+      >
+        <i class="colours bi bi-cart-fill"></i>
+      </button>
+      <app-cart-offcanva></app-cart-offcanva>
+
+      <div class="btn-group" dropdown *ngIf="authenticated()">
+        <div class="colours-group-hover">
+          <a
+            id="button-basic"
+            dropdownToggle
+            type="button"
+            class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+            aria-controls="dropdown-basic"
+          >
+            <i class="colours bi bi-person-circle"></i> &nbsp;
+            {{ userAuthenticated.name }} {{ userAuthenticated.surname
+            }}<span class="caret"></span>
+          </a>
+        </div>
+        <ul
+          id="dropdown-basic"
+          *dropdownMenu
+          class="dropdown-menu text-small shadow"
+          role="menu"
+          aria-labelledby="button-basic"
+        >
+        <li role="menuitem" dropdown triggers="mouseover" placement="bottom" container="body" class="btn-group dropdown">
+            <a id="button-nested" type="button" dropdownToggle
+               class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+               aria-controls="dropdown-basic" *ngIf="authenticated()">
+              Ajustes de usuario <span class="caret"></span>
             </a>
-            <div class="btn-group">
-                <a *ngIf="!authenticated()" type="button" [routerLink]="['login']"
-                class="colours btn  d-flex align-items-center link-dark text-decoration-none"
-                aria-controls="dropdown-basic">
-                Login &nbsp; <i class="colours bi bi-box-arrow-in-right"></i> 
-                </a>
-            </div> 
+            <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
+              <app-user-settings></app-user-settings>
+            </ul>
+          </li>
+          
+            <li role="menuitem">
+            <a
+                [routerLink]="['logout']"
+                *ngIf="authenticated()"
+                class="dropdown-item"
+            >
+                <i class="bi bi-box-arrow-left"></i> &nbsp; Cerrar sesión
+            </a>
+            </li>          
+        </ul>        
+      </div>
+      <a
+        *ngIf="!authenticated()"
+        type="button"
+        [routerLink]="['register']"
+        class="colours btn d-flex align-items-center link-dark text-decoration-none"
+        aria-controls="dropdown-basic"
+      >
+        Registro &nbsp; <i class="colours bi bi-person-plus"></i>
+      </a>
+      <div class="btn-group">
+        <a
+          *ngIf="!authenticated()"
+          type="button"
+          [routerLink]="['login']"
+          class="colours btn d-flex align-items-center link-dark text-decoration-none"
+          aria-controls="dropdown-basic"
+        >
+          Login &nbsp; <i class="colours bi bi-box-arrow-in-right"></i>
+        </a>
       </div>
     </div>
+  </div>
 </header>
