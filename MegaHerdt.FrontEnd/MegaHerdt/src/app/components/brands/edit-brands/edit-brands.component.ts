@@ -3,11 +3,9 @@ import { Brand } from 'src/app/models/ArticleBrand/Brand';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogUpdateBrandComponent } from './dialog-update-brand/dialog-update-brand.component';
-import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
-import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { structuredClone } from 'src/app/utils/StructuredClone';
 
 @Component({
   selector: 'app-edit-brands',
@@ -16,12 +14,15 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 })
 export class EditBrandsComponent implements OnInit {
   brands: Array<Brand>;
+  brandsAux: Array<Brand>;
+  brandsChanged: { [key: number]: boolean } = {};
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
   searchText: string = "";
 
   constructor(private _storageService: StorageService, private _brandService: BrandService,public dialog: MatDialog) {
     this.brands = new Array<Brand>();
+    this.brandsAux = new Array<Brand>();
     this.paginate = new Paginate(1,6);
   }
 
@@ -42,7 +43,11 @@ export class EditBrandsComponent implements OnInit {
   }
   
   loadBrands(){
-    this._brandService.brands.subscribe({next: response => this.brands = response});
+    this._brandService.brands.subscribe({next: response => {
+      this.brands = response;
+      this.brandsAux = structuredClone(this.brands);
+    }
+  });
   }
 
   openDialogDelete(brandId: number) {
@@ -75,12 +80,23 @@ export class EditBrandsComponent implements OnInit {
     );
   }
 
+  onBrandChange(brandId: number) {
+    const brand = this.brandsAux.find(brand => brand.id === brandId);
+    const currentBrand = this.brands.find(brand => brand.id === brandId);
+    this.brandsChanged[brandId] = brand?.name !== currentBrand?.name;
+  }
+
+  isChanged(brandId: number): boolean {
+    return !!this.brandsChanged[brandId];
+  }
+
   updateBrand(brand: Brand){
     this._brandService.update(brand, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
               AlertService.errorAlert('¡Error al intentar actualizar la Marca!');
           } else {
+            this.brandsChanged[brand.id] = !this.brandsChanged[brand.id];
             AlertService.successAlert('¡Actualizada!','Marca actualizada correctamente');
           }
         },

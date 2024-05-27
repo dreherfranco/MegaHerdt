@@ -21,9 +21,9 @@
             itemsPerPage: this.paginate.recordsPerPage, 
             currentPage:this.paginate.page
         }; let i = index">
-          <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{brand.name}}" [(ngModel)]="brand.name" ></td>
-          <td><button class="btn btn-primary col-sm-12"  (click)="openDialogUpdate(brand)" title="Editar"> <i class="bi bi-check-lg"></i> </button></td>
-          <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(brand.id)" title="Eliminar"> <i class="bi bi-x-lg"></i> </button></td>
+          <td><input class="form-control data-user" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" value="{{brand.name}}" [(ngModel)]="brand.name" (ngModelChange)="onBrandChange(brand.id)"></td>
+          <td><button class="btn btn-primary col-sm-12" [disabled]="!isChanged(brand.id)" (click)="openDialogUpdate(brand)" title="Editar"> <i class="bi bi-check-lg"></i> </button></td>
+          <td><button class="btn btn-danger col-sm-12" (click)="openDialogDelete(brand.id)" title="Eliminar"> <i class="bi bi-trash3-fill"></i> </button></td>
         </tr>
       </tbody>
     </table>

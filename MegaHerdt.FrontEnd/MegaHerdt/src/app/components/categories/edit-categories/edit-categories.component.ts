@@ -3,12 +3,9 @@ import { Category } from 'src/app/models/ArticleCategory/Category';
 import { CategoryService } from 'src/app/services/category/category.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogUpdateCategoryComponent } from './dialog-update-category/dialog-update-category.component';
-import { DialogConfirmDeleteComponent } from '../../general/dialog-confirm-delete/dialog-confirm-delete.component';
-
-import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
+import { structuredClone } from 'src/app/utils/StructuredClone';
 
 @Component({
   selector: 'app-edit-categories',
@@ -17,15 +14,17 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 })
 export class EditCategoriesComponent implements OnInit {
   categories: Array<Category>;
+  categoriesAux: Array<Category>;
+  categoriesChanged: { [key: number]: boolean } = {};
   @ViewChild('content', { static: true }) content!: ElementRef;
   paginate: Paginate;
   searchText: string = '';
   
   constructor(private _storageService: StorageService, private _categoryService: CategoryService,public dialog: MatDialog) {
     this.categories = new Array<Category>();
+    this.categoriesAux = new Array<Category>();
     this.paginate = new Paginate(1,6);
   }
-
 
   ngOnInit(): void {
     this.loadCategories();
@@ -44,7 +43,10 @@ export class EditCategoriesComponent implements OnInit {
   
   loadCategories(){
     this._categoryService.categories.subscribe({
-      next: res => this.categories = res 
+      next: res => {
+        this.categories = res;
+        this.categoriesAux = structuredClone(this.categories); // guardo un aux para ver los cambios.
+      }
     });
   }
 
@@ -77,12 +79,23 @@ export class EditCategoriesComponent implements OnInit {
     );
   }
 
+  onCategoryChange(categoryId: number) {
+    const originalCategory = this.categoriesAux.find(cat => cat.id === categoryId);
+    const currentCategory = this.categories.find(cat => cat.id === categoryId);
+    this.categoriesChanged[categoryId] = originalCategory?.name !== currentCategory?.name;
+  }
+
+  isChanged(categoryId: number): boolean {
+    return !this.categoriesChanged[categoryId];
+  }
+
   updateCategory(category: Category){
     this._categoryService.update(category, this._storageService.getTokenValue()).subscribe({
         next: (response) => {
           if (response.error) {
             AlertService.errorAlert('¡Error al intentar actualizar la Categoria!');
           } else {
+            this.categoriesChanged[category.id] = !this.categoriesChanged[category.id];
             AlertService.successAlert('¡Actualizada!','Categoria actualizada correctamente');
           }
         },
