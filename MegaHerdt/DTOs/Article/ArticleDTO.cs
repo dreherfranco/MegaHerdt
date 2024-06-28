@@ -12,6 +12,7 @@ namespace MegaHerdt.API.DTOs.Article
         public string Image { get; set; }
         public string Name { get; set; }
         public int Stock { get; set; }
+        public bool HasSerialNumber { get; set; }
         public float UnitValue { get; set; }
         public float UnitValueWithOffer { get; set; }
         public ArticleBrandDTO Brand { get; set; }

@@ -14,7 +14,7 @@
               <i class="bi bi-search text-white"></i>
             </div>
           </div>
-        <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar reparaciones">
+        <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar artículos">
       </div>
     </div>
     <div class="col-3">
@@ -33,10 +33,10 @@
       <th>Imgagen</th>
       <th>Nombre</th>
       <th>Precio venta</th>
-      <th>Codigo</th>
       <th>Stock</th>
       <th>Marca</th>
       <th>Categoria</th>
+      <th>Define Número de Serie</th>
       <th>Editar</th>
       <th>Eliminar</th>
     </tr>
@@ -56,10 +56,10 @@
       </td>
       <td>{{article.name}}</td>
       <td>{{article.unitValue | argentineFormat}}</td>
-      <td>{{article.code}}</td>
       <td>{{article.stock}}</td>
       <td>{{article.brand.name}}</td>
       <td>{{article.category.name}}</td>
+      <td>{{article.hasSerialNumber ? "Si" : "No"}}</td>
       <td>
         <button class="btn btn-primary" title="Editar" (click)="openModal(article)"
           type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"

@@ -7,11 +7,13 @@
 
         <div class="form-group mb-3">
             <label for="article"><b>(*)Artículo: </b></label>
-            <select (change)="setSelectedArticle($event)" class="form-select data-user" name="selectArticle" [(ngModel)]="articleProviderItem.articleId">
+            <select [disabled]="articleProviderItem.serialNumbers.length > 0" (change)="setSelectedArticle($event)" class="form-select data-user" name="selectArticle" [(ngModel)]="articleProviderItem.articleId">
                 <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">
                     {{article.name}}
                 </option>
             </select>
+            <p *ngIf="this.articleProviderItem.articleId != 0 && this.articleProviderItem.article?.hasSerialNumber">Se debe definir los números de serie para este artículo</p>
+            <p *ngIf="this.articleProviderItem.articleId != 0 && !this.articleProviderItem.article?.hasSerialNumber">No se pueden definir números de serie para este artículo</p>
         </div>
 
         <div class="row">
@@ -39,7 +41,7 @@
             <div class="col">
                 <input [(ngModel)]="serialNumberToAdd" id="serialNumber" name="serialNumber" #serialNumber="ngModel"
                     class="form-control" placeholder="Ingrese un numero de serie" type="text" 
-                    [disabled]="articleProviderItem.articleQuantity <= articleProviderItem.serialNumbers.length"/>
+                    [disabled]="disabledSerialNumbers()"/>
             </div>
             <a class="btn btn-primary col-sm-2" (click)="addSerialNumber()" title="Agregar">
                 <i class="bi bi-plus-circle-fill"></i>

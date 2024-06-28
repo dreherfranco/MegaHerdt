@@ -45,7 +45,9 @@ export class DialogAddProvisionItemComponent implements OnInit {
       return true;
     }
     
-    if(this.articleProviderItem.articleQuantity > 0)
+    // Si el articulo debe definir Numero de Serie entocnes se tiene que definir la cantidad
+    // de articulos a proveer
+    if(this.articleProviderItem.articleQuantity > 0 && this.articleProviderItem.article?.hasSerialNumber)
     {
       if(this.articleProviderItem.serialNumbers.length != this.articleProviderItem.articleQuantity)
       {
@@ -97,6 +99,17 @@ export class DialogAddProvisionItemComponent implements OnInit {
         console.log(err)
       }
     })
+  }
+
+  disabledSerialNumbers()
+  {
+    if(!(this.articleProviderItem.article?.hasSerialNumber ?? false)) return true;
+    
+    if(this.articleProviderItem.articleQuantity <= this.articleProviderItem.serialNumbers.length)
+    {
+        return true;
+    } 
+    return false;
   }
 
   addSerialNumber() {

@@ -134,7 +134,8 @@ export class EditArticleComponent implements OnInit {
       this.articleAux.stock,
       this.articleAux.unitValue,
       this.articleAux.brand.id,
-      this.articleAux.category.id
+      this.articleAux.category.id,
+      this.articleAux.hasSerialNumber
     );
   }
 
