@@ -69,7 +69,8 @@ export class DiscountStockComponent implements OnInit {
       // Mapear para obtener solo la propiedad serialNumber
       let serialNumbers = serialNumbersSelected.map(i => i.serialNumber);
 
-      let articleWithSerialNumbers = new ArticleWithSerialNumbers(this.article, serialNumbers);
+      // Armo la instancia para enviar al backend.
+      let articleWithSerialNumbers = new ArticleWithSerialNumbers(this.article, serialNumbers, this.serialNumbersSelection.discountReason);
       // Devuelvo los numeros de serie seleccionados con su articulo correspondiente (ArticleWithSerialNumbers)
       this.dialogRef.close(articleWithSerialNumbers);
     }

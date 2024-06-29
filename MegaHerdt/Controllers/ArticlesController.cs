@@ -191,7 +191,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                await articleService.DiscountStockWithSerialNumber(dto.Article.Id, dto.SerialNumbers);
+                await articleService.DiscountStockWithSerialNumber(dto.Article.Id, dto.SerialNumbers, dto.DiscountReason);
                 return dto.Article;
             }
             catch (Exception ex)

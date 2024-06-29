@@ -15,12 +15,14 @@ namespace MegaHerdt.Services.Services
         private readonly ArticleHelper _helper;
         private readonly ArticleCategoryHelper _articleCategoryHelper;
         private readonly ArticleProviderItemHelper _articleProviderItemHelper;
+        private readonly ArticleProviderHelper _articleProviderHelper;
         private readonly ArticleBrandHelper _articleBrandHelper;
         private readonly ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper;
 
         public ArticleService(ArticleHelper helper, ArticleCategoryHelper articleCategoryHelper, 
             ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper,
-            ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper) :
+            ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper, 
+            ArticleProviderHelper articleProviderHelper) :
             base(helper)
         {
             this._helper = helper;
@@ -28,11 +30,17 @@ namespace MegaHerdt.Services.Services
             this._articleBrandHelper = articleBrandHelper;
             this._articleProviderItemHelper = articleProviderItemHelper;
             this.articleProviderSerialNumberHelper = articleProviderSerialNumberHelper;
+            _articleProviderHelper = articleProviderHelper;
         }
-        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers)
+        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason)
         {
             Expression<Func<Article, bool>> filter = x => x.Id == articleId;
             await UpdateSerialNumbers(articleId, serialNumbers);
+
+            // Se crea una instancia de ArticleProvider que representa el descuento del stock.
+            var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, serialNumbers.Count(), discountReason);
+            await _articleProviderHelper.Create(instanceArticleProvider);
+
             // Descuento stock según la cantidad de Numeros de Serie.
             await this._helper.DiscountStock(filter, serialNumbers.Count);
         }

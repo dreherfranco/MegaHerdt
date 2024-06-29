@@ -10,8 +10,8 @@ namespace MegaHerdt.API.DTOs.ArticleProviderSerialNumber
             Article = article;
             SerialNumbers = serialNumbers;
         }
-
         public ArticleDTO Article { get; set; } = null!;
+        public string DiscountReason { get; set; } = string.Empty;
         public List<string> SerialNumbers { get; set; } = new();
     }
 }

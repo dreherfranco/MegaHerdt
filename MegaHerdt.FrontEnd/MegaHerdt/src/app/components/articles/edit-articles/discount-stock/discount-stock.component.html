@@ -1,4 +1,7 @@
 <h1>Descontar Stock</h1>
+
+<p>{{ article.name }}</p>
+
 <div *ngFor="let item of serialNumbersSelection.serialNumbers">
     <div class="row">
         <div class="form-group mb-3 col-sm-8">
@@ -7,6 +10,13 @@
             <label class="data-user" for="selected"><b>{{ item.serialNumber }}</b></label>
         </div>
     </div>
+</div>
+
+<div class="form-group mb-3 col-sm-6">
+    <label for="discountReason"><b>(*)Razón de descuento: </b></label>
+    <textarea id="discountReason" pattern="^([0-9 \u00c0-\u01ffa-zA-Z'\-\_])+$" placeholder="Razon del descuento" name="discountReason"
+        class="form-control" type="textarea" #discountReason="ngModel" [(ngModel)]="serialNumbersSelection.discountReason" required minlength="3">
+    </textarea>
 </div>
 
 <div class="d-flex justify-content-end flex-md-row flex-wrap">

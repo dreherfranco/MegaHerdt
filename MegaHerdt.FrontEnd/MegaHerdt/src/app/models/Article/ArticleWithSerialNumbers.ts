@@ -3,11 +3,13 @@ import { Article } from './Article';
 export class ArticleWithSerialNumbers {
     article: Article;
     serialNumbers: string[] = [];
+    discountReason: string;
 
-    constructor(article: Article = new Article(), serialNumbers: string[] = []) 
+    constructor(article: Article = new Article(), serialNumbers: string[] = [], discountReason: string = '') 
     {       
         this.article = article;
         this.serialNumbers = serialNumbers;
+        this.discountReason = discountReason;
     }
 }
 
@@ -16,10 +18,12 @@ export class ArticleWithSerialNumbers {
  */
 export class SerialNumbersSelection {
     serialNumbers: SerialNumbersSelectionItem[];
+    discountReason: string;
 
-    constructor(serialNumbers: SerialNumbersSelectionItem[] = [] )
+    constructor(serialNumbers: SerialNumbersSelectionItem[] = [] , discountReason: string = '')
     {       
         this.serialNumbers = serialNumbers;
+        this.discountReason = discountReason;
     }
 }
 
