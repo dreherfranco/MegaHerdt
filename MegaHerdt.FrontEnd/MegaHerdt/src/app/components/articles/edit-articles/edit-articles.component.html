@@ -37,6 +37,7 @@
       <th>Marca</th>
       <th>Categoria</th>
       <th>Define Número de Serie</th>
+      <th>Descontar Stock</th>
       <th>Editar</th>
       <th>Eliminar</th>
     </tr>
@@ -60,6 +61,14 @@
       <td>{{article.brand.name}}</td>
       <td>{{article.category.name}}</td>
       <td>{{article.hasSerialNumber ? "Si" : "No"}}</td>
+      <td>
+        <button class="btn btn-primary" title="Descontar Stock" 
+        (click)="openDialogDiscountStock(article)"
+         type="button" class="btn btn-primary">
+          <i class="bi bi-pencil-square"></i>
+        </button>
+      </td>
+
       <td>
         <button class="btn btn-primary" title="Editar" (click)="openModal(article)"
           type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"

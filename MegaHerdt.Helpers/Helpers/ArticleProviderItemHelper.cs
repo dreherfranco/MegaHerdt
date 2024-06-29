@@ -30,12 +30,12 @@ namespace MegaHerdt.Helpers.Helpers
                 // Trae los que solo estan en stock
                 if (enStock.Value)
                 {
-                    serialNumbers.Where(sn => sn.EnStock);
+                    serialNumbers = serialNumbers.Where(sn => sn.EnStock);
                 }
                 // Trae los que no estan en stock
                 else
                 {
-                    serialNumbers.Where(sn => !sn.EnStock);
+                    serialNumbers = serialNumbers.Where(sn => !sn.EnStock);
                 }
             }
             return serialNumbers;

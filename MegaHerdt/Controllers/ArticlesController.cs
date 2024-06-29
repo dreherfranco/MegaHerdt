@@ -184,6 +184,23 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpPost("article-discount-stock")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<ArticleDTO>> ArticleDiscountStock([FromBody] ArticleWithSerialNumbersDTO dto)
+        {
+            try
+            {
+                await articleService.DiscountStockWithSerialNumber(dto.Article.Id, dto.SerialNumbers);
+                return dto.Article;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
         [HttpPost("update")]
       //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
      //   [AuthorizeRoles(Role.Admin, Role.Empleado)]

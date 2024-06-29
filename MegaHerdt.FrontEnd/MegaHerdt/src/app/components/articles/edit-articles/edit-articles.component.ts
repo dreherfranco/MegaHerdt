@@ -7,8 +7,9 @@ import { DialogUpdatePriceArticleByCategoryComponent } from './dialog-update-pri
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { instanceArticle } from 'src/app/utils/InstanceArticle';
 import { changeImage } from 'src/app/utils/errorImage';
+import { DiscountStockComponent } from './discount-stock/discount-stock.component';
+import { ArticleWithSerialNumbers } from 'src/app/models/Article/ArticleWithSerialNumbers';
 
 @Component({
   selector: 'app-edit-articles',
@@ -31,7 +32,11 @@ export class EditArticlesComponent implements OnInit {
   { 
     this.paginate = new Paginate(1,6);
     this.searchText = "";
-    this.selectedArticle = instanceArticle();
+    this.selectedArticle = new Article();
+  }
+
+  ngOnInit(): void {
+    this.loadProducts();
   }
 
   // Si se cerro la modal
@@ -117,7 +122,46 @@ export class EditArticlesComponent implements OnInit {
       });
   }
 
-  ngOnInit(): void {
-    this.loadProducts();
+
+  openDialogDiscountStock(article: Article) 
+  {
+    const dialogRef = this.dialog.open(DiscountStockComponent,
+      {
+        data: article,
+        height: '700px',
+        width: '700px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: ArticleWithSerialNumbers) => {
+      if(result != undefined){
+        this.discountStock(result);
+      }
+    });
   }
+
+  discountStock(articleWithSerialNumbers: ArticleWithSerialNumbers) {
+    this._articleService.ArticleDiscountStock(articleWithSerialNumbers, this._storageService.getTokenValue())
+      .subscribe({
+        next: (response) => {
+          if (response.error) {
+
+            AlertService.errorAlert('¡Error al querer descontar el stock!')
+
+          } else {
+            //window.location.reload();
+            AlertService.successAlert('¡Stock Descontado!',"El stock se descontó exitosamente.")
+            .then(()=>
+            {
+              // Si fue exitoso se recarga la pagina
+               window.location.reload();
+            })
+          }
+        },
+        error: (err) => {
+          AlertService.errorAlert('¡Error al querer descontar el stock!')         
+          console.log(err.error);
+        },
+      });
+  }
+
 }

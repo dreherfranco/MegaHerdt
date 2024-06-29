@@ -26,7 +26,7 @@ export class EditArticleComponent implements OnInit {
   image: File;
   changeImage = changeImage;
 
-  articleWithSerialNumbers: ArticleWithSerialNumbers = new ArticleWithSerialNumbers();
+  //articleWithSerialNumbers: ArticleWithSerialNumbers = new ArticleWithSerialNumbers();
 
   constructor(
     private _categoryService: CategoryService,

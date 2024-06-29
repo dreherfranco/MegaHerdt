@@ -2,7 +2,9 @@
 
 using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Repository.Base;
 using MegaHerdt.Services.Services.Base;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -14,14 +16,44 @@ namespace MegaHerdt.Services.Services
         private readonly ArticleCategoryHelper _articleCategoryHelper;
         private readonly ArticleProviderItemHelper _articleProviderItemHelper;
         private readonly ArticleBrandHelper _articleBrandHelper;
+        private readonly ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper;
+
         public ArticleService(ArticleHelper helper, ArticleCategoryHelper articleCategoryHelper, 
-            ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper) :
+            ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper,
+            ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper) :
             base(helper)
         {
             this._helper = helper;
             this._articleCategoryHelper = articleCategoryHelper;
             this._articleBrandHelper = articleBrandHelper;
             this._articleProviderItemHelper = articleProviderItemHelper;
+            this.articleProviderSerialNumberHelper = articleProviderSerialNumberHelper;
+        }
+        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers)
+        {
+            Expression<Func<Article, bool>> filter = x => x.Id == articleId;
+            await UpdateSerialNumbers(articleId, serialNumbers);
+            // Descuento stock según la cantidad de Numeros de Serie.
+            await this._helper.DiscountStock(filter, serialNumbers.Count);
+        }
+
+        private async Task UpdateSerialNumbers(int articleId, List<string> serialNumbers)
+        {
+            serialNumbers = serialNumbers.Select(s => s.ToUpper()).ToList();
+            // Items de donde voy a obtener los numeros de serie
+            // Obtengo los numeros de serie que estan en stock solamente.
+            var articleProviderItemsSerialNumbers = _articleProviderItemHelper
+                                                      .GetSerialNumbersByArticleId(articleId, enStock: true)
+                                                      .Where(i => serialNumbers.Contains(i.SerialNumber!.ToUpper()))
+                                                      .ToList();
+
+            foreach (var serialNumberData in articleProviderItemsSerialNumbers)
+            {
+                // Actualizar el numero de serie correspondiente a la tabla ArticleProviderSerialNumber
+                serialNumberData.EnStock = false;
+                await articleProviderSerialNumberHelper.Update(serialNumberData);
+            }
+ 
         }
 
         public async Task AddStock(int articleId, int value)
