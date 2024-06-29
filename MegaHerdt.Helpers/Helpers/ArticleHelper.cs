@@ -14,6 +14,27 @@ namespace MegaHerdt.Helpers.Helpers
         {
 
         }
+
+        /// <summary>
+        /// Establece el precio de provision, articleEditedDateTime, provisionCreatedDateTime 
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public async Task UpdateArticleWithProvisionData(Expression<Func<Article, bool>> filter, int stockToAdd, float provisionPrice)
+        {
+            var article = this.repository.Get(filter)
+                .FirstOrDefault();
+            if (article == null) { throw new Exception("article not exists"); }
+
+            article.AddStock(stockToAdd);
+            article.ProvisionCreatedDateTime = DateTime.UtcNow;
+            article.ProvisionPrice = provisionPrice;
+
+            await this.repository.Update(article);
+        }
+
         public async Task AddStock(Expression<Func<Article, bool>> filter, int value)
         {
             var article = this.repository.Get(filter)

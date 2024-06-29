@@ -64,7 +64,8 @@ namespace MegaHerdt.Services.Services
             foreach (var item in articleProvider.ArticlesItems)
             {
                 Expression<Func<Article, bool>> filter = x => x.Id == item.ArticleId;
-                await this._articleHelper.AddStock(filter, item.ArticleQuantity);
+                await this._articleHelper.UpdateArticleWithProvisionData(filter, item.ArticleQuantity, item.PurchasePrice);
+
             }
            
         }

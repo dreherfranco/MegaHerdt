@@ -19,5 +19,11 @@ namespace MegaHerdt.API.DTOs.Article
         public ArticleCategoryDTO Category { get; set; }
         public List<ArticleOfferDetailDTO> CurrentsOffers { get; set; }
         public List<ArticleOfferDetailDTO> FutureOffers { get; set; }
+
+        #region Gestion de Provisiones
+        public float? ProvisionPrice { get; set; }
+        public DateTime? ArticleEditedDateTime { get; set; }
+        public DateTime? ProvisionCreatedDateTime { get; set; }
+        #endregion
     }
 }

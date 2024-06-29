@@ -104,6 +104,7 @@ export class EditArticlesComponent implements OnInit {
           this.articles = response;
           this.articlesAux = this.articles;
           this.filter(true);
+          console.log(this.articlesAux)
         },
         error: (err) => console.log(err),
       }

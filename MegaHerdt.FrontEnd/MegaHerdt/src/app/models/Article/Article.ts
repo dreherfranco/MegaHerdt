@@ -15,10 +15,15 @@ export class Article {
     category: Category;
     currentsOffers: ArticleOfferDetail[];
     futureOffers: ArticleOfferDetail[];
-    
+    provisionPrice: number | null;
+    articleEditedDateTime: Date | null;
+    provisionCreatedDateTime: Date | null;
+
     constructor(id: number=0, name: string='', code: string='', stock: number=0, image:string='', 
         unitValue:number=0, unitValueWithOffer: number=0, brand: Brand=new Brand(), category: Category=new Category(), 
-        currentsOffers:ArticleOfferDetail[] = [], futureOffers: ArticleOfferDetail[] = [], hasSerialNumber: boolean = false) 
+        currentsOffers:ArticleOfferDetail[] = [], futureOffers: ArticleOfferDetail[] = [], 
+        hasSerialNumber: boolean = false, provisionPrice: number | null = null, 
+        articleEditedDateTime: Date | null = null, provisionCreatedDateTime: Date | null = null) 
     {       
         this.id = id;
         this.name = name;
@@ -32,5 +37,8 @@ export class Article {
         this.currentsOffers = currentsOffers;
         this.futureOffers = futureOffers;
         this.hasSerialNumber = hasSerialNumber;
+        this.provisionPrice = provisionPrice;
+        this.articleEditedDateTime = articleEditedDateTime;
+        this.provisionCreatedDateTime = provisionCreatedDateTime;
     }
 }

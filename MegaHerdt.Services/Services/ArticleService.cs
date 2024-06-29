@@ -19,6 +19,13 @@ namespace MegaHerdt.Services.Services
         private readonly ArticleBrandHelper _articleBrandHelper;
         private readonly ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper;
 
+        /// <summary>
+        /// Indica los dias de vigencia de la propiedad Article.ProvisionCreatedDateTime.
+        /// El valor de esta propiedad se establece cuando se crea una provision.
+        /// </summary>
+        public readonly int ProvisionCreatedDateTimeValidityDays = 7;
+
+
         public ArticleService(ArticleHelper helper, ArticleCategoryHelper articleCategoryHelper, 
             ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper,
             ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper, 
@@ -43,6 +50,25 @@ namespace MegaHerdt.Services.Services
 
             // Descuento stock según la cantidad de Numeros de Serie.
             await this._helper.DiscountStock(filter, serialNumbers.Count);
+        }
+
+        public async Task UpdateProvisionCreatedDateTime(IEnumerable<Article> articles)
+        {
+            foreach (var article in articles)
+            {
+                if (article.ProvisionCreatedDateTime is not null)
+                {
+                    // Establezco 7 dias de vigencia.
+                    var datetime = article.ProvisionCreatedDateTime.Value.AddDays(ProvisionCreatedDateTimeValidityDays);
+
+                    // Si pasaron 7 dias despues de que se agregó la provisión se tiene que nulear la propiedad ProvisionCreatedDateTime.
+                    if (DateTime.UtcNow > datetime)
+                    {
+                        article.ProvisionCreatedDateTime = null;
+                        await Update(article);
+                    }
+                }
+            }
         }
 
         private async Task UpdateSerialNumbers(int articleId, List<string> serialNumbers)
