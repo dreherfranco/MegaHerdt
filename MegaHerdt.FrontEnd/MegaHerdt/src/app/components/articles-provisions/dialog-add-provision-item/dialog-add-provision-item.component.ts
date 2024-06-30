@@ -128,7 +128,10 @@ export class DialogAddProvisionItemComponent implements OnInit {
             this.serialNumberRepeted = true;
         }
     }
-}
+  }
 
-
+  deleteSerialNumber(serialNumber: string) 
+  {
+    this.articleProviderItem.serialNumbers = this.articleProviderItem.serialNumbers.filter(sn => sn.serialNumber !== serialNumber);
+  }
 }

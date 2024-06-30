@@ -69,7 +69,7 @@ namespace MegaHerdt.Models.Models
                             {
                                 if(serialNumber.SerialNumber!.Equals(serialNumberPersisted.SerialNumber) && serialNumber.IsDiscountStockOperation == serialNumberPersisted.IsDiscountStockOperation)
                                 {
-                                    ErrorMessages.Add($"El número de serie {serialNumber.SerialNumber} ya existe en la base de datos.");
+                                    ErrorMessages.Add($"El número de serie {serialNumber.SerialNumber} definido en el artículo {_articleConfiguration.Name} ya existe en la base de datos.");
                                 }
                             }
                         }

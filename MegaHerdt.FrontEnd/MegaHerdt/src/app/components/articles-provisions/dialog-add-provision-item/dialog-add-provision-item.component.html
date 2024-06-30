@@ -58,6 +58,9 @@
                 <ul id="dropdown-basic" *dropdownMenu class="serial-number-list dropdown-menu" role="menu" aria-labelledby="button-basic">
                     <li *ngFor="let serialNumber of articleProviderItem.serialNumbers" class="dropdown-item">
                         <b>S/N: {{ serialNumber.serialNumber }}</b>
+                        <a class="btn btn-danger" (click)="deleteSerialNumber(serialNumber.serialNumber)" title="Agregar">
+                            <i class="bi bi-x-circle-fill"></i>
+                        </a>
                     </li>
                 </ul>
             </div>
