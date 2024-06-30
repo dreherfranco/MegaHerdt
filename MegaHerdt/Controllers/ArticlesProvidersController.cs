@@ -32,13 +32,36 @@ namespace MegaHerdt.API.Controllers
         }
 
         
-
+        /// <summary>
+        /// Provisiones. 
+        /// ArticleProvider.Add == true
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult<List<ArticleProviderDTO>> GetArticlesProviders()
+        public ActionResult<List<ArticleProviderDTO>> GetAddedArticlesProviders()
         {
             try
             {
-                var articlesProviders = articleProviderService.GetAll().ToList();
+                var articlesProviders = articleProviderService.GetAll().Where(ap => ap.Add).ToList();
+                return this.Mapper.Map<List<ArticleProviderDTO>>(articlesProviders);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        /// <summary>
+        /// Descuentos de Stock.
+        /// ArticleProvider.Add == false
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("get-all-discounted")]
+        public ActionResult<List<ArticleProviderDTO>> GetDiscountedArticlesProviders()
+        {
+            try
+            {
+                var articlesProviders = articleProviderService.GetAll().Where(ap => !ap.Add).ToList();
                 return this.Mapper.Map<List<ArticleProviderDTO>>(articlesProviders);
             }
             catch (Exception ex)

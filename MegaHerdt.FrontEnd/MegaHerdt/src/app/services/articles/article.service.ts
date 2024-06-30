@@ -4,6 +4,7 @@ import { interval, Observable, timeInterval } from 'rxjs';
 import { Global } from '../../utils/Global';
 import { ArticlePriceUpdateByCategory } from 'src/app/models/Article/ArticlePriceUpdateByCategory';
 import { Article } from 'src/app/models/Article/Article';
+import { ArticleWithSerialNumbers } from 'src/app/models/Article/ArticleWithSerialNumbers';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,13 @@ export class ArticleService {
   constructor(private _http: HttpClient) 
   {
     this.url = Global.url + "Articles";
+  }
+
+  ArticleDiscountStock(articleWithSerialNumbers: ArticleWithSerialNumbers, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(articleWithSerialNumbers);
+    console.log(articleWithSerialNumbers);
+    return this._http.post(this.url + "/article-discount-stock", params, { headers: this.headers });
   }
 
   getArticles(): Observable<any> {

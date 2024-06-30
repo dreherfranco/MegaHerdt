@@ -6,9 +6,10 @@ export class ArticleUpdate {
     unitValue: number;
     brandId: number;
     categoryId: number;
-    
+    hasSerialNumber: boolean;
+
     constructor(id: number, name: string, code: string, stock: number,
-        unitValue:number, brandId: number, categoryId: number) 
+        unitValue:number, brandId: number, categoryId: number, hasSerialNumber: boolean) 
     {       
         this.id = id;
         this.name = name;
@@ -17,5 +18,6 @@ export class ArticleUpdate {
         this.unitValue = unitValue;
         this.brandId = brandId;
         this.categoryId = categoryId;
+        this.hasSerialNumber = hasSerialNumber;
     }
 }

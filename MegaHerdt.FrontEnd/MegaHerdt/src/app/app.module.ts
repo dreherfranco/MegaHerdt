@@ -148,6 +148,7 @@ import { OffersGridComponent } from './components/offers/offers-grid/offers-grid
 import { ProvidersGridComponent } from './components/providers/providers-grid/providers-grid.component';
 import { ProvidersFormComponent } from './components/providers/providers-form/providers-form.component';
 import { ArticlesProvisionsGridComponent } from './components/articles-provisions/articles-provisions-grid/articles-provisions-grid.component';
+import { DiscountStockComponent } from './components/articles/edit-articles/discount-stock/discount-stock.component';
 
 @NgModule({
   declarations: [
@@ -275,7 +276,8 @@ import { ArticlesProvisionsGridComponent } from './components/articles-provision
     OffersGridComponent,
     ProvidersGridComponent,
     ProvidersFormComponent,
-    ArticlesProvisionsGridComponent
+    ArticlesProvisionsGridComponent,
+    DiscountStockComponent
   ],
   imports: [
     MatSnackBarModule,

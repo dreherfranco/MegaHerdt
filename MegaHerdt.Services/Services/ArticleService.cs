@@ -2,7 +2,9 @@
 
 using MegaHerdt.Helpers.Helpers;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Repository.Base;
 using MegaHerdt.Services.Services.Base;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -13,15 +15,79 @@ namespace MegaHerdt.Services.Services
         private readonly ArticleHelper _helper;
         private readonly ArticleCategoryHelper _articleCategoryHelper;
         private readonly ArticleProviderItemHelper _articleProviderItemHelper;
+        private readonly ArticleProviderHelper _articleProviderHelper;
         private readonly ArticleBrandHelper _articleBrandHelper;
+        private readonly ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper;
+
+        /// <summary>
+        /// Indica los dias de vigencia de la propiedad Article.ProvisionCreatedDateTime.
+        /// El valor de esta propiedad se establece cuando se crea una provision.
+        /// </summary>
+        public readonly int ProvisionCreatedDateTimeValidityDays = 7;
+
+
         public ArticleService(ArticleHelper helper, ArticleCategoryHelper articleCategoryHelper, 
-            ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper) :
+            ArticleBrandHelper articleBrandHelper, ArticleProviderItemHelper articleProviderItemHelper,
+            ArticleProviderSerialNumberHelper articleProviderSerialNumberHelper, 
+            ArticleProviderHelper articleProviderHelper) :
             base(helper)
         {
             this._helper = helper;
             this._articleCategoryHelper = articleCategoryHelper;
             this._articleBrandHelper = articleBrandHelper;
             this._articleProviderItemHelper = articleProviderItemHelper;
+            this.articleProviderSerialNumberHelper = articleProviderSerialNumberHelper;
+            _articleProviderHelper = articleProviderHelper;
+        }
+        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason)
+        {
+            Expression<Func<Article, bool>> filter = x => x.Id == articleId;
+            await UpdateSerialNumbers(articleId, serialNumbers);
+
+            // Se crea una instancia de ArticleProvider que representa el descuento del stock.
+            var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, serialNumbers.Count(), discountReason);
+            await _articleProviderHelper.Create(instanceArticleProvider);
+
+            // Descuento stock según la cantidad de Numeros de Serie.
+            await this._helper.DiscountStock(filter, serialNumbers.Count);
+        }
+
+        public async Task UpdateProvisionCreatedDateTime(IEnumerable<Article> articles)
+        {
+            foreach (var article in articles)
+            {
+                if (article.ProvisionCreatedDateTime is not null)
+                {
+                    // Establezco 7 dias de vigencia.
+                    var datetime = article.ProvisionCreatedDateTime.Value.AddDays(ProvisionCreatedDateTimeValidityDays);
+
+                    // Si pasaron 7 dias despues de que se agregó la provisión se tiene que nulear la propiedad ProvisionCreatedDateTime.
+                    if (DateTime.UtcNow > datetime)
+                    {
+                        article.ProvisionCreatedDateTime = null;
+                        await Update(article);
+                    }
+                }
+            }
+        }
+
+        private async Task UpdateSerialNumbers(int articleId, List<string> serialNumbers)
+        {
+            serialNumbers = serialNumbers.Select(s => s.ToUpper()).ToList();
+            // Items de donde voy a obtener los numeros de serie
+            // Obtengo los numeros de serie que estan en stock solamente.
+            var articleProviderItemsSerialNumbers = _articleProviderItemHelper
+                                                      .GetSerialNumbersByArticleId(articleId, enStock: true)
+                                                      .Where(i => serialNumbers.Contains(i.SerialNumber!.ToUpper()))
+                                                      .ToList();
+
+            foreach (var serialNumberData in articleProviderItemsSerialNumbers)
+            {
+                // Actualizar el numero de serie correspondiente a la tabla ArticleProviderSerialNumber
+                serialNumberData.EnStock = false;
+                await articleProviderSerialNumberHelper.Update(serialNumberData);
+            }
+ 
         }
 
         public async Task AddStock(int articleId, int value)

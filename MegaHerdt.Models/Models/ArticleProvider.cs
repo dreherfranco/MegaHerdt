@@ -6,6 +6,15 @@ namespace MegaHerdt.Models.Models
 {
     public partial class ArticleProvider
     {
+        public ArticleProvider() { }
+        public ArticleProvider(string discountReason, DateTime provisionDate, List<ArticleProviderItem> articlesItems, bool add = false)
+        {
+            Add = add;
+            DiscountReason = discountReason;
+            ProvisionDate = provisionDate;
+            ArticlesItems = articlesItems;
+        }
+
         [Key]
         public int Id { get; set; }
 

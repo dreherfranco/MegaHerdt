@@ -32,11 +32,17 @@ namespace MegaHerdt.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<ArticleDTO>> GetAllArticles()
+        public async Task<ActionResult<List<ArticleDTO>>> GetAllArticles()
         {
             try
             {
                 var articles = articleService.GetAll();
+
+                // Actualizo el ProvisionCreatedDateTime
+                await articleService.UpdateProvisionCreatedDateTime(articles);
+
+                articles = articleService.GetAll();
+
                 return this.Mapper.Map<List<ArticleDTO>>(articles);
             }
             catch (Exception ex)
@@ -51,6 +57,11 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var articles = articleService.GetEnabledsArticles();
+
+                // Actualizo el ProvisionCreatedDateTime
+                await articleService.UpdateProvisionCreatedDateTime(articles);
+                articles = articleService.GetEnabledsArticles();
+
                 return this.Mapper.Map<List<ArticleDTO>>(articles);
             }
             catch (Exception ex)
@@ -184,6 +195,23 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpPost("article-discount-stock")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<ArticleDTO>> ArticleDiscountStock([FromBody] ArticleWithSerialNumbersDTO dto)
+        {
+            try
+            {
+                await articleService.DiscountStockWithSerialNumber(dto.Article.Id, dto.SerialNumbers, dto.DiscountReason);
+                return dto.Article;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+
         [HttpPost("update")]
       //  [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
      //   [AuthorizeRoles(Role.Admin, Role.Empleado)]
@@ -208,6 +236,10 @@ namespace MegaHerdt.API.Controllers
                 }*/
 
                 articleDb = this.Mapper.Map(articleDTO, articleDb);
+
+                articleDb!.ArticleEditedDateTime = DateTime.UtcNow;
+                articleDb!.ProvisionCreatedDateTime = null;
+
                 var articleCode = await articleService.Update(articleDb);
                 return Ok(articleCode);
             }

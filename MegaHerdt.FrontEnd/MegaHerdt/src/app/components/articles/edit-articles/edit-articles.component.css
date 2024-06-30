@@ -14,3 +14,13 @@
     width: 3rem;
     height: 1.5rem;
 }
+
+.btn-return{
+    border: .1rem #6112ff solid !important;
+    background-color: #712CF9 !important;
+    transition: background-color 0.3s ease, color 0.3s ease !important;
+}
+
+.btn-return:hover {
+    background-color: #6112ff !important;
+}

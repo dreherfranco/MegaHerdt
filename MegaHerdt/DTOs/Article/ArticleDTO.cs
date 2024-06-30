@@ -12,11 +12,18 @@ namespace MegaHerdt.API.DTOs.Article
         public string Image { get; set; }
         public string Name { get; set; }
         public int Stock { get; set; }
+        public bool HasSerialNumber { get; set; }
         public float UnitValue { get; set; }
         public float UnitValueWithOffer { get; set; }
         public ArticleBrandDTO Brand { get; set; }
         public ArticleCategoryDTO Category { get; set; }
         public List<ArticleOfferDetailDTO> CurrentsOffers { get; set; }
         public List<ArticleOfferDetailDTO> FutureOffers { get; set; }
+
+        #region Gestion de Provisiones
+        public float? ProvisionPrice { get; set; }
+        public DateTime? ArticleEditedDateTime { get; set; }
+        public DateTime? ProvisionCreatedDateTime { get; set; }
+        #endregion
     }
 }

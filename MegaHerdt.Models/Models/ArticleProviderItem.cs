@@ -28,19 +28,35 @@ namespace MegaHerdt.Models.Models
 
     public partial class ArticleProviderItem
     {
+        /// <summary>
+        /// Articulo para validaciones
+        /// </summary>
+        [NotMapped]
+        public Article? _articleConfiguration;
+
         [NotMapped]
         public List<string> ErrorMessages { get; set; } = new();
         public bool IsBroken()
         {
-            if (SerialNumbers is null)
-            {
-                ErrorMessages.Add("No contiene numeros de serie definidos.");
+            if (_articleConfiguration is null) 
+            { 
+                ErrorMessages.Add("No se agregó configuración para la entidad ArticleProviderItem.");
+                return ErrorMessages.Any();
             }
-            else
+          
+            //Define si el articulo tiene numero de serie
+            if (_articleConfiguration.HasSerialNumber)
             {
-                if(SerialNumbers.Count != ArticleQuantity)
+                if (SerialNumbers is null)
                 {
-                    ErrorMessages.Add($"Cantidad de numeros de series no coincidentes con la cantidad de articulos. Numeros de articulos = { ArticleQuantity } y Numeros de serie definidos = { SerialNumbers.Count }");
+                    ErrorMessages.Add("No contiene numeros de serie definidos.");
+                }
+                else
+                {
+                    if (SerialNumbers.Count != ArticleQuantity)
+                    {
+                        ErrorMessages.Add($"Cantidad de numeros de series no coincidentes con la cantidad de articulos. Numeros de articulos = {ArticleQuantity} y Numeros de serie definidos = {SerialNumbers.Count}");
+                    }
                 }
             }
 

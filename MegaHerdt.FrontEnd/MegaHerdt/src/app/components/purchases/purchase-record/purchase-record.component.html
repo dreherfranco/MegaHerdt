@@ -33,9 +33,11 @@
                             <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
                              <button type="button" class="btn btn-primary col-sm-1" 
                                      (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
-                                     title="Ver numeros de serie">
+                                     title="Ver numeros de serie"
+                                     *ngIf="purchaseArticle.article.hasSerialNumber">
                                 <i class="bi bi-eye"></i>
                             </button>
+                            <span *ngIf="!purchaseArticle.article.hasSerialNumber">(Sin N/S)</span>
                         </p>
                     </th>
 

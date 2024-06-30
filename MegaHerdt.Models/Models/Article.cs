@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 
 namespace MegaHerdt.Models.Models
 {
-    public class Article
+    public partial class Article
     {
         [Key]
         public int Id { get; set; }
@@ -19,12 +19,24 @@ namespace MegaHerdt.Models.Models
         public string Image { get; set; }
         public float UnitValue { get; set; }
         public bool Enabled { get; set; } = true;
+        public bool HasSerialNumber { get; set; } 
         public ArticleBrand Brand { get; set; }
         public ArticleCategory Category { get; set; }
         public List<ArticleOffer> Offers { get; set; }
         //public List<ArticleProvider> ArticlesProviders { get; set; }
         public List<ReparationArticle> ReparationArticles { get; set;}
         public List<PurchaseArticle> PurchaseArticles { get; set; }
+
+        #region Gestion de Provisiones
+        public float? ProvisionPrice { get; set; }
+        public DateTime? ArticleEditedDateTime { get; set; }
+        public DateTime? ProvisionCreatedDateTime { get; set; }
+        #endregion
+    }
+
+    public partial class Article
+    {
+        #region Gestion de Stock
         private int _stock { get; set; }
 
         public int Stock
@@ -38,7 +50,7 @@ namespace MegaHerdt.Models.Models
                 this._stock = value;
             }
         }
-      
+
         public void DiscountStock(int value)
         {
             if (this._stock - value < 0)
@@ -84,6 +96,6 @@ namespace MegaHerdt.Models.Models
             var dateNow = DateTime.Now;
             return Offers.Where(x => x.StartDate <= dateNow && x.EndDate > dateNow);
         }
-
+        #endregion
     }
 }

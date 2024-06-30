@@ -112,6 +112,7 @@ namespace MegaHerdt.API.ExtensionMethods
             builder.Services.AddTransient<DebtorsHelper>();
             builder.Services.AddTransient<IncomeExpensesHelper>();
             builder.Services.AddTransient<ArticleProviderItemHelper>();
+            builder.Services.AddTransient<ArticleProviderSerialNumberHelper>();
             return builder;
         }
 

@@ -27,7 +27,7 @@
             let i = index">
                 <td>
                     <span class="data-user" disabled>
-                        {{articleProvider.provider.email}}
+                        {{articleProvider.provider?.email}}
                     </span>
                 </td>
                 <td>
@@ -50,7 +50,7 @@
                     <span *ngIf="articleProvider.articlesItems.length == 0" class="text-secondary"> No contiene
                         articulos</span>
                     <p *ngFor="let item of articleProvider.articlesItems" class="data-user">
-                        {{ item.article.name }}
+                        {{ item.article.name }} x {{ item.articleQuantity }} Unidades
                     </p>
                 </td>
 
