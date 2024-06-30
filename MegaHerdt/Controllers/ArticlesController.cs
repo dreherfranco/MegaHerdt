@@ -202,7 +202,7 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                await articleService.DiscountStockWithSerialNumber(dto.Article.Id, dto.SerialNumbers, dto.DiscountReason);
+                await articleService.DiscountStockWithSerialNumber(dto.Article.Id, dto.SerialNumbers, dto.DiscountReason, dto.QuantityToDiscount);
                 return dto.Article;
             }
             catch (Exception ex)

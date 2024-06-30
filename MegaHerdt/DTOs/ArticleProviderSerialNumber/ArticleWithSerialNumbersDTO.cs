@@ -12,6 +12,7 @@ namespace MegaHerdt.API.DTOs.ArticleProviderSerialNumber
         }
         public ArticleDTO Article { get; set; } = null!;
         public string DiscountReason { get; set; } = string.Empty;
+        public int? QuantityToDiscount { get; set; } 
         public List<string> SerialNumbers { get; set; } = new();
     }
 }

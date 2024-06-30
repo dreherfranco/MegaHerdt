@@ -70,7 +70,10 @@ export class DiscountStockComponent implements OnInit {
       let serialNumbers = serialNumbersSelected.map(i => i.serialNumber);
 
       // Armo la instancia para enviar al backend.
-      let articleWithSerialNumbers = new ArticleWithSerialNumbers(this.article, serialNumbers, this.serialNumbersSelection.discountReason);
+      let articleWithSerialNumbers = new ArticleWithSerialNumbers(this.article, 
+        serialNumbers, 
+        this.serialNumbersSelection.discountReason,
+        this.serialNumbersSelection.quantityToDiscount);
       // Devuelvo los numeros de serie seleccionados con su articulo correspondiente (ArticleWithSerialNumbers)
       this.dialogRef.close(articleWithSerialNumbers);
     }
@@ -83,6 +86,26 @@ export class DiscountStockComponent implements OnInit {
 
   closeModal(){
     this.dialogRef.close();
+  }
+
+  disableAcceptButton(){
+    // Si el articulo define numeros de serie
+    if(this.article.hasSerialNumber)
+    {
+      // Tiene que tener mas de un numero de serie seleccionado
+      if(this.serialNumbersSelection.serialNumbers.length <= 0)
+      {
+        return true;
+      }
+    }
+    // Si el articulo no define numeros de serie
+    else
+    {
+      if(this.serialNumbersSelection.quantityToDiscount == null){ return true; }
+      if(this.serialNumbersSelection.quantityToDiscount <= 0){ return true; }
+    }
+    
+    return false;
   }
 
 }

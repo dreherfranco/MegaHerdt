@@ -74,7 +74,7 @@
       <td>{{article.category.name}}</td>
       <td>{{article.hasSerialNumber ? "Si" : "No"}}</td>
       <td>
-        <button class="btn btn-primary" title="Descontar Stock" 
+        <button *ngIf="article.stock > 0" class="btn btn-primary" title="Descontar Stock" 
         (click)="openDialogDiscountStock(article)"
          type="button" class="btn-return btn btn-danger">
           <i class="bi bi-dash"></i>

@@ -12,6 +12,14 @@
     </div>
 </div>
 
+
+<!-- Si no define numeros de series se debe indicar la cantidad a descontar -->
+<div *ngIf="!article.hasSerialNumber" class="form-group mb-3 col-sm-6">
+    <label for="quantityToDiscount"><b>(*)Cantidad a descontar: </b></label>
+    <input id="quantityToDiscount" placeholder="Cantidad a descontar" name="quantityToDiscount"
+        class="form-control" type="number" #quantityToDiscount="ngModel" [(ngModel)]="serialNumbersSelection.quantityToDiscount" required>
+</div>
+
 <div class="form-group mb-3 col-sm-6">
     <label for="discountReason"><b>(*)Razón de descuento: </b></label>
     <textarea id="discountReason" pattern="^([0-9 \u00c0-\u01ffa-zA-Z'\-\_])+$" placeholder="Razon del descuento" name="discountReason"
@@ -20,6 +28,10 @@
 </div>
 
 <div class="d-flex justify-content-end flex-md-row flex-wrap">
-    <button class="btn btn-primary d-flex p-2 m-2" (click)="confirm()">{{this.dialogRef ? 'Aceptar' : 'Aceptar sin \'dialogo\''}}</button>
+    <button class="btn btn-primary d-flex p-2 m-2" 
+            (click)="confirm()" 
+            [disabled]="disableAcceptButton()">
+            {{this.dialogRef ? 'Aceptar' : 'Aceptar sin \'dialogo\''}}
+    </button>
     <button *ngIf="this.dialogRef" class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
 </div>

@@ -4,12 +4,14 @@ export class ArticleWithSerialNumbers {
     article: Article;
     serialNumbers: string[] = [];
     discountReason: string;
+    quantityToDiscount: number | null;
 
-    constructor(article: Article = new Article(), serialNumbers: string[] = [], discountReason: string = '') 
+    constructor(article: Article = new Article(), serialNumbers: string[] = [], discountReason: string = '', quantityToDiscount:number | null = null) 
     {       
         this.article = article;
         this.serialNumbers = serialNumbers;
         this.discountReason = discountReason;
+        this.quantityToDiscount = quantityToDiscount;
     }
 }
 
@@ -19,11 +21,13 @@ export class ArticleWithSerialNumbers {
 export class SerialNumbersSelection {
     serialNumbers: SerialNumbersSelectionItem[];
     discountReason: string;
+    quantityToDiscount: number | null;
 
-    constructor(serialNumbers: SerialNumbersSelectionItem[] = [] , discountReason: string = '')
+    constructor(serialNumbers: SerialNumbersSelectionItem[] = [] , discountReason: string = '', quantityToDiscount:number | null = null)
     {       
         this.serialNumbers = serialNumbers;
         this.discountReason = discountReason;
+        this.quantityToDiscount = quantityToDiscount;
     }
 }
 

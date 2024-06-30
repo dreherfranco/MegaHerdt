@@ -39,17 +39,34 @@ namespace MegaHerdt.Services.Services
             this.articleProviderSerialNumberHelper = articleProviderSerialNumberHelper;
             _articleProviderHelper = articleProviderHelper;
         }
-        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason)
+        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason, int? quantityToDiscount)
         {
             Expression<Func<Article, bool>> filter = x => x.Id == articleId;
-            await UpdateSerialNumbers(articleId, serialNumbers);
+            var article = GetBy(filter).Single();
+
+            int articleQuantityToDiscount = default!;
+
+            // Si el articulo define numeros de serie.
+            if (article.HasSerialNumber)
+            {
+                await UpdateSerialNumbers(articleId, serialNumbers);
+
+                articleQuantityToDiscount = serialNumbers.Count();
+            }
+            // Si el articulo no define numeros de serie.
+            else
+            {
+                if (quantityToDiscount is null) throw new Exception("La cantidad a descontar no puede ser nula.");
+                articleQuantityToDiscount = quantityToDiscount.Value;
+            }
 
             // Se crea una instancia de ArticleProvider que representa el descuento del stock.
-            var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, serialNumbers.Count(), discountReason);
+            var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, articleQuantityToDiscount, discountReason);
             await _articleProviderHelper.Create(instanceArticleProvider);
 
             // Descuento stock según la cantidad de Numeros de Serie.
-            await this._helper.DiscountStock(filter, serialNumbers.Count);
+            await this._helper.DiscountStock(filter, articleQuantityToDiscount);
+    
         }
 
         public async Task UpdateProvisionCreatedDateTime(IEnumerable<Article> articles)
