@@ -35,6 +35,9 @@ namespace MegaHerdt.Models.Models
         public Article? _articleConfiguration;
 
         [NotMapped]
+        public List<ArticleProviderSerialNumber>? _serialNumbersPersisted;
+
+        [NotMapped]
         public List<string> ErrorMessages { get; set; } = new();
         public bool IsBroken()
         {
@@ -56,6 +59,20 @@ namespace MegaHerdt.Models.Models
                     if (SerialNumbers.Count != ArticleQuantity)
                     {
                         ErrorMessages.Add($"Cantidad de numeros de series no coincidentes con la cantidad de articulos. Numeros de articulos = {ArticleQuantity} y Numeros de serie definidos = {SerialNumbers.Count}");
+                    }
+
+                    if(_serialNumbersPersisted is not null)
+                    {
+                        foreach(var serialNumber in SerialNumbers)
+                        {
+                            foreach(var serialNumberPersisted in _serialNumbersPersisted)
+                            {
+                                if(serialNumber.SerialNumber!.Equals(serialNumberPersisted.SerialNumber) && serialNumber.IsDiscountStockOperation == serialNumberPersisted.IsDiscountStockOperation)
+                                {
+                                    ErrorMessages.Add($"El número de serie {serialNumber.SerialNumber} ya existe en la base de datos.");
+                                }
+                            }
+                        }
                     }
                 }
             }

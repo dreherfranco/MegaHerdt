@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MegaHerdt.Services.Services
 {
-    public class ArticleProviderService: BaseService<ArticleProvider>
+    public class ArticleProviderService : BaseService<ArticleProvider>
     {
         private readonly ArticleHelper _articleHelper;
         public ArticleProviderService(ArticleProviderHelper helper, ArticleHelper _articleHelper) :
@@ -25,18 +25,20 @@ namespace MegaHerdt.Services.Services
         /// </summary>
         /// <param name="articleProvider"></param>
         /// <returns></returns>
-        private async Task ConfigureArticlesItems(ArticleProvider articleProvider)
+        private async Task ConfigureArticlesItems(ArticleProvider articleProvider, List<ArticleProviderSerialNumber> serialNumbersPersisted)
         {
             foreach (var item in articleProvider.ArticlesItems)
             {
                 item._articleConfiguration = await _articleHelper.Get(a => a.Id == item.ArticleId).FirstOrDefaultAsync();
+                item._serialNumbersPersisted = serialNumbersPersisted;
             }
         }
 
         public override async Task<ArticleProvider> Create(ArticleProvider articleProvider)
         {
-           await ConfigureArticlesItems(articleProvider);
-
+            var serialNumbersPersisted = await GetSerialNumbersPersisted(articleProvider);
+            await ConfigureArticlesItems(articleProvider, serialNumbersPersisted);
+            
             if (!articleProvider.IsBroken())
             {
 
@@ -56,6 +58,12 @@ namespace MegaHerdt.Services.Services
                 var errorMessage = string.Join("\n", articleProvider.ErrorMessages);
                 throw new Exception(errorMessage);
             }
+        }
+
+        private async Task<List<ArticleProviderSerialNumber>> GetSerialNumbersPersisted(ArticleProvider articleProvider)
+        {
+            var serialNumbers = await helper.Get().SelectMany(i => i.ArticlesItems).SelectMany(i => i.SerialNumbers!).ToListAsync();
+            return serialNumbers;
         }
 
         public async Task AddProvision(ArticleProvider articleProvider)

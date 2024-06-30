@@ -58,6 +58,14 @@ namespace MegaHerdt.Models.Models
                             ErrorMessages.AddRange(item.ErrorMessages);
                         }
                     }
+
+                    var serialNumbersToAdd = ArticlesItems.SelectMany(ai => ai.SerialNumbers!).GroupBy(s =>  s.SerialNumber);
+
+                    if(serialNumbersToAdd.Any(g => g.Count() > 1))
+                    {
+                        ErrorMessages.Add($"El número de serie {serialNumbersToAdd.First(g => g.Count() > 1)} se encuentra repetido.");
+                    }
+                   
                 }
             }
 

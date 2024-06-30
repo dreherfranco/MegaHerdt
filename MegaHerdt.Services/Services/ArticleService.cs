@@ -41,31 +41,41 @@ namespace MegaHerdt.Services.Services
         }
         public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason, int? quantityToDiscount)
         {
-            Expression<Func<Article, bool>> filter = x => x.Id == articleId;
-            var article = GetBy(filter).Single();
-
-            int articleQuantityToDiscount = default!;
-
-            // Si el articulo define numeros de serie.
-            if (article.HasSerialNumber)
+            try
             {
-                await UpdateSerialNumbers(articleId, serialNumbers);
+                Expression<Func<Article, bool>> filter = x => x.Id == articleId;
+                var article = GetBy(filter).Single();
 
-                articleQuantityToDiscount = serialNumbers.Count();
-            }
-            // Si el articulo no define numeros de serie.
-            else
+                int articleQuantityToDiscount = default!;
+
+                // Si el articulo define numeros de serie.
+                if (article.HasSerialNumber)
+                {
+                    await UpdateSerialNumbers(articleId, serialNumbers);
+
+                    articleQuantityToDiscount = serialNumbers.Count();
+                }
+                // Si el articulo no define numeros de serie.
+                else
+                {
+                    if (quantityToDiscount is null) throw new Exception("La cantidad a descontar no puede ser nula.");
+                    articleQuantityToDiscount = quantityToDiscount.Value;
+                }
+
+                // Se crea una instancia de ArticleProvider que representa el descuento del stock.
+                var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, articleQuantityToDiscount, discountReason, serialNumbers);
+                await _articleProviderHelper.Create(instanceArticleProvider);
+
+                // Descuento stock según la cantidad de Numeros de Serie.
+                await this._helper.DiscountStock(filter, articleQuantityToDiscount);
+            }catch (Exception ex)
             {
-                if (quantityToDiscount is null) throw new Exception("La cantidad a descontar no puede ser nula.");
-                articleQuantityToDiscount = quantityToDiscount.Value;
+                // AJUSTAR ESTO, NO ESTÁ HECHO TODAVIA
+                if (ex.Message.Equals(""))
+                {
+                    throw new Exception("Ya existe un numero de serie con el codigo");
+                }
             }
-
-            // Se crea una instancia de ArticleProvider que representa el descuento del stock.
-            var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, articleQuantityToDiscount, discountReason);
-            await _articleProviderHelper.Create(instanceArticleProvider);
-
-            // Descuento stock según la cantidad de Numeros de Serie.
-            await this._helper.DiscountStock(filter, articleQuantityToDiscount);
     
         }
 

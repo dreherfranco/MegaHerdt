@@ -24,15 +24,27 @@ namespace MegaHerdt.Helpers.Helpers
                 .OrderByDescending(x => x.ProvisionDate);
         }
 
-        public ArticleProvider CreateDiscountStockInstance(int articleId, int articleQuantity, string discountReason)
+        public ArticleProvider CreateDiscountStockInstance(int articleId, int articleQuantity, string discountReason, List<string> serialNumbers)
         {
+            List<ArticleProviderSerialNumber> serialNumbersToSave = new();
+            foreach(var serialNumber in serialNumbers)
+            {
+                serialNumbersToSave.Add(new()
+                { 
+                    SerialNumber = serialNumber, 
+                    EnStock=false, 
+                    IsDiscountStockOperation=true 
+                });
+            }
+
             ArticleProvider articleProviderDiscount = new ArticleProvider(discountReason, DateTime.UtcNow,
                // Solo una instancia porque en el descuento de stock solo se toma un articulo con sus numeros de serie a descontar.
                 new List< ArticleProviderItem>(){
                 new ArticleProviderItem() 
                 {
                     ArticleId = articleId,
-                    ArticleQuantity = articleQuantity
+                    ArticleQuantity = articleQuantity,
+                    SerialNumbers = serialNumbersToSave
                 }
                });
             return articleProviderDiscount;

@@ -4,6 +4,7 @@ using MegaHerdt.DbConfiguration.DbConfiguration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MegaHerdt.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240630225721_stock-discount-operation")]
+    partial class stockdiscountoperation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -278,15 +280,11 @@ namespace MegaHerdt.API.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("SerialNumber")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ArticleProviderItemId");
-
-                    b.HasIndex("SerialNumber", "IsDiscountStockOperation")
-                        .IsUnique()
-                        .HasFilter("[SerialNumber] IS NOT NULL");
 
                     b.ToTable("ArticlesProviderSerialNumbers");
                 });
@@ -432,8 +430,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48c-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "87d331d1-c745-4b50-8c50-d6e4ff64cdc9",
-                            CreatedDate = new DateTime(2024, 6, 30, 23, 3, 8, 520, DateTimeKind.Utc).AddTicks(2284),
+                            ConcurrencyStamp = "63418808-9aeb-4abf-abfe-89319c3ecaa4",
+                            CreatedDate = new DateTime(2024, 6, 30, 22, 57, 21, 293, DateTimeKind.Utc).AddTicks(1420),
                             Dni = "42464099",
                             Email = "megaherdt.electronica@hotmail.com",
                             EmailConfirmed = false,
@@ -447,7 +445,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f4afa837-bcd9-4770-a643-bbc0be44eaef",
+                            SecurityStamp = "50ba96ad-9116-42f4-bd75-5210d59b00dd",
                             Surname = "Admin",
                             TwoFactorEnabled = false,
                             UserName = "megaherdt.electronica@hotmail.com"
@@ -456,8 +454,8 @@ namespace MegaHerdt.API.Migrations
                         {
                             Id = "7c2e2a04-d48d-4dd7-a3b9-4474c400dcbe",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ce79d4c3-4d93-437a-b92f-86df160e3fac",
-                            CreatedDate = new DateTime(2024, 6, 30, 23, 3, 8, 520, DateTimeKind.Utc).AddTicks(2294),
+                            ConcurrencyStamp = "6961db0b-ceec-4e72-92f8-b8fff7a4659f",
+                            CreatedDate = new DateTime(2024, 6, 30, 22, 57, 21, 293, DateTimeKind.Utc).AddTicks(1437),
                             Dni = "45698746",
                             Email = "conefecto77@gmail.com",
                             EmailConfirmed = false,
@@ -471,7 +469,7 @@ namespace MegaHerdt.API.Migrations
                             Password = "HbUx5+Ac8aaOfKLSxrpaTQ8uMV9Iz/ty5pBaJINg5Fc=",
                             PasswordHash = "AQAAAAEAACcQAAAAEMfyNTA180vxZ2Log08brPlw6oav6rL7mDtMn2Dv22mlg+eRjRRRtNMSCA4aoAvyNA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ed1dec74-f56e-49a5-8646-2861913450e0",
+                            SecurityStamp = "d9b5b9fb-6028-472a-a850-2054fc937514",
                             Surname = "Zappa",
                             TwoFactorEnabled = false,
                             UserName = "conefecto77@gmail.com"
@@ -1042,14 +1040,14 @@ namespace MegaHerdt.API.Migrations
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845d",
-                            ConcurrencyStamp = "41fa6757-26c0-4d14-9e56-ca220d359305",
+                            ConcurrencyStamp = "4f3ab956-7f8c-4adb-aea0-87a23f5d09ce",
                             Name = "ADMIN",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "9aae0b6d-d50c-4d0a-9b90-2a6873e3845e",
-                            ConcurrencyStamp = "739a753e-ff6f-4930-bd3b-0b54ea197b2e",
+                            ConcurrencyStamp = "bb4ea829-d6a9-4049-9eac-1390256e4c17",
                             Name = "EMPLEADO",
                             NormalizedName = "EMPLEADO"
                         });
