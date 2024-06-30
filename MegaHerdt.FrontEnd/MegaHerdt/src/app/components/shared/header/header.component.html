@@ -35,7 +35,7 @@
             class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none"
             [routerLink]="['']"
           >
-            Inicio <span class="caret"></span>
+            Inicio 
           </a>
         </div>
 
@@ -47,7 +47,7 @@
             class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
             aria-controls="dropdown-basic"
           >
-            Artículos <span class="caret"></span>
+            Artículos 
           </a>
           <ul
             id="dropdown-basic"
@@ -73,6 +73,7 @@
               placement="right"
               container="body"
               class="btn-group dropend"
+              disabled
             >
               <a
                 id="button-nested"
@@ -81,7 +82,7 @@
                 class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
                 aria-controls="dropdown-nested"
               >
-                Categorías <span class="caret"></span>
+                Categorías 
               </a>
               <ul
                 *dropdownMenu
@@ -115,6 +116,7 @@
               placement="right"
               container="body"
               class="btn-group dropend"
+              disabled
             >
               <a
                 id="button-nested"
@@ -123,7 +125,7 @@
                 class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
                 aria-controls="dropdown-nested"
               >
-                Marcas <span class="caret"></span>
+                Marcas 
               </a>
               <ul
                 *dropdownMenu
@@ -154,7 +156,7 @@
             class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
             aria-controls="dropdown-basic"
           >
-            Reparaciones <span class="caret"></span>
+            Reparaciones 
           </a>
           <ul
             id="dropdown-basic"
@@ -187,7 +189,7 @@
             class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
             aria-controls="dropdown-basic"
           >
-            Compras <span class="caret"></span>
+            Compras 
           </a>
           <ul
             id="dropdown-basic"
@@ -212,7 +214,7 @@
             </li>
           </ul>
         </div>
-        
+
         <div class="btn-group" dropdown *ngIf="authenticated() && isAdmin()">
           <a
             id="button-basic"
@@ -221,7 +223,7 @@
             class="colours btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
             aria-controls="dropdown-basic"
           >
-            Administrar <span class="caret"></span>
+            Administrar 
           </a>
           <ul
             id="dropdown-basic"
@@ -258,7 +260,7 @@
           >
             <i class="colours bi bi-person-circle"></i> &nbsp;
             {{ userAuthenticated.name }} {{ userAuthenticated.surname
-            }}<span class="caret"></span>
+            }}
           </a>
         </div>
         <ul
@@ -268,27 +270,47 @@
           role="menu"
           aria-labelledby="button-basic"
         >
-        <li role="menuitem" dropdown triggers="mouseover" placement="bottom" container="body" class="btn-group dropdown">
-            <a id="button-nested" type="button" dropdownToggle
-               class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
-               aria-controls="dropdown-basic" *ngIf="authenticated()">
-              Ajustes de usuario <span class="caret"></span>
+          <li
+            role="menuitem"
+            dropdown
+            triggers="mouseover"
+            placement="bottom"
+            container="body"
+            class="btn-group dropdown"
+            disabled
+            
+          >
+            <a
+              id="button-nested"
+              type="button"
+              dropdownToggle
+              class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+              aria-controls="dropdown-basic"
+              *ngIf="authenticated()"
+              disabled
+            >
+              Ajustes de usuario
             </a>
-            <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
+            <ul
+              *dropdownMenu
+              class="dropdown-menu text-small shadow"
+              role="menu"
+              aria-labelledby="button-basic"
+            >
               <app-user-settings></app-user-settings>
             </ul>
           </li>
-          
-            <li role="menuitem">
+
+          <li role="menuitem">
             <a
-                [routerLink]="['logout']"
-                *ngIf="authenticated()"
-                class="dropdown-item"
+              [routerLink]="['logout']"
+              *ngIf="authenticated()"
+              class="dropdown-item"
             >
-                <i class="bi bi-box-arrow-left"></i> &nbsp; Cerrar sesión
+              <i class="bi bi-box-arrow-left"></i> &nbsp; Cerrar sesión
             </a>
-            </li>          
-        </ul>        
+          </li>
+        </ul>
       </div>
       <a
         *ngIf="!authenticated()"
