@@ -3,34 +3,51 @@
 <div class="container-fluid">
   <div class="row align-items-center justify-content-between">
     <div class="col-3">
-      <button class="btn btn-primary h-searcher searcher m-1 ml-btn" (click)="openDialogUpdatePriceByCategory()">
+      <button
+        class="btn btn-primary h-searcher searcher m-1 ml-btn"
+        (click)="openDialogUpdatePriceByCategory()"
+      >
         Actualizar artículos por categoría
       </button>
-    </div>    
+    </div>
     <div class="col-6">
-      <div class="input-group" style="width: 75%;">
+      <div class="input-group" style="width: 75%">
         <div class="input-group-append">
-            <div class="input-group-text bg-primary">
-              <i class="bi bi-search text-white"></i>
-            </div>
+          <div class="input-group-text bg-primary">
+            <i class="bi bi-search text-white"></i>
           </div>
-        <input class="form-control w-75" type="text" [(ngModel)]="searchText" placeholder="Buscar artículos">
+        </div>
+        <input
+          class="form-control w-75"
+          type="text"
+          [(ngModel)]="searchText"
+          placeholder="Buscar artículos"
+        />
       </div>
     </div>
     <div class="col-3">
-      <div class="form-check form-switch ">
-        <input class="form-check-input switch-input-lg" type="checkbox" role="switch" id="flexSwitchCheckChecked"
-                [(ngModel)]="filterByStock" (click)="filter(false)">
-        <label class="form-check-label text-uppercase fs-5 ms-2 mt-1" for="flexSwitchCheckChecked">{{!this.filterByStock ? 'Con stock' : 'Sin stock'}}</label>
+      <div class="form-check form-switch">
+        <input
+          class="form-check-input switch-input-lg"
+          type="checkbox"
+          role="switch"
+          id="flexSwitchCheckChecked"
+          [(ngModel)]="filterByStock"
+          (click)="filter(false)"
+        />
+        <label
+          class="form-check-label text-uppercase fs-5 ms-2 mt-1"
+          for="flexSwitchCheckChecked"
+          >{{ !this.filterByStock ? "Con stock" : "Sin stock" }}</label
+        >
       </div>
     </div>
   </div>
 </div>
-<hr>
+<hr />
 <table class="table table-striped table-hover">
   <thead>
     <tr class="text-center text-uppercase">
-      <th>*</th>
       <th>Imagen</th>
       <th>Nombre</th>
       <th>Precio venta</th>
@@ -44,72 +61,116 @@
     </tr>
   </thead>
   <tbody>
-    <tr class="text-center text-uppercase"
-        *ngFor="let article of articles | filter: searchText |
-                                          paginate: { itemsPerPage: this.paginate.recordsPerPage, currentPage:this.paginate.page }">
-      
+    <tr
+      class="text-center text-uppercase"
+      *ngFor="
+        let article of articles
+          | filter : searchText
+          | paginate
+            : {
+                itemsPerPage: this.paginate.recordsPerPage,
+                currentPage: this.paginate.page
+              }
+      "
+    >
       <td>
-        <div class="mt-1" role="alert" *ngIf="article.provisionCreatedDateTime">
-          <button type="button" class="btn btn-warning w-100 h-auto mx-auto"
-              matTooltipPosition="above"
-              matTooltip="Precio recomendado por provisión creada: {{article.provisionPrice}}">
-              <i class="bi bi-star-fill"></i>
-          </button>
-        </div>
-
-      </td>
-      <td>
-        <div class="imgContainer">
-          <img class="imgCard"
-                src="{{article.image}}" 
-                alt="image"
-                (error)="changeImage($event)"
+        <div
+          class="imgContainer position-relative d-inline-block overflow-visible"
+        >
+          <img
+            class="imgCard"
+            src="{{ article.image }}"
+            alt="image"
+            (error)="changeImage($event)"
           />
+          <i
+            *ngIf="article.provisionCreatedDateTime"
+            class="bi bi-star-fill star-icon position-absolute top-0 end-0"
+            matTooltipPosition="above"
+            matTooltip="Precio recomendado por provisión creada: {{
+              article.provisionPrice
+            }}"
+          ></i>
         </div>
       </td>
-      <td>{{article.name}}</td>
-      <td>{{article.unitValue | argentineFormat}}</td>
-      <td>{{article.stock}}</td>
-      <td>{{article.brand.name}}</td>
-      <td>{{article.category.name}}</td>
-      <td>{{article.hasSerialNumber ? "Si" : "No"}}</td>
+      <td>{{ article.name }}</td>
+      <td>{{ article.unitValue | argentineFormat }}</td>
+      <td>{{ article.stock }}</td>
+      <td>{{ article.brand.name }}</td>
+      <td>{{ article.category.name }}</td>
+      <td>{{ article.hasSerialNumber ? "Si" : "No" }}</td>
       <td>
-        <button class="btn btn-primary" title="Descontar Stock" 
-        (click)="openDialogDiscountStock(article)"
-         type="button" class="btn-return btn btn-danger">
+        <button
+          class="btn btn-primary"
+          title="Descontar Stock"
+          (click)="openDialogDiscountStock(article)"
+          type="button"
+          class="btn-return btn btn-danger"
+        >
           <i class="bi bi-dash"></i>
         </button>
       </td>
 
       <td>
-        <button class="btn btn-primary" title="Editar" (click)="openModal(article)"
-          type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-          >
+        <button
+          class="btn btn-primary"
+          title="Editar"
+          (click)="openModal(article)"
+          type="button"
+          class="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+        >
           <i class="bi bi-pencil-square"></i>
         </button>
       </td>
       <td>
-          <button class="btn btn-danger" (click)="openDialogDelete(article)"  title="Eliminar"><i class="bi bi-trash3"></i></button>
+        <button
+          class="btn btn-danger"
+          (click)="openDialogDelete(article)"
+          title="Eliminar"
+        >
+          <i class="bi bi-trash3"></i>
+        </button>
       </td>
     </tr>
   </tbody>
 </table>
 <!-- Modal -->
-<div  #myModal class="modal fade" id="exampleModal" (hidden.bs.modal)="isDismiss()" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div
+  #myModal
+  class="modal fade"
+  id="exampleModal"
+  (hidden.bs.modal)="isDismiss()"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">{{selectedArticle.name}}</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+          {{ selectedArticle.name }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
         <ng-container *ngIf="isShow">
-          <app-edit-article [article]="selectedArticle" ></app-edit-article>
-        </ng-container>          
+          <app-edit-article [article]="selectedArticle"></app-edit-article>
+        </ng-container>
       </div>
     </div>
   </div>
 </div>
-<pagination-controls class="text-center" (pageChange)="this.paginate.page = $event" previousLabel="Anterior"
-  nextLabel="Siguiente">
+<pagination-controls
+  class="text-center"
+  (pageChange)="this.paginate.page = $event"
+  previousLabel="Anterior"
+  nextLabel="Siguiente"
+>
 </pagination-controls>

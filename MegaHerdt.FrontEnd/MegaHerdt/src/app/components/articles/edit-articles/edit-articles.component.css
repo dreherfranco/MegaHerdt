@@ -24,3 +24,10 @@
 .btn-return:hover {
     background-color: #6112ff !important;
 }
+
+.star-icon {    
+    font-size: 1.5rem; 
+    color: gold; 
+    transform: translate(-50%, -20%);
+    /* z-index: 2; */
+}
