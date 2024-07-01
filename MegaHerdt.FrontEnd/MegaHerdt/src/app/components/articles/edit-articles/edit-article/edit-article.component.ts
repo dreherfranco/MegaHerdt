@@ -24,6 +24,7 @@ export class EditArticleComponent implements OnInit {
   categories: Array<Category>;
   brands: Array<Brand>;
   image: File;
+  priceRecommend!: number;
   changeImage = changeImage;
 
   //articleWithSerialNumbers: ArticleWithSerialNumbers = new ArticleWithSerialNumbers();
@@ -146,6 +147,7 @@ export class EditArticleComponent implements OnInit {
     //Clono el articulo, para q no me lo cambie en la pantalla de atras y por si cancela.
     this.articleAux = structuredClone(this.article);
 
+    this.priceRecommend = (this.articleAux.provisionPrice) != null ?  (this.articleAux.provisionPrice) * 1.10 : 99999;
 
     console.log("article=> " + JSON.stringify(this.article) + '\n' + "aux=> " + JSON.stringify(this.articleAux));
     // this._articleService.getArticleWithSerialNumbers(this.article.id).subscribe({

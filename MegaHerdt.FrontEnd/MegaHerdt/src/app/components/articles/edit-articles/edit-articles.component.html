@@ -55,7 +55,7 @@
       <th>Marca</th>
       <th>Categoria</th>
       <th>Define Número de Serie</th>
-      <th>Descontar Stock</th>
+      <th *ngIf="!this.filterByStock" >Descontar Stock</th>
       <th>Editar</th>
       <th>Eliminar</th>
     </tr>
@@ -99,8 +99,8 @@
       <td>{{ article.brand.name }}</td>
       <td>{{ article.category.name }}</td>
       <td>{{ article.hasSerialNumber ? "Si" : "No" }}</td>
-      <td>
-        <button *ngIf="article.stock > 0" class="btn btn-primary" title="Descontar Stock" 
+      <td *ngIf="article.stock > 0">
+        <button class="btn btn-primary" title="Descontar Stock" 
         (click)="openDialogDiscountStock(article)"
          type="button" class="btn-return btn btn-danger">
           <i class="bi bi-dash"></i>

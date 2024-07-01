@@ -30,18 +30,9 @@
             <div class=" form-floating">
                 <input class="form-control form-control-sm form-control data-article"
                 name="unitValue" [(ngModel)]="articleAux.unitValue" type="number" min="0" placeholder="" />
-                <label>Precio de venta:</label>                 
-            </div>       
-        </div>
-    </div>
-
-    <div class="row justify-content-center align-content-center mt-2" *ngIf="articleAux.provisionCreatedDateTime">
-        <div class="col">
-            <div class=" form-floating">
-                <input class="form-control form-control-sm form-control data-article"
-                name="unitValue" [(ngModel)]="articleAux.provisionPrice" disabled="true" type="number" min="0" placeholder="" />
-                <label>Precio Recomendado:</label>                 
-            </div>       
+                <label>Precio de venta:</label>                                 
+            </div>
+            <label class="text-info">Precio Recomendado: {{priceRecommend | argentineFormat}}</label>       
         </div>
     </div>
 

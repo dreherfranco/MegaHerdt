@@ -129,8 +129,8 @@ export class EditArticlesComponent implements OnInit {
     const dialogRef = this.dialog.open(DiscountStockComponent,
       {
         data: article,
-        height: '700px',
-        width: '700px'
+        height: '47%',
+        width: '48%'
       });
 
     dialogRef.afterClosed().subscribe((result: ArticleWithSerialNumbers) => {

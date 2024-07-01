@@ -1,0 +1,4 @@
+.scrollable-container {
+    max-height: calc(4 * 1.8rem); /* Suponiendo que cada fila tiene 40px de altura */
+    overflow-y: auto;
+}
