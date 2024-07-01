@@ -101,6 +101,15 @@ export class DialogAddProvisionItemComponent implements OnInit {
     })
   }
 
+  ///Cambia el tamaño del dialogo
+  resizeDialog(): void {
+    console.log(this.articleProviderItem.article?.hasSerialNumber)
+    if (this.articleProviderItem.articleId != 0 &&
+        this.articleProviderItem.article?.hasSerialNumber) this.dialogRef.updateSize('48%', '62%'); 
+    else this.dialogRef.updateSize('48%', '48%');
+    
+  }
+
   disabledSerialNumbers()
   {
     if(!(this.articleProviderItem.article?.hasSerialNumber ?? false)) return true;

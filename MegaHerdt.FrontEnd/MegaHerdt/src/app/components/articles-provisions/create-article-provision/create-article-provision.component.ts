@@ -104,12 +104,13 @@ export class CreateArticleProvisionComponent implements OnInit {
   agregarItemProvision()
   {
 
-    const dialogRef = this.dialog.open(DialogAddProvisionItemComponent,
-      {
-        data: null,
-        height: '700px',
-        width: '700px'
-      });
+    const dialogRef = this.dialog.open(DialogAddProvisionItemComponent, {
+      data: null,
+      height: '48%',
+      width: '48%',
+      panelClass: 'custom-dialog-container'
+    });
+    
 
     dialogRef.afterClosed().subscribe((result: ArticleProviderItem) => {
       if(result != undefined){

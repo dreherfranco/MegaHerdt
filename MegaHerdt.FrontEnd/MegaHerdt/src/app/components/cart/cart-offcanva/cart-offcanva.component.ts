@@ -44,6 +44,8 @@ export class CartOffcanvaComponent implements OnInit {
 
   removeArticle(cartArticleDetail: CartArticleDetail) {
     this._cartService.removeArticleFromCart(cartArticleDetail.article);
+
+    (this.cartArticles.length == 0) && this._cartService.emptyCart();
   }
 
 

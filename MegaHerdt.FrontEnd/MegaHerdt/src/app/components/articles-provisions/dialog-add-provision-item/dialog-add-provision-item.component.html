@@ -1,74 +1,160 @@
 <div class="modal-header d-flex justify-content-end">
-    <button type="button" class="btn-close" (click)="closeModal()" title="Cerrar"></button>
+  <button
+    type="button"
+    class="btn-close"
+    (click)="closeModal()"
+    title="Cerrar"
+  ></button>
 </div>
 
 <div class="container-fluid">
-    <p class="alert bg-custom-light d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center"><b>Agregar item a la provisión</b></p>
+  <p
+    class="alert bg-custom-light d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center"
+  >
+    <b>Agregar item a la provisión</b>
+  </p>
 
-        <div class="form-group mb-3">
-            <label for="article"><b>(*)Artículo: </b></label>
-            <select [disabled]="articleProviderItem.serialNumbers.length > 0" (change)="setSelectedArticle($event)" class="form-select data-user" name="selectArticle" [(ngModel)]="articleProviderItem.articleId">
-                <option class="data-user" name="article" *ngFor="let article of articles" [ngValue]="article.id">
-                    {{article.name}}
-                </option>
-            </select>
-            <p *ngIf="this.articleProviderItem.articleId != 0 && this.articleProviderItem.article?.hasSerialNumber">Se debe definir los números de serie para este artículo</p>
-            <p *ngIf="this.articleProviderItem.articleId != 0 && !this.articleProviderItem.article?.hasSerialNumber">No se pueden definir números de serie para este artículo</p>
-        </div>
+  <div class="form-group mb-3">
+    <label for="article"><b>(*)Artículo: </b></label>
+    <select
+      [disabled]="articleProviderItem.serialNumbers.length > 0"
+      (change)="setSelectedArticle($event); resizeDialog();"
+      class="form-select data-user"
+      name="selectArticle"
+      [(ngModel)]="articleProviderItem.articleId"
+    >
+      <option
+        class="data-user"
+        name="article"
+        *ngFor="let article of articles"
+        [ngValue]="article.id"
+      >
+        {{ article.name }}
+      </option>
+    </select>
+    <p class="text-info" *ngIf="this.articleProviderItem.articleId != 0">
+        {{((this.articleProviderItem.article?.hasSerialNumber) ? 
+        "Se debe definir los " : "No se pueden definir ") + "números de serie para este artículo"}}
+    </p>    
+  </div>
 
-        <div class="row">
-            <div class="form-group mb-3 col-sm-4 p-2">
-                <label for="articleQuantity" class="mb-1 data-user">(*)Cantidad:</label>
-                <input [disabled]="articleProviderItem.serialNumbers.length > 0" id="articleQuantity" name="articleQuantity" class="form-control" type="number" min="0"
-                    #articleQuantity="ngModel" [(ngModel)]="articleProviderItem.articleQuantity" required>
-                <!-- <span *ngIf="articleQuantity.touched && !articleQuantity.valid" class="text-danger">Ingrese un numero
+  <div class="row">
+    <div class="form-group mb-3 col-sm-4 p-2">
+      <label for="articleQuantity" class="mb-1 data-user">(*)Cantidad:</label>
+      <input
+        [disabled]="articleProviderItem.serialNumbers.length > 0"
+        id="articleQuantity"
+        name="articleQuantity"
+        class="form-control"
+        type="number"
+        min="0"
+        #articleQuantity="ngModel"
+        [(ngModel)]="articleProviderItem.articleQuantity"
+        required
+      />
+      <!-- <span *ngIf="articleQuantity.touched && !articleQuantity.valid" class="text-danger">Ingrese un numero
                     correcto</span> -->
-            </div> 
-        </div>
-    
-        <div class="row">
-            <div class="form-group mb-3 col-sm-4 p-2">
-                <label for="purchasePrice" class="mb-1 data-user">(*)Precio de Compra:</label>
-                <input id="purchasePrice" name="purchasePrice" class="form-control" type="number" min="0"
-                    #purchasePrice="ngModel" [(ngModel)]="articleProviderItem.purchasePrice" required>
-                <span *ngIf="purchasePrice.touched && !purchasePrice.valid" class="text-danger">Ingrese un monto
-                    correcto</span>
-            </div> 
-        </div>
+    </div>
+  </div>
 
-         <div class="form-group mb-3 row">
-            <label for="serialNumber"><b>Agregar número de serie: </b></label>
-            <div class="col">
-                <input [(ngModel)]="serialNumberToAdd" id="serialNumber" name="serialNumber" #serialNumber="ngModel"
-                    class="form-control" placeholder="Ingrese un numero de serie" type="text" 
-                    [disabled]="disabledSerialNumbers()"/>
-            </div>
-            <a class="btn btn-primary col-sm-2" (click)="addSerialNumber()" title="Agregar">
-                <i class="bi bi-plus-circle-fill"></i>
+  <div class="row">
+    <div class="form-group mb-3 col-sm-4 p-2">
+      <label for="purchasePrice" class="mb-1 data-user"
+        >(*)Precio de Compra:</label
+      >
+      <input
+        id="purchasePrice"
+        name="purchasePrice"
+        class="form-control"
+        type="number"
+        min="0"
+        #purchasePrice="ngModel"
+        [(ngModel)]="articleProviderItem.purchasePrice"
+        required
+      />
+      <span
+        *ngIf="purchasePrice.touched && !purchasePrice.valid"
+        class="text-danger"
+        >Ingrese un monto correcto</span
+      >
+    </div>
+  </div>
+
+  <ng-container *ngIf="this.articleProviderItem.article?.hasSerialNumber">
+    <div class="form-group mb-3 row">
+      <label for="serialNumber"><b>Agregar número de serie: </b></label>
+      <div class="col">
+        <input
+          [(ngModel)]="serialNumberToAdd"
+          id="serialNumber"
+          name="serialNumber"
+          #serialNumber="ngModel"
+          class="form-control"
+          placeholder="Ingrese un numero de serie"
+          type="text"
+          [disabled]="disabledSerialNumbers()"
+        />
+      </div>
+      <a
+        class="btn btn-primary col-sm-2"
+        (click)="addSerialNumber()"
+        title="Agregar"
+      >
+        <i class="bi bi-plus-circle-fill"></i>
+      </a>
+    </div>
+
+    <div class="form-group mb-3">
+      <div class="dropdown w-50" dropdown>
+        <button
+          id="button-basic"
+          dropdownToggle
+          type="button"
+          class="btn btn-primary dropdown-toggle"
+          aria-controls="dropdown-basic"
+          [ngStyle]="{ visibility: articleProviderItem.serialNumbers.length === 0 ? 'hidden' : 'visible' }"
+        >
+          Ver números de serie agregados
+        </button>
+        <span *ngIf="serialNumberRepeted" class="text-danger"
+          >El número de serie ya existe en la lista.</span
+        >
+
+        <ul
+          id="dropdown-basic"
+          *dropdownMenu
+          class="serial-number-list dropdown-menu"
+          role="menu"
+          aria-labelledby="button-basic"
+        >
+          <li
+            *ngFor="let serialNumber of articleProviderItem.serialNumbers"
+            class="dropdown-item"
+          >
+            <b>S/N: {{ serialNumber.serialNumber }}</b>
+            <a
+              class="btn btn-danger"
+              (click)="deleteSerialNumber(serialNumber.serialNumber)"
+              title="Agregar"
+            >
+              <i class="bi bi-x-circle-fill"></i>
             </a>
-        </div> 
-       
-        <div class="form-group mb-3">
-            <div class="dropdown w-50" dropdown >
-                <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle" aria-controls="dropdown-basic">
-                    Ver números de serie agregados
-                </button>
-                <span *ngIf="serialNumberRepeted" class="text-danger">El número de serie ya existe en la lista.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
 
-                <ul id="dropdown-basic" *dropdownMenu class="serial-number-list dropdown-menu" role="menu" aria-labelledby="button-basic">
-                    <li *ngFor="let serialNumber of articleProviderItem.serialNumbers" class="dropdown-item">
-                        <b>S/N: {{ serialNumber.serialNumber }}</b>
-                        <a class="btn btn-danger" (click)="deleteSerialNumber(serialNumber.serialNumber)" title="Agregar">
-                            <i class="bi bi-x-circle-fill"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-        
-
-        <div class=" d-flex justify-content-end flex-md-row flex-wrap">
-            <button [disabled]="disableAcceptButton()" class="btn btn-primary d-flex p-2 m-2 " (click)="confirm()">Aceptar</button>
-            <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
-        </div>
+  <div class="d-flex justify-content-end flex-md-row flex-wrap">
+    <button
+      [disabled]="disableAcceptButton()"
+      class="btn btn-primary d-flex p-2 m-2"
+      (click)="confirm()"
+    >
+      Aceptar
+    </button>
+    <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">
+      Cancelar
+    </button>
+  </div>
 </div>

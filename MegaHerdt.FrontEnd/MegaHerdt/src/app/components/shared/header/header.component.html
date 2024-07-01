@@ -244,6 +244,7 @@
         data-bs-toggle="offcanvas"
         data-bs-target="#offcanvasRight"
         aria-controls="offcanvasRight"
+        [disabled]="!cartByLocal()"
       >
         <i class="colours bi bi-cart-fill"></i>
       </button>

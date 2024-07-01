@@ -160,3 +160,7 @@ thead th{
 .mat-simple-snackbar-action {
    color: white;  /*Cambia el color del texto del botón "Cerrar" a blanco */
 }
+
+.custom-dialog-container .mat-dialog-container {
+    overflow: visible !important;
+} 

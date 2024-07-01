@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Brand } from 'src/app/models/ArticleBrand/Brand';
 import { Category } from 'src/app/models/ArticleCategory/Category';
+import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { UserDetail } from 'src/app/models/User/UserDetail';
 import { BrandService } from 'src/app/services/brand/brand.service';
 import { CategoryService } from 'src/app/services/category/category.service';
@@ -16,12 +18,16 @@ export class HeaderComponent implements OnInit {
   userAuthenticated: UserDetail = new UserDetail('','','','','',[]);
   categories: Category[] = [];
   brands: Brand[] = [];
-
+  cart: string | null = null;
 
   constructor(private _storageService: StorageService, 
     private _brandService: BrandService,
     private _categoryService: CategoryService) 
   { 
+  }
+
+  cartByLocal(){
+    return localStorage.getItem('cart');   
   }
 
   ngOnInit(): void {
