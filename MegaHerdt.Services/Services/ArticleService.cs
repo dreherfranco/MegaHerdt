@@ -39,17 +39,44 @@ namespace MegaHerdt.Services.Services
             this.articleProviderSerialNumberHelper = articleProviderSerialNumberHelper;
             _articleProviderHelper = articleProviderHelper;
         }
-        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason)
+        public async Task DiscountStockWithSerialNumber(int articleId, List<string> serialNumbers, string discountReason, int? quantityToDiscount)
         {
-            Expression<Func<Article, bool>> filter = x => x.Id == articleId;
-            await UpdateSerialNumbers(articleId, serialNumbers);
+            try
+            {
+                Expression<Func<Article, bool>> filter = x => x.Id == articleId;
+                var article = GetBy(filter).Single();
 
-            // Se crea una instancia de ArticleProvider que representa el descuento del stock.
-            var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, serialNumbers.Count(), discountReason);
-            await _articleProviderHelper.Create(instanceArticleProvider);
+                int articleQuantityToDiscount = default!;
 
-            // Descuento stock según la cantidad de Numeros de Serie.
-            await this._helper.DiscountStock(filter, serialNumbers.Count);
+                // Si el articulo define numeros de serie.
+                if (article.HasSerialNumber)
+                {
+                    await UpdateSerialNumbers(articleId, serialNumbers);
+
+                    articleQuantityToDiscount = serialNumbers.Count();
+                }
+                // Si el articulo no define numeros de serie.
+                else
+                {
+                    if (quantityToDiscount is null) throw new Exception("La cantidad a descontar no puede ser nula.");
+                    articleQuantityToDiscount = quantityToDiscount.Value;
+                }
+
+                // Se crea una instancia de ArticleProvider que representa el descuento del stock.
+                var instanceArticleProvider = _articleProviderHelper.CreateDiscountStockInstance(articleId, articleQuantityToDiscount, discountReason, serialNumbers);
+                await _articleProviderHelper.Create(instanceArticleProvider);
+
+                // Descuento stock según la cantidad de Numeros de Serie.
+                await this._helper.DiscountStock(filter, articleQuantityToDiscount);
+            }catch (Exception ex)
+            {
+                // AJUSTAR ESTO, NO ESTÁ HECHO TODAVIA
+                if (ex.Message.Equals(""))
+                {
+                    throw new Exception("Ya existe un numero de serie con el codigo");
+                }
+            }
+    
         }
 
         public async Task UpdateProvisionCreatedDateTime(IEnumerable<Article> articles)

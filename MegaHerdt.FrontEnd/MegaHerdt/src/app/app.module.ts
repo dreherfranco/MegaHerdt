@@ -135,7 +135,6 @@ import { ArticlesInOfferComponent } from './components/articles/articles-in-offe
 import { CartOffcanvaComponent } from './components/cart/cart-offcanva/cart-offcanva.component';
 import { LineDividerComponent } from './components/line-divider/line-divider.component';
 import { MainComponent } from './components/shared/main/main.component';
-import { ProvisionStockDiscountComponent } from './components/articles-provisions/provision-stock-discount/provision-stock-discount.component';
 import { DialogAddProvisionItemComponent } from './components/articles-provisions/dialog-add-provision-item/dialog-add-provision-item.component';
 import { DialogShowSerialNumbersComponent } from './components/articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 import { ReservedStateDialogComponent } from './components/purchases/show-all-purchases/dialogs/reserved-state-dialog/reserved-state-dialog.component';
@@ -149,6 +148,7 @@ import { ProvidersGridComponent } from './components/providers/providers-grid/pr
 import { ProvidersFormComponent } from './components/providers/providers-form/providers-form.component';
 import { ArticlesProvisionsGridComponent } from './components/articles-provisions/articles-provisions-grid/articles-provisions-grid.component';
 import { DiscountStockComponent } from './components/articles/edit-articles/discount-stock/discount-stock.component';
+import { ProvisionStockDiscountedGridComponent } from './components/articles-provisions/provision-stock-discounted-grid/provision-stock-discounted-grid.component';
 
 @NgModule({
   declarations: [
@@ -265,7 +265,6 @@ import { DiscountStockComponent } from './components/articles/edit-articles/disc
     CartOffcanvaComponent,
     LineDividerComponent,
     MainComponent,
-    ProvisionStockDiscountComponent,
     DialogAddProvisionItemComponent,
     DialogShowSerialNumbersComponent,
     ReservedStateDialogComponent,
@@ -277,7 +276,8 @@ import { DiscountStockComponent } from './components/articles/edit-articles/disc
     ProvidersGridComponent,
     ProvidersFormComponent,
     ArticlesProvisionsGridComponent,
-    DiscountStockComponent
+    DiscountStockComponent,
+    ProvisionStockDiscountedGridComponent
   ],
   imports: [
     MatSnackBarModule,

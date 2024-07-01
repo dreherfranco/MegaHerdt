@@ -46,6 +46,7 @@ import { ReparationPaymentSuccessComponent } from './components/reparationPaymen
 import { ReparationPaymentFailedComponent } from './components/reparationPayments/reparation-payment-failed/reparation-payment-failed.component';
 import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
 import { ShowStatisticsComponent } from './components/statistics/show-statistics/show-statistics.component';
+import { ProvisionStockDiscountedGridComponent } from './components/articles-provisions/provision-stock-discounted-grid/provision-stock-discounted-grid.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { type: 'default' } },
@@ -98,6 +99,10 @@ const routes: Routes = [
   },
   { 
     path: 'administrate/administrate-provisions', component: AdministrateArticlesProvisionsComponent, canActivate: [AuthGuard, RoleGuard], 
+      data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  },
+  { 
+    path: 'administrate/provisions-discount', component: ProvisionStockDiscountedGridComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 

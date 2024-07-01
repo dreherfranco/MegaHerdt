@@ -120,6 +120,13 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
             //modelBuilder.Entity<Payment>().Navigation(p => p.PaymentMethod).AutoInclude();
             #endregion
 
+            #region SerialNumbers
+            // Indice por SerialNumber y por IsDiscountStockOperation
+            modelBuilder.Entity<ArticleProviderSerialNumber>().HasIndex(new string[] { nameof(ArticleProviderSerialNumber.SerialNumber), nameof(ArticleProviderSerialNumber.IsDiscountStockOperation) })
+                        .IsUnique();
+
+            #endregion
+
             SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
