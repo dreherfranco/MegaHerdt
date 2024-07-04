@@ -54,6 +54,10 @@ export class ArticleService {
     return this._http.get(this.url+"/get-by-name/"+name,{headers: this.headers});
   }
 
+  getById(id: number): Observable<any>{
+    return this._http.get(this.url + "/" + id, {headers: this.headers});
+  }
+
   /**
    * 
    * @returns Array: ArticleName

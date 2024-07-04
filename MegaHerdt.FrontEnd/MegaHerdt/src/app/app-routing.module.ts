@@ -47,11 +47,13 @@ import { ReparationPaymentFailedComponent } from './components/reparationPayment
 import { CreateArticleProvisionComponent } from './components/articles-provisions/create-article-provision/create-article-provision.component';
 import { ShowStatisticsComponent } from './components/statistics/show-statistics/show-statistics.component';
 import { ProvisionStockDiscountedGridComponent } from './components/articles-provisions/provision-stock-discounted-grid/provision-stock-discounted-grid.component';
+import { ArticleDetailComponent } from './components/articles/article-detail/article-detail.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { type: 'default' } },
   { path: 'register', component: RegisterComponent },
   { path: 'forget-password', component: ForgetPasswordComponent },
+  { path: 'article-detail/:articleId', component: ArticleDetailComponent }, 
   { path: 'articles/articles-by-category/:categoryId', component: HomeComponent, data: { type: 'category' }}, // Lo mando al home, para llamar al componente correspondiente
   { path: 'articles/articles-by-brand/:brandId', component: HomeComponent, data: { type: 'brand' }},      // Lo mando al home, para llamar al componente correspondiente
   { path: 'articles/articles-offers', component: HomeComponent, data: { type: 'offer' } },

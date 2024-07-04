@@ -1,6 +1,6 @@
-<div class="card mb-3 card-container d-flex">
-  <div class="container">
-    <img [src]="article.image" class="card-img-top">
+<div class="card mb-3 card-container d-flex" >
+  <div class="container" [routerLink]="['article-detail', article.id]">
+    <img [src]="article.image" class="card-img-top pe-auto">
   </div>
   <hr>
   <div class="card-body">
@@ -12,7 +12,7 @@
       <span class="card-text line-through text-danger">{{formatoArgentino(article.unitValue)}} </span>
     </div>
     <div [title]="article.name" class="card-article-container text-dark">
-      <span class="data-article"> {{article.name}}</span>
+      <span class="data-article" [routerLink]="['article-detail', article.id]"> {{article.name}}</span>
     </div>
   
     <div class="stock-pos card-article-container text-dark">

@@ -1,8 +1,10 @@
 <div class="row align-content-center justify-content-center text-center">
-    <strong class="col-12 mx-auto data-user">{{cartArticle.article.name}} </strong>
+    <strong class="col-12 mx-auto data-user" [routerLink]="['article-detail', cartArticle.article.id]">
+        {{cartArticle.article.name}} 
+    </strong>
 </div>
 <div class="row align-content-center justify-content-center">
-    <img src="{{cartArticle.article.image}}" class="col-4 img-thumbnail w-25 m-1" />
+    <img src="{{cartArticle.article.image}}" [routerLink]="['article-detail', cartArticle.article.id]" class="col-4 img-thumbnail w-25 m-1" />
     <div class="col-8 p-0">
         <div class="row align-content-center justify-content-center p-2 mx-auto">
             <div class="col-6">                
