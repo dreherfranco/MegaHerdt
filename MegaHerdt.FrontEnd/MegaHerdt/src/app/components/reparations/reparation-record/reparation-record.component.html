@@ -71,16 +71,21 @@
                         <span class="data-user" *ngIf="reparation.bill !== null">{{ reparation.bill.type }}</span>
                     </th>
                     <th>
-                        <button class="btn btn-danger w-100" [routerLink]="['reparation', reparation.id, 'claim']"> 
-                            <i class="bi bi-exclamation-circle-fill"></i> 
-                        </button>
-
-                        <div class="mt-1" role="alert" *ngIf="reparation.reparationsClaims.length > 0">
-                            <button type="button" class="btn btn-warning w-100"
-                                matTooltipPosition="above"
-                                matTooltip="{{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación">
-                                <i class="bi bi-exclamation-diamond"></i>
-                            </button>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <button title="Reclamar" class="btn link-custom" [routerLink]="['reparation', reparation.id, 'claim']"> 
+                                    <i class="bi bi-exclamation-circle-fill text-danger"></i> 
+                                </button>
+                            </div>
+                            <div class="col-md-4">
+                                <div role="alert" *ngIf="reparation.reparationsClaims.length > 0">
+                                    <button type="button" class="btn link-custom"
+                                        matTooltipPosition="above"
+                                        matTooltip="{{ reparation.reparationsClaims.length }} reclamo/s efectuado/s de esta reparación">
+                                        <i class="bi bi-exclamation-diamond text-warning"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </th>
                     <th>

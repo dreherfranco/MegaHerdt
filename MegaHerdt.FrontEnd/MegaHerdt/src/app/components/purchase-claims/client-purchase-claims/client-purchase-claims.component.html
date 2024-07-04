@@ -35,12 +35,12 @@
                     </th>
                     <th>
                         <span class="data-user text-primary" *ngIf="purchaseClaim.answered">SI
-                            <button class="btn btn-primary" (click)="openDialogClaimAnswers(purchaseClaim.id)"><i class="bi bi-eye-fill text-dark"></i></button>
+                            <button class="btn link-custom" (click)="openDialogClaimAnswers(purchaseClaim.id)"><i class="bi bi-eye-fill text-dark"></i></button>
                         </span>
                         <span class="data-user text-danger" *ngIf="!purchaseClaim.answered">NO</span>
                     </th>
                    <th>
-                        <button class="btn btn-primary" (click)="openDialog(purchaseClaim.purchase)"><i class="bi bi-eye-fill text-dark"></i></button>
+                        <button class="btn link-custom" (click)="openDialog(purchaseClaim.purchase)"><i class="bi bi-eye-fill"></i></button>
                     </th>                     
                 </tr>
             </tbody>

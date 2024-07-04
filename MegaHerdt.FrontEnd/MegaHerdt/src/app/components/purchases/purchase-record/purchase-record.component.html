@@ -31,11 +31,11 @@
                         <p *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
                             {{ purchaseArticle.article.name }} x {{ purchaseArticle.articleQuantity }}
                             <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
-                             <button type="button" class="btn btn-primary col-sm-1" 
+                             <button type="button" class="btn link-custom" 
                                      (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
                                      title="Ver numeros de serie"
                                      *ngIf="purchaseArticle.article.hasSerialNumber">
-                                <i class="bi bi-eye"></i>
+                                <i class="bi bi-eye-fill text-primary"></i>
                             </button>
                             <span *ngIf="!purchaseArticle.article.hasSerialNumber">(Sin N/S)</span>
                         </p>
@@ -63,17 +63,23 @@
                         </div>
                     </th> -->
                     <th>
-                        <button class="btn btn-danger" [routerLink]="['purchase', purchase.id, 'claim']">
-                            <i class="bi bi-exclamation-circle-fill"></i>
-                        </button>
-                        <div>
-                            <button type="button" class="btn btn-warning mt-1"
-                                *ngIf="purchase.purchasesClaims.length > 0"
-                                matTooltipPosition="above"
-                                matTooltip="{{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta compra">
-                                <i class="bi bi-exclamation-diamond"></i>
-                            </button>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <button title="Reclamar" class="btn link-custom" [routerLink]="['purchase', purchase.id, 'claim']">
+                                    <i class="bi bi-exclamation-circle-fill text-danger"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-1">
+                                <button type="button" 
+                                        class="btn link-custom"
+                                        *ngIf="purchase.purchasesClaims.length > 0"
+                                        matTooltipPosition="above"
+                                        matTooltip="{{ purchase.purchasesClaims.length }} reclamo/s efectuado/s de esta compra">
+                                  <i class="bi bi-exclamation-diamond text-warning"></i>
+                               </button>
+                            </div>
                         </div>
+ 
                     </th>
                 </tr>
             </tbody>

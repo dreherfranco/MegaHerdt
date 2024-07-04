@@ -70,10 +70,10 @@
                         <p *ngFor="let purchaseArticle of purchase.purchasesArticles" class="data-user">
                             {{ purchaseArticle.article.name }} x {{ purchaseArticle.articleQuantity }}
                              <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
-                         <button type="button" class="btn btn-primary col-sm-2" 
+                         <button class="btn link-custom"  
                                 (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
                                 title="Ver numeros de serie">
-                            <i class="bi bi-eye"></i>
+                            <i class="bi bi-eye-fill"></i>
                         </button>
                         </p> 
                     </th>
@@ -97,6 +97,7 @@
                         </button>
                     </td>
                     <td  *ngIf="purchaseStateSelected == purchaseStatesEnum.Reserved">
+
                         <button class="btn btn-danger col-sm-12" title="Cancelar" 
                                 (click)="openCancelReservationDialog(purchase)"> 
                                    <i class="bi bi-x-circle-fill"></i>
