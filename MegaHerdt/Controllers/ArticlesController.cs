@@ -56,11 +56,11 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var articles = articleService.GetEnabledsArticles();
+                var articles = articleService.GetEnabledsArticles().ToList();
 
                 // Actualizo el ProvisionCreatedDateTime
                 await articleService.UpdateProvisionCreatedDateTime(articles);
-                articles = articleService.GetEnabledsArticles();
+                articles = articleService.GetEnabledsArticles().ToList();
 
                 return this.Mapper.Map<List<ArticleDTO>>(articles);
             }
