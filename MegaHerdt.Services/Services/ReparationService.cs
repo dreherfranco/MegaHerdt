@@ -43,6 +43,11 @@ namespace MegaHerdt.Services.Services
             return reparationStateName.Contains("PRESUPUESTO");
         }
 
+        public async Task UpdateFromReparadoToPresupuesto(Reparation reparation, int installments, MethodOfPayment method)
+        {
+            await this.reparationHelper.UpdateFromReparadoToPresupuesto(reparation, installments, method);
+        }
+
         public async Task UpdateBudget(Reparation reparation, bool isAccepted/*, DateTime approximateTime*/)
         {
             await this.reparationHelper.UpdateBudget(reparation, isAccepted/*, approximateTime*/);

@@ -1,3 +1,4 @@
+import { MethodOfPayment } from "src/app/utils/MethodOfPayment";
 import { ReparationArticleUpdate } from "../Article/ReparationArticleUpdate";
 import { Bill } from "../Bill/Bill";
 
@@ -14,9 +15,14 @@ export class ReparationUpdate {
     employeeObservation: string;
     approximateTime: Date;
 
+    paymentsQuantity: number | null = null;
+    // Metodo de pago (Efectivo, debito, credito)
+    methodOfPayment: MethodOfPayment | null = null;
+    
     constructor(id: number, reparationStateId: number, employeeId: string, clientId: string, amount: number,
         date: Date, reparationsArticles: Array<ReparationArticleUpdate>, bill: Bill, clientDescription: string
-        ,employeeObservation: string, approximateTime: Date) {
+        ,employeeObservation: string, approximateTime: Date, paymentsQuantity: number | null = null,
+        methodOfPayment: MethodOfPayment|null=null) {
         this.id = id;
         this.reparationStateId = reparationStateId;
         this.employeeId = employeeId;
@@ -28,6 +34,8 @@ export class ReparationUpdate {
         this.clientDescription = clientDescription;
         this.employeeObservation = employeeObservation;
         this.approximateTime = approximateTime;
+        this.paymentsQuantity = paymentsQuantity;
+        this.methodOfPayment = methodOfPayment;
     }
 
 }

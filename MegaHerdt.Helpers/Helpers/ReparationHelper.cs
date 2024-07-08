@@ -1,5 +1,6 @@
 ﻿using MegaHerdt.Helpers.Helpers.Base;
 using MegaHerdt.Models.Models;
+using MegaHerdt.Models.Models.PaymentData;
 using MegaHerdt.Repository.Base;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
@@ -68,6 +69,64 @@ namespace MegaHerdt.Helpers.Helpers
             {
                 throw new Exception("Reparation: couldn't update," + entity.ReparationStateId + "is final state");
             }
+        }
+
+        public async Task UpdateFromReparadoToPresupuesto(Reparation entity, int installments, MethodOfPayment method)
+        {
+            if (!isFinalState(entity))
+            {
+                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+                
+                // Si el estado es distinto de entregado
+                if (entity.ReparationStateId != 7)
+                {
+
+                    ++entity.ReparationStateId;
+                }
+
+
+                if (billIsValid(entity.Bill))
+                {
+                    entity.Facturada = true;
+                }
+
+                var payments = this.InstancePayments(entity, installments, method);
+
+                entity.Bill.Payments = payments;
+                //var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "00000000", SaleNumber = "00001", Payments = payments };
+                //entity.Bill = bill;
+
+                await this.repository.Update(entity);
+            }
+            else
+            {
+                throw new Exception("Reparation: couldn't update," + entity.ReparationStateId + "is final state");
+            }
+        }
+
+        private List<Payment> InstancePayments(Reparation reparation, int installments, MethodOfPayment method)
+        {
+            var payments = new List<Payment>();
+            var amount = reparation.TotalArticleAmount + reparation.Amount;
+
+            for (var i = 0; i < installments; i++)
+            {
+                var instancePaymentMethod = new Models.Models.PaymentMethod()
+                {
+                    InstallmentQuantity = installments,
+                    StartValidity = DateTime.Now.AddMonths(i),
+                    EndValidity = DateTime.Now.AddMonths(i + 1),
+                    Method = method
+                };
+                var payment = new Payment()
+                {
+                    Amount = (float)(amount / installments),
+                    PaymentDate = DateTime.Now.AddMonths(i),
+                    PaymentMethod = instancePaymentMethod,
+                };
+                payments.Add(payment);
+            }
+            return payments;
         }
 
         private bool billIsValid(Bill? bill)

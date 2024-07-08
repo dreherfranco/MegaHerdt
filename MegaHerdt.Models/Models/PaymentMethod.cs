@@ -2,6 +2,16 @@
 
 namespace MegaHerdt.Models.Models
 {
+    public enum MethodOfPayment
+    {
+        //Efectivo
+        Cash = 0,
+        //Debito
+        Debit = 1,
+        //Credito
+        Credit = 2
+    }
+
     public class PaymentMethod
     {
         [Key]
@@ -17,6 +27,7 @@ namespace MegaHerdt.Models.Models
         public int InstallmentQuantity { get; set; }
         public DateTime StartValidity { get; set; }
         public DateTime EndValidity { get; set; }
+        public MethodOfPayment Method { get; set; }
         public List<Payment> Payments { get; set; }
 
     }

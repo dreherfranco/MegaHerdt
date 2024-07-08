@@ -82,6 +82,41 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpPost("update-from-reparado-to-presupuesto")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> UpdateReparationFromReparadoToPresupuesto([FromBody] ReparationUpdateDTO reparationDTO)
+        {
+            try
+            {
+                if (reparationDTO.PaymentsQuantity is null) throw new Exception("Ingrese una cantidad de pagos válida.");
+                if (reparationDTO.MethodOfPayment is null) throw new Exception("Ingrese un método de pago válido.");
+                var reparationDb = this.ReparationService.GetReparationById(reparationDTO.Id);
+                if (reparationDb.Bill is not null)
+                {
+                    var payments = Mapper.Map<List<Payment>>(reparationDb.Bill.Payments);
+                    reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                    reparationDb.Bill.Payments = payments;
+                }
+                else
+                {
+                    reparationDb = this.Mapper.Map(reparationDTO, reparationDb);
+                }
+
+                await this.ReparationService.UpdateFromReparadoToPresupuesto(reparationDb, reparationDTO.PaymentsQuantity.Value, reparationDTO.MethodOfPayment.Value);
+
+                //MAILER
+                //  reparationDb = this.ReparationService.GetReparationById(reparationDb.Id);
+                //    var mailRequest = this.ReparationService.mailRequest(reparationDb);
+                //       await this.MailService.SendEmailAsync(mailRequest);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
         /// <summary>
         /// Metodo implementado para volver atras en los estados de las reparaciones (principalmente de 'En Reparacion' hacia 'Presupuesto')
         /// </summary>

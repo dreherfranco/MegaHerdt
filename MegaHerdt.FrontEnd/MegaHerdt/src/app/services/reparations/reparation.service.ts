@@ -31,6 +31,12 @@ export class ReparationService {
     return this._http.post(this.url + "/update", params, { headers: this.headers });
   }
   
+  updateReparationFromReparadoToPresupuesto(reparation: ReparationUpdate, token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(reparation);
+    return this._http.post(this.url + "/update-from-reparado-to-presupuesto", params, { headers: this.headers });
+  }
+
   updateBudget(reparation: ReparationUpdateBudget, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(reparation);

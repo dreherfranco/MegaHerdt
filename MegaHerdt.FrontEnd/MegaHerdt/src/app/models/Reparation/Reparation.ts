@@ -1,3 +1,4 @@
+import { MethodOfPayment } from "src/app/utils/MethodOfPayment";
 import { ReparationArticle } from "../Article/ReparationArticle";
 import { Bill } from "../Bill/Bill";
 import { ReparationClaimDetail } from "../ReparationClaims/ReparationClaimDetail";
@@ -20,6 +21,10 @@ export class Reparation {
     approximateTime: Date;
     numeroTicket:  string;
     facturada:  boolean;
+    //Cantidad de pagos de la reparación
+    paymentsQuantity: number | null = null;
+    // Metodo de pago (Efectivo, debito, credito)
+    methodOfPayment: MethodOfPayment | null = null;
 
     constructor(id:number, reparationState: ReparationState, employee: UserDetail, client: UserDetail, amount: number,
         date: Date, reparationsArticles: Array<ReparationArticle>, bill: Bill, employeeObservation: string, numeroTicket:  string,facturada:  boolean) {
