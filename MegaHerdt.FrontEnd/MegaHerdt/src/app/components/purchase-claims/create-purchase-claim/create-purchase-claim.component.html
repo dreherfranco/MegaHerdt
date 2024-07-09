@@ -1,4 +1,8 @@
 <div class="container-fluid">
+  <a (click)="goBack()" class="btn btn-link">
+    <i class="bi bi-arrow-left"></i> Volver
+  </a>
+  
   <h1 class="text-center">Hacer reclamo</h1>
   
   <form #reparationClaimForm="ngForm" (ngSubmit)="onSubmit(reparationClaimForm)" class="w-50 mx-auto">

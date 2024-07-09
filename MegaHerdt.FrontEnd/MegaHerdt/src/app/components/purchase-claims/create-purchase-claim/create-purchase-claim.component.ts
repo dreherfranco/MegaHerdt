@@ -6,6 +6,7 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import Swal from 'sweetalert2';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-purchase-claim',
@@ -15,13 +16,20 @@ import Swal from 'sweetalert2';
 export class CreatePurchaseClaimComponent implements OnInit {
   description: string;
 
-  constructor(private _route: ActivatedRoute, private _purchaseClaimService: PurchaseClaimService,
-    private _storageService: StorageService) {
+  constructor(private _route: ActivatedRoute, 
+    private _purchaseClaimService: PurchaseClaimService,
+    private _storageService: StorageService, 
+    private location: Location) 
+    {
       this.description = '';
-   }
+    }
 
   ngOnInit(): void {
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   getPurchaseId(): number{

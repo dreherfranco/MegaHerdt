@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-purchase-detail/dialog-show-purchase-detail.component';
 import { Sort } from '@angular/material/sort';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-show-purchase-claims',
@@ -29,6 +30,19 @@ export class ShowPurchaseClaimsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPurchaseClaims();
+  }
+  
+  showDescriptionDialog(description: string)
+  {
+    AlertService.infoDialog(
+      'Descripción del reclamo',
+      '<p>' + description + '</p>',
+      'Cerrar'
+    ).then((result) => {
+      if (result.isConfirmed) {
+        console.log('El diálogo se ha cerrado.');
+      }
+    });
   }
   
   openDialog(purchase: Purchase){

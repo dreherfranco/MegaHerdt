@@ -4,6 +4,7 @@ import { PurchaseClaimAnswerCreation } from 'src/app/models/PurchaseClaim/Purcha
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { PurchaseClaimService } from 'src/app/services/purchase-claims/purchase-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-answer-purchase-claims',
@@ -13,13 +14,21 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class AnswerPurchaseClaimsComponent implements OnInit {
   answer: string;
 
-  constructor(private _route: ActivatedRoute, private _router: Router, private _purchaseClaimService: PurchaseClaimService,
-    private _storageService: StorageService) {
+  constructor(private _route: ActivatedRoute, 
+    private _router: Router, 
+    private _purchaseClaimService: PurchaseClaimService,
+    private _storageService: StorageService,
+    private location: Location) 
+  {
     this.answer = '';
-   }
+  }
 
   ngOnInit(): void {
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   getIdPurchaseClaim(): number{

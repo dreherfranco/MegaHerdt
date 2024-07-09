@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ReparationClaimCreation } from 'src/app/models/ReparationClaims/ReparationClaimCreation';
@@ -15,13 +16,20 @@ import Swal from 'sweetalert2';
 export class CreateReparationClaimComponent implements OnInit {
   description: string;
 
-  constructor(private _route: ActivatedRoute, private _reparationClaimService: ReparationClaimService,
-    private _storageService: StorageService) {
+  constructor(private _route: ActivatedRoute, 
+    private _reparationClaimService: ReparationClaimService,
+    private _storageService: StorageService, 
+    private location: Location) 
+    {
       this.description = '';
-   }
+    }
 
   ngOnInit(): void {
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   getReparationId(): number{

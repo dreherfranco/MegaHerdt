@@ -4,7 +4,7 @@ import { ReparationClaimAnswerCreation } from 'src/app/models/ReparationClaims/R
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationClaimService } from 'src/app/services/reparation-claims/reparation-claim.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-answer-reparation-claim',
   templateUrl: './answer-reparation-claim.component.html',
@@ -13,13 +13,20 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 export class AnswerReparationClaimComponent implements OnInit {
   answer: string;
 
-  constructor(private _route: ActivatedRoute, private _router: Router, private _reparationClaimService: ReparationClaimService,
-    private _storageService: StorageService) {
+  constructor(private _route: ActivatedRoute, 
+    private _router: Router, 
+    private _reparationClaimService: ReparationClaimService,
+    private _storageService: StorageService, 
+    private location: Location) {
     this.answer = '';
    }
 
   ngOnInit(): void {
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   getIdReparationClaim(): number{

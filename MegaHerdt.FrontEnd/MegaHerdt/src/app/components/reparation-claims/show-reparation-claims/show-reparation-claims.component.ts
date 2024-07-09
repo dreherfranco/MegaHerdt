@@ -8,6 +8,7 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { DialogShowReparationDetailComponent } from '../../reparations/dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 import { Sort } from '@angular/material/sort';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-show-reparation-claims',
@@ -31,6 +32,19 @@ export class ShowReparationClaimsComponent implements OnInit {
     this.loadReparationClaims();
   }
 
+  showDescriptionDialog(description: string)
+  {
+    AlertService.infoDialog(
+      'Descripción del reclamo',
+      '<p>' + description + '</p>',
+      'Cerrar'
+    ).then((result) => {
+      if (result.isConfirmed) {
+        console.log('El diálogo se ha cerrado.');
+      }
+    });
+  }
+  
   openDialog(reparation: Reparation){
     this.dialog.open(DialogShowReparationDetailComponent,
       {
