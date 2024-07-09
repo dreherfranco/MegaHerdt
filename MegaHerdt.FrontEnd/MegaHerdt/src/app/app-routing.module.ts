@@ -55,8 +55,11 @@ const routes: Routes = [
   { path: 'forget-password', component: ForgetPasswordComponent },
   { path: 'article-detail/:articleId', component: ArticleDetailComponent }, 
   { path: 'articles/articles-by-category/:categoryId', component: HomeComponent, data: { type: 'category' }}, // Lo mando al home, para llamar al componente correspondiente
+  { path: 'articles/articles-by-category/:categoryId/article-detail/:articleId', component: ArticleDetailComponent}, 
   { path: 'articles/articles-by-brand/:brandId', component: HomeComponent, data: { type: 'brand' }},      // Lo mando al home, para llamar al componente correspondiente
+  { path: 'articles/articles-by-brand/:brandId/article-detail/:articleId', component: ArticleDetailComponent},
   { path: 'articles/articles-offers', component: HomeComponent, data: { type: 'offer' } },
+  { path: 'articles/articles-offers/article-detail/:articleId', component: ArticleDetailComponent },
   { path: 'login', component: LoginComponent },
   { path: 'logout', component: LogoutComponent, canActivate:[AuthGuard] },
   { path: 'user/settings/update', component: UserUpdateComponent, canActivate: [AuthGuard] },

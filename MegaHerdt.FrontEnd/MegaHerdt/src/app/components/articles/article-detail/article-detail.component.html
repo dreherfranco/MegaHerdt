@@ -1,5 +1,5 @@
 <div class="card mb-3 card-container d-flex w-50 mx-auto">
-    <div class="container img-container" [routerLink]="['article-detail', article.id]">
+    <div class="container img-container" >
       <img [src]="article.image" class="img-fluid article-image">
     </div>
     <hr>
@@ -12,7 +12,7 @@
         <span class="card-text line-through text-danger">{{formatoArgentino(article.unitValue)}} </span>
       </div>
       <div [title]="article.name" class="card-article-container text-dark">
-        <span class="data-article" [routerLink]="['article-detail', article.id]"> {{article.name}}</span>
+        <span class="data-article" > {{article.name}}</span>
       </div>
     
       <div class="stock-pos card-article-container text-dark">
