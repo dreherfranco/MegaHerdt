@@ -1,0 +1,16 @@
+/* Contenedor de la imagen */
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Ajusta la altura según tus necesidades */
+    overflow: hidden;
+  }
+  
+  /* Imagen del artículo */
+  .article-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+  

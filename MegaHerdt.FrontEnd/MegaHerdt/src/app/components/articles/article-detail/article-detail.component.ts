@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/models/Article/Article';
+import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { ArticleService } from 'src/app/services/articles/article.service';
+import { CartService } from 'src/app/services/cart/cart.service';
 
 @Component({
   selector: 'app-article-detail',
@@ -13,7 +15,8 @@ export class ArticleDetailComponent implements OnInit {
   articleId: number | null = null;
 
   constructor(private _articleService: ArticleService, 
-    private _route: ActivatedRoute) { }
+    private _route: ActivatedRoute,
+    private _cartService: CartService) { }
 
   ngOnInit(): void 
   {
@@ -48,4 +51,25 @@ export class ArticleDetailComponent implements OnInit {
     })
   }
 
+  isOnOffer(article: Article): boolean{
+    return article.unitValueWithOffer < article.unitValue;
+  }
+
+  addToCart(){
+    var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer, this.article.name);
+    this._cartService.addToCart(this.article, purchaseArticle);
+  }
+
+  formatoArgentino(precio: number): string {
+    return precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+  }
+
+  getStyle(){
+    return{
+      color: (this.article.stock>20) ? '#00A02F' :
+              (this.article.stock>5)  ? '#BE8C08' : 'red',
+      display: (this.article.stock<1) ? "none" : "block",
+    }
+  }
+  
 }
