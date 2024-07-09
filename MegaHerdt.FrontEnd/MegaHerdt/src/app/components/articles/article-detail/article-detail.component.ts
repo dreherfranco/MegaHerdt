@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Article } from 'src/app/models/Article/Article';
+import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
 
 @Component({
   selector: 'app-article-detail',
@@ -13,10 +15,14 @@ import { CartService } from 'src/app/services/cart/cart.service';
 export class ArticleDetailComponent implements OnInit {
   article: Article = new Article();
   articleId: number | null = null;
+  cartArticles: Array<CartArticleDetail>;
 
   constructor(private _articleService: ArticleService, 
     private _route: ActivatedRoute,
-    private _cartService: CartService) { }
+    private _cartService: CartService) 
+    { 
+        this.cartArticles = this._cartService.getCart();
+    }
 
   ngOnInit(): void 
   {
@@ -37,19 +43,49 @@ export class ArticleDetailComponent implements OnInit {
         if(this.articleId != null)
         {
           this.getArticleById(this.articleId);
+          this.loadCartAndArticles(this.articleId);
         }
       }
     });
   }
 
-  getArticleById(articleId: number){
-    this._articleService.getById(articleId).subscribe({
+  loadCartAndArticles(articleId: number){
+    this._cartService.setFilterBy(ArticlesFilterByEnum.GET_BY_ID, articleId);
+    this._cartService.cartArticlesDetails.subscribe({
       next: result => 
       {
-        this.article=result;
+        this.cartArticles=result;               
+      }
+    })
+    this._cartService.articles.subscribe({
+      next: result=>
+      { 
+        var article = result.find(art => art.id == articleId) 
+        console.log(article)
+        if(article !== undefined)
+        {
+          this.article = article;
+        }
       }
     })
   }
+  
+  getArticleById(articleId: number){
+    this._articleService.getById(articleId).subscribe(
+      {
+        next: (response) => 
+        {
+          this.article = response;
+          /** Actualiza el stock en los articulos segun los articulos cargados en el carrito */
+          this._cartService.setArticle(this.article);
+
+        },
+        error: (err) => console.log(err)
+      }
+    );
+    
+  }
+
 
   isOnOffer(article: Article): boolean{
     return article.unitValueWithOffer < article.unitValue;

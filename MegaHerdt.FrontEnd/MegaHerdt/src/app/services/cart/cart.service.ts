@@ -37,6 +37,15 @@ export class CartService {
    */
   constructFiltersHandler(){
     return {
+      [ArticlesFilterByEnum.GET_BY_ID]: () => {
+        this._articleService.getById(this.filterValue).subscribe({
+          next: result => {
+            var articles = new Array<Article>();
+            articles.push(result);
+            this.setArticlesStock(result);
+          }
+        });
+      },
       [ArticlesFilterByEnum.GET_ALL]: () => {
         this._articleService.getAllEnableds().subscribe({
           next: result => {
@@ -129,6 +138,22 @@ export class CartService {
       //   }
       // }
 
+      this.updateArticles(articles);
+    }
+  }
+
+  setArticle(article: Article) {
+    let cartArticlesDetails = this.getCartFromStorage();
+    if (cartArticlesDetails != null) {
+
+
+      cartArticlesDetails.find( (byCart : any) => {
+        if(article.id == byCart.article.id)
+        article.stock -= byCart.purchaseArticle.articleQuantity;          
+      });
+
+      var articles = new Array<Article>();
+      articles.push(article);
       this.updateArticles(articles);
     }
   }
