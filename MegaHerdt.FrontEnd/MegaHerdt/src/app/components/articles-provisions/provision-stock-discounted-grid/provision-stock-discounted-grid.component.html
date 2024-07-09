@@ -1,59 +1,62 @@
-<div class="bg-light">
-    <h2 class="mx-auto">LISTADO DE DESCUENTOS DE STOCK</h2>
+<div *ngIf="articlesProviders.length > 0">
+    <div class="bg-light">
+        <h2 class="mx-auto">LISTADO DE DESCUENTOS DE STOCK</h2>
 
-    <app-searcher [isVisible]="articlesProviders.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
+        <app-searcher [isVisible]="articlesProviders.length > 0" (searchTextChange)="onSearchTextChange($event)"></app-searcher>
+    </div>
+
+    <div class="table-responsive" #content>
+        <table matSort (matSortChange)="sortData($event)" class="table">
+            <thead>
+                <tr>
+                    <th mat-sort-header="provisionDate" scope="col">FECHA DEL DESCUENTO</th>
+                    <th scope="col">ARTICULOS</th>
+                    <th scope="col">RAZÓN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let articleProvider of sortedData
+                | filter: searchText 
+                | paginate: 
+                {
+                    itemsPerPage: this.paginate.recordsPerPage, 
+                    currentPage:this.paginate.page
+                };
+                let i = index">
+
+                    <td>
+                        <span class="data-user" disabled>
+                            {{articleProvider.provisionDate | date: 'dd/MM/yyyy' }}
+                        </span>
+                    </td>
+
+                    <td>
+                        <span *ngIf="articleProvider.articlesItems.length == 0" class="text-secondary"> No contiene
+                            articulos</span>
+                        <p *ngFor="let item of articleProvider.articlesItems" class="data-user">
+                            {{ item.article.name }} x {{ item.articleQuantity }} Unidades
+
+                                <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
+                                <button type="button" class="btn btn-primary col-sm-1" 
+                                        (click)="showSerialNumbers(item.serialNumbers)"  
+                                        title="Ver numeros de serie"
+                                        *ngIf="item.serialNumbers.length > 0">
+                                        <i class="bi bi-eye"></i>
+                                </button>
+                        </p>
+                    </td>
+
+                    <td>
+                        <span class="data-user" disabled>
+                            {{articleProvider.discountReason }}
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
+            previousLabel="Anterior" nextLabel="Siguiente" *ngIf="articlesProviders.length > 6">
+        </pagination-controls>
+    </div>
 </div>
-
-<div class="table-responsive" #content>
-    <table matSort (matSortChange)="sortData($event)" class="table">
-        <thead>
-            <tr>
-                <th mat-sort-header="provisionDate" scope="col">FECHA DEL DESCUENTO</th>
-                <th scope="col">ARTICULOS</th>
-                <th scope="col">RAZÓN</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let articleProvider of sortedData
-            | filter: searchText 
-            | paginate: 
-            {
-                itemsPerPage: this.paginate.recordsPerPage, 
-                currentPage:this.paginate.page
-            };
-            let i = index">
-
-                <td>
-                    <span class="data-user" disabled>
-                        {{articleProvider.provisionDate | date: 'dd/MM/yyyy' }}
-                    </span>
-                </td>
-
-                <td>
-                    <span *ngIf="articleProvider.articlesItems.length == 0" class="text-secondary"> No contiene
-                        articulos</span>
-                    <p *ngFor="let item of articleProvider.articlesItems" class="data-user">
-                        {{ item.article.name }} x {{ item.articleQuantity }} Unidades
-
-                            <!-- VER NUMEROS DE SERIE DE LOS ARTICULOS -->
-                            <button type="button" class="btn btn-primary col-sm-1" 
-                                    (click)="showSerialNumbers(item.serialNumbers)"  
-                                    title="Ver numeros de serie"
-                                    *ngIf="item.serialNumbers.length > 0">
-                                    <i class="bi bi-eye"></i>
-                            </button>
-                    </p>
-                </td>
-
-                <td>
-                    <span class="data-user" disabled>
-                        {{articleProvider.discountReason }}
-                    </span>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <pagination-controls class="text-center data-user" (pageChange)="this.paginate.page = $event"
-        previousLabel="Anterior" nextLabel="Siguiente" *ngIf="articlesProviders.length > 6">
-    </pagination-controls>
-</div>
+<p class="alert alert-warning m-2 w-50 mx-auto" *ngIf="articlesProviders.length === 0"><i class="bi bi-exclamation-circle-fill"></i> No existe ninguna baja de stock por el momento.</p>

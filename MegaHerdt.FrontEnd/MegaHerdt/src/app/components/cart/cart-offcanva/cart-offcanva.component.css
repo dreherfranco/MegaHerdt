@@ -14,7 +14,7 @@
 }
 
 .offcanvas-body::-webkit-scrollbar-thumb {
-    background-color: #6F2CF4;
+    /*background-color: #6F2CF4;*/
     border-radius: .5rem; 
 }
 

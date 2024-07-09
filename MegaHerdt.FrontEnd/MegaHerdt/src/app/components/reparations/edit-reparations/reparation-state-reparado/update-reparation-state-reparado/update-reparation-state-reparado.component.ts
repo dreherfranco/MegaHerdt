@@ -37,4 +37,14 @@ export class UpdateReparationStateREPARADOComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+  selectMethodOfPayment()
+  {
+    console.log(this.reparation.methodOfPayment);
+    if(this.reparation.methodOfPayment == MethodOfPayment.Cash)
+    {
+      this.reparation.paymentsQuantity = 1;
+    }
+  }
+
 }

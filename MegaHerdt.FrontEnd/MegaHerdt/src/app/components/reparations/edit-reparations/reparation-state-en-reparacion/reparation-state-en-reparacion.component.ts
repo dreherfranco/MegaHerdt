@@ -81,7 +81,7 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
     this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!', response.error);
         } else {
           this.loadReparations();
           AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente')
@@ -96,7 +96,7 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
       },
       error: (err) => {
         console.log(err)
-        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!', err.error.message);
       }
     })
   }

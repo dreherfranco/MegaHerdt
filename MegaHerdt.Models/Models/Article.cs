@@ -54,7 +54,7 @@ namespace MegaHerdt.Models.Models
         public void DiscountStock(int value)
         {
             if (this._stock - value < 0)
-                throw new Exception("No stock available");
+                throw new Exception($"No hay stock disponible para el articulo {Name}. \nUnidades disponibles: {Stock}. \nUnidades requeridas por el usuario: {value}");
 
             this._stock -= value;
         }

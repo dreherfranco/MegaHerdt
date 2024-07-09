@@ -18,7 +18,7 @@
     rgb(26, 105, 216) 48%,
     rgb(111, 44, 244) 100%
     );
-    background-size: 300% 100%;
+    background-size: 100% 100%;
     animation: gradient 5s ease infinite;
     width: 95% !important;
     height: .15rem !important;

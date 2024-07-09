@@ -10,6 +10,7 @@ namespace MegaHerdt.Helpers.Helpers
     public class ReparationHelper: BaseHelper<Reparation>
     {
         private readonly Repository<Article> _articleRepository;
+
         public ReparationHelper(Repository<Reparation> repository, Repository<Article> _articleRepository) :
             base(repository)
         {
@@ -50,19 +51,30 @@ namespace MegaHerdt.Helpers.Helpers
         {
             if (!isFinalState(entity))
             {
-                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+               
                 // Si el estado es distinto de entregado
-                if (entity.ReparationStateId != 7)
+                if (entity.ReparationStateId != ReparationStatesValues.ENTREGADO)
                 {
-                    
                     ++entity.ReparationStateId;
                 }
-                
-                
-                if(billIsValid(entity.Bill))
+
+                // Si el estado de la reparación pasa a en presupuesto se actualizan el precio de los articulos.
+                if (entity.ReparationStateId == ReparationStatesValues.EN_PRESUPUESTO)
+                {
+                    entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+                }
+
+                // Si el estado es Reparado se deben actualizar el stock de los articulos que se incluyeron en la reparación.
+                if (entity.ReparationStateId == ReparationStatesValues.REPARADO)
+                {
+                    await UpdateArticlesStock(entity.ReparationsArticles);
+                }
+
+                if (billIsValid(entity.Bill))
                 {
                     entity.Facturada = true;
                 }
+
                 await this.repository.Update(entity);
             }
             else
@@ -78,23 +90,19 @@ namespace MegaHerdt.Helpers.Helpers
                 entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
                 
                 // Si el estado es distinto de entregado
-                if (entity.ReparationStateId != 7)
+                if (entity.ReparationStateId != ReparationStatesValues.ENTREGADO)
                 {
-
                     ++entity.ReparationStateId;
-                }
-
-
-                if (billIsValid(entity.Bill))
-                {
-                    entity.Facturada = true;
                 }
 
                 var payments = this.InstancePayments(entity, installments, method);
 
+                if(entity.Bill is null)
+                {
+                    entity.Bill = new Bill() { Type = "A", ReparationId = entity.Id, Number = "00000000", SaleNumber = "00001" };
+                }
+
                 entity.Bill.Payments = payments;
-                //var bill = new Bill() { Type = "A", PurchaseId = purchase.Id, Number = "00000000", SaleNumber = "00001", Payments = payments };
-                //entity.Bill = bill;
 
                 await this.repository.Update(entity);
             }
@@ -144,7 +152,7 @@ namespace MegaHerdt.Helpers.Helpers
             }
             else
             {
-                entity.ReparationStateId = 8; 
+                entity.ReparationStateId = ReparationStatesValues.CANCELADO; 
                 await this.repository.Update(entity);
             }
         }
@@ -166,7 +174,7 @@ namespace MegaHerdt.Helpers.Helpers
 
         private bool isFinalState(Reparation entity)
         {
-            return entity.ReparationStateId == 8;  // || entity.ReparationStateId == 7 
+            return entity.ReparationStateId == ReparationStatesValues.CANCELADO;  // || entity.ReparationStateId == 7 
         }
 
         private List<ReparationArticle> SetArticlePriceAtTheMoment(Reparation entity)
@@ -184,6 +192,21 @@ namespace MegaHerdt.Helpers.Helpers
                 else { throw new Exception("Article not exists"); }
             }
             return reparationsArticlesList;
+        }
+
+        /// <summary>
+        /// Actualiza el stock de los artículos involucrados en la reparación.
+        /// </summary>
+        /// <param name="reparationArticles"></param>
+        /// <returns></returns>
+        private async Task UpdateArticlesStock(List<ReparationArticle> reparationArticles)
+        {
+            foreach (var reparationArticle in reparationArticles)
+            {
+                var article = this._articleRepository.Get(x => x.Id == reparationArticle.ArticleId).FirstOrDefault();
+                article.DiscountStock(reparationArticle.ArticleQuantity);
+                await this._articleRepository.Update(article);
+            }
         }
     }
 }
