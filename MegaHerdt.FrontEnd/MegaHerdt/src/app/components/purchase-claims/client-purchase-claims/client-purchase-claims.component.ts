@@ -10,6 +10,7 @@ import { DialogShowPurchaseDetailComponent } from '../../purchases/dialog-show-p
 import { DialogShowPurchaseClaimAnswersComponent } from '../dialog-show-purchase-claim-answers/dialog-show-purchase-claim-answers.component';
 import { Sort } from '@angular/material/sort';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-client-purchase-claims',
@@ -60,6 +61,19 @@ export class ClientPurchaseClaimsComponent implements OnInit {
     });
   }
 
+  showDescriptionDialog(description: string)
+  {
+    AlertService.infoDialog(
+      'Descripción del reclamo',
+      '<p>' + description + '</p>',
+      'Cerrar'
+    ).then((result) => {
+      if (result.isConfirmed) {
+        console.log('El diálogo se ha cerrado.');
+      }
+    });
+  }
+  
   openDialogClaimAnswers(reparationClaimId: number){
     this.dialog.open(DialogShowPurchaseClaimAnswersComponent,
       {

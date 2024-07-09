@@ -5,16 +5,28 @@
         </div>
         <hr>
         <div class="card-text">
+            <p class="data-user"> Fecha: {{data.date | date: 'dd/MM/yyyy'}}</p>
+            <p class="data-user"> Email del cliente: {{data.client.email}}</p>
+            <p class="data-user"> Empleado: {{data.employee.name}} {{data.employee.surname}}</p>
+            <p class="data-user"> Descripción del Cliente: {{data.clientDescription}}</p>
+            <p class="data-user"> Observación del empleado: {{data.employeeObservation}}</p>
+
             <p class="data-user" *ngIf="data.reparationsArticles.length > 0">Articulos:</p>
             <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">&nbsp;&nbsp;&nbsp;&nbsp;{{reparationArticle.articleName}}</p>
-            <p class="data-user"> Empleado: {{data.employee.name}} {{data.employee.surname}}</p>
-            <p class="data-user"> Email del cliente: {{data.client.email}}</p>
-            <p class="data-user"> Fecha: {{data.date | date: 'dd/MM/yyyy'}}</p>
             <p class="data-user"> Estado de la reparacion: {{data.reparationState.name}}</p>
+            <p class="data-user" *ngIf="data.reparationState.name == 'EN PRESUPUESTO' || data.reparationState.name == 'EN REPARACION'">
+                 Fecha estimada: {{data.approximateTime  | date: 'dd/MM/yyyy'}}
+            </p>
             <div *ngIf="data.bill.number === ''">
                 <p class="data-user"> Numero de factura: {{data.bill.number}}</p>
                 <p class="data-user"> Tipo de factura: {{data.bill.type}}</p>
+                <p class="data-user"> Cantidad de Pagos: {{data.paymentsQuantity}}</p>
+                <p class="data-user"> Método de Pago: {{data.methodOfPayment?.toString()}}</p>
             </div>
+            <p class="data-user"> Monto mano de obra: {{data.amount}}</p>
+            <p class="data-user"> Monto total de articulos: {{data.totalArticleAmount}}</p>
+            <p class="data-user"> Total: {{data.totalArticleAmount + data.amount}}</p>
+
         </div>
     </div>
    

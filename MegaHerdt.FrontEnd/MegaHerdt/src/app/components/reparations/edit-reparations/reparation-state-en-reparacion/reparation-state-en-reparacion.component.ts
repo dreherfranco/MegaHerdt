@@ -13,6 +13,7 @@ import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
 import { Router } from '@angular/router';
+import { DialogShowReparationDetailComponent } from '../../dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 
 @Component({
   selector: 'app-reparation-state-en-reparacion',
@@ -141,6 +142,15 @@ export class ReparationStateENREPARACIONComponent implements OnInit {
         AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
       }
     })
+  }
+  
+  openShowReparationDetail(reparation: Reparation){
+    this.dialog.open(DialogShowReparationDetailComponent,
+      {
+        disableClose:true,
+        data: reparation,
+        width: '550px'
+      });
   }
   
   sortData(sort: Sort) {

@@ -280,6 +280,7 @@ import { ArticleDetailComponent } from './components/articles/article-detail/art
     DiscountStockComponent,
     ProvisionStockDiscountedGridComponent,
     ArticleDetailComponent
+    
   ],
   imports: [
     MatSnackBarModule,

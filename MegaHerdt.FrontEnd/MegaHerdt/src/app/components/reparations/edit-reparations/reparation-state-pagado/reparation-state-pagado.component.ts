@@ -12,6 +12,7 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
+import { DialogShowReparationDetailComponent } from '../../dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 
 @Component({
   selector: 'app-reparation-state-pagado',
@@ -123,6 +124,15 @@ export class ReparationStatePAGADOComponent implements OnInit {
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
       , reparation.employeeObservation, reparation.approximateTime);
+  }
+  
+  openShowReparationDetail(reparation: Reparation){
+    this.dialog.open(DialogShowReparationDetailComponent,
+      {
+        disableClose:true,
+        data: reparation,
+        width: '550px'
+      });
   }
   
   sortData(sort: Sort) {

@@ -13,6 +13,7 @@ import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { Router } from '@angular/router';
 import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
+import { DialogShowReparationDetailComponent } from '../../dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 
 @Component({
   selector: 'app-reparation-state-en-presupuesto',
@@ -161,6 +162,15 @@ export class ReparationStateENPRESUPUESTOComponent implements OnInit {
         console.log(err)
       }
     });
+  }
+
+  openShowReparationDetail(reparation: Reparation){
+    this.dialog.open(DialogShowReparationDetailComponent,
+      {
+        disableClose:true,
+        data: reparation,
+        width: '550px'
+      });
   }
   
   sortData(sort: Sort) {

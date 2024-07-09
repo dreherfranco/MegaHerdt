@@ -8,6 +8,8 @@ import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationService } from 'src/app/services/reparations/reparation.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { PDFGenerator } from 'src/app/utils/PDFGenerator';
+import { DialogShowReparationDetailComponent } from '../dialog-show-reparation-detail/dialog-show-reparation-detail.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-reparation-record',
@@ -22,7 +24,7 @@ export class ReparationRecordComponent implements OnInit {
   searchText: string = '';
 
   constructor(private _storageService: StorageService,
-    private _reparationService: ReparationService) { 
+    private _reparationService: ReparationService,public dialog: MatDialog) { 
     this.reparations = new Array<Reparation>();
     this.paginate = new Paginate(1,4);
   }
@@ -96,6 +98,15 @@ export class ReparationRecordComponent implements OnInit {
 
   onSearchTextChange(searchText: string) {
     this.searchText = searchText;
+  }
+  
+  openShowReparationDetail(reparation: Reparation){
+    this.dialog.open(DialogShowReparationDetailComponent,
+      {
+        disableClose:true,
+        data: reparation,
+        width: '550px'
+      });
   }
   
   sortData(sort: Sort) {

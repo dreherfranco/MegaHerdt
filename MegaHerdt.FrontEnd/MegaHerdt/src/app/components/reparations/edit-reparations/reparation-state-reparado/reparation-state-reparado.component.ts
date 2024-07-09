@@ -11,6 +11,7 @@ import { Sort } from '@angular/material/sort';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ReparationStatesEnum } from 'src/app/utils/ReparationStatesEnum';
 import { Router } from '@angular/router';
+import { DialogShowReparationDetailComponent } from '../../dialog-show-reparation-detail/dialog-show-reparation-detail.component';
 
 @Component({
   selector: 'app-reparation-state-reparado',
@@ -126,6 +127,15 @@ export class ReparationStateREPARADOComponent implements OnInit {
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
       , reparation.employeeObservation, reparation.approximateTime, reparation.paymentsQuantity, reparation.methodOfPayment);
+  }
+  
+  openShowReparationDetail(reparation: Reparation){
+    this.dialog.open(DialogShowReparationDetailComponent,
+      {
+        disableClose:true,
+        data: reparation,
+        width: '550px'
+      });
   }
   
   sortData(sort: Sort) {
