@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MegaHerdt.Models.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace MegaHerdt.API.DTOs.PurchasePayment
 {
@@ -13,7 +14,7 @@ namespace MegaHerdt.API.DTOs.PurchasePayment
         public int InstallmentQuantity { get; set; } = 0;
         public DateTime StartValidity { get; set; } = DateTime.Now;
         public DateTime EndValidity { get; set; } = DateTime.Now;
-
+        public MethodOfPayment Method { get; set; } = MethodOfPayment.Cash;
     }
 
   

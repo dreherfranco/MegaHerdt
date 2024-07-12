@@ -147,7 +147,11 @@ namespace MegaHerdt.Helpers.Helpers
             if (isAccepted)
             {
                 ++entity.ReparationStateId;
-             //   entity.ApproximateTime = approximateTime;
+
+                // Si el estado de la reparación pasa a en presupuesto se actualizan el precio de los articulos.
+                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+
+                //   entity.ApproximateTime = approximateTime;
                 await this.repository.Update(entity);
             }
             else

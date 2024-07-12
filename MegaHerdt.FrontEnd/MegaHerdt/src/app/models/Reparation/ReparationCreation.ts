@@ -10,9 +10,12 @@ export class ReparationCreation {
     reparationsArticles: Array<ReparationArticleCreation>;
     bill: BillCreation;
     clientDescription: string;
+    employeeObservation: string;
 
-    constructor(reparationStateId: number, employeeId: string, clientId: string, amount: number,
-        date: Date, reparationsArticles: Array<ReparationArticleCreation>, bill: BillCreation,) {
+    constructor(reparationStateId: number=0, employeeId: string='', clientId: string='', amount: number=0,
+        date: Date= new Date(), reparationsArticles: Array<ReparationArticleCreation>=[], bill: BillCreation= new BillCreation(),
+        clientDescription: string='', employeeObservation: string='') 
+    {
         this.reparationStateId = reparationStateId;
         this.employeeId = employeeId;
         this.clientId = clientId;
@@ -20,7 +23,8 @@ export class ReparationCreation {
         this.date = date;
         this.reparationsArticles = reparationsArticles;
         this.bill = bill;
-        this.clientDescription = '';
+        this.clientDescription = clientDescription;
+        this.employeeObservation = employeeObservation;
     }
 
 }

@@ -4,25 +4,28 @@
             <button class="btn btn-close" (click)="closeModal()" title="Cerrar"></button>
         </div>
         <hr>
-        <div class="card-text">
+        <div class="card-text ">
             <p class="data-user"> Fecha: {{data.date | date: 'dd/MM/yyyy'}}</p>
             <p class="data-user"> Email del cliente: {{data.client.email}}</p>
             <p class="data-user"> Empleado: {{data.employee.name}} {{data.employee.surname}}</p>
             <p class="data-user"> Descripción del Cliente: {{data.clientDescription}}</p>
-            <p class="data-user"> Observación del empleado: {{data.employeeObservation}}</p>
+            <p class="data-user"> Observación del Empleado: {{data.employeeObservation}}</p>
+            <p class="data-user"> Diagnostico: {{data.diagnostic}}</p>
 
             <p class="data-user" *ngIf="data.reparationsArticles.length > 0">Articulos:</p>
-            <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">&nbsp;&nbsp;&nbsp;&nbsp;{{reparationArticle.articleName}}</p>
+            <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">&nbsp;&nbsp;&nbsp;&nbsp;{{reparationArticle.articleName}} x {{reparationArticle.articleQuantity}}</p>
             <p class="data-user"> Estado de la reparacion: {{data.reparationState.name}}</p>
             <p class="data-user" *ngIf="data.reparationState.name == 'EN PRESUPUESTO' || data.reparationState.name == 'EN REPARACION'">
                  Fecha estimada: {{data.approximateTime  | date: 'dd/MM/yyyy'}}
             </p>
-            <div *ngIf="data.bill.number === ''">
+            <div *ngIf="data.bill.number !== ''">
+                <h3><b>Factura</b></h3>
                 <p class="data-user"> Numero de factura: {{data.bill.number}}</p>
                 <p class="data-user"> Tipo de factura: {{data.bill.type}}</p>
-                <p class="data-user"> Cantidad de Pagos: {{data.paymentsQuantity}}</p>
-                <p class="data-user"> Método de Pago: {{data.methodOfPayment?.toString()}}</p>
+                <p class="data-user"> Cantidad de Pagos: {{data.bill.payments.length}}</p>
+                <p class="data-user"> Método de Pago: {{ getPaymentMethod(data.bill.payments[0].paymentMethod?.method)}}</p>
             </div>
+            <h3><b>Montos</b></h3>
             <p class="data-user"> Monto mano de obra: {{data.amount}}</p>
             <p class="data-user"> Monto total de articulos: {{data.totalArticleAmount}}</p>
             <p class="data-user"> Total: {{ (data.totalArticleAmount + data.amount).toFixed(2) }}</p>

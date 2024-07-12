@@ -13,7 +13,13 @@
         <div class="form-group mt-2">
             <label class="fw-bold" for="percentage">(*)Porcentaje (-100 - 100)</label>
             <div class="input-group">
-                <input id="percentage" name="percentage" class="form-control" type="number" min="-100" max="100" #percentage="ngModel" [(ngModel)]="articlePriceUpdate.pricePercentage" required>
+                <input id="percentage" name="percentage" class="form-control" type="number" 
+                        min="-100" 
+                        max="100" 
+                        #percentage="ngModel" 
+                        pattern="^-?[0-9]+$"
+                        [(ngModel)]="articlePriceUpdate.pricePercentage" 
+                        required>
                 <span class="input-group-text">%</span>
             </div>
             <div *ngIf="percentage.touched && !percentage.valid" class="text-danger">Ingrese un número del -100 al 100</div>

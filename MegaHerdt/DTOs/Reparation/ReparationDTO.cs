@@ -11,12 +11,13 @@ namespace MegaHerdt.API.DTOs.Reparation
         public int Id { get; set; }
         public float Amount { get; set; }
         public DateTime Date { get; set; }
-        public string ClientDescription { get; set; }
-        public string EmployeeObservation { get; set; }
+        public string ClientDescription { get; set; } = string.Empty;
+        public string EmployeeObservation { get; set; } = string.Empty;
+        public string Diagnostic { get; set; } = string.Empty;
         public float TotalArticleAmount { get; set; }
         public DateTime ApproximateTime { get; set; }
-        public UserDetailDTO Client { get; set; }
-        public UserDetailDTO Employee { get; set; }
+        public UserDetailDTO Client { get; set; } = null!;
+        public UserDetailDTO Employee { get; set; } = null!;
         public ReparationStateDTO ReparationState { get; set; }
         public List<ReparationArticleDTO> ReparationsArticles { get; set; }
         public BillReparationDTO Bill { get; set; }

@@ -25,9 +25,14 @@
         </div>
     </div>
     <div class="form-group">
-        <label for="clientDescription" class="data-user">(*)Descripcion del servicio requerido segun el cliente:</label>
+        <label for="clientDescription" class="data-user">(*)Descripcion del cliente:</label>
         <textarea class="form-control" id="clientDescription" name="clientDescription" #clientDescription="ngModel" [(ngModel)]="reparation.clientDescription" required></textarea>
-      </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <label for="employeeObservation" class="data-user">(*)Observación del Empleado:</label>
+        <textarea class="form-control" id="employeeObservationclass" name="employeeObservationclass" #employeeObservationclass="ngModel" [(ngModel)]="reparation.employeeObservation" required></textarea>
+    </div>
     <p>
         <input type="submit" class="btn btn-primary mt-3" [disabled]="reparationForm.invalid" value="Crear" />
     </p>

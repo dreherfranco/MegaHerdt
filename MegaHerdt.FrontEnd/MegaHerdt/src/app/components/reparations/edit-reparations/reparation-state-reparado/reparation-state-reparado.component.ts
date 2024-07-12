@@ -126,7 +126,7 @@ export class ReparationStateREPARADOComponent implements OnInit {
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
-      , reparation.employeeObservation, reparation.approximateTime, reparation.paymentsQuantity, reparation.methodOfPayment);
+      , reparation.employeeObservation, reparation.diagnostic, reparation.approximateTime, reparation.paymentsQuantity, reparation.methodOfPayment);
   }
   
   openShowReparationDetail(reparation: Reparation){
@@ -160,8 +160,8 @@ export class ReparationStateREPARADOComponent implements OnInit {
             return compare(a.reparationState.name, b.reparationState.name, isAsc);
         case 'clientDescription':
             return compare(a.clientDescription, b.clientDescription, isAsc);
-       case 'employeeObservation':
-            return compare(a.employeeObservation, b.employeeObservation, isAsc);
+       case 'diagnostic':
+            return compare(a.diagnostic, b.diagnostic, isAsc);
        case 'approximateTime':
             return compare(a.approximateTime, b.approximateTime, isAsc);
         case 'amount':

@@ -8,7 +8,7 @@
                 <th mat-sort-header="clientEmail" scope="col">Cliente</th>
                 <th mat-sort-header="date" scope="col">Fecha</th>
                 <th mat-sort-header="clientDescription" scope="col">Descripción del cliente</th>
-                <th mat-sort-header="employeeObservation" scope="col">Observación del Empleado</th>
+                <th mat-sort-header="diagnostic" scope="col">Diagnostico</th>
                 <th mat-sort-header="total" scope="col">Total</th>
                 <th>Detalle</th>
                 <th></th>
@@ -45,9 +45,9 @@
                     <span *ngIf="reparation.clientDescription.length > 25">...</span>
                 </th>
                 <th>
-                    <span *ngIf="reparation.employeeObservation === '' " class="text-secondary">No existe observación</span>
-                    <span class="data-user">{{ reparation.employeeObservation.substring(0, 25) }} </span>
-                    <span *ngIf="reparation.employeeObservation.length > 25">...</span>
+                    <span *ngIf="reparation.diagnostic === '' " class="text-secondary">No se hizo ningún diagnostico</span>
+                    <span class="data-user">{{ reparation.diagnostic.substring(0, 25) }} </span>
+                    <span *ngIf="reparation.diagnostic.length > 25">...</span>
                 </th>
 
                 <th>

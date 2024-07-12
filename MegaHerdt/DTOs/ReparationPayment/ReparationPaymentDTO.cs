@@ -1,4 +1,6 @@
-﻿namespace MegaHerdt.API.DTOs.ReparationPayment
+﻿using MegaHerdt.API.DTOs.PurchasePayment;
+
+namespace MegaHerdt.API.DTOs.ReparationPayment
 {
     public class ReparationPaymentDTO
     {
@@ -6,5 +8,6 @@
         public float Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public int Tax { get; set; }
+        public PaymentMethodDTO PaymentMethod { get; set; }
     }
 }

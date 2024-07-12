@@ -68,8 +68,8 @@ export class ReparationStateCANCELADOComponent implements OnInit {
             return compare(a.reparationState.name, b.reparationState.name, isAsc);
         case 'clientDescription':
             return compare(a.clientDescription, b.clientDescription, isAsc);
-       case 'employeeObservation':
-            return compare(a.employeeObservation, b.employeeObservation, isAsc);
+       case 'diagnostic':
+            return compare(a.diagnostic, b.diagnostic, isAsc);
         default:
           return 0;
       }
