@@ -28,7 +28,7 @@ export class CreateArticleComponent implements OnInit {
   
   constructor(private _storageService: StorageService, private _articleService: ArticleService, private _router: Router,
     private _categoryService: CategoryService, private _brandService: BrandService,public dialog: MatDialog) {
-    this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0,false);
+    this.article = new ArticleCreation();
     this.categories = new Array<Category>();
     this.categoryId = 0;
     this.brands = new Array<Brand>();
@@ -50,7 +50,7 @@ export class CreateArticleComponent implements OnInit {
           AlertService.errorAlert('¡Error al intentar crear el articulo!')
          
         } else {
-          this.article = new ArticleCreation("", "codeNotNULL", new File(new Array, ''), 0, 0, 0, 0, false);
+          this.article = new ArticleCreation();
           this.imageOk = false;
           this.categoryId = 0;
           this.brandId = 0;

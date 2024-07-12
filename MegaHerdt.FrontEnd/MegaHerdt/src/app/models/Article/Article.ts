@@ -7,6 +7,7 @@ export class Article {
     name: string;
     hasSerialNumber:boolean;
     code: string;
+    description: string;
     stock: number;
     image: string;
     unitValue: number;
@@ -19,7 +20,7 @@ export class Article {
     articleEditedDateTime: Date | null;
     provisionCreatedDateTime: Date | null;
 
-    constructor(id: number=0, name: string='', code: string='', stock: number=0, image:string='', 
+    constructor(id: number=0, name: string='', code: string='', description: string ='', stock: number=0, image:string='', 
         unitValue:number=0, unitValueWithOffer: number=0, brand: Brand=new Brand(), category: Category=new Category(), 
         currentsOffers:ArticleOfferDetail[] = [], futureOffers: ArticleOfferDetail[] = [], 
         hasSerialNumber: boolean = false, provisionPrice: number | null = null, 
@@ -28,6 +29,7 @@ export class Article {
         this.id = id;
         this.name = name;
         this.code = code;
+        this.description = description;
         this.stock = stock;
         this.image = image;
         this.unitValue = unitValue;

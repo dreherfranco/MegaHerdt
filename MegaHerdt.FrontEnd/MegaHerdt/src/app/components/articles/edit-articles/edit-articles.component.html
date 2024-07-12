@@ -157,7 +157,7 @@
       </div>
       <div class="modal-body">
         <ng-container *ngIf="isShow">
-          <app-edit-article [article]="selectedArticle"></app-edit-article>
+          <app-edit-article [article]="selectedArticle" (updateArticleEvent)="receiveUpdateArticleMessage($event)"></app-edit-article>
         </ng-container>
       </div>
     </div>

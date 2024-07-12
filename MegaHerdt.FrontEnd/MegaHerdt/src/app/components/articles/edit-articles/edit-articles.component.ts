@@ -129,7 +129,7 @@ export class EditArticlesComponent implements OnInit {
     const dialogRef = this.dialog.open(DiscountStockComponent,
       {
         data: article,
-        height: '47%',
+        height: '69%',
         width: '48%'
       });
 
@@ -165,4 +165,8 @@ export class EditArticlesComponent implements OnInit {
       });
   }
 
+
+  receiveUpdateArticleMessage($event: string) {
+    this.loadProducts();
+  }
 }

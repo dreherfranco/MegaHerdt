@@ -16,7 +16,7 @@ export class CartItemComponent implements OnInit {
   @Input() cartArticle: CartArticleDetail;
 
   constructor(private _cartService: CartService) {
-    this.cartArticle = new CartArticleDetail(new Article(0, '', '', 0, '', 0, 0, new Brand(0, ''), new Category(0, ''), new Array<ArticleOfferDetail>(), new Array<ArticleOfferDetail>()), new PurchaseArticleCreation(0, 0, 0, ''))
+    this.cartArticle = new CartArticleDetail();
   }
 
   ngOnInit(): void {

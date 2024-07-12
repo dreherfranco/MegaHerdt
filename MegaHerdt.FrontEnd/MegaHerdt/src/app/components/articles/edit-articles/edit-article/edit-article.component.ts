@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Article } from 'src/app/models/Article/Article';
 import { ArticleUpdateImage } from 'src/app/models/Article/ArticleUpdateImage';
@@ -21,6 +21,8 @@ import { ArticleUpdate } from 'src/app/models/Article/ArticleUpdate';
 export class EditArticleComponent implements OnInit {
   @Input() article!: Article; articleAux!: Article;
   @ViewChild('buttonX') buttonX!: ElementRef;
+  // Evento para informar que se actualizo el articulo.
+  @Output() updateArticleEvent = new EventEmitter();
   categories: Array<Category>;
   brands: Array<Brand>;
   image: File;
@@ -91,6 +93,8 @@ export class EditArticleComponent implements OnInit {
             console.log(JSON.stringify(value))
             this.articleAux = value;
             this.copyData();
+            // Evento para informar que se actualizo el articulo.
+            this.updateArticleEvent.emit();
           },
           error(err) {
             console.log(err.error);
@@ -120,6 +124,7 @@ export class EditArticleComponent implements OnInit {
   copyData(): void{
     this.article.id = this.articleAux.id,
     this.article.name = this.articleAux.name,
+    this.article.description = this.articleAux.description,
     this.article.code = this.articleAux.code,
     this.article.stock = this.articleAux.stock,
     this.article.unitValue = this.articleAux.unitValue,
@@ -132,6 +137,7 @@ export class EditArticleComponent implements OnInit {
       this.articleAux.id,
       this.articleAux.name,
       this.articleAux.code,
+      this.articleAux.description,
       this.articleAux.stock,
       this.articleAux.unitValue,
       this.articleAux.brand.id,

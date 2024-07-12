@@ -12,11 +12,9 @@ export class PurchaseArticle{
     constructor(){
         this.articlePriceAtTheMoment = 0;
         this.articleQuantity = 0;
-        this.article = this.instanceArticle();
+        this.article = new Article();
         this.serialNumbers = [];
     }
 
-    instanceArticle(): Article{
-        return new Article(0,'','',0,'',0,0, new Brand(0,''), new Category(0,''), [], [])
-    }
+
 }

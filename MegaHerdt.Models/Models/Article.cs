@@ -15,6 +15,8 @@ namespace MegaHerdt.Models.Models
         [Required]
         public string Code { get; set; }
         [Required]
+        public string Description { get; set; }
+        [Required]
         public string Name { get; set; }
         public string Image { get; set; }
         public float UnitValue { get; set; }

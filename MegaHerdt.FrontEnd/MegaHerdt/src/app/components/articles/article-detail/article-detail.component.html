@@ -14,7 +14,11 @@
       <div [title]="article.name" class="card-article-container text-dark">
         <span class="data-article" > {{article.name}}</span>
       </div>
-    
+
+      <div [title]="article.description" class="card-article-container text-dark">
+        <span class="data-article" > {{article.description}}</span>
+      </div>
+
       <div class="stock-pos card-article-container text-dark">
         <span class="data-article" [ngStyle]="getStyle()">{{article.stock}} unidades</span>
       </div>

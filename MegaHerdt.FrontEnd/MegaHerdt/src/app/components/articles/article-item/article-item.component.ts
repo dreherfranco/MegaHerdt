@@ -15,15 +15,7 @@ export class ArticleItemComponent implements OnInit {
   @Input() article: Article;
 
   constructor(private _cartService: CartService) { 
-    this.article = this.instanceArticle();
-  }
-
-  private instanceArticle(): Article {
-    let brand = new Brand (0,'');
-    let category = new Category (0,'');
-    let offers = new Array<ArticleOfferDetail>();
-    let article = new Article(0,'','',0,'',0,0,brand,category,offers, offers);
-    return article;
+    this.article = new Article();
   }
 
   isOnOffer(article: Article): boolean{
