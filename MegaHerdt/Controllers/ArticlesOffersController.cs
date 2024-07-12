@@ -25,12 +25,15 @@ namespace MegaHerdt.API.Controllers
             this.Mapper = Mapper;
         }
 
-        [HttpGet]
-        public ActionResult<List<ArticleOfferDTO>> Get()
+        [HttpGet("get-all-vigentes")]
+        public ActionResult<List<ArticleOfferDTO>> GetAllVigentes()
         {
             try
             {
-                var articlesOffers = articleOfferService.GetAll().OrderByDescending(x => x.StartDate);
+                var articlesOffers = articleOfferService.GetAll()
+                    .Where(o => o.EndDate > DateTime.Now)
+                    .OrderByDescending(x => x.StartDate)
+                    .ToList();
                 return this.Mapper.Map<List<ArticleOfferDTO>>(articlesOffers);
             }
             catch (Exception ex)
@@ -39,6 +42,21 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult<List<ArticleOfferDTO>> GetAll()
+        {
+            try
+            {
+                var articlesOffers = articleOfferService.GetAll()
+                    .OrderByDescending(x => x.StartDate)
+                    .ToList();
+                return this.Mapper.Map<List<ArticleOfferDTO>>(articlesOffers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
         [HttpGet("{id}")]
         public ActionResult<ArticleOfferDTO> Get(int id)

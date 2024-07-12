@@ -17,10 +17,12 @@ import { OffersFormComponent } from '../offers-form/offers-form.component';
 })
 export class OffersGridComponent implements OnInit {
   offers: Array<ArticleOffer>;
+  offersAux: Array<ArticleOffer> = [];
   articles: Array<ArticleName>;
   paginate: Paginate;
   @ViewChild('content', { static: true }) content!: ElementRef;
   sortedData: ArticleOffer[] = [];
+  filterByVigencia: boolean = false; 
 
   constructor(private _offerService: OfferService, private _storageService: StorageService,
     private _articleService: ArticleService,public dialog: MatDialog) {
@@ -30,8 +32,17 @@ export class OffersGridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadOffers();
+    this.loadOffersVigentes();
     this.loadArticles();
+  }
+
+  filter()
+  {
+    if(this.filterByVigencia){
+      this.loadOffersVigentes();
+    }else{
+      this.loadAllOffers();
+    }
   }
 
   openDialogUpdate(offer: ArticleOffer){
@@ -68,7 +79,13 @@ export class OffersGridComponent implements OnInit {
         if(response.error){
           AlertService.errorAlert('¡Error al intentar eliminar la Oferta!');
         }else{
-          this.loadOffers();
+          if(this.filterByVigencia)
+          {
+            this.loadOffersVigentes();
+          }else{
+            this.loadAllOffers();
+          }
+
           AlertService.successAlert('¡Eliminada!', 'Oferta eliminada correctamente').then(() =>
           {
             window.location.reload();
@@ -101,13 +118,14 @@ export class OffersGridComponent implements OnInit {
     })
   }
 
-  loadOffers() {
-    this._offerService.getAll(this._storageService.getTokenValue()).subscribe({
+  loadOffersVigentes() {
+    this._offerService.getAllVigentes(this._storageService.getTokenValue()).subscribe({
       next: (response) =>{
         if(response.error){
           console.log("error al cargar ofertas");
         }else{
           this.offers = response;
+          this.offersAux = response;
           this.sortedData = this.offers.slice();
         }
       },
@@ -116,6 +134,24 @@ export class OffersGridComponent implements OnInit {
       }
     });
   }
+
+  loadAllOffers() {
+    this._offerService.getAll(this._storageService.getTokenValue()).subscribe({
+      next: (response) =>{
+        if(response.error){
+          console.log("error al cargar ofertas");
+        }else{
+          this.offers = response;
+          this.offersAux = response;
+          this.sortedData = this.offers.slice();
+        }
+      },
+      error: (err) => {
+        console.log(err)
+      }
+    });
+  }
+
 
   loadArticles(){
     this._articleService.getArticleNames().subscribe({

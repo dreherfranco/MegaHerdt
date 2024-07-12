@@ -76,7 +76,21 @@ namespace MegaHerdt.API.Controllers
         {
             try
             {
-                var articles = articleService.GetEnabledsArticles();
+                var articles = articleService.GetEnabledsArticles().ToList();
+                return this.Mapper.Map<List<ArticleNameDTO>>(articles);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpGet("get-article-names-with-stock")]
+        public ActionResult<List<ArticleNameDTO>> GetArticlesNamesWithStock()
+        {
+            try
+            {
+                var articles = articleService.GetEnabledsArticles().Where(a => a.Stock > 0).ToList();
                 return this.Mapper.Map<List<ArticleNameDTO>>(articles);
             }
             catch (Exception ex)

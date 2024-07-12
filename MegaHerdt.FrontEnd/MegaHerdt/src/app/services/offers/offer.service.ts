@@ -32,6 +32,12 @@ export class OfferService {
     return this._http.get(this.url, { headers: this.headers } )
   }
 
+  getAllVigentes(token: string): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url+"/get-all-vigentes", { headers: this.headers } )
+  }
+
+
   update(offer: ArticleOffer, token: string): Observable<any>{
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(offer);

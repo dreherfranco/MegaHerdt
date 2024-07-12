@@ -49,7 +49,7 @@
                     <span *ngIf="reparation.employeeObservation.length > 25">...</span>
                 </th>
                 <th>
-                    <span class="data-user">${{ reparation.amount + reparation.totalArticleAmount  }}</span>
+                    <span class="data-user">${{ (reparation.amount + reparation.totalArticleAmount).toFixed(2)  }}</span>
                 </th>
 
                 <th>

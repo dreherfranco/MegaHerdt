@@ -1,11 +1,34 @@
 <div class="bg-light">
     <h2 class="mx-auto">LISTADO DE OFERTAS</h2>
 </div>
+<div class="container-fluid">
+    <div class="row align-items-center justify-content-between">
+        <div class="col-4">
+            <div class="form-check form-switch">
+            <input
+                class="form-check-input switch-input-lg"
+                type="checkbox"
+                role="switch"
+                id="flexSwitchCheckChecked"
+                [(ngModel)]="filterByVigencia"
+                (click)="filter()" 
+            />
+                    
+            <label
+                class="form-check-label text-uppercase fs-5 ms-2 mt-1"
+                for="flexSwitchCheckChecked"
+                > {{ this.filterByVigencia ? "Todas las ofertas" : "Ofertas con Vigencia"  }}</label
+            >
+            </div>
+        </div>
+    </div>
+</div>
 <div class="table-responsive" #content>
     <table matSort (matSortChange)="sortData($event)" class="table">
         <thead>
             <tr>
                 <th scope="col">ARTICULO</th>
+                <th scope="col">STOCK ARTICULO</th>
                 <th mat-sort-header="discountPercentage" scope="col">PORCENTAJE DESCUENTO</th>
                 <th mat-sort-header="startDate" scope="col">INICIO</th>
                 <th mat-sort-header="endDate" scope="col">FIN</th>
@@ -21,7 +44,8 @@
                 currentPage:this.paginate.page
             }; let i = index">
                 <td> {{ offer.article.name }}</td>
-                <td>{{ offer.discountPercentage }}</td>
+                <td> {{ offer.article.stock }}</td>
+                <td>{{ offer.discountPercentage }}%</td>
                 <td>{{offer.startDate | date: 'dd/MM/yyyy' }}</td>
                 <td>{{offer.endDate | date: 'dd/MM/yyyy' }}</td>
                 <td>

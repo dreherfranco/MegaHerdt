@@ -75,7 +75,7 @@ export class OffersFormComponent implements OnInit {
   }
 
   loadArticles(){
-    this._articleService.getArticleNames().subscribe({
+    this._articleService.getArticleNamesWithStock().subscribe({
       next: (response) =>{
         if(response.error){
           console.log("error al obtener articulos");

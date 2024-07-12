@@ -66,6 +66,10 @@ export class ArticleService {
     return this._http.get(this.url+"/get-article-names",{headers: this.headers});
   }
 
+  getArticleNamesWithStock(): Observable<any>{
+    return this._http.get(this.url+"/get-article-names-with-stock",{headers: this.headers});
+  }
+
   updatePriceByCategory(articlePriceUpdate: ArticlePriceUpdateByCategory): Observable<any>{
     let params = JSON.stringify(articlePriceUpdate);
     return this._http.post(this.url + "/update-price-by-category",params, {headers: this.headers})
