@@ -26,7 +26,7 @@
         </div>
         <div class="form-group col-sm-4 mt-3">
             <label for="amount"><b>(*)Monto mano de obra: </b></label>
-            <input id="amount" name="amount" class="form-control" type="number" min="0" #amount="ngModel"
+            <input id="amount" name="amount" class="form-control" type="number" min="1" #amount="ngModel"
                 [(ngModel)]="reparation.amount" required>
             <span *ngIf="amount.touched && !amount.valid" class="text-danger">Ingrese un numero valido</span>
         </div>
@@ -66,7 +66,10 @@
                       <span class="data-user">{{ item.articleQuantity }}</span>
                     </td>
                     <td>
-                      <button type="button" class="btn link-custom col-sm-12" (click)="editReparationArticle(item)"  title="Editar">
+                      <button type="button" 
+                                class="btn link-custom col-sm-12" 
+                                (click)="editReparationArticle(item)"  
+                                title="Editar">
                           <i class="bi bi-pencil-square text-primary"></i>
                       </button>
                     </td>
@@ -81,8 +84,11 @@
           </div>
 
         <div class=" d-flex justify-content-end flex-md-row flex-wrap">
-            <button class="btn btn-primary d-flex p-2 m-2 " [disabled]="reparationForm.invalid" (click)="confirm()">Aceptar</button>
-            <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
+            <button class="btn btn-primary d-flex p-2 m-2 " [disabled]="reparationForm.invalid" 
+            (click)="confirm()">
+                  Aceptar
+            </button>
+            <button class="btn btn-secondary d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
         </div>
     </div>
 </form>

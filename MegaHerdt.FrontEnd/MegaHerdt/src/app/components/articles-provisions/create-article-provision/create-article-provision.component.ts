@@ -105,7 +105,11 @@ export class CreateArticleProvisionComponent implements OnInit {
   {
 
     const dialogRef = this.dialog.open(DialogAddProvisionItemComponent, {
-      data: null,
+      data: 
+      {
+        articleProviderItem: null,
+        articlesUsedIds: this.getArticlesUsedIds(null)
+      },
       width: '48%',
       panelClass: 'custom-dialog-container'
     });
@@ -138,7 +142,11 @@ export class CreateArticleProvisionComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DialogAddProvisionItemComponent,
       {
-        data: itemCopy, // Pasar la copia del objeto al diálogo
+        data:
+        {
+          articleProviderItem: itemCopy,
+          articlesUsedIds: this.getArticlesUsedIds(item.articleId)
+        }, // Pasar la copia del objeto al diálogo
         height: '700px',
         width: '700px'
       });
@@ -152,8 +160,28 @@ export class CreateArticleProvisionComponent implements OnInit {
         }
       }
     });
-}
+  }
 
+  /**
+     * Devuelve los ids de los articulos que serán utilizadas en la reparacion.
+     * articleActualId: Indica en la edición el articulo que se va a editar para que no filtre de los articulos
+     */
+  getArticlesUsedIds(articleActualId: number | null )
+  {
+    var articlesUsedIds = new Array<Number>();
+    for(let ai of this.articleProvider.articlesItems)
+    {
 
+      if(articleActualId === null)
+      {
+        articlesUsedIds.push(ai.articleId);
+      }
+      else if(articleActualId !== null && articleActualId !== ai.articleId)
+      {
+        articlesUsedIds.push(ai.articleId);
+      }
+    }
+    return articlesUsedIds;
+  }
 
 }

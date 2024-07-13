@@ -100,33 +100,32 @@
       <td>{{ article.category.name }}</td>
       <td>{{ article.hasSerialNumber ? "Si" : "No" }}</td>
       <td *ngIf="article.stock > 0">
-        <button class="btn btn-primary" title="Descontar Stock" 
+        <button class="btn link-custom" title="Descontar Stock" 
         (click)="openDialogDiscountStock(article)"
-         type="button" class="btn-return btn btn-danger">
-          <i class="bi bi-dash"></i>
+         type="button">
+          <i class="bi bi-dash-circle-fill text-primary"></i>
         </button>
       </td>
 
       <td>
         <button
-          class="btn btn-primary"
+          class="btn link-custom"
           title="Editar"
           (click)="openModal(article)"
           type="button"
-          class="btn btn-primary"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
-          <i class="bi bi-pencil-square"></i>
+          <i class="bi bi-pencil-square text-primary"></i>
         </button>
       </td>
       <td>
         <button
-          class="btn btn-danger"
+          class="btn link-custom"
           (click)="openDialogDelete(article)"
           title="Eliminar"
         >
-          <i class="bi bi-trash3"></i>
+          <i class="bi bi-trash3 text-danger"></i>
         </button>
       </td>
     </tr>

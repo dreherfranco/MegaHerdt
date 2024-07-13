@@ -101,7 +101,11 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
     var articlesUsedIds = new Array<Number>();
     for(let ra  of this.reparation.reparationsArticles)
     {
-      if(articleActualId !== null && articleActualId !== ra.articleId)
+      if(articleActualId === null)
+      {
+        articlesUsedIds.push(ra.articleId);
+      }
+      else if(articleActualId !== null && articleActualId !== ra.articleId)
       {
         articlesUsedIds.push(ra.articleId);
       }

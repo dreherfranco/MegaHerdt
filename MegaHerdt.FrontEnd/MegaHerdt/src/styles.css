@@ -96,6 +96,7 @@ thead th{
 
 .btn:disabled{
     opacity: .25 !important;
+    border: none;
 }
 
 .disabled{
@@ -227,3 +228,8 @@ thead th{
     color: #007BFF; /* Color azul */
     font-size: 16px;
   }
+
+  .text-violet {
+    --bs-text-opacity: 1;
+    color: #712CF9  !important;
+}

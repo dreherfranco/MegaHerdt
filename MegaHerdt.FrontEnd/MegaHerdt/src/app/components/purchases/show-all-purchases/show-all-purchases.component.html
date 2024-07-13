@@ -73,7 +73,7 @@
                          <button class="btn link-custom"  
                                 (click)="showSerialNumbers(purchaseArticle.serialNumbers)"  
                                 title="Ver numeros de serie">
-                            <i class="bi bi-eye-fill"></i>
+                            <i class="bi bi-eye-fill text-primary"></i>
                         </button>
                         </p> 
                     </th>
@@ -91,16 +91,16 @@
                     </th>
 
                     <td *ngIf="purchaseStateSelected !== purchaseStatesEnum.CancelledReservation">
-                        <button class="btn btn-primary col-sm-12" title="Editar" 
+                        <button class="btn link-custom" title="Editar" 
                                 (click)="openUpdateDialog(purchase)"> 
-                                   <i class="bi bi-pencil-square"></i>
+                                   <i class="bi bi-pencil-square text-primary"></i>
                         </button>
                     </td>
                     <td  *ngIf="purchaseStateSelected == purchaseStatesEnum.Reserved">
 
-                        <button class="btn btn-danger col-sm-12" title="Cancelar" 
+                        <button class="btn link-custom" title="Cancelar" 
                                 (click)="openCancelReservationDialog(purchase)"> 
-                                   <i class="bi bi-x-circle-fill"></i>
+                                   <i class="bi bi-x-circle-fill text-danger"></i>
                         </button>
                     </td>
                 </tr>

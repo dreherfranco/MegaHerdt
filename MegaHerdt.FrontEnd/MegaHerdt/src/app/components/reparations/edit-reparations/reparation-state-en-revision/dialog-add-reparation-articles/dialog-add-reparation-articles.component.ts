@@ -32,8 +32,6 @@ export class DialogAddReparationArticlesComponent implements OnInit {
   }
 
   disableAcceptButton(){
-    
-
     return false;
   }
 

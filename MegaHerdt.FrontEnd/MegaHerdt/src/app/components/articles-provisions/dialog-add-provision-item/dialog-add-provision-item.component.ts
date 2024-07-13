@@ -18,17 +18,17 @@ export class DialogAddProvisionItemComponent implements OnInit {
   isNewItem: boolean;
 
   constructor(public dialogRef: MatDialogRef<DialogAddProvisionItemComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ArticleProviderItem | null,
+              @Inject(MAT_DIALOG_DATA) public data: any,
               private _articleService: ArticleService) 
     {
       this.articles = new Array<ArticleName>();
       this.articleProviderItem = new ArticleProviderItem();
-      this.isNewItem = data == null; // Determina si es un nuevo ítem
+      this.isNewItem = data.articleProviderItem == null; // Determina si es un nuevo ítem
 
       //console.log(data);
       //console.log(data.item);
       if (!this.isNewItem) {
-        this.articleProviderItem = data as ArticleProviderItem; // Si no es nuevo, carga el ítem existente
+        this.articleProviderItem = data.articleProviderItem as ArticleProviderItem; // Si no es nuevo, carga el ítem existente
       }
     }
 
@@ -93,6 +93,7 @@ export class DialogAddProvisionItemComponent implements OnInit {
           console.log("error al obtener articulos");
         } else {
           this.articles = response;
+          this.articles = this.articles.filter(a => !this.data.articlesUsedIds.includes(a.id))
         }
       },
       error: (err) => {

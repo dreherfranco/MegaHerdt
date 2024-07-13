@@ -49,12 +49,12 @@
                 <td>{{offer.startDate | date: 'dd/MM/yyyy' }}</td>
                 <td>{{offer.endDate | date: 'dd/MM/yyyy' }}</td>
                 <td>
-                    <button class="btn btn-primary" (click)="openDialogUpdate(offer)" title="Editar"> 
-                        <i class="bi-pencil-square"></i>
+                    <button class="btn link-custom" (click)="openDialogUpdate(offer)" title="Editar"> 
+                        <i class="bi-pencil-square text-primary"></i>
                     </button>
                 </td>
-                <td><button class="btn btn-danger" (click)="openDialogDelete(offer.id)" title="Eliminar"> 
-                        <i class="bi bi-trash3"></i>
+                <td><button class="btn link-custom" (click)="openDialogDelete(offer.id)" title="Eliminar"> 
+                        <i class="bi bi-trash3 text-danger"></i>
                     </button>
                 </td>
                 
