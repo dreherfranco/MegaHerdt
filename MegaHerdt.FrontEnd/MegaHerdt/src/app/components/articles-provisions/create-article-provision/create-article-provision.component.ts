@@ -106,7 +106,6 @@ export class CreateArticleProvisionComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DialogAddProvisionItemComponent, {
       data: null,
-      height: '48%',
       width: '48%',
       panelClass: 'custom-dialog-container'
     });

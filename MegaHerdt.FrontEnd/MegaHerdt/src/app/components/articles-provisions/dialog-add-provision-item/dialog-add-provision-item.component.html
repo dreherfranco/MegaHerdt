@@ -18,7 +18,7 @@
     <label for="article"><b>(*)Artículo: </b></label>
     <select
       [disabled]="articleProviderItem.serialNumbers.length > 0"
-      (change)="setSelectedArticle($event); resizeDialog();"
+      (change)="setSelectedArticle($event);"
       class="form-select data-user"
       name="selectArticle"
       [(ngModel)]="articleProviderItem.articleId"
