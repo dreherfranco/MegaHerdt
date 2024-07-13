@@ -150,6 +150,7 @@ import { ArticlesProvisionsGridComponent } from './components/articles-provision
 import { DiscountStockComponent } from './components/articles/edit-articles/discount-stock/discount-stock.component';
 import { ProvisionStockDiscountedGridComponent } from './components/articles-provisions/provision-stock-discounted-grid/provision-stock-discounted-grid.component';
 import { ArticleDetailComponent } from './components/articles/article-detail/article-detail.component';
+import { DialogAddReparationArticlesComponent } from './components/reparations/edit-reparations/reparation-state-en-revision/dialog-add-reparation-articles/dialog-add-reparation-articles.component';
 
 @NgModule({
   declarations: [
@@ -279,8 +280,8 @@ import { ArticleDetailComponent } from './components/articles/article-detail/art
     ArticlesProvisionsGridComponent,
     DiscountStockComponent,
     ProvisionStockDiscountedGridComponent,
-    ArticleDetailComponent
-    
+    ArticleDetailComponent,
+    DialogAddReparationArticlesComponent
   ],
   imports: [
     MatSnackBarModule,

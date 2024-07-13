@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ReparationArticle } from 'src/app/models/Article/ReparationArticle';
 import { Paginate } from 'src/app/models/Paginate/Paginate';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { ArticleService } from 'src/app/services/articles/article.service';
+import { DialogAddReparationArticlesComponent } from '../dialog-add-reparation-articles/dialog-add-reparation-articles.component';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 
 @Component({
   selector: 'app-update-reparation-state-en-revision',
@@ -18,7 +20,9 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
 
   constructor(private _articleService: ArticleService,
     public dialogRef: MatDialogRef<UpdateReparationStateENREVISIONComponent>,
-    @Inject(MAT_DIALOG_DATA) public reparation: Reparation) { 
+    @Inject(MAT_DIALOG_DATA) public reparation: Reparation,
+    public dialog: MatDialog) 
+  { 
     //this.reparation.reparationsArticles = [];
     this.articles = new Array<ArticleName>();
     this.reparationArticle = new ReparationArticle(0,1,0,"");
@@ -65,5 +69,61 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
       }
     }
     
+  }
+
+  openDialog()
+  {
+
+    const dialogRef = this.dialog.open(DialogAddReparationArticlesComponent, {
+      data: null,
+      height: '48%',
+      width: '48%',
+      panelClass: 'custom-dialog-container'
+    });
+    
+
+    dialogRef.afterClosed().subscribe((result: ReparationArticle) => {
+      if(result != undefined){
+        this.reparation.reparationsArticles.push(result);
+      }
+    });
+  }
+
+  editReparationArticle(item: ReparationArticle){     
+    // Crear una copia del objeto antes de abrir el diálogo
+    const itemCopy = { ...item };
+
+    const dialogRef = this.dialog.open(DialogAddReparationArticlesComponent,
+      {
+        data: itemCopy, // Pasar la copia del objeto al diálogo
+        height: '700px',
+        width: '700px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: ReparationArticle) => {
+      if(result != undefined){
+        // Buscar el ítem existente y actualizarlo
+        const index = this.reparation.reparationsArticles.findIndex(x => x.articleId === result.articleId);
+        if (index !== -1) {
+          this.reparation.reparationsArticles[index] = result;
+        }
+      }
+    });
+    
+  }
+
+  removeReparationArticle(item: ReparationArticle)
+  {     
+    AlertService.warningAlert('¿Seguro que quieres remover este artículo?')
+    .then((result) => {
+      if (result.isConfirmed) {     
+        // Buscar el ítem existente y actualizarlo
+        const index = this.reparation.reparationsArticles.findIndex(x => x.articleId === item.articleId);
+        if (index !== -1) 
+        {
+          this.reparation.reparationsArticles.splice(index, 1);
+        }
+      }
+    });
   }
 }
