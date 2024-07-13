@@ -15,15 +15,15 @@ export class DialogAddReparationArticlesComponent implements OnInit {
   reparationArticle: ReparationArticle = new ReparationArticle();
 
   constructor(public dialogRef: MatDialogRef<DialogAddReparationArticlesComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: ReparationArticle | null,
+              @Inject(MAT_DIALOG_DATA) public data: any,
               private _articleService: ArticleService) 
     {
       this.articles = new Array<ArticleName>();
-      this.isNewItem = data == null; // Determina si es un nuevo ítem
+      this.isNewItem = data.reparationArticle == null; // Determina si es un nuevo ítem
 
       if (!this.isNewItem)
       {
-        this.reparationArticle = data as ReparationArticle; // Si no es nuevo, carga el ítem existente
+        this.reparationArticle = data.reparationArticle as ReparationArticle; // Si no es nuevo, carga el ítem existente
       }
     }
 
@@ -63,6 +63,8 @@ export class DialogAddReparationArticlesComponent implements OnInit {
           console.log("error al obtener articulos");
         } else {
           this.articles = response;
+          // Filtrar artículos que no están en articlesUsedIds
+          this.articles = this.articles.filter(a => !this.data.articlesUsedIds.includes(a.id));       
         }
       },
       error: (err) => {

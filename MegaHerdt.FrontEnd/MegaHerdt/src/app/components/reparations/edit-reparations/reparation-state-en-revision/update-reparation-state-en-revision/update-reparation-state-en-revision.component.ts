@@ -73,9 +73,12 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
 
   openDialog()
   {
-
     const dialogRef = this.dialog.open(DialogAddReparationArticlesComponent, {
-      data: null,
+      data: 
+      {
+        reparationArticle: null, // Pasar la copia del objeto al diálogo
+        articlesUsedIds: this.getArticlesUsedIds(null), // Pasar los IDs de los artículos usados // Pasar la copia del objeto al diálogo
+       },
       height: '48%',
       width: '48%',
       panelClass: 'custom-dialog-container'
@@ -89,13 +92,35 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
     });
   }
 
+  /**
+   * Devuelve los ids de los articulos que serán utilizadas en la reparacion.
+   * articleActualId: Indica en la edición el articulo que se va a editar para que no filtre de los articulos
+   */
+  getArticlesUsedIds(articleActualId: number | null )
+  {
+    var articlesUsedIds = new Array<Number>();
+    for(let ra  of this.reparation.reparationsArticles)
+    {
+      if(articleActualId !== null && articleActualId !== ra.articleId)
+      {
+        articlesUsedIds.push(ra.articleId);
+      }
+    }
+    return articlesUsedIds;
+  }
+
   editReparationArticle(item: ReparationArticle){     
     // Crear una copia del objeto antes de abrir el diálogo
     const itemCopy = { ...item };
 
     const dialogRef = this.dialog.open(DialogAddReparationArticlesComponent,
-      {
-        data: itemCopy, // Pasar la copia del objeto al diálogo
+      { 
+       // articlesUsedIds,
+        data: 
+        {
+          reparationArticle: itemCopy, // Pasar la copia del objeto al diálogo
+          articlesUsedIds: this.getArticlesUsedIds(item.articleId), // Pasar los IDs de los artículos usados // Pasar la copia del objeto al diálogo
+         },
         height: '700px',
         width: '700px'
       });
