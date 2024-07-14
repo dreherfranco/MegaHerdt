@@ -1,0 +1,16 @@
+<div class=" d-flex justify-content-end">
+    <button class="btn btn-close" (click)="closeModal()"></button>
+</div>
+<hr>
+
+<div>
+    <form (ngSubmit)="onSubmit()" #uploadForm="ngForm">
+        <div class="form-group mb-3">
+            <label for="image"><b>(*)Archivo de Respaldo: </b></label>
+            <input id="image" name="image" class="form-control" type="file" (change)="onFileSelected($event)">
+        </div>
+        <p>
+            <button class="btn btn-primary mt-3" type="submit" [disabled]="!uploadForm.form.valid">Restaurar</button>
+        </p>
+    </form>
+</div>
