@@ -194,8 +194,18 @@ namespace MegaHerdt.API.Controllers
             var wwwrootPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot");
             var articlesDestinationPath = Path.Combine(wwwrootPath, "articles");
             var articlesProvidersDestinationPath = Path.Combine(wwwrootPath, "articles-providers");
+            
+            // Eliminar las carpetas de destino si existen
+            if (Directory.Exists(articlesDestinationPath))
+            {
+                Directory.Delete(articlesDestinationPath, true);
+            }
+            if (Directory.Exists(articlesProvidersDestinationPath))
+            {
+                Directory.Delete(articlesProvidersDestinationPath, true);
+            }
 
-            // Crear las carpetas de destino si no existen
+            // Crear las carpetas de destino
             Directory.CreateDirectory(articlesDestinationPath);
             Directory.CreateDirectory(articlesProvidersDestinationPath);
             
