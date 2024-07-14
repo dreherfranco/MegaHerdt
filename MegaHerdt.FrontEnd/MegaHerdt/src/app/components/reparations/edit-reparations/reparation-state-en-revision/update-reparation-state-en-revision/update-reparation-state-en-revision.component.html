@@ -1,5 +1,5 @@
 <div class="container-fluid">
-    <h1 class="text-center">Actualizar reparacion (estado actual: EN REVISION)</h1>
+    <h1 class="text-center">Actualizar reparación</h1>
 <form #reparationForm="ngForm" class="w-75 mx-auto">
     <div class="row">
         <div class="row">
@@ -8,81 +8,81 @@
                     <span class="form-control data-user disabled">{{reparation.client.userName}}</span>
             </div>
 
-            <div class="form-group mb-3 col-sm-3">
-                <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
-                <span class="form-control data-user disabled" >{{
-                    reparation.reparationState.name }}</span>
+                <div class="form-group mb-3 col-sm-3">
+                    <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
+                    <span class="form-control data-user disabled" >{{
+                        reparation.reparationState.name }}</span>
+                </div>
+    
             </div>
-   
-        </div>
+            
+            <hr class="m-2">
+
+            <div class="row mt-2">
+                <div class="form-group col-sm-8">
+                    <label for="diagnostic" class="data-user">(*)Diagnostico:</label>
+                    <textarea class="form-control" id="diagnostic" name="diagnostic" #diagnostic="ngModel"
+                        [(ngModel)]="reparation.diagnostic" required></textarea>
+                </div>  
+            </div>
+            <div class="form-group col-sm-4 mt-3">
+                <label for="amount"><b>(*)Monto mano de obra: </b></label>
+                <input id="amount" name="amount" class="form-control" type="number" min="1" #amount="ngModel"
+                    [(ngModel)]="reparation.amount" required>
+                <span *ngIf="amount.touched && !amount.valid" class="text-danger">Ingrese un numero valido</span>
+            </div>
+
+            <div class="form-group mb-3 col-sm-5 mt-3">
+                <label for="approximateTime"><b>(*)Fecha estimada para finalizar la reparacion: </b></label>
+
+                <input id="approximateTime" name="approximateTime" class="form-control w-75" type="date" #approximateTime="ngModel" [(ngModel)]="reparation.approximateTime"
+                    required>
+                <span *ngIf="approximateTime.touched && !approximateTime.valid" class="text-danger">Ingrese una fecha valida</span>
+            </div>
+
+            <p>
+                <button type="button" (click)="openDialog()"  class="btn btn-primary mt-3">
+                    <i class="bi bi-plus"></i> Artículos a utilizar
+                </button>
+            </p>
+            
         
-        <hr class="m-2">
-
-        <div class="row mt-2">
-            <div class="form-group col-sm-8">
-                <label for="diagnostic" class="data-user">(*)Diagnostico:</label>
-                <textarea class="form-control" id="diagnostic" name="diagnostic" #diagnostic="ngModel"
-                    [(ngModel)]="reparation.diagnostic" required></textarea>
-            </div>  
-        </div>
-        <div class="form-group col-sm-4 mt-3">
-            <label for="amount"><b>(*)Monto mano de obra: </b></label>
-            <input id="amount" name="amount" class="form-control" type="number" min="1" #amount="ngModel"
-                [(ngModel)]="reparation.amount" required>
-            <span *ngIf="amount.touched && !amount.valid" class="text-danger">Ingrese un numero valido</span>
-        </div>
-
-        <div class="form-group mb-3 col-sm-5 mt-3">
-            <label for="approximateTime"><b>(*)Fecha estimada para finalizar la reparacion: </b></label>
-
-            <input id="approximateTime" name="approximateTime" class="form-control w-75" type="date" #approximateTime="ngModel" [(ngModel)]="reparation.approximateTime"
-                required>
-            <span *ngIf="approximateTime.touched && !approximateTime.valid" class="text-danger">Ingrese una fecha valida</span>
-        </div>
-
-        <p>
-            <button type="button" (click)="openDialog()"  class="btn btn-primary mt-3">
-                <i class="bi bi-plus"></i> Artículos a utilizar
-            </button>
-         </p>
-        
-      
-          <div class="table-responsive w-75 text-center">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">Artículo</th>
-                    <th scope="col">Cantidad</th>
-                     <th scope="col"></th>
-                     <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let item of reparation.reparationsArticles; 
-                      let i = index">
-                    <td>
-                      <span class="data-user">{{ item.articleName }}</span>
-                    </td>
-                    <td>
-                      <span class="data-user">{{ item.articleQuantity }}</span>
-                    </td>
-                    <td>
-                      <button type="button" 
-                                class="btn link-custom col-sm-12" 
-                                (click)="editReparationArticle(item)"  
-                                title="Editar">
-                          <i class="bi bi-pencil-square text-primary"></i>
-                      </button>
-                    </td>
-                    <td>
-                        <button type="button" class="btn link-custom col-sm-12" (click)="removeReparationArticle(item)"  title="Editar">
-                            <i class="bi bi-trash text-danger"></i>
+            <div class="table-responsive w-75 text-center">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Artículo</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of reparation.reparationsArticles; 
+                        let i = index">
+                        <td>
+                        <span class="data-user">{{ item.articleName }}</span>
+                        </td>
+                        <td>
+                        <span class="data-user">{{ item.articleQuantity }}</span>
+                        </td>
+                        <td>
+                        <button type="button" 
+                                    class="btn link-custom col-sm-12" 
+                                    (click)="editReparationArticle(item)"  
+                                    title="Editar">
+                            <i class="bi bi-pencil-square text-primary"></i>
                         </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>
+                        </td>
+                        <td>
+                            <button type="button" class="btn link-custom col-sm-12" (click)="removeReparationArticle(item)"  title="Editar">
+                                <i class="bi bi-trash text-danger"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
         <div class=" d-flex justify-content-end flex-md-row flex-wrap">
             <button class="btn btn-primary d-flex p-2 m-2 " [disabled]="reparationForm.invalid" 

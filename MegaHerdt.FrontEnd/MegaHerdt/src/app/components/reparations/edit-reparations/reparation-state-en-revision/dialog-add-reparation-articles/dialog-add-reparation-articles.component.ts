@@ -32,6 +32,10 @@ export class DialogAddReparationArticlesComponent implements OnInit {
   }
 
   disableAcceptButton(){
+    if(this.reparationArticle.articleId == 0 || this.reparationArticle.articleQuantity <= 0)
+    {
+      return true;
+    }
     return false;
   }
 
