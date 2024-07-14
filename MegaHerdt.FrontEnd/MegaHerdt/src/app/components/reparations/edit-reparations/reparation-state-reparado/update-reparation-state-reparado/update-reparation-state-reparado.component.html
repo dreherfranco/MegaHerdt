@@ -1,83 +1,87 @@
-<h1 class="text-center">Actualizar reparacion (estado actual: REPARADO)</h1>
-<form #reparationForm="ngForm" class="w-100">
-    <div class="row">
-        <div class="form-group mb-3 col">
-            <label for="client" class="m-1"><b>Cliente: </b></label>
-            <span class="form-control data-user disabled" >{{reparation.client.userName}}</span>
+<div class="container-fluid mx-2">
+
+    <h1 >Actualizar reparación</h1>
+    <form #reparationForm="ngForm" class="w-100">
+        <div class="row">
+            <div class="form-group mb-3 col">
+                <label for="client" class="m-1"><b>Cliente: </b></label>
+                <span class="form-control data-user disabled" >{{reparation.client.userName}}</span>
+            </div>
+
+            <div class="form-group mb-3 col">
+                <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
+                <span class="form-control data-user disabled" >{{
+                    reparation.reparationState.name }}</span>
+            </div>
         </div>
 
-        <div class="form-group mb-3 col">
-            <label for="reparationState" class="m-1"><b>Estado de la reparacion: </b></label>
-            <span class="form-control data-user disabled" >{{
-                reparation.reparationState.name }}</span>
+
+        <div class="row">
+            <div class="col-md-3">
+                <label for="reparation-total"><b>Total: </b></label>
+                <input id="reparation-total" name="reparation-total" class="form-control" type="number" #reparationTotal="ngModel"
+                [(ngModel)]="this.total" disabled="true">
+            </div>
+
+            <div class="form-group mb-3 col-sm-4">
+                <label for="methodOfPayments"><b>(*)Método de Pago: </b></label>
+                <select class="form-select data-user" name="methodOfPayments" (change)="selectMethodOfPayment()" [(ngModel)]="reparation.methodOfPayment">
+                    <option class="data-user" name="methodOfPayments" [ngValue]="methodOfPayments.Cash" selected>Efectivo</option>
+                    <option class="data-user" name="methodOfPayments" [ngValue]="methodOfPayments.Credit">Credito</option>
+                    <option class="data-user" name="methodOfPayments" [ngValue]="methodOfPayments.Debit">Débito</option>
+                </select>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="paymentsQuantity"><b>(*)Cantidad de pagos: </b></label>
+                <input id="paymentsQuantity" pattern="^([0-9])$" name="paymentsQuantity" class="form-control" type="number" #paymentsQuantity="ngModel"
+                    [(ngModel)]="reparation.paymentsQuantity" required
+                    [disabled]="this.reparation.methodOfPayment == methodOfPayments.Cash">
+                <span *ngIf="paymentsQuantity.touched && !paymentsQuantity.valid" class="text-danger">Ingrese un numero valido</span>
+            </div>
+        
+        </div>    
+
+
+        <!-- <div class="row mt-2">
+            <h3 class="data-user"><b>Facturación: </b></h3>
+            <div class="form-group mb-2 col-sm-6">
+                <label for="billSaleNumber"><b>(*)Numero de factura: </b></label>
+                <div class="row">
+                    <div class="col-sm-4">
+                        
+                        <input id="billSaleNumber" pattern="^([0-9]{5})$" name="billSaleNumber" class="form-control" type="text" #billSaleNumber="ngModel"
+                            [(ngModel)]="reparation.bill.saleNumber" required>
+                        <span *ngIf="billSaleNumber.touched && !billSaleNumber.valid" class="text-danger">Ingrese un numero valido</span>
+                    </div>
+                    -
+                    <div class="col-sm-6">
+                        <input id="billNumber" pattern="^([0-9]{8})$" name="billNumber" class="form-control" type="text" #billNumber="ngModel"
+                            [(ngModel)]="reparation.bill.number" required>
+                        <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
+                    </div>
+                
+                </div>     
+            </div>
+
+            <div class="form-group mb-3 col-sm-4">
+                <label for="billType"><b>(*)Tipo de factura: </b></label>
+                <select class="form-select data-user" name="selectBillType" [(ngModel)]="reparation.bill.type">
+                    <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>{{billTypes.A}}</option>
+                    <option class="data-user" name="billType" [ngValue]="billTypes.B">{{billTypes.B}}</option>
+                    <option class="data-user" name="billType" [ngValue]="billTypes.C">{{billTypes.C}}</option>
+                    <option class="data-user" name="billType" [ngValue]="billTypes.RECIBO">{{billTypes.RECIBO}}</option>
+                </select>
+            </div>
+        </div> -->
+
+        <div class=" d-flex justify-content-end flex-md-row flex-wrap">
+            <button class="btn btn-primary d-flex p-2 m-2 " [disabled]="reparationForm.invalid" (click)="confirm()">Aceptar</button>
+            <button class="btn btn-secondary d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
         </div>
-    </div>
+
+    </form>
 
 
-    <div class="row">
-        <div class="col-md-3">
-            <label for="reparation-total"><b>Total: </b></label>
-            <input id="reparation-total" name="reparation-total" class="form-control" type="number" #reparationTotal="ngModel"
-            [(ngModel)]="this.total" disabled="true">
-        </div>
 
-        <div class="form-group mb-3 col-sm-4">
-            <label for="methodOfPayments"><b>(*)Método de Pago: </b></label>
-            <select class="form-select data-user" name="methodOfPayments" (change)="selectMethodOfPayment()" [(ngModel)]="reparation.methodOfPayment">
-                <option class="data-user" name="methodOfPayments" [ngValue]="methodOfPayments.Cash" selected>Efectivo</option>
-                <option class="data-user" name="methodOfPayments" [ngValue]="methodOfPayments.Credit">Credito</option>
-                <option class="data-user" name="methodOfPayments" [ngValue]="methodOfPayments.Debit">Débito</option>
-            </select>
-        </div>
-
-        <div class="col-sm-4">
-            <label for="paymentsQuantity"><b>(*)Cantidad de pagos: </b></label>
-            <input id="paymentsQuantity" pattern="^([0-9])$" name="paymentsQuantity" class="form-control" type="number" #paymentsQuantity="ngModel"
-                [(ngModel)]="reparation.paymentsQuantity" required
-                [disabled]="this.reparation.methodOfPayment == methodOfPayments.Cash">
-            <span *ngIf="paymentsQuantity.touched && !paymentsQuantity.valid" class="text-danger">Ingrese un numero valido</span>
-        </div>
-      
-    </div>    
-
-
-    <!-- <div class="row mt-2">
-        <h3 class="data-user"><b>Facturación: </b></h3>
-        <div class="form-group mb-2 col-sm-6">
-            <label for="billSaleNumber"><b>(*)Numero de factura: </b></label>
-            <div class="row">
-                <div class="col-sm-4">
-                    
-                    <input id="billSaleNumber" pattern="^([0-9]{5})$" name="billSaleNumber" class="form-control" type="text" #billSaleNumber="ngModel"
-                        [(ngModel)]="reparation.bill.saleNumber" required>
-                    <span *ngIf="billSaleNumber.touched && !billSaleNumber.valid" class="text-danger">Ingrese un numero valido</span>
-                </div>
-                -
-                <div class="col-sm-6">
-                    <input id="billNumber" pattern="^([0-9]{8})$" name="billNumber" class="form-control" type="text" #billNumber="ngModel"
-                        [(ngModel)]="reparation.bill.number" required>
-                    <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
-                </div>
-             
-            </div>     
-        </div>
-
-        <div class="form-group mb-3 col-sm-4">
-            <label for="billType"><b>(*)Tipo de factura: </b></label>
-            <select class="form-select data-user" name="selectBillType" [(ngModel)]="reparation.bill.type">
-                <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>{{billTypes.A}}</option>
-                <option class="data-user" name="billType" [ngValue]="billTypes.B">{{billTypes.B}}</option>
-                <option class="data-user" name="billType" [ngValue]="billTypes.C">{{billTypes.C}}</option>
-                <option class="data-user" name="billType" [ngValue]="billTypes.RECIBO">{{billTypes.RECIBO}}</option>
-            </select>
-        </div>
-    </div> -->
-
-    <div class=" d-flex justify-content-end flex-md-row flex-wrap">
-        <button class="btn btn-primary d-flex p-2 m-2 " [disabled]="reparationForm.invalid" (click)="confirm()">Aceptar</button>
-        <button class="btn btn-secondary d-flex p-2 m-2" (click)="closeModal()">Cancelar</button>
-    </div>
-
-</form>
-
-
+</div>

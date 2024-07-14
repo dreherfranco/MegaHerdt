@@ -7,14 +7,10 @@
     ></button>
   </div>
   
-  <div class="container-fluid">
-    <p
-      class="alert bg-custom-light d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center"
-    >
-      <b>Agregar artículo a la reparación</b>
-    </p>
-  
-    <div class="form-group mb-3 d-flex row mt-3">
+  <div class="container-fluid mx-2">
+    <h1>Agregar artículo a la reparación</h1>
+
+    <div class="form-group mb-3 d-flex row mt-3 px-3">
         <div class="col">
             <label for="article"><b>Seleccione articulos: </b></label>
             <select class="form-select data-user mt-2" name="selectReparationState"
@@ -41,7 +37,7 @@
       >
         Aceptar
       </button>
-      <button class="btn btn-danger d-flex p-2 m-2" (click)="closeModal()">
+      <button class="btn btn-secondary d-flex p-2 m-2" (click)="closeModal()">
         Cancelar
       </button>
     </div>
