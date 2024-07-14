@@ -49,8 +49,8 @@ export class ReparationStateENREVISIONComponent implements OnInit {
     const dialogRef = this.dialog.open(UpdateReparationStateENREVISIONComponent,
       {
         disableClose:true,
-        data: reparation,
-        maxHeight: '90vh'
+        data: reparation,        
+        panelClass: 'custom-dialog-container',
       });
 
     dialogRef.afterClosed().subscribe((result: Reparation) => {
