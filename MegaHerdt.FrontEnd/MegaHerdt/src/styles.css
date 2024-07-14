@@ -162,10 +162,28 @@ thead th{
    color: white;  /*Cambia el color del texto del botón "Cerrar" a blanco */
 }
 
-
 .custom-dialog-container .mat-dialog-container {
     overflow: visible !important;
-    max-height: 90vh !important;
+    max-height: 90vh !important;    
+}
+
+.custom-dialog-container .mat-dialog-container .container-fluid {
+    border: solid .1rem #26a6ef !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;    
+}
+
+.custom-dialog-container .mat-dialog-container h1{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background-color: #26a6ef !important; 
+    color: #fff !important; 
+    padding: 1rem !important;
+    margin: 0 !important;
+    font-size: 1.25rem !important; 
+    font-weight: bold !important; 
+    text-transform: uppercase !important;
 }
 
 @media (width > 0px) {

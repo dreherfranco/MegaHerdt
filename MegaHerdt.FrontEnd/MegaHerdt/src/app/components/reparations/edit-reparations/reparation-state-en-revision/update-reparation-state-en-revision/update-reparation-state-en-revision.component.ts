@@ -78,8 +78,7 @@ export class UpdateReparationStateENREVISIONComponent implements OnInit {
       {
         reparationArticle: null, // Pasar la copia del objeto al diálogo
         articlesUsedIds: this.getArticlesUsedIds(null), // Pasar los IDs de los artículos usados // Pasar la copia del objeto al diálogo
-       },
-      height: '48%',
+       },      
       width: '48%',
       panelClass: 'custom-dialog-container'
     });

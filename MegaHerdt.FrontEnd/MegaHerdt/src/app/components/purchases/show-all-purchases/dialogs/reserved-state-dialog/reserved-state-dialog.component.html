@@ -1,29 +1,29 @@
 <div class="container-fluid">
-    <p class="alert bg-custom-light d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center">Proceso de pago</p>
-    <form #purchaseForm="ngForm" class="w-75 mx-auto mt-3">
-        <div>Total: {{ total }}</div>
-        <div class="row">
-            <div class="col-sm-4">
+    <h1>Proceso de pago</h1>
+    <form #purchaseForm="ngForm" class="w-75 mx-auto mt-3">       
+        <div class="row justify-content-center align-items-center">
+            <div class="col-6 data-user fs-5"><strong>Total:</strong> {{ total | argentineFormat }}</div>
+            <div class="col-6">
                 <label for="paymentsQuantity"><b>Cantidad de pagos: </b></label>
                 <input id="paymentsQuantity" pattern="^([0-9])$" name="paymentsQuantity" class="form-control" type="number" #paymentsQuantity="ngModel"
-                    [(ngModel)]="purchase.paymentsQuantity" required>
+                    [(ngModel)]="purchase.paymentsQuantity" required min="0" >
                 <span *ngIf="paymentsQuantity.touched && !paymentsQuantity.valid" class="text-danger">Ingrese un numero valido</span>
-            </div>
+            </div>            
         </div>    
-
+        <hr class="my-4">
         <div class="row">
-            <h3 class="data-user">Facturación: </h3>
-            <div class="form-group mb-3 col-sm-6">
+            <p class="h4"><strong>Facturación: </strong></p>
+            <div class="form-group mb-3 col-6">
                 <label for="billSaleNumber"><b>(*)Numero de factura: </b></label>
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-4">
                         
                         <input id="billSaleNumber" pattern="^([0-9]{5})$" name="billSaleNumber" class="form-control" type="text" #billSaleNumber="ngModel"
                             [(ngModel)]="purchase.bill.saleNumber" required>
                         <span *ngIf="billSaleNumber.touched && !billSaleNumber.valid" class="text-danger">Ingrese un numero valido</span>
                     </div>
                     -
-                    <div class="col-sm-6">
+                    <div class="col-6">
                         <input id="billNumber" pattern="^([0-9]{8})$" name="billNumber" class="form-control" type="text" #billNumber="ngModel"
                             [(ngModel)]="purchase.bill.number" required>
                         <span *ngIf="billNumber.touched && !billNumber.valid" class="text-danger">Ingrese un numero valido</span>
@@ -32,7 +32,7 @@
                 </div>     
             </div>
     
-            <div class="form-group mb-3 col-sm-4">
+            <div class="form-group mb-3 col-6">
                 <label for="billType"><b>(*)Tipo de factura: </b></label>
                 <select class="form-select data-user" name="selectBillType" [(ngModel)]="purchase.bill.type">
                     <option class="data-user" name="billType" [ngValue]="billTypes.A" selected>{{billTypes.A}}</option>

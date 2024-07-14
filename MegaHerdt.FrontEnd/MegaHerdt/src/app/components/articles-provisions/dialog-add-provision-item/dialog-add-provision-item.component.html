@@ -7,18 +7,14 @@
   ></button>
 </div>
 
-<div class="container-fluid">
-  <p
-    class="alert bg-custom-light d-flex my-2 my-md-0 mr-md-3 d-flex align-content-center"
-  >
-    <b>Agregar item a la provisión</b>
-  </p>
+<div class="container-fluid mx-2">
+  <h1>Agregar item a la provisión</h1>
 
-  <div class="form-group mb-3">
+  <div class="form-group mb-3 px-2">
     <label for="article"><b>(*)Artículo: </b></label>
     <select
       [disabled]="articleProviderItem.serialNumbers.length > 0"
-      (change)="setSelectedArticle($event);"
+      (change)="setSelectedArticle($event)"
       class="form-select data-user"
       name="selectArticle"
       [(ngModel)]="articleProviderItem.articleId"
@@ -33,12 +29,15 @@
       </option>
     </select>
     <p class="text-info" *ngIf="this.articleProviderItem.articleId != 0">
-        {{((this.articleProviderItem.article?.hasSerialNumber) ? 
-        "Se debe definir los " : "No se pueden definir ") + "números de serie para este artículo"}}
-    </p>    
+      {{
+        (this.articleProviderItem.article?.hasSerialNumber
+          ? "Se debe definir los "
+          : "No se pueden definir ") + "números de serie para este artículo"
+      }}
+    </p>
   </div>
 
-  <div class="row">
+  <div class="row px-3">
     <div class="form-group mb-3 col-sm-4 p-2">
       <label for="articleQuantity" class="mb-1"><b>(*)Cantidad:</b></label>
       <input
@@ -57,7 +56,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row px-3">
     <div class="form-group mb-3 col-sm-4 p-2">
       <label for="purchasePrice" class="mb-1"
         ><b>(*)Precio de Compra:</b></label
@@ -81,7 +80,7 @@
   </div>
 
   <ng-container *ngIf="this.articleProviderItem.article?.hasSerialNumber">
-    <div class="form-group mb-3 row">
+    <div class="form-group mb-3 row px-3">
       <label for="serialNumber"><b>Agregar número de serie: </b></label>
       <div class="col">
         <input
@@ -112,7 +111,12 @@
           type="button"
           class="btn btn-primary dropdown-toggle"
           aria-controls="dropdown-basic"
-          [ngStyle]="{ visibility: articleProviderItem.serialNumbers.length === 0 ? 'hidden' : 'visible' }"
+          [ngStyle]="{
+            visibility:
+              articleProviderItem.serialNumbers.length === 0
+                ? 'hidden'
+                : 'visible'
+          }"
         >
           Ver números de serie agregados
         </button>

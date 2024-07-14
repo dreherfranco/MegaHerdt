@@ -157,7 +157,8 @@ export class ShowAllPurchasesComponent implements OnInit {
       {
         disableClose:true,
         data: purchase,
-        maxHeight: '90vh'
+        width: '48%',
+        panelClass: 'custom-dialog-container'
       });
 
     dialogRef.afterClosed().subscribe((result: Purchase) => {

@@ -1,4 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ArticleName } from 'src/app/models/Article/ArticleName';
 import { ArticleProviderItem } from 'src/app/models/ArticleProvider/ArticleProviderItem';
