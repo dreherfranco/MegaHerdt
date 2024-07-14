@@ -2,8 +2,9 @@
 {
     public class URLsZipDTO
     {
-        public string UrlArticlesZip { get; set; }
-        public string UrlArticlesProvidersZip { get; set; }
-        public string UrlDatabaseZip { get; set; }
+        //public string UrlArticlesZip { get; set; }
+        //public string UrlArticlesProvidersZip { get; set; }
+        //public string UrlDatabaseZip { get; set; }
+        public string UrlMainZip { get; set; }
     }
 }

@@ -144,8 +144,25 @@
     </a>
 </li>
 <li><hr class="dropdown-divider"></li>
-<li role="menuitem">
-    <a (click)="openDialogBackup()" class="dropdown-item btn">
-         Hacer respaldo
-    </a>
+<li  role="menuitem" dropdown triggers="mouseover" placement="bottom right" container="body" class="btn-group dropend">
+    <a id="button-nested" type="button" dropdownToggle
+            class="btn d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-dark text-decoration-none dropdown-toggle"
+            aria-controls="dropdown-basic" disabled>
+            Respaldos de Información
+        </a>
+        <ul *dropdownMenu class="dropdown-menu text-small shadow" role="menu" aria-labelledby="button-basic">
+            <li role="menuitem" >
+                <a (click)="openDialogBackup()" class="dropdown-item btn">
+                    Hacer respaldo
+               </a>
+            </li>
+            
+            <li><hr class="dropdown-divider"></li>
+            
+            <li role="menuitem">
+                <a (click)="openDialogRestoreBackup()" class="dropdown-item">
+                    Restaurar
+                </a>
+            </li>
+        </ul>   
 </li>

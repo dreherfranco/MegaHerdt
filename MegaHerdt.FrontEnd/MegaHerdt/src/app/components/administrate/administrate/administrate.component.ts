@@ -4,6 +4,7 @@ import { BackupService } from 'src/app/services/backup/backup.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { RoleEnum as Role} from 'src/app/utils/RoleEnum';
 import { DialogDownloadBackupComponent } from '../../backup/dialog-download-backup/dialog-download-backup.component';
+import { BackupRestoreComponent } from '../../backup/backup-restore/backup-restore.component';
 
 @Component({
   selector: 'app-administrate',
@@ -42,6 +43,15 @@ export class AdministrateComponent implements OnInit {
       }
     })
       
+    
+  }
+
+  openDialogRestoreBackup(){
+    this.dialog.open(BackupRestoreComponent,
+      {
+        disableClose:true,
+        data: null
+      });
     
   }
 }
