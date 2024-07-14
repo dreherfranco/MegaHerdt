@@ -40,6 +40,7 @@ export class ArticleService {
       var xhr = new XMLHttpRequest();
       
       for(var key in article){
+        console.log(key, article[key]);
         formData.append(key, article[key]);
       }
     
@@ -52,6 +53,10 @@ export class ArticleService {
 
   getByName(name: string): Observable<any>{
     return this._http.get(this.url+"/get-by-name/"+name,{headers: this.headers});
+  }
+
+  imageIsValid(extension: string): Observable<any>{
+    return this._http.get(this.url+"/image-is-valid/"+extension,{headers: this.headers});
   }
 
   getById(id: number): Observable<any>{

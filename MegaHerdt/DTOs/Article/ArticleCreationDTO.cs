@@ -7,7 +7,7 @@ namespace MegaHerdt.API.DTOs.Article
     {
         public int BrandId { get; set; }
         public int CategoryId { get; set; }
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
         public string Description { get; set; }
         public bool HasSerialNumber { get; set; }
         public string Name { get; set; }

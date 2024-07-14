@@ -43,6 +43,7 @@ export class CreateArticleComponent implements OnInit {
   onSubmit(form: any) {
     this.article.categoryId = this.categoryId;
     this.article.brandId = this.brandId;
+    console.log(this.article)
     this._articleService.sendFormData(this.article, "create").subscribe({
       next: (response) => { 
         console.log(response);
@@ -88,7 +89,27 @@ export class CreateArticleComponent implements OnInit {
 
   onChange(fileInput: any){
     this.article.image = <File>fileInput.target.files[0];
-    this.imageOk = true;
+
+    var extension = this.article.image.name.split('.').pop();
+
+    if(extension !== undefined)
+    {
+      this._articleService.imageIsValid(extension).subscribe({
+        next: res => 
+        {
+          this.imageOk = res
+          if(!this.imageOk)
+          {
+            this.article.image = new File([],'');
+            AlertService.errorAlert('¡Extensión de imagen incorrecta!', 'Ingrese una imagen valida.');
+          }
+        }
+      })
+    }
+    else
+    {
+        this.imageOk = false;
+    }
   }
 
   disabledForm(articleForm:any): boolean{

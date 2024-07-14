@@ -187,7 +187,7 @@ namespace MegaHerdt.API.Controllers
             try
             {
                 var article = this.Mapper.Map<Article>(articleDTO);
-                
+
                 if (articleDTO.Image != null)
                 {
                     using (var memoryStream = new MemoryStream())
@@ -195,11 +195,19 @@ namespace MegaHerdt.API.Controllers
                         await articleDTO.Image.CopyToAsync(memoryStream);
                         var content = memoryStream.ToArray();
                         var extension = Path.GetExtension(articleDTO.Image.FileName);
-                        article.Image = await fileManager.SaveFile(content, extension, container,
-                            articleDTO.Image.ContentType);
+
+                        if (articleService.ExstensionImageIsValid(extension))
+                        {
+                            article.Image = await fileManager.SaveFile(content, extension, container,
+                                articleDTO.Image.ContentType);
+                        }
+                        else
+                        {
+                            throw new Exception($"La extension {extension} del archivo no es valida.");
+                        }
                     }
                 }
-            
+
                 article = await articleService.Create(article);
                 return this.Mapper.Map<ArticleDTO>(article);
             }
@@ -208,6 +216,22 @@ namespace MegaHerdt.API.Controllers
                 return BadRequest(ex);
             }
         }
+
+        [HttpGet("image-is-valid/{extension}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> ImageIsValid(string extension)
+        {
+            try
+            {
+               return articleService.ExstensionImageIsValid(extension);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
 
         [HttpPost("article-discount-stock")]
         // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]

@@ -87,5 +87,18 @@ namespace MegaHerdt.Services.Services
                 await this._articleHelper.DiscountStock(filter, item.ArticleQuantity);
             }
         }
+
+        /// <summary>
+        /// Valida que la extesion del comprobante sea correcta.
+        /// En este caso se admiten pdfs e imagenes.
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
+        public bool ExstensionVoucherIsValid(string extension)
+        {
+            var validsExtesions = new string[] { "png", "jpeg", "jpg", "webp", "pdf" };
+
+            return validsExtesions.Contains(extension);
+        }
     }
 }

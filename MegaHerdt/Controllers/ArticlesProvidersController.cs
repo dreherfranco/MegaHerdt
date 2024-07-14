@@ -31,7 +31,21 @@ namespace MegaHerdt.API.Controllers
             this.fileManager = fileManager;
         }
 
-        
+        [HttpGet("voucher-is-valid/{extension}")]
+        // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //  [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<bool>> VoucherIsValid(string extension)
+        {
+            try
+            {
+                return articleProviderService.ExstensionVoucherIsValid(extension);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
         /// <summary>
         /// Provisiones. 
         /// ArticleProvider.Add == true

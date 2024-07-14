@@ -24,6 +24,8 @@ export class CreateArticleProvisionComponent implements OnInit {
   // articles: Array<ArticleName>;
    articleProvider: ArticleProviderCreation;
   // serialNumberToAdd: string = '';
+  imageOk: boolean = false;
+  imageIsCharged: boolean = false;
 
   constructor(private _articleProvisionService: ArticleProvisionService, 
               private _providerService: ProviderService,
@@ -98,7 +100,31 @@ export class CreateArticleProvisionComponent implements OnInit {
   
 
   onChange(fileInput: any) {
-    this.articleProvider.voucher = <File>fileInput.target.files[0]
+    this.articleProvider.voucher = <File>fileInput.target.files[0];
+
+    var extension = this.articleProvider.voucher.name.split('.').pop();
+
+    if(extension !== undefined)
+    {
+      this._articleProvisionService.voucherIsValid(extension).subscribe({
+        next: res => 
+        {
+          this.imageOk = res;
+          if(!this.imageOk)
+          {
+            this.articleProvider.voucher = new File([],'');
+            AlertService.errorAlert('¡Extensión de imagen incorrecta!', 'Ingrese una imagen valida.');
+          }else
+          {
+              this.imageIsCharged = true;
+          }
+        }
+      })
+    }
+    else
+    {
+        this.imageOk = false;
+    }
   }
 
   agregarItemProvision()
@@ -184,4 +210,7 @@ export class CreateArticleProvisionComponent implements OnInit {
     return articlesUsedIds;
   }
 
+  disableForm(articleProvisionForm:any): boolean{
+    return articleProvisionForm.invalid || (this.imageIsCharged && !this.imageOk) || this.articleProvider.providerId == 0 || this.articleProvider.articlesItems.length == 0;
+  }
 }

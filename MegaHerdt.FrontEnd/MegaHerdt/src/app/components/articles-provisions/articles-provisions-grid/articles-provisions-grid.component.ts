@@ -10,6 +10,7 @@ import { ArticleProvisionService } from 'src/app/services/articles-provisions/ar
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { Sort } from '@angular/material/sort';
+import { delay } from 'lodash';
 
 @Component({
   selector: 'app-articles-provisions-grid',
@@ -120,9 +121,30 @@ export class ArticlesProvisionsGridComponent implements OnInit {
   onChange(fileInput: any, articleProvider: ArticleProvider){
     var voucher = new File(new Array,'')
     voucher = <File>fileInput.target.files[0];
-    var articleProviderVoucherUpdate = new ArticleProviderVoucherUpdate(articleProvider.id, voucher);
-    this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher");
-    window.location.reload();
+    var extension = voucher.name.split('.').pop();
+
+    if(extension !== undefined)
+    {
+      this._articleProvisionService.voucherIsValid(extension).subscribe({
+        next: res => 
+        {
+          if(!res)
+          {
+            AlertService.errorAlert('¡Extensión de imagen incorrecta!', 'Ingrese una imagen valida.');
+          }else
+          {
+            var articleProviderVoucherUpdate = new ArticleProviderVoucherUpdate(articleProvider.id, voucher);
+            this._articleProvisionService.sendFormData(articleProviderVoucherUpdate,"update-voucher");
+            
+            setTimeout(() => 
+            {           
+                 window.location.reload();
+            }, 1500);
+          }
+        }
+      })
+    }
+
   }
 
   onSearchTextChange(searchText: string) {

@@ -74,8 +74,28 @@ export class EditArticleComponent implements OnInit {
   // Ver la forma de ejecutarlo cuando se manda el update
   onChange(fileInput: any) {
     this.image = <File>fileInput.target.files[0];
-    var articleImage = new ArticleUpdateImage(this.article.id, this.image);
-    this._articleService.sendFormData(articleImage, 'update-image');
+    var extension = this.image.name.split('.').pop();
+
+    if(extension !== undefined)
+    {
+      this._articleService.imageIsValid(extension).subscribe({
+        next: res => 
+        {
+          if(!res)
+          {
+            this.image = new File([],'');
+            AlertService.errorAlert('¡Extensión de imagen incorrecta!', 'Ingrese una imagen valida.');
+          }
+          else
+          {
+            var articleImage = new ArticleUpdateImage(this.article.id, this.image);
+            this._articleService.sendFormData(articleImage, 'update-image');
+          }
+        }
+      })
+    }
+
+ 
   }
 
   openDialogUpdate() {

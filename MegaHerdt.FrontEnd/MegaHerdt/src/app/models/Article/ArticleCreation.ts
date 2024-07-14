@@ -9,7 +9,8 @@ export class ArticleCreation {
     categoryId: number;
     hasSerialNumber: boolean;
     
-    constructor(name: string = '', code: string = '', description: string = '', image: File = new File([], ''), stock: number=0,
+    // Le pongo el 'NotNull' al codigo porque sino no pasa por el sendFormData del servicio.
+    constructor(name: string = '', code: string = 'NotNull', description: string = '', image: File = new File([], ''), stock: number=0,
         unitValue:number=0, brandId: number=0, categoryId: number=0, hasSerialNumber: boolean=false) 
     {       
         this.name = name;

@@ -216,5 +216,18 @@ namespace MegaHerdt.Services.Services
                                              .Select(sn => sn.SerialNumber!)
                                              .ToList();
         }
+
+        /// <summary>
+        /// Valida que la extesion de la imagen sea correcta.
+        /// (No se permiten pdfs)
+        /// </summary>
+        /// <param name="extension"></param>
+        /// <returns></returns>
+        public bool ExstensionImageIsValid(string extension)
+        {
+            var validsExtesions = new string[] { "png", "jpeg", "jpg", "webp" };
+
+            return validsExtesions.Contains(extension);
+        }
     }
 }

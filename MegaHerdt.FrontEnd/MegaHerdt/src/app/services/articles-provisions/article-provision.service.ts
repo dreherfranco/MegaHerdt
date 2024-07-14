@@ -18,6 +18,10 @@ export class ArticleProvisionService {
     this.updateArticleProviders();
   }
 
+  voucherIsValid(extension: string): Observable<any>{
+    return this._http.get(this.url+"/voucher-is-valid/"+extension,{headers: this.headers});
+  }
+
   updateArticleProviders(){
     this.getAll().subscribe({
       next: res => this.articlesProviders.next(res)
