@@ -68,7 +68,8 @@ export class ReparationStateREPARADOComponent implements OnInit {
       {
         disableClose:true,
         data: reparation,
-        maxHeight: '90vh'
+        maxHeight: '90vh',
+        panelClass: 'custom-dialog-container'
       });
 
     dialogRef.afterClosed().subscribe((result: Reparation) => {
