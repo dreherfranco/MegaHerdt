@@ -1,10 +1,14 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from 'src/app/models/Article/Article';
 import { CartArticleDetail } from 'src/app/models/Cart/CartArticleDetail';
+import { PurchasePaymentConfirm } from 'src/app/models/Payment/PurchasePaymentConfirm';
 import { PurchaseArticleCreation } from 'src/app/models/PurchaseArticle/PurchaseArticleCreation';
+import { AlertService } from 'src/app/services/Alerts/AlertService';
 import { ArticleService } from 'src/app/services/articles/article.service';
 import { CartService } from 'src/app/services/cart/cart.service';
+import { PurchasePaymentService } from 'src/app/services/purchase-payments/purchase-payment.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 import { ArticlesFilterByEnum } from 'src/app/utils/ArticlesFilterByEnum';
 
 @Component({
@@ -16,12 +20,18 @@ export class ArticleDetailComponent implements OnInit {
   article: Article = new Article();
   articleId: number | null = null;
   cartArticles: Array<CartArticleDetail>;
+  stockAdd: number;
 
   constructor(private _articleService: ArticleService, 
+    private _router: Router,
     private _route: ActivatedRoute,
-    private _cartService: CartService) 
+    private _cartService: CartService,
+    private _storageService: StorageService,
+    private _PurchasePaymentService: PurchasePaymentService 
+  ) 
     { 
-        this.cartArticles = this._cartService.getCart();
+      this.stockAdd = 1;
+      this.cartArticles = this._cartService.getCart();
     }
 
   ngOnInit(): void 
@@ -29,6 +39,51 @@ export class ArticleDetailComponent implements OnInit {
     // Se subscribe a los parametros para detectar si hay cambios y cargar
     // los datos del articulo cada vez que cambia el id de articulo en la url
     this.subscribeParams();
+  }
+
+  removeUnits(){
+    if(this.stockAdd > 1)
+      this.stockAdd = this.stockAdd - 1;
+  }
+
+  addUnits(){
+    if(this.stockAdd < this.article.stock)
+      this.stockAdd = this.stockAdd + 1;
+  }
+
+  reservedPurchase(){
+    console.log("Reservar la compra");
+    var identity = this._storageService.getIdentity();
+    let purchaseReserved = new PurchasePaymentConfirm();
+    purchaseReserved.clientEmail = identity.email;
+    purchaseReserved.clientId = identity.id;
+    purchaseReserved.payInPerson = true;
+    purchaseReserved.purchaseArticles = [{
+      articleId: this.article.id,
+      articleName: this.article.name,
+      articlePriceAtTheMoment: (this.isOnOffer(this.article) ? this.article.unitValueWithOffer : this.article.unitValue),
+      articleQuantity: this.stockAdd,
+    }];
+
+    if(purchaseReserved.purchaseArticles.length > 0)
+    {
+      this._PurchasePaymentService.purchaseReserved(purchaseReserved, this._storageService.getTokenValue()).subscribe({
+        next: (response) =>{
+          if(response.error){
+            AlertService.errorAlert('¡Error al intentar reservar la compra!');
+          }else{
+            AlertService.successAlert('¡Reservada!','Los articulos fueron reservados para su compra')
+            .then(() => {
+              this._router.navigate(['/purchases/record']);
+            });
+          }
+        },
+        error: (err) => {
+          AlertService.errorAlert('¡Error al intentar reservar la compra!');
+          console.log(err)
+        }
+      })
+    }
   }
 
    /**
@@ -92,12 +147,13 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   addToCart(){
-    var purchaseArticle = new PurchaseArticleCreation(this.article.id, 1, this.article.unitValueWithOffer, this.article.name);
-    this._cartService.addToCart(this.article, purchaseArticle);
-  }
+    if(this.article.stock < 1)
+      return;
 
-  formatoArgentino(precio: number): string {
-    return precio.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
+    var purchaseArticle = new PurchaseArticleCreation(this.article.id, this.stockAdd, this.article.unitValueWithOffer, this.article.name);
+    this._cartService.addToCart(this.article, purchaseArticle);
+
+    setTimeout(() => {this._router.navigate([''])}, 1000);
   }
 
   getStyle(){

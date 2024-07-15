@@ -202,7 +202,7 @@ export class CartService {
       if (this.existsArticleInCart(article)) {
         for (var i = 0; i < cart.length; i++) {
           if (cart[i].article.id == article.id) {
-            cart[i].purchaseArticle.articleQuantity++;
+            cart[i].purchaseArticle.articleQuantity = cart[i].purchaseArticle.articleQuantity + purchaseArticle.articleQuantity;
           }
         }
       }
