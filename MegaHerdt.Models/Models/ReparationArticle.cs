@@ -20,5 +20,14 @@ namespace MegaHerdt.Models.Models
         public Article Article { get; set; }
         public Reparation Reparation { get; set; }
 
+        /// <summary>
+        /// Numeros de serie de los articulos comprados.
+        /// </summary>
+        /// <remarks>
+        ///     En la compra se debe descontar el stock 
+        ///     y marcarse los numeros de seria ArticleProviderSerialNumber.EnStock = false
+        /// </remarks>
+        public List<ReparationArticleSerialNumber> SerialNumbers { get; set; } = new();
+
     }
 }

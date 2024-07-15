@@ -7,6 +7,7 @@
                 <th mat-sort-header="clientEmail" scope="col">Cliente</th>
                 <th mat-sort-header="date" scope="col">Fecha</th>
                 <th mat-sort-header="clientDescription" scope="col">Descripcion del cliente</th>
+                <th mat-sort-header="employeeObservation" scope="col">Obsevación del empleado</th>
                 <th scope="col"></th>
             </tr>
         </thead>
@@ -37,6 +38,11 @@
                     <span *ngIf="reparation.clientDescription === '' " class="text-secondary">No existe descripción</span>
                     <span class="data-user">{{ reparation.clientDescription.substring(0, 25) }}</span>
                     <span *ngIf="reparation.clientDescription.length > 25">...</span>
+                </th>
+                <th>
+                    <span *ngIf="reparation.employeeObservation=== '' " class="text-secondary">No existe observación</span>
+                    <span class="data-user">{{ reparation.employeeObservation.substring(0, 25) }}</span>
+                    <span *ngIf="reparation.employeeObservation.length > 25">...</span>
                 </th>
                 <td>
                     <button class="btn link-custom" title="Editar" (click)="openDialogUpdate(reparation)" [disabled]="this.userAuthenticated.email !== reparation.employee.email"> <i

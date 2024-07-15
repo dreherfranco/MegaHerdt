@@ -28,8 +28,8 @@ namespace MegaHerdt.Models.Models
         public ReparationState ReparationState { get; set; }
         public User Client { get; set; }
         public User Employee { get; set; }
-        public List<ReparationClaim> ReparationsClaims { get; set; }
-        public List<ReparationArticle> ReparationsArticles { get; set; }
+        public List<ReparationClaim> ReparationsClaims { get; set; } = new();
+        public List<ReparationArticle> ReparationsArticles { get; set; } = new();
         public Bill Bill { get; set; }
         public Guid NumeroTicket { get; set; } = new Guid();
         public bool Facturada { get; set; } = false;

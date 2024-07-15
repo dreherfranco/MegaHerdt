@@ -1,7 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
+import { ReparationArticleSerialNumber } from 'src/app/models/Article/ReparationArticleSerialNumber';
 import { Reparation } from 'src/app/models/Reparation/Reparation';
 import { MethodOfPayment } from 'src/app/utils/MethodOfPayment';
+import { DialogShowSerialNumbersComponent } from '../../articles-provisions/dialog-show-serial-numbers/dialog-show-serial-numbers.component';
 
 @Component({
   selector: 'app-dialog-show-reparation-detail',
@@ -10,7 +12,7 @@ import { MethodOfPayment } from 'src/app/utils/MethodOfPayment';
 })
 export class DialogShowReparationDetailComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<DialogShowReparationDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Reparation) { 
+    @Inject(MAT_DIALOG_DATA) public data: Reparation,  public dialog: MatDialog) { 
       this.dialogRef.disableClose = false;
     }
 
@@ -21,11 +23,23 @@ export class DialogShowReparationDetailComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  getPaymentMethod(methodOfPayment: MethodOfPayment | null | undefined)
-  {
-    if(methodOfPayment === null || methodOfPayment === undefined) return '';
-    switch(methodOfPayment)
-    {
+  showSerialNumbers(serialNumbers: ReparationArticleSerialNumber[]){     
+    const dialogRef = this.dialog.open(DialogShowSerialNumbersComponent,
+      {
+        data: serialNumbers,
+        height: '300px',
+        width: '300px'
+      });
+
+    dialogRef.afterClosed().subscribe((result: any) => {
+      /**logica para aplicar luego de cerrar el dialogo */
+    });
+  }
+
+  getPaymentMethod(methodOfPayment: MethodOfPayment | null | undefined): string {
+    console.log("payment method", methodOfPayment);
+    if (methodOfPayment === null || methodOfPayment === undefined) return 'Desconocido';
+    switch (methodOfPayment) {
       case MethodOfPayment.Cash:
         return "Efectivo";
       case MethodOfPayment.Credit:
@@ -33,7 +47,7 @@ export class DialogShowReparationDetailComponent implements OnInit {
       case MethodOfPayment.Debit:
         return "Debito";
       default:
-          return "Efectivo";
+        return "Desconocido";
     }
   }
 }

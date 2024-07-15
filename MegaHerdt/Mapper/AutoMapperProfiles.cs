@@ -64,12 +64,12 @@ namespace MegaHerdt.API.Mapper
 
             #region Reparation
             CreateMap<Reparation, ReparationDTO>()
-                .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleMap))
                 .ReverseMap();
-            CreateMap<ReparationCreationDTO, Reparation>()
-                .ForMember(x=>x.ReparationsArticles, x=>x.MapFrom(this.ReparationArticleCreationMap));
-            CreateMap<ReparationUpdateDTO, Reparation>()
-                 .ForMember(x => x.ReparationsArticles, x => x.MapFrom(this.ReparationArticleUpdateMap));
+
+            CreateMap<ReparationCreationDTO, Reparation>();
+
+            CreateMap<ReparationUpdateDTO, Reparation>();
+
             CreateMap<Reparation, ReparationDetailDTO>();
 
             CreateMap<Reparation, ReparationDebtDTO>()
@@ -79,7 +79,20 @@ namespace MegaHerdt.API.Mapper
                .ForMember(dest => dest.ClientSurname, opt => opt.MapFrom(src => src.Client.Surname))
                .ForMember(dest => dest.ClientDni, opt => opt.MapFrom(src => src.Client.Dni))
                .ReverseMap();
+
             #endregion Reparation
+
+            #region ReparationArticle
+            CreateMap<ReparationArticle, ReparationArticleDTO>()
+              .ReverseMap();
+
+            CreateMap<ReparationArticleCreationDTO, ReparationArticle>();
+
+            CreateMap<ReparationArticleUpdateDTO, ReparationArticle> ();
+
+            CreateMap<ReparationArticleSerialNumber, ReparationArticleSerialNumberDTO>()
+           .ReverseMap();
+            #endregion
 
             #region ReparationState
             CreateMap<ReparationState, ReparationStateDTO>()
@@ -408,46 +421,46 @@ namespace MegaHerdt.API.Mapper
         #endregion UserUtilsMethods  
 
         #region ReparationUtilsMethods
-        private List<ReparationArticleDTO> ReparationArticleMap(Reparation reparation, ReparationDTO reparationDTO)
-        {
-            var result = new List<ReparationArticleDTO>();
-            if (reparation.ReparationsArticles == null) { return result; }
+        //private List<ReparationArticleDTO> ReparationArticleMap(Reparation reparation, ReparationDTO reparationDTO)
+        //{
+        //    var result = new List<ReparationArticleDTO>();
+        //    if (reparation.ReparationsArticles == null) { return result; }
 
-            foreach (var reparationArticle in reparation.ReparationsArticles)
-            {
-                result.Add(
-                    new ReparationArticleDTO()
-                    {
-                        ArticleQuantity = reparationArticle.ArticleQuantity,
-                        ArticleId = reparationArticle.ArticleId,
-                        ArticlePriceAtTheMoment = reparationArticle.ArticlePriceAtTheMoment,
-                        ArticleName = reparationArticle.Article.Name
-                    });
-            }
-            return result;
-        }
+        //    foreach (var reparationArticle in reparation.ReparationsArticles)
+        //    {
+        //        result.Add(
+        //            new ReparationArticleDTO()
+        //            {
+        //                ArticleQuantity = reparationArticle.ArticleQuantity,
+        //                ArticleId = reparationArticle.ArticleId,
+        //                ArticlePriceAtTheMoment = reparationArticle.ArticlePriceAtTheMoment,
+        //                ArticleName = reparationArticle.Article.Name
+        //            });
+        //    }
+        //    return result;
+        //}
 
-        private List<ReparationArticle> ReparationArticleCreationMap(ReparationCreationDTO reparationDTO, Reparation reparation)
-        {
-            return new List<ReparationArticle>();
-        }
+        //private List<ReparationArticle> ReparationArticleCreationMap(ReparationCreationDTO reparationDTO, Reparation reparation)
+        //{
+        //    return new List<ReparationArticle>();
+        //}
 
-        private List<ReparationArticle> ReparationArticleUpdateMap(ReparationUpdateDTO reparationDTO, Reparation reparation)
-        {
-            var result = new List<ReparationArticle>();
-            if (reparationDTO.ReparationsArticles == null) { return result; }
+        //private List<ReparationArticle> ReparationArticleUpdateMap(ReparationUpdateDTO reparationDTO, Reparation reparation)
+        //{
+        //    var result = new List<ReparationArticle>();
+        //    if (reparationDTO.ReparationsArticles == null) { return result; }
 
-            foreach (var reparationArticle in reparationDTO.ReparationsArticles)
-            {
-                result.Add(
-                    new ReparationArticle()
-                    {
-                        ArticleQuantity = reparationArticle.ArticleQuantity,
-                        ArticleId = reparationArticle.ArticleId
-                    });
-            }
-            return result;
-        }
+        //    foreach (var reparationArticle in reparationDTO.ReparationsArticles)
+        //    {
+        //        result.Add(
+        //            new ReparationArticle()
+        //            {
+        //                ArticleQuantity = reparationArticle.ArticleQuantity,
+        //                ArticleId = reparationArticle.ArticleId
+        //            });
+        //    }
+        //    return result;
+        //}
 
         #endregion ReparationUtilsMethods
 

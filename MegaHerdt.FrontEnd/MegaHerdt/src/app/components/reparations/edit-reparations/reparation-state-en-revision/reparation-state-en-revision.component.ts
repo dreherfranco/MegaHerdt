@@ -68,7 +68,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
     this._reparationService.update(reparationUpdate, this._storageService.getTokenValue()).subscribe({
       next: (response) => {
         if (response.error) {
-          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+          AlertService.errorAlert('¡Error al intentar actualizar la Reparación!', response.error);
         } else {
           this.loadReparations();
           AlertService.successAlert('¡Actualizada!','Reparación actualizada correctamente')
@@ -81,7 +81,7 @@ export class ReparationStateENREVISIONComponent implements OnInit {
         }
       },
       error: (err) => {
-        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!');
+        AlertService.errorAlert('¡Error al intentar actualizar la Reparación!', err.error.message);
         console.log(err)
       }
     })
@@ -133,6 +133,8 @@ export class ReparationStateENREVISIONComponent implements OnInit {
             return compare(a.reparationState.name, b.reparationState.name, isAsc);
         case 'clientDescription':
             return compare(a.clientDescription, b.clientDescription, isAsc);
+       case 'employeeObservation':
+              return compare(a.employeeObservation, b.employeeObservation, isAsc);
         default:
           return 0;
       }

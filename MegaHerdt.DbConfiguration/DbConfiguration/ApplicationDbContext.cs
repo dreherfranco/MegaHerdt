@@ -15,6 +15,7 @@ namespace MegaHerdt.DbConfiguration.DbConfiguration
        public DbSet<ReparationState> ReparationsStates { get; set;}
        public DbSet<ReparationClaim> ReparationsClaims { get; set;}
        public DbSet<ReparationArticle> ReparationsArticles { get; set; }
+        public DbSet<ReparationArticleSerialNumber> ReparationsArticlesSerialNumbers { get; set; }
         public DbSet<Bill> Bills { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<PaymentMethod> PaymentMethods { get; set; }

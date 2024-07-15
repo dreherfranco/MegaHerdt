@@ -13,17 +13,27 @@
             <p class="data-user"> Diagnostico: {{data.diagnostic}}</p>
 
             <p class="data-user" *ngIf="data.reparationsArticles.length > 0">Articulos:</p>
-            <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">&nbsp;&nbsp;&nbsp;&nbsp;{{reparationArticle.articleName}} x {{reparationArticle.articleQuantity}}</p>
+            <p class="data-user" *ngFor="let reparationArticle of data.reparationsArticles">
+                &nbsp;&nbsp;&nbsp;&nbsp;{{reparationArticle.articleName}} x {{reparationArticle.articleQuantity}}
+                <button class="btn link-custom"  
+                        (click)="showSerialNumbers(reparationArticle.serialNumbers)"  
+                        title="Ver numeros de serie">
+                    <i class="bi bi-eye-fill text-primary"></i>
+                </button>
+            </p>
             <p class="data-user"> Estado de la reparacion: {{data.reparationState.name}}</p>
             <p class="data-user" *ngIf="data.reparationState.name == 'EN PRESUPUESTO' || data.reparationState.name == 'EN REPARACION'">
                  Fecha estimada: {{data.approximateTime  | date: 'dd/MM/yyyy'}}
             </p>
-            <div *ngIf="data.bill.number !== ''">
+            <div *ngIf="data.bill.number !== '' && data.bill.number !== '00000000' ">
                 <h3><b>Factura</b></h3>
                 <p class="data-user"> Numero de factura: {{data.bill.number}}</p>
                 <p class="data-user"> Tipo de factura: {{data.bill.type}}</p>
                 <p class="data-user"> Cantidad de Pagos: {{data.bill.payments.length}}</p>
-                <p class="data-user"> Método de Pago: {{ getPaymentMethod(data.bill.payments[0].paymentMethod?.method)}}</p>
+                <p class="data-user">
+                    Método de Pago: {{ getPaymentMethod(data.bill?.payments?.[0]?.paymentMethod?.method) }}
+                  </p>
+
             </div>
             <h3><b>Montos</b></h3>
             <p class="data-user"> Monto mano de obra: {{data.amount}}</p>

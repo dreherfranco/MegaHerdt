@@ -46,5 +46,20 @@ namespace MegaHerdt.Repository.Base
             await this.Context.SaveChangesAsync();
         }
 
+        /// <summary>
+        /// Marca las entidades como modificadas, afectando al change tracker, no ejecuta el SaveChanges.
+        /// </summary>
+        /// <param name="entidad"></param>
+        public void SetModifiedState(T entidad)
+        {
+            this.Context.Entry(entidad).State = EntityState.Modified;
+            //await this.Context.SaveChangesAsync();
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            //this.Context.Entry(entidad).State = EntityState.Modified;
+            await this.Context.SaveChangesAsync();
+        }
     }
 }

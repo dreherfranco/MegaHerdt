@@ -10,11 +10,17 @@ namespace MegaHerdt.Helpers.Helpers
     public class ReparationHelper: BaseHelper<Reparation>
     {
         private readonly Repository<Article> _articleRepository;
+        private readonly Repository<ArticleProviderItem> articleProviderItemRepository;
+        private readonly Repository<ArticleProviderSerialNumber> articleProviderSerialNumberRepository;
 
-        public ReparationHelper(Repository<Reparation> repository, Repository<Article> _articleRepository) :
+        public ReparationHelper(Repository<Reparation> repository, Repository<Article> _articleRepository,
+                                Repository<ArticleProviderItem> articleProviderItemRepository,
+                                Repository<ArticleProviderSerialNumber> articleProviderSerialNumberRepository) :
             base(repository)
         {
             this._articleRepository = _articleRepository;
+            this.articleProviderItemRepository = articleProviderItemRepository;
+            this.articleProviderSerialNumberRepository = articleProviderSerialNumberRepository;
         }
 
         public override IQueryable<Reparation> Get(Expression<Func<Reparation, bool>> filter = null)
@@ -25,7 +31,9 @@ namespace MegaHerdt.Helpers.Helpers
                 .Include(x => x.ReparationState)
                 .Include(x => x.ReparationsClaims)
                 .Include(x => x.ReparationsArticles)
-                .ThenInclude(x => x.Article)
+                     .ThenInclude(x => x.Article)
+                .Include(x => x.ReparationsArticles)
+                    .ThenInclude(x => x.SerialNumbers)
                 .Include(x=>x.Bill)
                 .ThenInclude(x => x.Payments)
                 .ThenInclude(p => p.PaymentMethod)
@@ -34,7 +42,7 @@ namespace MegaHerdt.Helpers.Helpers
 
         public override async Task<Reparation> Create(Reparation entity)
         {
-            entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+            //entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
             return await this.repository.Add(entity);
         }
 
@@ -58,10 +66,17 @@ namespace MegaHerdt.Helpers.Helpers
                     ++entity.ReparationStateId;
                 }
 
+
                 // Si el estado de la reparación pasa a en presupuesto se actualizan el precio de los articulos.
                 if (entity.ReparationStateId == ReparationStatesValues.EN_PRESUPUESTO)
                 {
                     entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+
+                    foreach (var reparationArticle in entity.ReparationsArticles)
+                    {
+                        // Asignar numeros de serie a los articulos de la reparacion.
+                        await AssignSerialNumbers(reparationArticle);
+                    }
                 }
 
                 // Si el estado es Reparado se deben actualizar el stock de los articulos que se incluyeron en la reparación.
@@ -165,9 +180,26 @@ namespace MegaHerdt.Helpers.Helpers
         {
             if (!isFinalState(entity))
             {
-                entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+               // entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
                 --entity.ReparationStateId;
-                
+
+                // Si el estado de la reparación pasa a en presupuesto se actualizan el precio de los articulos.
+                if (entity.ReparationStateId == ReparationStatesValues.EN_REVISION)
+                {
+                    //entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+
+                    foreach (var reparationArticle in entity.ReparationsArticles)
+                    {
+                        // Asignar numeros de serie a los articulos de la reparacion.
+                        await RemoveSerialNumbers(reparationArticle);
+                    }
+                }
+
+                //if (entity.ReparationStateId == ReparationStatesValues.EN_PRESUPUESTO)
+                //{
+                //    entity.ReparationsArticles = this.SetArticlePriceAtTheMoment(entity);
+                //}
+
                 await this.repository.Update(entity);
             }
             else
@@ -212,5 +244,82 @@ namespace MegaHerdt.Helpers.Helpers
                 await this._articleRepository.Update(article);
             }
         }
+
+        #region Asignar/Remover Numeros de serie
+        /// <summary>
+        /// Asignar numeros de serie a la compra 
+        /// y actualizar ArticleProviderSerialNumber.EnStock = false
+        /// </summary>
+        /// <param name="reparationArticle"></param>
+        /// <returns></returns>
+        private async Task AssignSerialNumbers(ReparationArticle reparationArticle)
+        {
+
+            // Items de donde voy a obtener los numeros de serie
+            // Obtengo los numeros de serie que estan en stock solamente.
+            var articleProviderItemsSerialNumbers = articleProviderItemRepository.Get(i => i.ArticleId == reparationArticle.ArticleId)
+                                            .Include(i => i.SerialNumbers)
+                                            .SelectMany(i => i.SerialNumbers)
+                                            .Where(i => i.EnStock)
+                                            // Si tiene 3 articulos la reparacion solo tomo 3 numeros de serie
+                                            .Take(reparationArticle.ArticleQuantity)
+                                            .ToList();
+
+            var article = await _articleRepository.Get(a => a.Id == reparationArticle.ArticleId).SingleAsync();
+           
+            if (reparationArticle.ArticleQuantity > articleProviderItemsSerialNumbers.Count()) 
+            {
+                throw new Exception($"Se requieren {reparationArticle.ArticleQuantity} unidades del articulo '{article.Name}', pero solo hay {articleProviderItemsSerialNumbers.Count()} N° de serie cargados.");
+            }
+
+            foreach (var serialNumberData in articleProviderItemsSerialNumbers)
+            {
+                var reparationSerialNumber = new ReparationArticleSerialNumber(serialNumberData.SerialNumber);
+                // Agregar el numero de seria a los articulos de la reparacion
+                reparationArticle.SerialNumbers.Add(reparationSerialNumber);
+
+                // Actualizar el numero de serie correspondiente a la tabla ArticleProviderSerialNumber
+                serialNumberData.EnStock = false;
+                await articleProviderSerialNumberRepository.Update(serialNumberData);
+            }
+
+        }
+
+        /// <summary>
+        /// Remuevo los numeros de serie de ReparationArticle si vuelvo del estado 'En Presupuesto' a 'En Revision',
+        /// ya que, se deben asignar de nuevo los articulos para la reparación.
+        /// </summary>
+        /// <param name="reparationArticle"></param>
+        /// <returns></returns>
+        private async Task RemoveSerialNumbers(ReparationArticle reparationArticle)
+        {
+
+            // Items de donde voy a obtener los numeros de serie
+            // Obtengo los numeros de serie que estan en stock solamente.
+            var articleProviderItemsSerialNumbers = await articleProviderItemRepository.Get(i => i.ArticleId == reparationArticle.ArticleId)
+                                            .Include(i => i.SerialNumbers)
+                                            .SelectMany(i => i.SerialNumbers)
+                                            .Where(i => !i.EnStock)
+                                            //.AsNoTracking()
+                                            .ToListAsync();
+
+            foreach (var reparationArticleSerialNumber in reparationArticle.SerialNumbers)
+            {
+                foreach (var serialNumberData in articleProviderItemsSerialNumbers)
+                {
+
+                    if (serialNumberData.SerialNumber.Equals(reparationArticleSerialNumber.SerialNumber))
+                    {
+                        // Actualizar el numero de serie correspondiente a la tabla ArticleProviderSerialNumber
+                        serialNumberData.EnStock = true;
+                        articleProviderSerialNumberRepository.SetModifiedState(serialNumberData);
+                    }
+                }
+            }
+
+            // Dejo sin numeros de serie asignados al articulo de la reparación.
+            reparationArticle.SerialNumbers.Clear();
+        }
+        #endregion
     }
 }
