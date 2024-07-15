@@ -1,32 +1,100 @@
-<div class="card mb-3 card-container d-flex w-50 mx-auto">
-    <div class="container img-container" >
-      <img [src]="article.image" class="img-fluid article-image">
+<div class="container">
+  <nav>
+    <ol class="breadcrumb fs-6">
+      <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">
+        {{ article.name }}
+      </li>
+    </ol>
+  </nav>
+  <div class="row no-gutters">
+    <div class="col-8 h-100">
+      <div class="img-container h-100">
+        <img [src]="article.image" class="img-fluid article-image h-100" />
+      </div>
     </div>
-    <hr>
-    <div class="card-body">
-      <span *ngIf="isOnOffer(article)" class="bg-primary rounded text-white p-1">ARTICULO EN OFERTA</span>
-      <p *ngIf="!isOnOffer(article)" class="card-text data-user m-1 text-dark font-weight-bold">{{ formatoArgentino(article.unitValue)}}</p>
-      <div *ngIf="isOnOffer(article)" class="mx-1 my-2">
-        <span class="card-text data-offer text-dark font-weight-bold">{{formatoArgentino(article.unitValueWithOffer)}}</span>
-        <i class="bi bi-arrow-left p-2"></i>
-        <span class="card-text line-through text-danger">{{formatoArgentino(article.unitValue)}} </span>
+    <div class="col-4 p-0 mb-4">
+      <div class="row">
+        <div [title]="article.name" class="col-12">
+          <h1>{{ article.name | uppercase }}</h1>
+        </div>
+        <div class="col-12">
+          <p *ngIf="!isOnOffer(article)" class="data-user fw-bold fs-4">
+            {{ article.unitValue | argentineFormat }}
+          </p>
+          <span
+            *ngIf="isOnOffer(article)"
+            class="bg-primary rounded text-white p-1"
+            >ARTICULO EN OFERTA</span
+          >
+          <div *ngIf="isOnOffer(article)" class="mx-1 my-2">
+            <span class="data-user fw-bold fs-4">{{
+              article.unitValueWithOffer | argentineFormat
+            }}</span>
+            <i class="bi bi-arrow-left p-2"></i>
+            <span class="card-text line-through text-danger">{{
+              article.unitValue | argentineFormat
+            }}</span>
+          </div>
+        </div>
       </div>
-      <div [title]="article.name" class="card-article-container text-dark">
-        <span class="data-article" > {{article.name}}</span>
+      <div class="row container-description">
+        <div [title]="article.description" class="col-12 h-100">
+          <p>{{ article.description }}</p>
+        </div>
       </div>
-
-      <div [title]="article.description" class="card-article-container text-dark">
-        <span class="data-article" > {{article.description}}</span>
+      <div class="row">
+        <div
+          class="row align-content-center justify-content-center p-2 mx-auto"
+        >
+          <div class="col-4 offset-8 text-center">
+            <button
+              class="btn btn-sacar h-btn"
+              title="Sacar"
+              (click)="removeUnits()"
+            >
+              <i class="bi bi-dash-square-fill text-center m-auto"></i>
+            </button>
+            <div class="container-cant-article p-1 mx-auto text-center">
+              <strong class="cant-article data-user">{{ stockAdd }}</strong>
+            </div>
+            <button
+              class="btn btn-agregar h-btn"
+              title="Agregar"
+              (click)="addUnits()"
+            >
+              <i class="bi bi-plus-square-fill"></i>
+            </button>
+            <p class="p-1" [ngStyle]="getStyle()">
+              {{ article.stock }} Unid. disp
+            </p>
+          </div>
+        </div>
+        <div
+          class="btn-group col-12"
+          *ngIf="article.stock > 0"
+          role="group"
+          aria-label="acciones del carrito"
+        >
+          <button
+            class="btn btn-outline-primary btn-block"
+            data-bs-dismiss="offcanvas"
+            (click)="reservedPurchase()"
+          >
+            <i class="bi bi-alarm-fill"></i> Reservar
+          </button>
+          <button
+            class="btn-pos btn btn-outline-primary"
+            (click)="addToCart()"
+            *ngIf="article.stock > 0"
+          >
+            <i class="bi bi-cart-plus-fill"></i> Agregar al carrito
+          </button>
+        </div>
+        <span class="btn-pos btn btn-danger" *ngIf="article.stock == 0">
+          Sin stock
+        </span>
       </div>
-
-      <div class="stock-pos card-article-container text-dark">
-        <span class="data-article" [ngStyle]="getStyle()">{{article.stock}} unidades</span>
-      </div>
-      <button class="btn-pos btn btn-outline-primary" (click)="addToCart()" *ngIf="article.stock > 0">
-        <i class="bi bi-cart-plus-fill"></i> Agregar al carrito</button>
-      <span class="btn-pos btn btn-danger" *ngIf="article.stock == 0">
-        Sin stock
-      </span>       
     </div>
   </div>
-  
+</div>
