@@ -17,7 +17,7 @@ namespace MegaHerdt.Helpers.Helpers
             this.purchaseRepository = purchaseRepository;
         }
 
-        public List<IncomeExpenses> GetReparationsIncome(int year, int month, int day)
+        public List<IncomeExpenses> GetReparationsIncome(DateTime? startDate, DateTime? endDate)
         {
             var reparations = this.reparationRepository
                 .Get()
@@ -28,19 +28,18 @@ namespace MegaHerdt.Helpers.Helpers
                 .Include(x => x.Client)
                 .ToList();
 
-            if (month == 0 && day == 0)
+            if (startDate.HasValue && endDate.HasValue)
             {
-                return IncomeExpensesReparationsUtils.GetIncomeYearly(reparations, year);
-            }
-            else if(day == 0)
-            {
-                return IncomeExpensesReparationsUtils.GetIncomeMonthly(reparations, year, month);
+                return IncomeExpensesReparationsUtils.GetIncomeInRange(reparations, startDate.Value, endDate.Value);
             }
 
-            return IncomeExpensesReparationsUtils.GetIncomeDaily(reparations, year, month, day);
+            // Si no se proporcionan fechas, retorna ingresos del mes actual
+            var currentMonthStart = new DateTime(DateTime.UtcNow.Year, DateTime.UtcNow.Month, 1);
+            var currentMonthEnd = currentMonthStart.AddMonths(1).AddDays(-1);
+            return IncomeExpensesReparationsUtils.GetIncomeInRange(reparations, currentMonthStart, currentMonthEnd);
         }
 
-        public List<IncomeExpenses> GetPurchasesIncome(int year, int month, int day)
+        public List<IncomeExpenses> GetPurchasesIncome(DateTime? startDate, DateTime? endDate)
         {
             var purchases = this.purchaseRepository
                 .Get()
@@ -50,17 +49,9 @@ namespace MegaHerdt.Helpers.Helpers
                 .ThenInclude(x => x.Article)
                 .Include(x => x.Client)
                 .ToList();
-            
-            if (month == 0 && day == 0)
-            {
-                return IncomeExpensesPurchasesUtils.GetIncomeYearly(purchases, year);
-            }
-            else if (day == 0)
-            {
-                return IncomeExpensesPurchasesUtils.GetIncomeMonthly(purchases, year, month);
-            }
 
-            return IncomeExpensesPurchasesUtils.GetIncomeDaily(purchases, year, month, day);
+            // Filtrar por fechas
+            return IncomeExpensesPurchasesUtils.GetIncomeInRange(purchases, startDate, endDate);
         }
 
     }

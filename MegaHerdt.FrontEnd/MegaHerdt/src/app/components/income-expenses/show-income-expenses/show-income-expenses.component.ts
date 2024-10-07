@@ -1,11 +1,7 @@
-import { formatDate } from '@angular/common';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { IncomeExpenses } from 'src/app/models/IncomeExpenses/IncomeExpenses';
 import { IncomeExpensesService } from 'src/app/services/income-expenses/income-expenses.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { filter } from 'rxjs/operators';
 import { DetailsIncomeExpenses } from 'src/app/models/IncomeExpenses/DetailsIncomeExpenses';
 
 @Component({
@@ -14,64 +10,81 @@ import { DetailsIncomeExpenses } from 'src/app/models/IncomeExpenses/DetailsInco
   styleUrls: ['./show-income-expenses.component.css']
 })
 export class ShowIncomeExpensesComponent implements OnInit {
-  selectedDate: Date = new Date();
-  reparationsIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses;
-  purchasesIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses;
+  dateRangeForm!: FormGroup;
+  reparationsIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses();
+  purchasesIncomes: DetailsIncomeExpenses = new DetailsIncomeExpenses();
 
-  constructor(private _storageService: StorageService,private incExpServices: IncomeExpensesService) { }
+  constructor(private _storageService: StorageService, private incExpServices: IncomeExpensesService) 
+  {
+  }
 
   ngOnInit(): void {
-  }
-
-  showFormattedDate() {
-    const day = formatDate(this.selectedDate, 'd', 'en-US');
-    const month = formatDate(this.selectedDate, 'MMM', 'en-US');
-    const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
-
-    console.log(`Fecha formateada: ${day} de ${month} del ${year}`);
-  }
-
-  searchByDay(){
-    const day = parseInt(formatDate(this.selectedDate, 'd', 'en-US'));
-    const month = parseInt(formatDate(this.selectedDate, 'M', 'en-US'));
-    const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
+    this.dateRangeForm = new FormGroup({
+      start: new FormControl(new Date()),
+      end: new FormControl(new Date())
+    });
     
-    this.incExpServices.getReparationsIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
-      this.reparationsIncomes = result;
-    });
-
-    this.incExpServices.getPurchasesIncomes(this._storageService.getTokenValue(), year, month, day).subscribe(result => {
-       this.purchasesIncomes = result;
-    });
+    this.setToday();  // Inicializamos la vista con los datos de hoy.
   }
 
-  searchByMonth(){
-    const month = parseInt(formatDate(this.selectedDate, 'M', 'en-US'));
-    const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
-    
-    this.incExpServices.getReparationsIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
-          this.reparationsIncomes = result;
-    });
-    this.incExpServices.getPurchasesIncomes(this._storageService.getTokenValue(), year, month).subscribe(result => {
+  setToday() {
+    const today = new Date();
+    this.dateRangeForm.setValue({ start: today, end: today });
+    this.searchByRange();
+  }
+
+  setYesterday() {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    this.dateRangeForm.setValue({ start: yesterday, end: yesterday });
+    this.searchByRange();
+  }
+
+  setCurrentMonth() {
+    const start = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const end = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0);
+    this.dateRangeForm.setValue({ start, end });
+    this.searchByRange();
+  }
+
+  setPreviousMonth() {
+    const start = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
+    const end = new Date(new Date().getFullYear(), new Date().getMonth(), 0);
+    this.dateRangeForm.setValue({ start, end });
+    this.searchByRange();
+  }
+
+  filterByThisYear() {
+    const currentYear = new Date().getFullYear();
+    const start = new Date(currentYear, 0, 1); // 1 de enero del año actual
+    const end = new Date(currentYear + 1, 0, 1); // 1 de enero del año siguiente
+    this.dateRangeForm.setValue({ start, end });
+
+    this.searchByRange();
+  }
+  
+  filterByLastYear() {
+    const lastYear = new Date().getFullYear() - 1;
+    const start = new Date(lastYear, 0, 1); // 1 de enero del año pasado
+    const end = new Date(lastYear + 1, 0, 1); // 1 de enero del año siguiente
+    this.dateRangeForm.setValue({ start, end });
+
+    this.searchByRange();
+  }
+
+  searchByRange() {
+    const startDate = this.dateRangeForm.value.start;
+    const endDate = this.dateRangeForm.value.end;
+
+     // Hacer la búsqueda de ingresos y egresos en el rango
+    this.incExpServices.getReparationsIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
+                        .subscribe(result => {
+                          this.reparationsIncomes = result;
+                        });
+
+    this.incExpServices.getPurchasesIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
+    .subscribe(result => {
       this.purchasesIncomes = result;
     });
-  }
-
-  searchByYear(){
-    const year = parseInt(formatDate(this.selectedDate, 'y', 'en-US'));
-
-    this.incExpServices.getReparationsIncomes(this._storageService.getTokenValue(), year)
-    .subscribe(
-      result => {
-             this.reparationsIncomes = result;
-      }
-    );
-
-    this.incExpServices.getPurchasesIncomes(this._storageService.getTokenValue(), year)
-    .subscribe(
-      result => {
-             this.purchasesIncomes = result;
-      }
-    );
   }
 }

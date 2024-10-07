@@ -152,6 +152,8 @@ import { ProvisionStockDiscountedGridComponent } from './components/articles-pro
 import { ArticleDetailComponent } from './components/articles/article-detail/article-detail.component';
 import { DialogAddReparationArticlesComponent } from './components/reparations/edit-reparations/reparation-state-en-revision/dialog-add-reparation-articles/dialog-add-reparation-articles.component';
 import { BackupRestoreComponent } from './components/backup/backup-restore/backup-restore.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -308,7 +310,9 @@ import { BackupRestoreComponent } from './components/backup/backup-restore/backu
     PopoverModule.forRoot(),
     MatTooltipModule,
     MatCardModule,
+    MatDatepickerModule,
     MatProgressSpinnerModule,
+    MatInputModule,
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
     BsDatepickerModule.forRoot()
   ],

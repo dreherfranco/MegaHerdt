@@ -18,40 +18,43 @@ namespace MegaHerdt.API.Controllers
             this.mapper = mapper;
         }
 
-        [HttpGet("get-reparations-income/{year}/{month?}/{day?}")]
-        public IActionResult GetReparationsIncome(int year=0, int month=0, int day=0)
+        [HttpGet("get-reparations-income/{startDate}/{endDate}")]
+        public IActionResult GetReparationsIncome(DateTime? startDate = null, DateTime? endDate = null)
         {
             try
             {
-                var incomesExpenses = this.incomeExpensesService.GetReparationsIncome(year, month, day);
-                var total = this.incomeExpensesService.GetTotalIncomeExpenses(incomesExpenses);
-                var detailIncomeExpenses = new DetailsIncomeExpensesDTO { Total = total };
-                
-                detailIncomeExpenses.IncomeExpenses = this.mapper.Map<List<IncomeExpensesDTO>>(incomesExpenses);
-                
-                return Ok( detailIncomeExpenses );
-            }catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [HttpGet("get-purchases-income/{year}/{month?}/{day?}")]
-        public IActionResult GetPurchasesIncome(int year = 0, int month = 0, int day = 0)
-        {
-            try
-            {
-                var incomesExpenses = this.incomeExpensesService.GetPurchasesIncome(year, month, day);
+                var incomesExpenses = this.incomeExpensesService.GetReparationsIncome(startDate, endDate);
                 var total = this.incomeExpensesService.GetTotalIncomeExpenses(incomesExpenses);
                 var detailIncomeExpenses = new DetailsIncomeExpensesDTO { Total = total };
 
                 detailIncomeExpenses.IncomeExpenses = this.mapper.Map<List<IncomeExpensesDTO>>(incomesExpenses);
-                return Ok( detailIncomeExpenses );
+
+                return Ok(detailIncomeExpenses);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("get-purchases-income/{startDate}/{endDate}")]
+        public IActionResult GetPurchasesIncome(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            try
+            {
+                var incomesExpenses = this.incomeExpensesService.GetPurchasesIncome(startDate, endDate);
+                var total = this.incomeExpensesService.GetTotalIncomeExpenses(incomesExpenses);
+                var detailIncomeExpenses = new DetailsIncomeExpensesDTO { Total = total };
+
+                detailIncomeExpenses.IncomeExpenses = this.mapper.Map<List<IncomeExpensesDTO>>(incomesExpenses);
+                return Ok(detailIncomeExpenses);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
     }
 }

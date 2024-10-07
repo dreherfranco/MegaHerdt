@@ -1,30 +1,40 @@
-
-<h1>LLEVAR ESTA VISTA A INFORMES</h1>
-
 <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <div class="card">
-          <div class="card-body">
-            <div class="form-group mb-3">
-              <label for="date"><b>(*)Fecha: </b></label>
-              <div class="input-group">
-                <input id="date" name="date" class="form-control" [(ngModel)]="selectedDate" type="date" required>
-              </div>
+  <div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+      <div class="card">
+        <div class="card-body">
+          <div class="form-group mb-3">
+            <label for="dateRange"><b>(*) Fecha: </b></label>
+            <div class="input-group">
+              <!-- Date Range Picker -->
+              <mat-form-field class="full-width">
+                <mat-label>Seleccionar rango de fechas</mat-label>
+                <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
+                  <input matStartDate formControlName="start" placeholder="Fecha inicio">
+                  <input matEndDate formControlName="end" placeholder="Fecha fin">
+                </mat-date-range-input>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-date-range-picker #picker></mat-date-range-picker>
+              </mat-form-field>
+              
             </div>
-            <div class="text-center">
-              <div class="btn-group">
-                <button class="btn btn-primary me-2" (click)="searchByDay()"><i class="bi bi-calendar-date-fill me-1"></i>Buscar por día</button>
-                <button class="btn btn-primary me-2" (click)="searchByMonth()"><i class="bi bi-calendar2-month-fill me-1"></i>Buscar por mes</button>
-                <button class="btn btn-primary" (click)="searchByYear()"><i class="bi bi-calendar3-range-fill me-1"></i>Buscar por año</button>
-              </div>
+          </div>
+          <div class="text-center">
+            <div class="btn-group">
+              <button class="btn btn-primary me-2" (click)="setToday()">Hoy</button>
+              <button class="btn btn-primary me-2" (click)="setYesterday()">Ayer</button>
+              <button class="btn btn-primary me-2" (click)="setCurrentMonth()">Mes actual</button>
+              <button class="btn btn-primary me-2" (click)="setPreviousMonth()">Mes anterior</button>
+              <button class="btn btn-primary me-2" (click)="filterByLastYear()">Año Pasado</button>
+              <button class="btn btn-primary me-2" (click)="filterByThisYear()">Este Año</button>
+              <button class="btn btn-primary" (click)="searchByRange()">Buscar</button>  
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-
+</div>
 
 <div class="d-flex flex-row p-3">
 

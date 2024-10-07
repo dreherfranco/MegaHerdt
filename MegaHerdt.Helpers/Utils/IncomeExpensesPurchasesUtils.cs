@@ -4,46 +4,10 @@ using MegaHerdt.Helpers.Utils.ExtensionMethods;
 
 namespace MegaHerdt.Helpers.Utils
 {
+
     public static class IncomeExpensesPurchasesUtils
     {
-        public static List<IncomeExpenses> GetIncomeYearly(List<Purchase> purchases, int year)
-        {
-            var listIncomeExpenses = new List<IncomeExpenses>();
-
-            foreach (var purchase in purchases)
-            {
-                var band = true;
-                var incomeExpenses = new IncomeExpenses();
-                if (purchase.Bill != null && purchase.Bill.Payments.Count != 0)
-                {
-                    foreach (var payment in purchase.Bill.Payments)
-                    {
-                        var actualMonth = DateTime.UtcNow.Month;
-                        if (payment.PaymentDate.Year == year && payment.PaymentDate.Month <= actualMonth)
-                        {
-                            if (band)
-                            {
-                                incomeExpenses.SetArticles(purchase);
-                                incomeExpenses.SetClientDetails(purchase);
-                            }
-                            band = false;
-                            incomeExpenses.PaymentsMade++;
-                            incomeExpenses.TotalIncomePaidByReparation += payment.Amount;
-
-                        }
-                    }
-                    if (!band)
-                    {
-                        incomeExpenses.TotalPayments = purchase.Bill.Payments.Count;
-                        listIncomeExpenses.Add(incomeExpenses);
-                    }
-
-                }
-            }
-            return listIncomeExpenses;
-        }
-
-        public static List<IncomeExpenses> GetIncomeMonthly(List<Purchase> purchases, int year, int month)
+        public static List<IncomeExpenses> GetIncomeInRange(List<Purchase> purchases, DateTime? startDate, DateTime? endDate)
         {
             var listIncomeExpenses = new List<IncomeExpenses>();
 
@@ -56,8 +20,8 @@ namespace MegaHerdt.Helpers.Utils
                 {
                     foreach (var payment in purchase.Bill.Payments)
                     {
-                        var actualMonth = DateTime.UtcNow.Month;
-                        if (payment.PaymentDate.Year == year && payment.PaymentDate.Month == month)
+                        // Verificar si la fecha del pago está dentro del rango
+                        if (IsPaymentInRange(payment.PaymentDate, startDate, endDate))
                         {
                             if (band)
                             {
@@ -80,40 +44,19 @@ namespace MegaHerdt.Helpers.Utils
             return listIncomeExpenses;
         }
 
-        public static List<IncomeExpenses> GetIncomeDaily(List<Purchase> purchases, int year, int month, int day)
+        // Método auxiliar para verificar si el pago está dentro del rango de fechas
+        private static bool IsPaymentInRange(DateTime paymentDate, DateTime? startDate, DateTime? endDate)
         {
-            var listIncomeExpenses = new List<IncomeExpenses>();
-
-            foreach (var purchase in purchases)
+            if (startDate.HasValue && paymentDate < startDate.Value)
             {
-                var incomeExpenses = new IncomeExpenses();
-                var band = true;
-
-                if (purchase.Bill != null && purchase.Bill.Payments.Count != 0)
-                {
-                    foreach (var payment in purchase.Bill.Payments)
-                    {
-                        var actualMonth = DateTime.UtcNow.Month;
-                        if (payment.PaymentDate.Year == year && payment.PaymentDate.Month == month && payment.PaymentDate.Day == day)
-                        {
-                            if (band)
-                            {
-                                incomeExpenses.SetArticles(purchase);
-                                incomeExpenses.SetClientDetails(purchase);
-                            }
-                            band = false;
-                            incomeExpenses.PaymentsMade++;
-                            incomeExpenses.TotalIncomePaidByReparation += payment.Amount;
-                        }
-                    }
-                    if (!band)
-                    {
-                        incomeExpenses.TotalPayments = purchase.Bill.Payments.Count;
-                        listIncomeExpenses.Add(incomeExpenses);
-                    }
-                }
+                return false;
             }
-            return listIncomeExpenses;
+            if (endDate.HasValue && paymentDate > endDate.Value)
+            {
+                return false;
+            }
+            return true;
         }
     }
+
 }
