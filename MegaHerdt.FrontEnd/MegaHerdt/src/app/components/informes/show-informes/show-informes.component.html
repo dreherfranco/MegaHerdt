@@ -1,37 +1,56 @@
-<mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" opened>
-      <mat-nav-list>
-        <!-- Opción para seleccionar REPARACIONES -->
-        <mat-list-item (click)="selectReport(ReportTypeEnum.Reparaciones)">REPARACIONES</mat-list-item>
-        <!-- Opción para seleccionar otro informe -->
-        <mat-list-item (click)="selectReport(ReportTypeEnum.Informe2)">Informe 2</mat-list-item>
-        <mat-list-item (click)="selectReport(ReportTypeEnum.Informe3)">Informe 3</mat-list-item>
-      </mat-nav-list>
-    </mat-sidenav>
-  
-    <mat-sidenav-content>
-      <div class="content">
-  
-        <!-- BUSCADOR POR FECHA -->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-3 h-100">
+      <div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
         <ng-container matColumnDef="searcher">
           <app-date-range-search (dateRangeSelected)="onDateRangeSelected($event)"></app-date-range-search>
+        </ng-container>        
+        <hr>
+        <ul class="nav nav-pills flex-column mb-auto text-center mx-2">
+          <li class="nav-item">
+            <button 
+              (click)="selectReport(ReportTypeEnum.Ventas)" 
+              [class.active]="selectedReport === ReportTypeEnum.Ventas" 
+              class="nav-link w-100" 
+              aria-current="page">
+              Ventas
+            </button>
+          </li>
+          <li class="nav-item">
+            <button 
+              (click)="selectReport(ReportTypeEnum.Reparaciones)" 
+              [class.active]="selectedReport === ReportTypeEnum.Reparaciones" 
+              class="nav-link w-100">
+              Reparaciones
+            </button>
+          </li>
+          <li class="nav-item">
+            <button 
+              (click)="selectReport(ReportTypeEnum.Clientes)" 
+              [class.active]="selectedReport === ReportTypeEnum.Clientes"
+              class="nav-link w-100">
+              Clientes
+            </button>
+          </li>    
+        </ul>
+        <hr>  
+      </div>
+    </div>
+    <div class="col-9 border-2">
+        <!-- Mostrar el componente de REPARACIONES si está seleccionado -->
+        <ng-container *ngIf="selectedReport === ReportTypeEnum.Ventas" class="h-100">
+          <app-show-income-expenses [enumType]="'ventas'" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
         </ng-container>
     
-        <!-- Mostrar el componente de REPARACIONES si está seleccionado -->
-        <ng-container *ngIf="selectedReport === ReportTypeEnum.Reparaciones">
-          <app-show-income-expenses [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
-        </ng-container>
-  
         <!-- Otro componente para Informe 2 -->
-        <ng-container *ngIf="selectedReport === ReportTypeEnum.Informe2">
-          COMPONENTE 2
+        <ng-container *ngIf="selectedReport === ReportTypeEnum.Reparaciones">
+          <app-show-income-expenses [enumType]="'reparaciones'" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
         </ng-container>
-  
+    
         <!-- Otro componente para Informe 3 -->
-        <ng-container *ngIf="selectedReport === ReportTypeEnum.Informe3">
-          COMPONENTE 3
+        <ng-container *ngIf="selectedReport === ReportTypeEnum.Clientes">
+          <app-show-income-expenses [enumType]="'clientes'" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
         </ng-container>
-  
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </div>
+  </div>
+</div>

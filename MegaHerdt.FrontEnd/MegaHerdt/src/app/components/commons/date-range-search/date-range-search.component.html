@@ -1,25 +1,38 @@
-<div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
+<div class="container-fluid">
+    <div class="row justify-content-center align-content-center">
+      <div class="col">
         <div class="card">
           <div class="card-body">
-            <div class="form-group mb-3">
+            <div class="form-group">
               <label for="dateRange"><b>(*) Fecha: </b></label>
               <div class="input-group">
                 <!-- Date Range Picker -->
-                <mat-form-field class="full-width">
+                <mat-form-field>
                   <mat-label>Seleccionar rango de fechas</mat-label>
                   <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
                     <input matStartDate formControlName="start" placeholder="Fecha inicio">
                     <input matEndDate formControlName="end" placeholder="Fecha fin">
                   </mat-date-range-input>
                   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-date-range-picker #picker></mat-date-range-picker>
-                </mat-form-field>
-                
+                  <mat-date-range-picker #picker (openedChange)="onPickerOpened()"></mat-date-range-picker>
+                </mat-form-field>                               
               </div>
             </div>
-            <div class="text-center">
+            <div class="dropdown">
+              <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-funnel-fill"><strong> Filtros rapidos</strong></i>
+              </a>
+              <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
+                <li><button class="dropdown-item" (click)="setToday()">Hoy</button></li>
+                <li><button class="dropdown-item" (click)="setYesterday()">Ayer</button></li>
+                <li><button class="dropdown-item" (click)="setCurrentMonth()">Este Mes</button></li>
+                <li><button class="dropdown-item" (click)="setPreviousMonth()">Mes Anterior</button></li>
+                <li><button class="dropdown-item" (click)="filterByThisYear()">Este Año</button></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item" (click)="filterByLastYear()">Año Pasado</button></li>
+              </ul>
+            </div>
+            <!-- <div class="text-center">
               <div class="btn-group">
                 <button class="btn btn-primary me-2" (click)="setToday()">Hoy</button>
                 <button class="btn btn-primary me-2" (click)="setYesterday()">Ayer</button>
@@ -27,9 +40,9 @@
                 <button class="btn btn-primary me-2" (click)="setPreviousMonth()">Mes anterior</button>
                 <button class="btn btn-primary me-2" (click)="filterByLastYear()">Año Pasado</button>
                 <button class="btn btn-primary me-2" (click)="filterByThisYear()">Este Año</button>
-                <!-- <button class="btn btn-primary" (click)="searchByRange()">Buscar</button>   -->
+                <button class="btn btn-primary" (click)="searchByRange()">Buscar</button>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

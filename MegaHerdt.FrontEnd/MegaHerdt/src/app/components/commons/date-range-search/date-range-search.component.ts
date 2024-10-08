@@ -12,16 +12,38 @@ export class DateRangeSearchComponent implements OnInit {
  // @Output para emitir las fechas seleccionadas al componente padre
  @Output() dateRangeSelected = new EventEmitter<{ startDate: Date, endDate: Date }>();
 
-  constructor() { }
+ constructor() {
+  this.dateRangeForm = new FormGroup({
+    start: new FormControl(),
+    end: new FormControl()
+  });
+}
 
-  ngOnInit(): void {
-    this.dateRangeForm = new FormGroup({
-      start: new FormControl(new Date()),
-      end: new FormControl(new Date())
-    });
-    
-    this.setToday();  // Inicializamos la vista con los datos de hoy.
-  }
+ngOnInit(): void {
+  this.setToday();
+  // Suscribirse a cambios en el formulario
+  this.dateRangeForm.get('start')?.valueChanges.subscribe(value => {
+    this.onDateChange();
+  });
+
+  this.dateRangeForm.get('end')?.valueChanges.subscribe(value => {
+    this.onDateChange();
+  });  
+}
+
+onPickerOpened(): void {
+  // Limpiar el formulario
+  this.dateRangeForm.reset();
+}
+
+
+onDateChange(): void {// Manejar las fechas
+  const startDate = this.dateRangeForm.get('start')?.value;
+  const endDate = this.dateRangeForm.get('end')?.value;
+
+  // Solo ejecuta la lógica si ambos campos tienen valor
+  if (startDate && endDate) this.dateRangeSelected.emit({ startDate: startDate, endDate: endDate });
+} 
 
   setToday() {
     const today = new Date();

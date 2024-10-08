@@ -1,7 +1,7 @@
 <div *ngIf="purchasesIncomes.incomeExpenses.length > 0; else noData">
-  <div class="d-flex">
-    <h2 class="mx-auto"><b>INGRESOS DE VENTA DE ARTÍCULOS -> total: {{ purchasesIncomes.total }}</b></h2>
-  </div>
+  <h1 class="text-center">
+    <strong>INGRESOS DE VENTA DE ARTÍCULOS</strong>
+  </h1>
   <div class="table-responsive text-center mx-auto">
     <table class="table">
       <thead>
@@ -45,6 +45,14 @@
           </td>
         </tr>
       </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="7" class="text-end">
+            <strong class="fs-6">Total de ingresos: {{ purchasesIncomes.total }}</strong>
+          </td>
+        </tr>        
+      </tfoot>
+      
     </table>
     <pagination-controls
       class="text-center data-user"

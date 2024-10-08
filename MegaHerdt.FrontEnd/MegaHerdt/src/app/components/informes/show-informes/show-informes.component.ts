@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 export enum ReportType {
+  Ventas = 'ventas',
   Reparaciones = 'reparaciones',
-  Informe2 = 'informe2',
-  Informe3 = 'informe3'
+  Clientes = 'clientes',
 }
 
 @Component({
@@ -31,7 +31,7 @@ export class ShowInformesComponent implements OnInit {
   }
 
    // Método para manejar el evento emitido
-   onDateRangeSelected(range: { startDate: Date, endDate: Date }) {
+  onDateRangeSelected(range: { startDate: Date, endDate: Date }) {
     this.startDate = range.startDate;
     this.endDate = range.endDate;
     

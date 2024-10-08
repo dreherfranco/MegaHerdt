@@ -15,39 +15,40 @@ export class ShowIncomeExpensesComponent implements OnInit, OnChanges {
 
   @Input() startDate!: Date;
   @Input() endDate!: Date;
+  @Input() enumType!: string;
 
   constructor(private _storageService: StorageService, private incExpServices: IncomeExpensesService) 
   {
   }
-
   ngOnInit(): void {
-
-    
   }
 
   // Detecta cambios en los inputs de fechas
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['startDate'] || changes['endDate']) {
       // Ejecuta la búsqueda cuando cambien las fechas.
+      console.log("llego");
       this.searchByRange();
     }
   }
   
-
-
   searchByRange() {
     const startDate = this.startDate;
     const endDate = this.endDate;
 
-     // Hacer la búsqueda de ingresos y egresos en el rango
-    this.incExpServices.getReparationsIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
-                        .subscribe(result => {
-                          this.reparationsIncomes = result;
-                        });
-
-    this.incExpServices.getPurchasesIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
-    .subscribe(result => {
-      this.purchasesIncomes = result;
-    });
+    switch (this.enumType) {
+      case 'ventas':
+        this.incExpServices.getPurchasesIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
+          .subscribe(result => {
+            this.purchasesIncomes = result;
+        });
+        break;
+      case 'reparaciones':
+        this.incExpServices.getReparationsIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
+          .subscribe(result => {
+            this.reparationsIncomes = result;
+        });
+        break;
+    }
   }
 }
