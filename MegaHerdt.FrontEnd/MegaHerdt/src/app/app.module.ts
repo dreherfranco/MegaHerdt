@@ -14,6 +14,9 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {MatCardModule} from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTableModule } from '@angular/material/table';
+import { MatListModule } from '@angular/material/list';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -154,6 +157,8 @@ import { DialogAddReparationArticlesComponent } from './components/reparations/e
 import { BackupRestoreComponent } from './components/backup/backup-restore/backup-restore.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
+import { ShowInformesComponent } from './components/informes/show-informes/show-informes.component';
+import { DateRangeSearchComponent } from './components/commons/date-range-search/date-range-search.component';
 
 @NgModule({
   declarations: [
@@ -285,12 +290,15 @@ import { MatInputModule } from '@angular/material/input';
     ProvisionStockDiscountedGridComponent,
     ArticleDetailComponent,
     DialogAddReparationArticlesComponent,
-    BackupRestoreComponent
+    BackupRestoreComponent,
+    ShowInformesComponent,
+    DateRangeSearchComponent
   ],
   imports: [
     MatSnackBarModule,
     BrowserModule,
     AppRoutingModule,
+    MatTableModule,
     HttpClientModule,
     NgxPaginationModule,
     ReactiveFormsModule,
@@ -303,6 +311,7 @@ import { MatInputModule } from '@angular/material/input';
     ColorPickerModule,
     NgChartsModule,
     MatSortModule,
+    MatListModule,
     MatAutocompleteModule,
     MatFormFieldModule,
     MatNativeDateModule,
@@ -313,6 +322,8 @@ import { MatInputModule } from '@angular/material/input';
     MatDatepickerModule,
     MatProgressSpinnerModule,
     MatInputModule,
+    MatSidenavModule,
+
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
     BsDatepickerModule.forRoot()
   ],

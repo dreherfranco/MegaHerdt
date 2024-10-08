@@ -48,6 +48,7 @@ import { CreateArticleProvisionComponent } from './components/articles-provision
 import { ShowStatisticsComponent } from './components/statistics/show-statistics/show-statistics.component';
 import { ProvisionStockDiscountedGridComponent } from './components/articles-provisions/provision-stock-discounted-grid/provision-stock-discounted-grid.component';
 import { ArticleDetailComponent } from './components/articles/article-detail/article-detail.component';
+import { ShowInformesComponent } from './components/informes/show-informes/show-informes.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, data: { type: 'default' } },
@@ -162,8 +163,12 @@ const routes: Routes = [
     path: 'administrate/show-debtors', component: ShowDebtorsComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
+  // { 
+  //   path: 'administrate/show-income-expenses', component: ShowIncomeExpensesComponent, canActivate: [AuthGuard, RoleGuard], 
+  //     data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
+  // },
   { 
-    path: 'administrate/show-income-expenses', component: ShowIncomeExpensesComponent, canActivate: [AuthGuard, RoleGuard], 
+    path: 'administrate/show-information', component: ShowInformesComponent, canActivate: [AuthGuard, RoleGuard], 
       data: { expectedsRoles: [ Role.ADMIN, Role.EMPLEADO ] }  
   },
   { 

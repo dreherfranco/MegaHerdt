@@ -1,6 +1,4 @@
--Agregarle los impuestos a los pagos
--Mejorar la vista de purchase-success.component y purchase-failed.component
--Ver como agregar envios a las compras
-
-
--Agregar funcionalidad de pagos a las reparaciones
+INFORMES:
+-agregar cantidad de clientes activos
+-cantidad de articulos vendidos
+-cantidad de reparaciones realizadas
