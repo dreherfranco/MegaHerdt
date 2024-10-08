@@ -118,5 +118,11 @@ namespace MegaHerdt.Services.Services
             var twoMonthsInDays = 60;
             return differenceDate.Days < twoMonthsInDays;
         }
+
+        public async Task<List<User>> GetUsersWithPurchasesAndReparations(DateTime? startDate, DateTime? endDate)
+        {
+            return await AuthHelper.GetUsersWithPurchasesAndReparations(startDate, endDate);
+
+        }
     }
 }

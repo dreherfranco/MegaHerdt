@@ -1,0 +1,72 @@
+<div class="container-fluid">
+    <div class="user-search-container p-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="input-group search-box w-50">
+          <div class="input-group-prepend">
+            <span class="input-group-text search-icon"><i class="bi bi-search"></i></span>
+          </div>
+          <input class="form-control form-control-sm search-input" type="text" [(ngModel)]="searchText" placeholder="Buscar usuarios">
+        </div>
+
+      </div>
+    </div>
+    <div class="table-responsive m-1 mb-0 mx-auto">
+      <table matSort (matSortChange)="sortData($event)" class="table">
+        <tr>
+          <th mat-sort-header="name" class="font-weight-normal text-center">NOMBRE</th>
+          <th mat-sort-header="surname" class="font-weight-normal text-center">APELLIDO</th>
+          <th mat-sort-header="dni" class="font-weight-normal text-center">DNI</th>
+          <th mat-sort-header="lastLogin" class="font-weight-normal text-center">ÚLTIMO ACCESO</th>
+          <th mat-sort-header="purchasesCount" class="font-weight-normal text-center">COMPRAS</th>
+          <th mat-sort-header="reparationsCount" class="font-weight-normal text-center">REPARACIONES</th>
+        </tr>
+        <tbody>
+          <tr *ngFor="let user of users | filter: searchText 
+          | paginate: 
+          {
+              itemsPerPage: this.paginate.recordsPerPage, 
+              currentPage:this.paginate.page
+          }; let i = index">
+            <td>
+              <span class="data-user">{{user.name}} </span>
+            </td>
+            <td>
+              <span class="data-user">{{user.surname}}</span>
+            </td>
+            <td>
+              <span class="data-user">{{user.dni}}</span>
+            </td>
+            <td>
+              <span class="data-user">{{user.lastLogin | date: 'dd/MM/yyyy'}}</span>
+            </td>
+            <td  class="text-center">
+                <span class="data-user">{{user.purchasesCount}}</span>
+            </td>
+            <td class="text-center">
+             <span class="data-user">{{user.reparationsCount}}</span>
+            </td>
+          </tr>
+        </tbody>
+         <!-- Footer con totales -->
+        <tfoot>
+            <tr>
+            <td colspan="4" class="font-weight-bold">Totales:</td>
+            <td class="text-center">{{totalPurchases}}</td>
+            <td class="text-center">{{totalReparations}}</td>
+            </tr>
+        </tfoot>
+      </table>
+    </div>
+  
+    <!-- <div class="row mt-0">
+      <div class="col-md-4" *ngFor="let user of sortedData | filter: searchText | paginate: { itemsPerPage: paginate.recordsPerPage, currentPage:paginate.page }">
+        <app-user-detail-administrate [user]="user"></app-user-detail-administrate>
+      </div> -->
+  
+      <pagination-controls class="text-center" (pageChange)="this.paginate.page = $event" previousLabel="Anterior" nextLabel="Siguiente">
+      </pagination-controls>
+  
+    <!-- </div> -->
+  
+  </div>
+  

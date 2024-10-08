@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
 export enum ReportType {
-  Ventas = 'ventas',
-  Reparaciones = 'reparaciones',
-  Clientes = 'clientes',
+  IngresosVentas = 'IngresosVentas',
+  IngresosReparaciones = 'IngresosReparaciones',
+  Clientes = 'Clientes',
 }
 
 @Component({
@@ -15,7 +15,7 @@ export enum ReportType {
 
 export class ShowInformesComponent implements OnInit {
     // Control de informe seleccionado
-    selectedReport: ReportType = ReportType.Reparaciones; // 'reparaciones' se muestra por defecto.
+    selectedReport: ReportType = ReportType.IngresosReparaciones; // 'reparaciones' se muestra por defecto.
     ReportTypeEnum = ReportType;
 
   constructor() { }

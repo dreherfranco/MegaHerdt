@@ -69,5 +69,11 @@ export class UserService {
     let params = JSON.stringify(user);
     return this._http.post(this.url + "/forget-password", params, { headers: this.headers });
   }
+
+  getTopUsersByPurchase(token: string, startDate?: Date, endDate?: Date): Observable<any>{
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(`${this.url}/get-users-by-purchase/${startDate ? startDate.toISOString() : ''}/${endDate ? endDate.toISOString() : ''}`, 
+                          { headers: this.headers });
+  }
 }
 

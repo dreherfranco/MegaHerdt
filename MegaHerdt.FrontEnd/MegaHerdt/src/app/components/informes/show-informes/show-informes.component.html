@@ -9,19 +9,19 @@
         <ul class="nav nav-pills flex-column mb-auto text-center mx-2">
           <li class="nav-item">
             <button 
-              (click)="selectReport(ReportTypeEnum.Ventas)" 
-              [class.active]="selectedReport === ReportTypeEnum.Ventas" 
+              (click)="selectReport(ReportTypeEnum.IngresosVentas)" 
+              [class.active]="selectedReport === ReportTypeEnum.IngresosVentas" 
               class="nav-link w-100" 
               aria-current="page">
-              Ventas
+              Ingresos Ventas
             </button>
           </li>
           <li class="nav-item">
             <button 
-              (click)="selectReport(ReportTypeEnum.Reparaciones)" 
-              [class.active]="selectedReport === ReportTypeEnum.Reparaciones" 
+              (click)="selectReport(ReportTypeEnum.IngresosReparaciones)" 
+              [class.active]="selectedReport === ReportTypeEnum.IngresosReparaciones" 
               class="nav-link w-100">
-              Reparaciones
+              Ingresos Reparaciones
             </button>
           </li>
           <li class="nav-item">
@@ -38,18 +38,18 @@
     </div>
     <div class="col-9 border-2">
         <!-- Mostrar el componente de REPARACIONES si está seleccionado -->
-        <ng-container *ngIf="selectedReport === ReportTypeEnum.Ventas" class="h-100">
-          <app-show-income-expenses [enumType]="'ventas'" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
+        <ng-container *ngIf="selectedReport === ReportTypeEnum.IngresosVentas" class="h-100">
+          <app-show-income-expenses [enumType]="ReportTypeEnum.IngresosVentas" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
         </ng-container>
     
         <!-- Otro componente para Informe 2 -->
-        <ng-container *ngIf="selectedReport === ReportTypeEnum.Reparaciones">
-          <app-show-income-expenses [enumType]="'reparaciones'" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
+        <ng-container *ngIf="selectedReport === ReportTypeEnum.IngresosReparaciones">
+          <app-show-income-expenses [enumType]="ReportTypeEnum.IngresosReparaciones" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
         </ng-container>
     
         <!-- Otro componente para Informe 3 -->
         <ng-container *ngIf="selectedReport === ReportTypeEnum.Clientes">
-          <app-show-income-expenses [enumType]="'clientes'" [startDate]="startDate" [endDate]="endDate"></app-show-income-expenses>
+          <app-user-purchases-information [startDate]="startDate" [endDate]="endDate"></app-user-purchases-information>
         </ng-container>
     </div>
   </div>

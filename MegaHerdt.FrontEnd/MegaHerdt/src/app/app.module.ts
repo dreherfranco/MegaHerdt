@@ -159,6 +159,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { ShowInformesComponent } from './components/informes/show-informes/show-informes.component';
 import { DateRangeSearchComponent } from './components/commons/date-range-search/date-range-search.component';
+import { UserPurchasesInformationComponent } from './components/users/user-purchases-information/user-purchases-information.component';
 
 @NgModule({
   declarations: [
@@ -292,7 +293,8 @@ import { DateRangeSearchComponent } from './components/commons/date-range-search
     DialogAddReparationArticlesComponent,
     BackupRestoreComponent,
     ShowInformesComponent,
-    DateRangeSearchComponent
+    DateRangeSearchComponent,
+    UserPurchasesInformationComponent
   ],
   imports: [
     MatSnackBarModule,

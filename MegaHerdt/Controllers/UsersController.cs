@@ -272,5 +272,32 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+
+        #region Informes
+        [HttpGet("get-users-by-purchase/{startDate}/{endDate}")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [AuthorizeRoles(Role.Admin, Role.Empleado)]
+        public async Task<ActionResult<List<UserDetailDTO>>> GetTopUsersByPurchase(DateTime? startDate = null, DateTime? endDate = null)
+        {
+            try
+            {
+                var users = await this.UserService.GetUsersWithPurchasesAndReparations(startDate, endDate);
+
+                var usersDTO = Mapper.Map<List<UserDetailDTO>>(users);
+                //for (var i = 0; i < usersDTO.Count; i++)
+                //{
+                //    usersDTO[i].Roles = await this.UserService.GetUserRoles(usersDTO[i].UserName);
+                //}
+
+                return usersDTO;
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+
+        }
+        #endregion
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MegaHerdt.Models.Models.Identity
 {
@@ -22,5 +23,15 @@ namespace MegaHerdt.Models.Models.Identity
         public List<Reparation> ClientReparations { get; set; }
         public List<Reparation> EmployeeReparations { get; set; }
         public List<ReparationClaim> ReparationsClaims { get; set; }
+
+        /// <summary>
+        /// Indica la cantidad de compras por usuario.
+        /// No se persiste en la BDD.
+        /// </summary>
+        [NotMapped]
+        public int PurchasesCount { get; set; } = 0;
+        
+        [NotMapped]
+        public int ReparationsCount { get; set; } = 0;
     }
 }

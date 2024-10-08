@@ -8,23 +8,26 @@ using MegaHerdt.Models.Models.Identity;
 using System.Linq.Expressions;
 using MegaHerdt.Repository.Base;
 using MegaHerdt.Helpers.Handlers;
+using MegaHerdt.Models.Models;
 
 namespace MegaHerdt.Helpers.Helpers
 {
     public class AuthHelper
     {
         private readonly Repository<User> userRepository;
+        private readonly Repository<Purchase> purchaseRepository;
         private readonly Repository<IdentityRole> roleRepository;
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
 
         public AuthHelper(Repository<User> userRepository, Repository<IdentityRole> roleRepository, UserManager<User> userManager,
-            SignInManager<User> signInManager)
+            SignInManager<User> signInManager, Repository<Purchase> purchaseRepository)
         {
             this.userRepository = userRepository;
             this.roleRepository = roleRepository;
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.purchaseRepository = purchaseRepository;
         }
 
         public async Task<UserToken> CreateUser(User user, string jwtKey)
@@ -238,5 +241,99 @@ namespace MegaHerdt.Helpers.Helpers
 
             await roleRepository.Delete(role) ;
         }
+
+
+        #region Informes
+        private async Task<List<User>> GetTopClientsByPurchases(DateTime? startDate, DateTime? endDate)
+        {
+            var purchasesInRange = await purchaseRepository.Get(p => p.Date >= startDate 
+                                                            && p.Date <= endDate
+                                                            && p.Client.Enabled)
+                                                   .Include(p => p.Client) // Asegúrate de incluir los datos del cliente
+                                                   .ToListAsync();
+
+            // Agrupamos por cliente, contamos las compras y ordenamos de mayor a menor
+            var topClients = purchasesInRange.GroupBy(p => p.Client)
+                                             .Select(group => new
+                                             {
+                                                 Client = group.Key,
+                                                 PurchasesCount = group.Count()
+                                             })
+                                             .OrderByDescending(c => c.PurchasesCount)
+                                             .ToList();
+
+            List<User> users = new();
+            foreach(var group in topClients)
+            {
+                group.Client.PurchasesCount = group.PurchasesCount;
+                users.Add(group.Client);
+            }
+
+            return users;
+        }
+
+
+        private async Task<List<User>> GetTopUsersByReparations(DateTime? startDate, DateTime? endDate)
+        {
+            // Obtener todas las reparaciones que caen dentro del rango de fechas y cuyos clientes están habilitados
+            var reparationsInRange = await userRepository.Get(u => u.Enabled)
+                .Include(u => u.ClientReparations)
+                .Where(u => u.ClientReparations.Any(r => r.Date >= startDate && r.Date <= endDate))
+                .ToListAsync();
+
+            // Agrupamos por usuario y contamos las reparaciones como cliente y empleado
+            var topUsers = reparationsInRange.Select(u => new
+            {
+                User = u,
+                ReparationsCount = u.ClientReparations.Count(r => r.Date >= startDate && r.Date <= endDate) 
+            })
+            .OrderByDescending(u => u.ReparationsCount)
+            .ToList();
+
+            List<User> users = new();
+            foreach (var group in topUsers)
+            {
+                group.User.ReparationsCount = group.ReparationsCount; // Usarás este campo para las reparaciones
+                users.Add(group.User);
+            }
+
+            return users;
+        }
+
+        public async Task<List<User>> GetUsersWithPurchasesAndReparations(DateTime? startDate, DateTime? endDate)
+        {
+            var userPurchases = await GetTopClientsByPurchases(startDate, endDate);
+            var userReparations = await GetTopUsersByReparations(startDate, endDate);
+
+            var combinedList = userPurchases.Concat(userReparations).GroupBy(i => i.Id);
+
+            List<User> users = new();
+
+            foreach(var group in combinedList)
+            {
+                User? newUser = null;
+                foreach(var user in group)
+                {
+                    if (newUser is null) 
+                    {
+                        newUser = user; 
+                    }
+                    else
+                    {
+                        newUser.PurchasesCount = newUser.PurchasesCount != 0 
+                            ? newUser.PurchasesCount 
+                            : user.PurchasesCount;
+                        newUser.ReparationsCount = newUser.ReparationsCount != 0 
+                            ? newUser.ReparationsCount 
+                            : user.ReparationsCount;
+                    }
+                }
+
+                users.Add(newUser!);
+            }
+
+            return users;
+        }
+        #endregion
     }
 }

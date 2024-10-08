@@ -14,5 +14,9 @@ namespace MegaHerdt.API.DTOs.User
         public DateTime LastLogin { get; set; }
         public bool IsActive { get; set; }
         public List<string>? Roles { get; set; }
+
+        // Cantidad de compras de un usuario
+        public int? PurchasesCount { get; set; }
+        public int? ReparationsCount { get; set; }
     }
 }

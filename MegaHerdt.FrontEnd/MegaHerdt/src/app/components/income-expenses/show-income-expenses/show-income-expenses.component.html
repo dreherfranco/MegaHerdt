@@ -1,7 +1,7 @@
 <div class="d-flex flex-row p-3">
   <mat-card class="alert-card col-sm-6 mx-auto text-center" 
-  *ngIf="(purchasesIncomes.incomeExpenses.length == 0 && enumType == 'ventas')||
-         (reparationsIncomes.incomeExpenses.length == 0 && enumType == 'reparaciones')">
+  *ngIf="(purchasesIncomes.incomeExpenses.length == 0 && enumType == ReportTypeEnum.IngresosVentas)||
+         (reparationsIncomes.incomeExpenses.length == 0 && enumType == ReportTypeEnum.IngresosReparaciones)">
     <mat-card-header class="text-center mx-auto w-50">
       <mat-card-title class="alert-title text-center mx-auto">No se encontraron ingresos/egresos en esta fecha</mat-card-title>
     </mat-card-header>
@@ -9,10 +9,14 @@
       Intente buscando por otra fecha.
     </mat-card-content>
   </mat-card>
-  <ng-container *ngIf="(purchasesIncomes.incomeExpenses.length > 0 && enumType == 'ventas')||
-                       (reparationsIncomes.incomeExpenses.length > 0 && enumType == 'reparaciones')" [ngSwitch]="enumType">
-    <app-purchase-income-expenses *ngSwitchCase="'ventas'" [purchasesIncomes]="purchasesIncomes"></app-purchase-income-expenses>
-    <app-reparation-income-expenses *ngSwitchCase="'reparaciones'" [reparationsIncomes]="reparationsIncomes"></app-reparation-income-expenses>
-    <!--agregar el de clientes-->
+  <ng-container *ngIf="(purchasesIncomes.incomeExpenses.length > 0 && enumType == ReportTypeEnum.IngresosReparaciones)||
+                       (reparationsIncomes.incomeExpenses.length > 0 && enumType == ReportTypeEnum.IngresosReparaciones)" [ngSwitch]="enumType">
+    
+    <!-- Componente para mostrar ingresos de ventas -->
+    <app-purchase-income-expenses *ngSwitchCase="ReportTypeEnum.IngresosVentas" [purchasesIncomes]="purchasesIncomes"></app-purchase-income-expenses>
+    
+    <!-- Componente para mostrar ingresos de reparaciones -->
+    <app-reparation-income-expenses *ngSwitchCase="ReportTypeEnum.IngresosReparaciones" [reparationsIncomes]="reparationsIncomes"></app-reparation-income-expenses>
+
   </ng-container>
 </div>

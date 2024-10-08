@@ -9,8 +9,12 @@ export class UserDetail{
     isActive: boolean;
     roles: Array<string>;
     userName: string;
+    purchasesCount: number;
+    reparationsCount: number;
 
-    constructor(id:string='',email:string='', dni:string='', name:string='',surname:string='',roles: Array<string>=[])
+    constructor(id:string='',email:string='', dni:string='', name:string='',surname:string='',roles: Array<string>=[],
+        purchasesCount: number=0, reparationsCount: number=0
+    )
     {
         this.id = id;
         this.email = email;
@@ -22,5 +26,7 @@ export class UserDetail{
         this.lastLogin = new Date();
         this.isActive = false;
         this.userName = '';
+        this.purchasesCount = purchasesCount;
+        this.reparationsCount = reparationsCount;
     }
 }
