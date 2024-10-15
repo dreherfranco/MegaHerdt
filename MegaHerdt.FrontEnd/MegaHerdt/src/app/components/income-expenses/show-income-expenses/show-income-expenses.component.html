@@ -14,7 +14,7 @@
                         [ngSwitch]="enumType">
     
     <!-- Componente para mostrar ingresos de ventas -->
-    <app-purchase-income-expenses *ngSwitchCase="'IngresosVentas'" [purchasesIncomes]="purchasesIncomes"></app-purchase-income-expenses>
+    <app-purchase-income-expenses *ngSwitchCase="ReportTypeEnum.IngresosVentas" [purchasesIncomes]="purchasesIncomes"></app-purchase-income-expenses>
     
     <!-- Componente para mostrar ingresos de reparaciones -->
     <app-reparation-income-expenses *ngSwitchCase="ReportTypeEnum.IngresosReparaciones" [reparationsIncomes]="reparationsIncomes"></app-reparation-income-expenses>
