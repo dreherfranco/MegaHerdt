@@ -32,6 +32,10 @@ namespace MegaHerdt.Models.Models
         public List<ReparationArticle> ReparationsArticles { get; set; } = new();
         public Bill Bill { get; set; }
         public Guid NumeroTicket { get; set; } = new Guid();
+        /// <summary>
+        /// Indica el 'Tipo de Cosa' que se entregó para reparar por el cliente (impresora, notbook, etc).
+        /// </summary>
+        public string TipoObjeto { get; set; } = string.Empty;
         public bool Facturada { get; set; } = false;
         public float TotalArticleAmount
         {

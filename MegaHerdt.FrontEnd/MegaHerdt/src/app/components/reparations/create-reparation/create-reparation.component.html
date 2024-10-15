@@ -24,7 +24,13 @@
             <label for="date" class="m-1"><b>Fecha: {{ reparation.date | date: 'shortDate'  }}</b></label>
         </div>
     </div>
-    <div class="form-group">
+
+    <div class="form-group mt-3">
+        <label for="tipoObjeto" class="data-user">(*)Tipo de Objeto:</label>
+        <input id="name" pattern="^([ \u00c0-\u01ffa-zA-Z'\-])+$" name="name" class="form-control" type="text" #name="ngModel" [(ngModel)]="reparation.tipoObjeto" required>
+    </div>
+
+    <div class="form-group mt-3">
         <label for="clientDescription" class="data-user">(*)Descripción del cliente:</label>
         <textarea class="form-control" id="clientDescription" name="clientDescription" #clientDescription="ngModel" [(ngModel)]="reparation.clientDescription" required></textarea>
     </div>

@@ -24,6 +24,7 @@ export class ShowIncomeExpensesComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+    console.log(this.enumType);
   }
 
   // Detecta cambios en los inputs de fechas
@@ -43,12 +44,15 @@ export class ShowIncomeExpensesComponent implements OnInit, OnChanges {
         this.incExpServices.getPurchasesIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
           .subscribe(result => {
             this.purchasesIncomes = result;
+            console.log("cargando compras",this.purchasesIncomes);
         });
         break;
       case ReportType.IngresosReparaciones:
         this.incExpServices.getReparationsIncomesRange(this._storageService.getTokenValue(), startDate, endDate)
           .subscribe(result => {
             this.reparationsIncomes = result;
+            console.log("cargando reparaciones",this.reparationsIncomes);
+
         });
         break;
 

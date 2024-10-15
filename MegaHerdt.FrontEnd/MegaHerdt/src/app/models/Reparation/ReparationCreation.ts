@@ -11,10 +11,11 @@ export class ReparationCreation {
     bill: BillCreation;
     clientDescription: string;
     employeeObservation: string;
+    tipoObjeto: string;
 
     constructor(reparationStateId: number=0, employeeId: string='', clientId: string='', amount: number=0,
         date: Date= new Date(), reparationsArticles: Array<ReparationArticleCreation>=[], bill: BillCreation= new BillCreation(),
-        clientDescription: string='', employeeObservation: string='') 
+        clientDescription: string='', employeeObservation: string='', tipoObjeto: string = '') 
     {
         this.reparationStateId = reparationStateId;
         this.employeeId = employeeId;
@@ -25,6 +26,8 @@ export class ReparationCreation {
         this.bill = bill;
         this.clientDescription = clientDescription;
         this.employeeObservation = employeeObservation;
+        this.tipoObjeto = tipoObjeto;
+
     }
 
 }

@@ -127,7 +127,7 @@ export class ReparationStateREPARADOComponent implements OnInit {
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
-      , reparation.employeeObservation, reparation.diagnostic, reparation.approximateTime, reparation.paymentsQuantity, reparation.methodOfPayment);
+      , reparation.employeeObservation, reparation.diagnostic, reparation.approximateTime, reparation.tipoObjeto, reparation.paymentsQuantity, reparation.methodOfPayment);
   }
   
   openShowReparationDetail(reparation: Reparation){

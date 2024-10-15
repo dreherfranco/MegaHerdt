@@ -23,6 +23,10 @@ namespace MegaHerdt.API.DTOs.Reparation
         public BillReparationDTO Bill { get; set; }
         public List<ReparationClaimDetailDTO> ReparationsClaims { get; set; }
         public Guid NumeroTicket { get; set; }
+        /// <summary>
+        /// Indica el 'Tipo de Cosa' que se entregó para reparar por el cliente (impresora, notbook, etc).
+        /// </summary>
+        public string TipoObjeto { get; set; } = string.Empty;
         public bool Facturada { get; set; }
     }
 }

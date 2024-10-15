@@ -123,7 +123,7 @@ export class ReparationStatePAGADOComponent implements OnInit {
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id, reparation.client.id,
       reparation.amount, reparation.date, reparation.reparationsArticles, reparation.bill, reparation.clientDescription
-      , reparation.employeeObservation, reparation.diagnostic, reparation.approximateTime);
+      , reparation.employeeObservation, reparation.diagnostic, reparation.approximateTime, reparation.tipoObjeto);
   }
   
   openShowReparationDetail(reparation: Reparation){

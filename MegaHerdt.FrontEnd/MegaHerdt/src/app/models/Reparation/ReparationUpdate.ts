@@ -13,6 +13,7 @@ export class ReparationUpdate {
     bill: Bill;
     clientDescription: string;
     employeeObservation: string;
+    tipoObjeto: string;
     diagnostic: string;
     approximateTime: Date;
 
@@ -22,7 +23,8 @@ export class ReparationUpdate {
     
     constructor(id: number, reparationStateId: number, employeeId: string, clientId: string, amount: number,
         date: Date, reparationsArticles: Array<ReparationArticleUpdate>, bill: Bill, clientDescription: string
-        ,employeeObservation: string, diagnostic: string, approximateTime: Date, paymentsQuantity: number | null = null,
+        ,employeeObservation: string, diagnostic: string, approximateTime: Date,
+        tipoObjeto: string, paymentsQuantity: number | null = null,
         methodOfPayment: MethodOfPayment|null=null) {
         this.id = id;
         this.reparationStateId = reparationStateId;
@@ -38,6 +40,7 @@ export class ReparationUpdate {
         this.paymentsQuantity = paymentsQuantity;
         this.methodOfPayment = methodOfPayment;
         this.diagnostic = diagnostic;
+        this.tipoObjeto = tipoObjeto;
     }
 
 }

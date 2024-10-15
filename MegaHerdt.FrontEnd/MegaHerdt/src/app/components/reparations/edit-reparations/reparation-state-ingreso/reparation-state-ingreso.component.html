@@ -6,6 +6,7 @@
                 <th mat-sort-header="employeeEmail" scope="col">Email empleado</th>
                 <th mat-sort-header="clientEmail" scope="col">Cliente</th>
                 <th mat-sort-header="date" scope="col">Fecha</th>
+                <th mat-sort-header="tipoObjeto" scope="col">Tipo de objeto</th>
                 <th mat-sort-header="clientDescription" scope="col">Descripcion del cliente</th>
                 <th mat-sort-header="employeeObservation" scope="col">Obsevación del empleado</th>
                 <th scope="col"></th>
@@ -34,6 +35,10 @@
                 <th>
                     <span class="data-user">{{reparation.date | date: 'dd/MM/yyyy'}} </span>
                 </th>
+                <th>
+                    <span class="data-user">{{ reparation.tipoObjeto.substring(0, 25) }}</span>
+                    <span *ngIf="reparation.tipoObjeto.length > 25">...</span>
+                </th>  
                 <th>
                     <span *ngIf="reparation.clientDescription === '' " class="text-secondary">No existe descripción</span>
                     <span class="data-user">{{ reparation.clientDescription.substring(0, 25) }}</span>

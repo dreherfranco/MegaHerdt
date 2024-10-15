@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title data-user">Actualizar precios por categoria</h5>
+    <p class="h3">Actualizar precios por categoria</p>
     <button type="button" class="btn-close" (click)="closeModal()" title="Cerrar"></button>
 </div>
 <div class="modal-body">
@@ -17,6 +17,7 @@
                         min="-100" 
                         max="100" 
                         #percentage="ngModel" 
+                        step="1"
                         pattern="^-?[0-9]+$"
                         [(ngModel)]="articlePriceUpdate.pricePercentage" 
                         required>

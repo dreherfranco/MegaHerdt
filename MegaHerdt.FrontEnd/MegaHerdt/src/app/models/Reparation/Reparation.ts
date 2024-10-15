@@ -26,9 +26,11 @@ export class Reparation {
     paymentsQuantity: number | null = null;
     // Metodo de pago (Efectivo, debito, credito)
     methodOfPayment: MethodOfPayment | null = null;
+    tipoObjeto: string;
 
     constructor(id:number = 0, reparationState: ReparationState = new ReparationState(), employee: UserDetail=new UserDetail(), client: UserDetail=new UserDetail(), amount: number=0,
-        date: Date= new Date(), reparationsArticles: Array<ReparationArticle>=[], bill: Bill= new Bill(), employeeObservation: string='', diagnostic: string='', numeroTicket:  string='',facturada:  boolean=false) {
+        date: Date= new Date(), reparationsArticles: Array<ReparationArticle>=[], bill: Bill= new Bill(), employeeObservation: string='', diagnostic: string='', numeroTicket:  string='',
+        facturada:  boolean=false, tipoObjeto: string = '') {
         this.id = id;
         this.reparationState = reparationState;
         this.employee = employee;
@@ -45,6 +47,7 @@ export class Reparation {
         this.approximateTime = new Date();
         this.numeroTicket = numeroTicket;
         this.facturada = facturada;
+        this.tipoObjeto = tipoObjeto;
     }
 
 }

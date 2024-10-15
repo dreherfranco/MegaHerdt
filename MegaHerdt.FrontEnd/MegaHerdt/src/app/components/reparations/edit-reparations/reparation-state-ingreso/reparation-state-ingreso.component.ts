@@ -83,7 +83,7 @@ export class ReparationStateINGRESOComponent implements OnInit   {
     let identity = this._storageService.getIdentity();
     return new ReparationUpdate(reparation.id, reparation.reparationState.id, identity.id,reparation.client.id,
       reparation.amount,reparation.date,reparation.reparationsArticles,new Bill(0,'00001','00000000','A'), reparation.clientDescription
-      ,reparation.employeeObservation, reparation.diagnostic,reparation.approximateTime);
+      ,reparation.employeeObservation, reparation.diagnostic,reparation.approximateTime, reparation.tipoObjeto);
   }
 
   loadReparations(){

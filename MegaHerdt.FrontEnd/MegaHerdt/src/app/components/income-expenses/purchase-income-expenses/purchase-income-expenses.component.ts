@@ -17,6 +17,7 @@ export class PurchaseIncomeExpensesComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    console.log("componente mas interno", this.purchasesIncomes)
   }
 
 }
