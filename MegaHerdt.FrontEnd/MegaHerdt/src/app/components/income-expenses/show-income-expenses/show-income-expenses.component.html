@@ -9,7 +9,7 @@
       Intente buscando por otra fecha.
     </mat-card-content>
   </mat-card>
-  <ng-container *ngIf="(purchasesIncomes.incomeExpenses.length > 0 && enumType == ReportTypeEnum.IngresosReparaciones)||
+  <ng-container *ngIf="(purchasesIncomes.incomeExpenses.length > 0 && enumType == ReportTypeEnum.IngresosVentas)||
                        (reparationsIncomes.incomeExpenses.length > 0 && enumType == ReportTypeEnum.IngresosReparaciones)"
                         [ngSwitch]="enumType">
     
