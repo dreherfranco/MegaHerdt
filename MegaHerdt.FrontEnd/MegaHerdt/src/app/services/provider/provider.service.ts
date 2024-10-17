@@ -35,10 +35,25 @@ export class ProviderService {
     });
   }
 
+  getAllDisableds(token: string): Observable<any> {
+    this.headers = this.headers.set('Authorization', token);
+    return this._http.get(this.url + '/get-disableds', {
+      headers: this.headers,
+    });
+  }
+
   update(provider: Provider, token: string): Observable<any> {
     this.headers = this.headers.set('Authorization', token);
     let params = JSON.stringify(provider);
     return this._http.post(this.url + '/update', params, {
+      headers: this.headers,
+    });
+  }
+
+  recoverDisabledProvider(provider: Provider, token: string): Observable<any> {
+    this.headers = this.headers.set('Authorization', token);
+    let params = JSON.stringify(provider);
+    return this._http.post(this.url + '/recover-disabled-provider', params, {
       headers: this.headers,
     });
   }

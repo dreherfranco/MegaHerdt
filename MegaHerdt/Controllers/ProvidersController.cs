@@ -54,6 +54,20 @@ namespace MegaHerdt.API.Controllers
             }
         }
 
+        [HttpGet("get-disableds")]
+        public ActionResult<List<ProviderDTO>> GetDisabledsProviders()
+        {
+            try
+            {
+
+                var providers = providerService.GetDisabledsProviders();
+                return this.Mapper.Map<List<ProviderDTO>>(providers);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
 
         [HttpGet("{id}")]
         public ActionResult<ProviderDTO> Get(int id)
@@ -99,6 +113,29 @@ namespace MegaHerdt.API.Controllers
                     Expression<Func<Provider, bool>> filter = x => x.Id == providerDTO.Id;
                     var providerDb = this.providerService.GetBy(filter).FirstOrDefault();
                     providerDb = this.Mapper.Map(providerDTO, providerDb);
+                    await providerService.Update(providerDb);
+                    return true;
+                }
+                throw new Exception("provider email already exists");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
+        }
+
+        [HttpPost("recover-disabled-provider")]
+        public async Task<ActionResult<bool>> RecoverDisabledProvider([FromBody] ProviderDTO providerDTO)
+        {
+            try
+            {
+                if (!this.providerService.Exist(providerDTO.Email, providerDTO.Id))
+                {
+                    Expression<Func<Provider, bool>> filter = x => x.Id == providerDTO.Id;
+                    var providerDb = this.providerService.GetBy(filter).FirstOrDefault();
+                    // Vuelvo a habilitar al proveedor
+                    providerDb!.Enabled = true;
+
                     await providerService.Update(providerDb);
                     return true;
                 }

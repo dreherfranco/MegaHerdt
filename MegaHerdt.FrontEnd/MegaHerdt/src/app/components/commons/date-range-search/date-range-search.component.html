@@ -9,6 +9,8 @@
                 <!-- Date Range Picker -->
                 <mat-form-field>
                   <mat-label>Seleccionar rango de fechas</mat-label>
+                  <mat-hint>MM/DD/YYYY</mat-hint>
+
                   <mat-date-range-input [rangePicker]="picker" [formGroup]="dateRangeForm">
                     <input matStartDate formControlName="start" placeholder="Fecha inicio">
                     <input matEndDate formControlName="end" placeholder="Fecha fin">

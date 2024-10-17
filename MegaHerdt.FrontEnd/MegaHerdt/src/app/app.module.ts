@@ -161,6 +161,27 @@ import { ShowInformesComponent } from './components/informes/show-informes/show-
 import { DateRangeSearchComponent } from './components/commons/date-range-search/date-range-search.component';
 import { UserPurchasesInformationComponent } from './components/users/user-purchases-information/user-purchases-information.component';
 
+import {MAT_MOMENT_DATE_ADAPTER_OPTIONS, MomentDateAdapter, MatMomentDateModule } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+// Importa moment.js
+import * as moment from 'moment';
+import 'moment/locale/es';  // Carga el locale de español, por ejemplo
+
+moment.locale('es'); 
+
+// Define los formatos personalizados para la fecha
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',  // Formato de entrada
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',  // Formato mostrado en el input
+    monthYearLabel: 'MMM YYYY',  // Formato para mes y año en el calendario
+    dateA11yLabel: 'LL',  // Accesibilidad
+    monthYearA11yLabel: 'MMMM YYYY',  // Accesibilidad para mes y año
+  },
+};
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -325,11 +346,14 @@ import { UserPurchasesInformationComponent } from './components/users/user-purch
     MatProgressSpinnerModule,
     MatInputModule,
     MatSidenavModule,
-
+    MatMomentDateModule,
     NgxStripeModule.forRoot('pk_test_51KOsMMLFz3iBJKgrLLDZC0HmvofwUbENMgupBtCnJ4Yo21bINMHBolzgbdg6lTB5bO3D9l9J6axnZUx6tE0nPHgD00yKyQXAax'),
     BsDatepickerModule.forRoot()
   ],
-  providers: [ ],
+  providers: [  
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

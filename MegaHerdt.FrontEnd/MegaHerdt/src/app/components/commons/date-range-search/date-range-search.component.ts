@@ -1,10 +1,12 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-date-range-search',
   templateUrl: './date-range-search.component.html',
-  styleUrls: ['./date-range-search.component.css']
+  styleUrls: ['./date-range-search.component.css'],
+  providers: []
 })
 export class DateRangeSearchComponent implements OnInit {
   dateRangeForm!: FormGroup;
@@ -14,8 +16,8 @@ export class DateRangeSearchComponent implements OnInit {
 
  constructor() {
   this.dateRangeForm = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl()
+    start: new FormControl(moment),
+    end: new FormControl(moment)
   });
 }
 
