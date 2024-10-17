@@ -36,5 +36,10 @@ namespace MegaHerdt.Services.Services
         {
             return this.helper.Get().Where(x=>x.Enabled);
         }
+
+        public IEnumerable<Provider> GetDisabledsProviders()
+        {
+            return this.helper.Get().Where(x => !x.Enabled);
+        }
     }
 }
